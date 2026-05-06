@@ -16,14 +16,14 @@ interface Props {
 }
 
 const {
-  eyebrow = 'Cases · Echte resultaten',
+  eyebrow = 'Projecten · Echte resultaten',
   titleLine1 = 'Bewezen succesverhalen',
   titleLead = 'voor',
   titleAccent = 'ambitieus MKB.',
   lead = 'Geen loze beloftes, maar meetbare resultaten. Ontdek hoe wij MKB-bedrijven helpen groeien met slimme strategieën en doordachte uitvoering.',
   pickSlugs,
-  moreLabel = 'Meer cases →',
-  moreHref = '/werk',
+  moreLabel = 'Meer projecten →',
+  moreHref = '/projecten',
 } = Astro.props;
 
 const all = await getCollection('cases', ({ data }) => data.published !== false);
@@ -36,7 +36,7 @@ const [featured, ...rest] = cases;
 const others = rest.slice(0, 3);
 ---
 
-<section class="cases-strip" id="werk">
+<section class="cases-strip" id="projecten">
   <div class="cases-strip-head">
     <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
     <h2 class="cases-strip-title">
@@ -80,7 +80,7 @@ const others = rest.slice(0, 3);
             </div>
           )}
           <div class="case-card-cta">
-            <span>Bekijk case</span>
+            <span>Bekijk project</span>
             <span class="arrow">→</span>
           </div>
         </div>
@@ -118,7 +118,7 @@ const others = rest.slice(0, 3);
               </div>
             )}
             <div class="case-card-cta">
-              <span>Bekijk case</span>
+              <span>Bekijk project</span>
               <span class="arrow">→</span>
             </div>
           </div>
