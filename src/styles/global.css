@@ -424,9 +424,9 @@ main { display: contents; }
 
 .hero-right { position: relative; }
 
-/* Hero right-column = laptop + mobile mockup with comic drop-shadows.
-   PNG mockups have transparent rounded corners, so we use `filter: drop-shadow`
-   instead of `box-shadow` (which would draw a rectangle around the image). */
+/* Hero right-column = single composed mockup with a comic drop-shadow.
+   PNG mockup has transparent rounded edges, so we use filter: drop-shadow
+   instead of box-shadow (which would draw a rectangle around the image). */
 .hero-mockups {
   position: relative;
   width: 100%;
@@ -434,20 +434,10 @@ main { display: contents; }
   align-items: center;
   justify-content: center;
 }
-.hero-mockup--desktop {
-  width: 105%;
+.hero-mockup {
+  width: 100%;
   height: auto;
   filter: drop-shadow(10px 10px 0 var(--hero-card-shadow-color));
-  transform: translateX(-2%);
-}
-.hero-mockup--mobile {
-  position: absolute;
-  bottom: -6%;
-  right: -4%;
-  width: 28%;
-  height: auto;
-  filter: drop-shadow(6px 6px 0 var(--hero-card-shadow-color));
-  z-index: 2;
 }
 
 /* Now lives top-right, filling the spot the removed badge used to occupy.
@@ -2763,9 +2753,6 @@ main { display: contents; }
 
 @media (max-width: 1024px) {
   .hero { grid-template-columns: 1fr; gap: 56px; }
-  /* Mobile: stack mockups, drop the absolute mobile-on-desktop overlap */
-  .hero-mockup--desktop { width: 100%; transform: none; }
-  .hero-mockup--mobile { display: none; }
   .hero-result-card { top: auto; left: auto; right: 8px; bottom: -24px; max-width: 220px; }
   .cases-nav button { width: 44px; height: 44px; font-size: 18px; }
   .section-head { grid-template-columns: 1fr; gap: 24px; }

@@ -2,8 +2,7 @@
 import { Image } from 'astro:assets';
 import EyebrowPill from '../ui/EyebrowPill.astro';
 import type { ImageMetadata } from 'astro';
-import desktopMock from '@assets/hero/renovatie-desktop.webp';
-import mobileMock from '@assets/hero/renovatie-mobile.webp';
+import froseoMockup from '@assets/hero/froseo-mockup.webp';
 
 interface Props {
   eyebrow?: string;
@@ -20,12 +19,9 @@ interface Props {
   resultLabel?: string;
   resultValue?: string;
   resultMeta?: string;
-  /** Optional override for the desktop mockup. Defaults to Renovatie Totaal. */
-  desktopMockup?: ImageMetadata;
-  desktopAlt?: string;
-  /** Optional override for the mobile mockup that overlaps the desktop. */
-  mobileMockup?: ImageMetadata;
-  mobileAlt?: string;
+  /** Optional override for the hero mockup. Defaults to Calvin's composed Froseo mockup. */
+  mockup?: ImageMetadata;
+  mockupAlt?: string;
 }
 
 const {
@@ -46,10 +42,8 @@ const {
   resultLabel = '★ Recent',
   resultValue = '+180% verkeer',
   resultMeta = 'Renovatie Totaal',
-  desktopMockup = desktopMock,
-  desktopAlt = 'Renovatie Totaal — desktop website mockup',
-  mobileMockup = mobileMock,
-  mobileAlt = 'Renovatie Totaal — mobile website mockup',
+  mockup = froseoMockup,
+  mockupAlt = 'Froseo — voorbeeld website mockup',
 } = Astro.props;
 ---
 
@@ -86,21 +80,13 @@ const {
     <div class="hero-right">
       <div class="hero-mockups">
         <Image
-          src={desktopMockup}
-          alt={desktopAlt}
-          class="hero-mockup hero-mockup--desktop"
-          widths={[640, 960, 1280, 1600]}
+          src={mockup}
+          alt={mockupAlt}
+          class="hero-mockup"
+          widths={[640, 960, 1280, 1600, 1800]}
           sizes="(max-width: 1024px) 100vw, 640px"
           loading="eager"
           fetchpriority="high"
-        />
-        <Image
-          src={mobileMockup}
-          alt={mobileAlt}
-          class="hero-mockup hero-mockup--mobile"
-          widths={[240, 360, 480]}
-          sizes="220px"
-          loading="eager"
         />
         <div class="hero-result-card">
           <div class="result-icon">↗</div>
