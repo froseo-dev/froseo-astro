@@ -435,9 +435,11 @@ main { display: contents; }
   justify-content: center;
 }
 .hero-mockup {
-  width: 100%;
+  /* Mockup PNG already includes its own shadow, so no drop-shadow filter.
+     Slightly oversized (110%) for visual impact — flex parent centers it. */
+  width: 110%;
+  max-width: 110%;
   height: auto;
-  filter: drop-shadow(10px 10px 0 var(--hero-card-shadow-color));
 }
 
 /* Now lives top-right, filling the spot the removed badge used to occupy.
