@@ -2,7 +2,7 @@
 slug: rex-agency
 client: Rex Agency
 tagline: '+240% via Webdesign'
-description: 'Rex The Agency had een professionele site nodig die net zo scherp aanvoelde als hun shoots. Compleet redesign in WordPress met focus op presentatie en lead-flow. Resultaat: bijna 2,5x meer site-verkeer en een verdubbeling van inkomende boekingsaanvragen.'
+description: 'Een professionele WordPress-site met focus op design, snelheid en conversie. Compleet redesign binnen 4 weken.'
 type: Webdesign
 tags:
   - { label: Web, color: rare }

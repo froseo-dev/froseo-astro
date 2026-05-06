@@ -6,17 +6,21 @@ import EyebrowPill from '../ui/EyebrowPill.astro';
 interface Props {
   eyebrow?: string;
   titleLine1?: string;
+  titleLead?: string;
   titleAccent?: string;
-  /** comma-separated slugs to override default order — optional */
+  lead?: string;
+  /** Array of slugs to control order. First slug becomes the featured (large) case. */
   pickSlugs?: string[];
   moreLabel?: string;
   moreHref?: string;
 }
 
 const {
-  eyebrow = 'Recent werk · 80+ projecten live',
-  titleLine1 = 'We maken het verschil',
-  titleAccent = 'ambitieus MKB',
+  eyebrow = 'Cases · Echte resultaten',
+  titleLine1 = 'Bewezen succesverhalen',
+  titleLead = 'voor',
+  titleAccent = 'ambitieus MKB.',
+  lead = 'Geen loze beloftes, maar meetbare resultaten. Ontdek hoe wij MKB-bedrijven helpen groeien met slimme strategieën en doordachte uitvoering.',
   pickSlugs,
   moreLabel = 'Meer cases →',
   moreHref = '/werk',
@@ -27,79 +31,113 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
 const cases = pickSlugs
   ? pickSlugs.map((s) => sorted.find((c) => c.data.slug === s)).filter(Boolean)
   : sorted.filter((c) => c.data.featured);
+
+const [featured, ...rest] = cases;
+const others = rest.slice(0, 3);
 ---
 
 <section class="cases-strip" id="werk">
   <div class="cases-strip-head">
-    <EyebrowPill variant="highlight">{eyebrow}</EyebrowPill>
+    <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
     <h2 class="cases-strip-title">
-      {titleLine1}<br />voor <em>{titleAccent}</em>
+      {titleLine1}<br />{titleLead} <em>{titleAccent}</em>
     </h2>
+    <p class="cases-strip-lead">{lead}</p>
+
+    <aside class="cases-tagline" aria-hidden="true">
+      <span class="tagline-line tagline-line--1">MEER ZICHTBAAR.</span>
+      <span class="tagline-line tagline-line--2">MEER KLANTEN.</span>
+      <span class="tagline-line tagline-line--3">MEER GROEI.</span>
+      <svg class="tagline-arrow" viewBox="0 0 60 80" width="48" height="64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M48 6 Q 44 28 30 48 T 12 74" />
+        <path d="M4 64 L 12 74 L 22 60" />
+      </svg>
+    </aside>
   </div>
 
-  <div class="cases-row-wrap">
-    <div class="cases-row" id="cases-row">
-      {
-        cases.map((c) => (
-          <article class="case-card">
-            <div class="case-card-media">
-              <Image
-                src={c!.data.hero}
-                alt={`${c!.data.client} — ${c!.data.tagline}`}
-                class="case-card-img"
-                widths={[400, 600, 800, 1000]}
-                sizes="(max-width: 640px) 280px, 410px"
-                loading="lazy"
-              />
-              <div class="case-tags">
-                {c!.data.tags.map((t) => (
-                  <span class={`case-tag ${t.color}`}>{t.label}</span>
+  {featured && (
+    <div class="cases-grid">
+      <article class="case-card case-card--featured">
+        <div class="case-card-media">
+          <Image
+            src={featured.data.hero}
+            alt={`${featured.data.client} — ${featured.data.tagline}`}
+            class="case-card-img"
+            widths={[600, 900, 1200]}
+            sizes="(max-width: 1024px) 100vw, 600px"
+            loading="lazy"
+          />
+          <div class="case-tags">
+            {featured.data.tags.map((t) => (
+              <span class={`case-tag ${t.color}`}>{t.label}</span>
+            ))}
+          </div>
+          <div class="case-featured-badge" aria-hidden="true">
+            <span class="case-featured-star">★</span>
+          </div>
+        </div>
+        <div class="case-card-body">
+          <h3 class="case-card-name">{featured.data.client}</h3>
+          <p class="case-card-tagline">{featured.data.description ?? featured.data.tagline}</p>
+          {featured.data.metrics && (
+            <div class="case-card-metrics">
+              {featured.data.metrics.map((m) => (
+                <div class="case-metric">
+                  <div class="case-metric-value">{m.value}</div>
+                  <div class="case-metric-label">{m.label}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          <div class="case-card-cta">
+            <span>Bekijk case</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </article>
+
+      {others.map((c) => (
+        <article class="case-card">
+          <div class="case-card-media">
+            <Image
+              src={c!.data.hero}
+              alt={`${c!.data.client} — ${c!.data.tagline}`}
+              class="case-card-img"
+              widths={[400, 600, 800]}
+              sizes="(max-width: 1024px) 100vw, 400px"
+              loading="lazy"
+            />
+            <div class="case-tags">
+              {c!.data.tags.map((t) => (
+                <span class={`case-tag ${t.color}`}>{t.label}</span>
+              ))}
+            </div>
+            {!c!.data.metrics && <div class="case-result">{c!.data.result}</div>}
+          </div>
+          <div class="case-card-body">
+            <h3 class="case-card-name">{c!.data.client}</h3>
+            <p class="case-card-tagline">{c!.data.description ?? c!.data.tagline}</p>
+            {c!.data.metrics && (
+              <div class="case-card-metrics">
+                {c!.data.metrics.map((m) => (
+                  <div class="case-metric">
+                    <div class="case-metric-value">{m.value}</div>
+                    <div class="case-metric-label">{m.label}</div>
+                  </div>
                 ))}
               </div>
-              {!c!.data.metrics && <div class="case-result">{c!.data.result}</div>}
+            )}
+            <div class="case-card-cta">
+              <span>Bekijk case</span>
+              <span class="arrow">→</span>
             </div>
-            <div class="case-card-body">
-              <div class="case-card-eyebrow">{c!.data.type}</div>
-              <h3 class="case-card-name">{c!.data.client}</h3>
-              <p class="case-card-tagline">{c!.data.description ?? c!.data.tagline}</p>
-              {c!.data.metrics && (
-                <div class="case-card-metrics">
-                  {c!.data.metrics.map((m) => (
-                    <div class="case-metric">
-                      <div class="case-metric-value">{m.value}</div>
-                      <div class="case-metric-label">{m.label}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <div class="case-card-cta">
-                <span>Bekijk case</span>
-                <span class="arrow">→</span>
-              </div>
-            </div>
-          </article>
-        ))
-      }
+          </div>
+        </article>
+      ))}
     </div>
+  )}
 
-    <div class="cases-footer">
-      <a class="btn-ghost cases-more" href={moreHref}>{moreLabel}</a>
-      <div class="cases-nav">
-        <button id="prev-case" type="button" aria-label="Vorige case">←</button>
-        <button id="next-case" type="button" aria-label="Volgende case">→</button>
-      </div>
-    </div>
+  <div class="cases-footer">
+    <a class="btn-ghost cases-more" href={moreHref}>{moreLabel}</a>
   </div>
 </section>
-
-<script>
-  const row = document.getElementById('cases-row');
-  // Scroll one card width per click (card width + gap)
-  const STEP = 488;
-  document.getElementById('prev-case')?.addEventListener('click', () => {
-    row?.scrollBy({ left: -STEP, behavior: 'smooth' });
-  });
-  document.getElementById('next-case')?.addEventListener('click', () => {
-    row?.scrollBy({ left: STEP, behavior: 'smooth' });
-  });
-</script>

@@ -2,7 +2,7 @@
 slug: studio-max
 client: Studio Max
 tagline: '3 locaties via Lokale SEO'
-description: 'Studio Max Dance wilde gevonden worden in alle drie hun studio-steden tegelijk. Per locatie een eigen lokale strategie opgezet, met aparte landingspagina’s en geoptimaliseerde GBP-vermeldingen. Vandaag domineren ze de top-3 in Google Maps op iedere stad.'
+description: 'Lokale SEO in drie steden opgezet voor betere vindbaarheid en meer aanvragen. Top-3 posities in Google Maps behaald.'
 type: Lokale SEO
 tags:
   - { label: SEO, color: primary }

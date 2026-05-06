@@ -2,7 +2,7 @@
 slug: top-dakdekker
 client: Top Dakdekker
 tagline: '#1 in Zeist via Lokale SEO'
-description: 'Een dakdekker die jarenlang werd ondergesneeuwd in Google. Met scherpe lokale SEO, een nieuwe homepage en optimalisatie van het Google Business Profile staat Top Dakdekker nu al ruim een jaar stabiel op #1 voor Zeist en omgeving — meer dan 300% extra organisch verkeer.'
+description: 'Met een nieuwe SEO-strategie en geoptimaliseerde homepage stegen we naar de #1 positie in Google Maps Zeist en omgeving. Het resultaat: meer dan 300% extra organisch verkeer.'
 type: Lokale SEO
 tags:
   - { label: SEO, color: primary }

@@ -87,6 +87,7 @@
   --hero-accent-color:   var(--accent-primary);          /* the "onmisbaar" word */
   --hero-accent-underline: var(--accent-rare);           /* the bar underneath */
   --cases-strip-bg:      var(--accent-primary);
+  --cases-strip-title-color: var(--text-on-accent);
   --cases-strip-em:      var(--accent-highlight);        /* "ambitieus MKB" color */
   --cases-strip-em-underline: var(--surface-dark);
   --cases-strip-pill-bg: var(--accent-highlight);
@@ -252,10 +253,12 @@
   --action-bg-hover:         var(--color-teal-strong);
   --hero-accent-color:       var(--color-teal);
   --hero-accent-underline:   transparent;                /* kill the underline */
-  --cases-strip-bg:          var(--color-teal);
-  --cases-strip-em:          var(--color-white);
-  --cases-strip-em-underline: var(--color-purple-deep);
-  --cases-strip-pill-bg:     var(--color-purple);
+  /* Cases-strip: cream bg + dark teal accent (was teal bg + white text). */
+  --cases-strip-bg:          var(--surface-page);
+  --cases-strip-title-color: var(--text-primary);
+  --cases-strip-em:          var(--color-teal-strong);
+  --cases-strip-em-underline: var(--accent-highlight);
+  --cases-strip-pill-bg:     var(--color-purple-deep);
   --cases-strip-pill-text:   var(--color-white);
   --radius-action:           14px;                        /* matches result-card */
 
@@ -291,8 +294,11 @@
 
   --text-primary: var(--color-aubergine);
 
-  --action-bg:               var(--color-teal);
-  --action-bg-hover:         var(--color-teal-strong);
+  /* Action button bg darkened from --color-teal (#009692, 3.36:1 vs white)
+     to --color-teal-strong (#006461, 5.32:1) — passes WCAG AA. The bright
+     teal still appears in non-text contexts (hero accent, cases-strip bg). */
+  --action-bg:               var(--color-teal-strong);
+  --action-bg-hover:         #003F3D;
   --hero-accent-color:       var(--color-teal);
   --hero-accent-underline:   transparent;
   --cases-strip-bg:          var(--color-teal);

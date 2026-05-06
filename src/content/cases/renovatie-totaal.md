@@ -1,16 +1,16 @@
 ---
 slug: renovatie-totaal
 client: Renovatie Totaal
-tagline: '#2 NL via SEO + Content'
-description: 'Renovatie Totaal komt uit een vol speelveld met grote spelers. Diepgaande contentstrategie en een technische SEO-audit zorgden voor een sprong tot #2 op landelijk niveau voor de zwaarste zoekwoorden, en bijna 3x zoveel offerte-aanvragen via de site.'
+tagline: '+180% via SEO + Content'
+description: 'SEO en contentstrategie die vertrouwen wekt en converteert. Meer zichtbaarheid, meer kwalitatieve aanvragen.'
 type: SEO + Content
 tags:
   - { label: SEO, color: primary }
   - { label: Content, color: light }
-result: '#2 NL'
+result: '+180%'
 metrics:
-  - { value: '#2', label: 'Landelijk ranking' }
-  - { value: '+180%', label: 'Aanvragen via site' }
+  - { value: '+180%', label: 'Organisch verkeer' }
+  - { value: '+70%', label: 'Aanvragen' }
 hero: ../../assets/cases/renovatie-totaal/hero.webp
 gallery:
   - ../../assets/cases/renovatie-totaal/gallery-1.webp
