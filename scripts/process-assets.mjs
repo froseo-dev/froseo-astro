@@ -66,6 +66,11 @@ const LOOSE_ASSETS = [
     target: 'hero/froseo-mockup.webp',
     maxWidth: 1800,
   },
+  {
+    source: 'Afbeelding Calvin.png',
+    target: 'team/calvin.webp',
+    maxWidth: 600,
+  },
 ];
 
 /* ----- helpers ----- */

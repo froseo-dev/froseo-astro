@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import EyebrowPill from '../ui/EyebrowPill.astro';
+import calvinPhoto from '@assets/team/calvin.webp';
 
 interface Props {
   eyebrow?: string;
@@ -19,7 +21,7 @@ const {
   titleLine1 = 'Better call',
   titleAccent = 'Calvin.',
   body = [
-    'Even sparren over wat er beter kan? Of wil je gewoon weten of Froseo bij je past? Plan dan direct een afspraak met Calvin.',
+    'Even sparren over wat er beter kan? Of wil je gewoon weten of Froseo bij je past? Plan dan direct een afspraak met onze maestro Calvin.',
     'Tijdens een vrijblijvend gesprek van 30 minuten kijken we samen naar je website, vindbaarheid en groeikansen.',
   ],
   primaryLabel = 'Neem contact op',
@@ -54,8 +56,15 @@ const {
     </div>
 
     <div class="better-call-portrait">
-      <div class="better-call-photo" aria-label="Foto van Calvin (placeholder)">
-        <span class="better-call-photo-initial">C</span>
+      <div class="better-call-photo">
+        <Image
+          src={calvinPhoto}
+          alt="Calvin van Froseo"
+          class="better-call-photo-img"
+          widths={[200, 320, 480]}
+          sizes="(max-width: 1024px) 200px, 260px"
+          loading="lazy"
+        />
       </div>
       <div class="better-call-rating">
         <span class="better-call-rating-stars">★★★★★</span>
