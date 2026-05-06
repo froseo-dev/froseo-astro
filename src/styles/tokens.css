@@ -249,7 +249,7 @@
 
   /* Calvin-specific overrides — these are what makes Calvin different from Royal.
      Add new ones here as Calvin gives feedback; never edit the components. */
-  --action-bg:               var(--color-teal);
+  --action-bg:               #00807d;                  /* WCAG AA on white (~4.75:1) */
   --action-bg-hover:         var(--color-teal-strong);
   --hero-accent-color:       var(--color-teal);
   --hero-accent-underline:   transparent;                /* kill the underline */
