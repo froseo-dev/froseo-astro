@@ -294,11 +294,11 @@
 
   --text-primary: var(--color-aubergine);
 
-  /* Action button bg darkened from --color-teal (#009692, 3.36:1 vs white)
-     to --color-teal-strong (#006461, 5.32:1) — passes WCAG AA. The bright
-     teal still appears in non-text contexts (hero accent, cases-strip bg). */
-  --action-bg:               var(--color-teal-strong);
-  --action-bg-hover:         #003F3D;
+  /* Action button bg: #00807d hits ~4.75:1 against white — just over WCAG AA
+     (4.5:1) while staying closer to the brand teal #009692 than the deeper
+     #006461 we tried before. Hover darkens to --color-teal-strong. */
+  --action-bg:               #00807d;
+  --action-bg-hover:         var(--color-teal-strong);
   --hero-accent-color:       var(--color-teal);
   --hero-accent-underline:   transparent;
   --cases-strip-bg:          var(--color-teal);
