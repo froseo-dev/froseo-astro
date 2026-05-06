@@ -1071,6 +1071,8 @@ main { display: contents; }
 .service-card.highlight-shadow:hover { box-shadow: 10px 10px 0 var(--accent-highlight); }
 .service-card.dark-shadow            { box-shadow: var(--shadow-dark); }
 .service-card.dark-shadow:hover      { box-shadow: 10px 10px 0 var(--surface-dark); }
+.service-card.teal-shadow            { box-shadow: 6px 6px 0 var(--color-teal); }
+.service-card.teal-shadow:hover      { box-shadow: 10px 10px 0 var(--color-teal); }
 
 .service-icon {
   width: 56px;
@@ -1091,6 +1093,17 @@ main { display: contents; }
 .service-card.rare-shadow .service-icon      { background: var(--accent-rare);    color: var(--text-on-accent); }
 .service-card.dark-shadow .service-icon      { background: var(--surface-dark);   color: var(--text-on-dark); }
 .service-card.highlight-shadow .service-icon { background: var(--accent-highlight); color: var(--text-primary); }
+.service-card.teal-shadow .service-icon      { background: var(--color-teal);    color: var(--text-on-accent); }
+
+/* Per-card accent overrides for service-num + checkmark color
+   (the global default uses --accent-primary). Lokale SEO is the sole
+   teal-themed card; if more themed cards arrive, refactor to --card-accent. */
+.service-card.teal-shadow .service-num                 { color: var(--color-teal); }
+.service-card.teal-shadow .service-list li::before     { color: var(--color-teal); }
+.service-card.rare-shadow .service-num                 { color: var(--accent-rare); }
+.service-card.rare-shadow .service-list li::before     { color: var(--accent-rare); }
+.service-card.dark-shadow .service-num                 { color: var(--surface-dark); }
+.service-card.dark-shadow .service-list li::before     { color: var(--surface-dark); }
 
 .service-num {
   font-family: var(--font-mono);

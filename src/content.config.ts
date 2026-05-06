@@ -48,7 +48,7 @@ const services = defineCollection({
     icon: z.string(),
     bullets: z.array(z.string()),
     /** Semantic shadow role — maps to .service-card.shadow-{role} in global.css */
-    shadow: z.enum(['primary', 'rare', 'highlight', 'dark']).default('dark'),
+    shadow: z.enum(['primary', 'rare', 'highlight', 'dark', 'teal']).default('dark'),
     order: z.number().default(0),
     featured: z.boolean().default(true),
   }),
