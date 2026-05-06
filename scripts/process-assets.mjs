@@ -62,7 +62,7 @@ const LOOSE_ASSETS = [
     maxWidth: 1920,
   },
   {
-    source: 'mock-up-froseo-v1.png',
+    source: 'mock-up-froseo-v2.png',
     target: 'hero/froseo-mockup.webp',
     maxWidth: 1800,
   },
