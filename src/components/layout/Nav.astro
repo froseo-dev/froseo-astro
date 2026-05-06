@@ -36,8 +36,53 @@ const {
   </div>
   <div class="nav-right">
     <a class="nav-cta" href={ctaHref}>{ctaLabel}</a>
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label="Menu openen"
+      aria-expanded="false"
+      aria-controls="nav-drawer"
+      data-menu-toggle
+    >
+      <span class="menu-toggle-bar"></span>
+      <span class="menu-toggle-bar"></span>
+      <span class="menu-toggle-bar"></span>
+    </button>
   </div>
 </nav>
+
+<div class="nav-drawer" id="nav-drawer" data-menu-drawer="closed" aria-hidden="true">
+  <ul class="nav-drawer-list">
+    {items.map((item) => (
+      <li><a href={item.href} data-drawer-link>{item.label}</a></li>
+    ))}
+  </ul>
+  <a class="btn-primary nav-drawer-cta" href={ctaHref} data-drawer-link>{ctaLabel}</a>
+</div>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const drawer = document.querySelector<HTMLElement>('[data-menu-drawer]');
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-drawer-link]');
+
+  function setOpen(next: boolean) {
+    if (!toggle || !drawer) return;
+    toggle.setAttribute('aria-expanded', String(next));
+    toggle.setAttribute('aria-label', next ? 'Menu sluiten' : 'Menu openen');
+    drawer.dataset.menuDrawer = next ? 'open' : 'closed';
+    drawer.setAttribute('aria-hidden', String(!next));
+    document.body.style.overflow = next ? 'hidden' : '';
+  }
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    setOpen(!isOpen);
+  });
+  links.forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+</script>
 
 <style>
   /* The source PNG is white-on-transparent. We keep it white and rely on
