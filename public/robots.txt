@@ -1,5 +1,5 @@
+# Test/build phase — block all crawlers.
+# Replace BEFORE going live on froseo.nl with a permissive robots.txt that
+# allows indexing of /, /diensten, /werk, /blog, etc. (and Disallow /lab/).
 User-agent: *
-Allow: /
-Disallow: /lab/
-
-Sitemap: https://froseo.nl/sitemap-index.xml
+Disallow: /

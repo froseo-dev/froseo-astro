@@ -1,0 +1,8 @@
+# Cloudflare Pages — global response headers.
+# Applied to every URL on this deployment (incl. pages.dev preview).
+#
+# ⚠️  Block search-engine indexing while we're in build/test phase.
+#     Remove or change this rule BEFORE pointing the production domain
+#     (froseo.nl) at this project, otherwise Google will keep ignoring it.
+/*
+  X-Robots-Tag: noindex, nofollow
