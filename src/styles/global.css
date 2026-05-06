@@ -1865,7 +1865,7 @@ main { display: contents; }
 
 .step {
   display: grid;
-  grid-template-columns: 56px 1fr auto;
+  grid-template-columns: 56px 1fr;
   gap: 24px;
   padding: 24px 28px;
   background: var(--surface-card);
@@ -2783,7 +2783,6 @@ main { display: contents; }
   .local-agency-body { grid-template-columns: 1fr; gap: 40px; }
   .local-agency-head { margin-bottom: 36px; }
   .step { grid-template-columns: 48px 1fr; padding: 18px; gap: 18px; }
-  .step-tag { display: none; }
   .stats-grid { grid-template-columns: 1fr; gap: 16px; }
   .cta-form { padding: 24px; }
   .cases-strip-head { padding: 0 var(--gutter-mobile) 32px; }

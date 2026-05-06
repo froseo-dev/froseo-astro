@@ -2,7 +2,7 @@
 import EyebrowPill from '../ui/EyebrowPill.astro';
 import logoWhite from '@assets/brand/froseo-logo-wit.webp';
 
-interface Step { num: string; title: string; description: string; tag: string; }
+interface Step { num: string; title: string; description: string; }
 interface Props {
   eyebrow?: string;
   titleLine1?: string;
@@ -22,15 +22,31 @@ const {
   titleLine1 = 'Een aanpak',
   titleAccent = 'zonder',
   titleLine3 = 'gedoe.',
-  desc1 = 'Geen maandenlange discovery-fases, geen onoverzichtelijke offertes, geen lagen van accountmanagers tussen jou en het werk. Vier stappen — en je hebt een website die werkt én een plan dat rankt.',
-  desc2 = 'We werken in sprints, houden je wekelijks op de hoogte en zorgen dat elke euro verantwoord besteed wordt.',
+  desc1 = 'Geen wekenlange discovery-fases, geen vage offertes en geen lagen van accountmanagers tussen jou en het werk. We kijken wat jouw bedrijf online nodig heeft en vertalen dat naar een concreet plan voor website, vindbaarheid en groei.',
+  desc2 = 'Daarna gaan we bouwen, verbeteren en meten. In duidelijke stappen, met korte lijnen en zonder onnodige poespas.',
   ctaLabel = 'Maak een afspraak →',
   ctaHref = '#cta',
   steps = [
-    { num: '01', title: 'Kennismaken', description: 'Vrijblijvend gesprek, fysiek in Utrecht of online. Jij vertelt waar je staat, wij vertellen wat we zien — inclusief eerste quick wins.', tag: 'Week 1' },
-    { num: '02', title: 'Strategie & plan', description: "Concrete aanpak op papier: welke pagina's, welke zoekwoorden, welke campagnes. Helder, meetbaar, met deadlines en budgetten.", tag: 'Week 2' },
-    { num: '03', title: 'Bouwen & launchen', description: 'Wij bouwen, jij kijkt mee via wekelijkse sprints. Elke week een update — geen weken stilte. Na livegang stoppen we niet, we beginnen dan pas.', tag: 'Week 3–8' },
-    { num: '04', title: 'Groeien & finetunen', description: 'Lancering is het begin, niet het eind. We monitoren rankings, testen varianten, rapporteren maandelijks en zorgen dat je elke maand beter presteert dan de vorige.', tag: 'Doorlopend' },
+    {
+      num: '01',
+      title: 'Kennismaken',
+      description: 'We leren je bedrijf kennen en bepalen wat je online nodig hebt: een sterke website, betere vindbaarheid, meer aanvragen of alles tegelijk.',
+    },
+    {
+      num: '02',
+      title: 'Groeiplan maken',
+      description: 'We vertalen je doelen naar een concreet plan voor webdesign, content, SEO en marketing. Geen dikke rapporten, maar duidelijke keuzes.',
+    },
+    {
+      num: '03',
+      title: 'Bouwen & optimaliseren',
+      description: "We maken wat nodig is om vooruit te komen: websites, pagina's, content, SEO-verbeteringen, campagnes en conversie-optimalisatie.",
+    },
+    {
+      num: '04',
+      title: 'Meten & doorgroeien',
+      description: 'Na livegang of start van het traject blijven we meten, verbeteren en bijsturen. Zo wordt je online basis steeds sterker.',
+    },
   ],
   watermark = false,
 } = Astro.props;
@@ -60,7 +76,6 @@ const {
               <h3>{step.title}</h3>
               <p>{step.description}</p>
             </div>
-            <div class="step-tag">{step.tag}</div>
           </div>
         ))
       }

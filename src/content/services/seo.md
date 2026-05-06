@@ -1,13 +1,14 @@
 ---
 slug: seo
 title: SEO Dominantie
-eyebrow: '02 — Zoekmachine'
-description: 'Techniek, content en autoriteit — in die volgorde. We bouwen waterdichte SEO-strategieën waar Google niet omheen kan. Van technische audits tot content-plannen tot linkbuilding.'
+eyebrow: '03 — Zoekmachine'
+description: 'Techniek, content en autoriteit — in die volgorde. We bouwen waterdichte SEO-strategieën waar Google én de nieuwe AI-zoekmachines niet omheen kunnen. Van technische audits tot content-plannen tot linkbuilding én GEO.'
 icon: '⌕'
 shadow: rare
-order: 2
+order: 3
 bullets:
   - Technische SEO audits
-  - Contentstrategie & SEO-teksten
+  - Contentstrategie voor SEO én GEO
+  - AI-content optimalisatie (ChatGPT, Gemini, Perplexity)
   - Linkbuilding & autoriteit
 ---

@@ -1,7 +1,7 @@
 ---
 slug: paid-media
 title: Advertenties die leveren
-eyebrow: '04 — Paid Media'
+eyebrow: '04 — Paid Advertising'
 description: "Google Ads en Social Ads die rendement halen uit elk budget. Geen schieten met hagel, maar meetbare campagnes met heldere KPI's. Maandelijks bijsturen, maandelijks groeien."
 icon: '↗'
 shadow: primary
