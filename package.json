@@ -13,6 +13,9 @@
     "assets": "node scripts/process-assets.mjs"
   },
   "dependencies": {
+    "@fontsource/inter-tight": "^5.2.7",
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "@fontsource/outfit": "^5.2.8",
     "astro": "^5.0.0"
   },
   "devDependencies": {

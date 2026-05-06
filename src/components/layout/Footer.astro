@@ -58,7 +58,7 @@ const {
     {
       columns.map((col) => (
         <div class="footer-col">
-          <h4>{col.title}</h4>
+          <h3>{col.title}</h3>
           {col.html && <Fragment set:html={col.html} />}
           {col.links && (
             <ul>

@@ -34,3 +34,6 @@ Thumbs.db
 # src/assets/ are committed; the originals contain real client photos and
 # don't belong on a (potentially) public repo.
 _reference/
+
+# Claude Code local settings
+.claude/

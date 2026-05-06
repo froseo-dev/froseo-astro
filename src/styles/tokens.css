@@ -49,7 +49,7 @@
 
   --color-white:          #FFFFFF;
   --color-black:          #000000;
-  --color-muted:          #7A7590;
+  --color-muted:          #54506A;   /* WCAG AA on white (5.36:1) */
 
   /* ----- Layer 2 — semantic defaults (Royal Purple) ----- */
   --accent-primary:        var(--color-purple);

@@ -173,7 +173,12 @@ async function processBrand() {
   for (const file of files) {
     const base = path.basename(file, path.extname(file));
     const name = slugify(base) + '.webp';
-    await convert(path.join(srcDir, file), path.join(outDir, name));
+    /* Brand logo is rendered at ~32px tall in the nav (~140px wide max).
+       Cap at 400px so the asset is right-sized — was 1800px source. */
+    const meta = await sharp(path.join(srcDir, file)).metadata();
+    const pipeline = sharp(path.join(srcDir, file));
+    if (meta.width && meta.width > 400) pipeline.resize({ width: 400 });
+    await pipeline.webp({ quality: WEBP_QUALITY }).toFile(path.join(outDir, name));
     console.log(`  ✓ ${name}`);
   }
 }

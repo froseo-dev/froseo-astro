@@ -1,4 +1,17 @@
 ---
+/* Self-hosted fonts via @fontsource — bundled with the build, no Google Fonts
+   CDN render-block. Only the weights we actually use are imported. */
+import '@fontsource/outfit/700.css';
+import '@fontsource/outfit/800.css';
+import '@fontsource/outfit/900.css';
+import '@fontsource/inter-tight/400.css';
+import '@fontsource/inter-tight/500.css';
+import '@fontsource/inter-tight/600.css';
+import '@fontsource/inter-tight/700.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/700.css';
+
 import '@styles/global.css';
 import PaletteSwitcher from '../components/dev/PaletteSwitcher.astro';
 
@@ -68,13 +81,6 @@ const businessSchema = {
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="nl_NL" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 

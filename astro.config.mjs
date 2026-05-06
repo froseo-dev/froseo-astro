@@ -9,7 +9,9 @@ export default defineConfig({
     service: { entrypoint: 'astro/assets/services/sharp' },
   },
   build: {
-    inlineStylesheets: 'auto',
+    /* Inline ALL CSS into the HTML so it never blocks first paint.
+       Our total bundle is small enough that the trade-off is worth it. */
+    inlineStylesheets: 'always',
   },
   vite: {
     build: {

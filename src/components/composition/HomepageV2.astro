@@ -29,31 +29,33 @@ import basAvatar from '@assets/testimonials/bas-bertrams.webp';
 
 <Topbar />
 <Nav />
-<Hero heroImage={heroImage} heroAlt="Top Dakdekker Zeist case — +312% verkeer" />
-<LogosTicker />
-<CasesStrip />
-<PricingTeaser />
-<ServicesTicker />
-<ServicesGrid />
-<InlineCTA
-  primaryLabel="Plan een vrijblijvend gesprek →"
-  primaryHref="/contact"
-  secondaryLabel="of bekijk alle diensten →"
-  secondaryHref="/diensten"
-/>
-<Testimonial bgImage={testiBg} bgAlt="Renovatie Totaal aan het werk" avatar={basAvatar} />
-<Stats />
-<OverFroseo />
-<CTA
-  variant="form"
-  sectionId="analyse"
-  eyebrow="Gratis website-analyse"
-  titleLine1="Eerst weten waar je staat?"
-  titleAccent="Vraag een gratis analyse."
-  text="Ontvang een gratis analyse met concrete verbeterpunten. Zonder verplichtingen."
-  features={[]}
-/>
-<Approach watermark={true} />
-<BetterCallCalvin />
-<FAQ />
+<main>
+  <Hero heroImage={heroImage} heroAlt="Top Dakdekker Zeist case — +312% verkeer" />
+  <LogosTicker />
+  <CasesStrip />
+  <PricingTeaser />
+  <ServicesTicker />
+  <ServicesGrid />
+  <InlineCTA
+    primaryLabel="Plan een vrijblijvend gesprek →"
+    primaryHref="/contact"
+    secondaryLabel="of bekijk alle diensten →"
+    secondaryHref="/diensten"
+  />
+  <Testimonial bgImage={testiBg} bgAlt="Renovatie Totaal aan het werk" avatar={basAvatar} />
+  <Stats />
+  <OverFroseo />
+  <CTA
+    variant="form"
+    sectionId="analyse"
+    eyebrow="Gratis website-analyse"
+    titleLine1="Eerst weten waar je staat?"
+    titleAccent="Vraag een gratis analyse."
+    text="Ontvang een gratis analyse met concrete verbeterpunten. Zonder verplichtingen."
+    features={[]}
+  />
+  <Approach watermark={true} />
+  <BetterCallCalvin />
+  <FAQ />
+</main>
 <Footer />

@@ -57,6 +57,10 @@ input, button, textarea, select { font: inherit; }
   color: var(--text-primary);
 }
 
+/* The <main> landmark wraps the page content (between Nav and Footer).
+   `display: contents` keeps it semantic without adding a layout box. */
+main { display: contents; }
+
 /* Hero accent word — color + underline are themable per palette.
    Set --hero-accent-underline: transparent to remove the bar entirely. */
 .hero-title .accent {
@@ -2620,7 +2624,7 @@ input, button, textarea, select { font: inherit; }
   border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.footer-col h4 {
+.footer-col h3 {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.15em;
