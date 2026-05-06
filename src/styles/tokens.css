@@ -256,7 +256,7 @@
   /* Cases-strip: cream bg + dark teal accent (was teal bg + white text). */
   --cases-strip-bg:          var(--surface-page);
   --cases-strip-title-color: var(--text-primary);
-  --cases-strip-em:          var(--color-teal-strong);
+  --cases-strip-em:          var(--color-teal);
   --cases-strip-em-underline: var(--accent-highlight);
   --cases-strip-pill-bg:     var(--color-purple-deep);
   --cases-strip-pill-text:   var(--color-white);
