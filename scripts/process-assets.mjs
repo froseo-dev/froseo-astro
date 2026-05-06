@@ -61,6 +61,16 @@ const LOOSE_ASSETS = [
     target: 'testimonials/renovatie-totaal-bg.webp',
     maxWidth: 1920,
   },
+  {
+    source: 'mock-up renovatie 1.png',
+    target: 'hero/renovatie-desktop.webp',
+    maxWidth: 1600,
+  },
+  {
+    source: 'mock-up-renovatie 2.png',
+    target: 'hero/renovatie-mobile.webp',
+    maxWidth: 800,
+  },
 ];
 
 /* ----- helpers ----- */

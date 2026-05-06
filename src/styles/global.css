@@ -424,38 +424,30 @@ main { display: contents; }
 
 .hero-right { position: relative; }
 
-.hero-card {
+/* Hero right-column = laptop + mobile mockup with comic drop-shadows.
+   PNG mockups have transparent rounded corners, so we use `filter: drop-shadow`
+   instead of `box-shadow` (which would draw a rectangle around the image). */
+.hero-mockups {
   position: relative;
-  background: var(--surface-dark);
-  border: var(--border);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  /* Portrait — fills more vertical real estate, balances the h1 column visually. */
-  aspect-ratio: 4/5;
-  box-shadow: 12px 12px 0 var(--hero-card-shadow-color);
-  transition: transform var(--transition-medium);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
-.hero-card-img {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: contrast(1.05);
+.hero-mockup--desktop {
+  width: 105%;
+  height: auto;
+  filter: drop-shadow(10px 10px 0 var(--hero-card-shadow-color));
+  transform: translateX(-2%);
 }
-
-.hero-card-overlay {
+.hero-mockup--mobile {
   position: absolute;
-  inset: 0;
-  /* Adaptive overlay — picks up current theme's dark + primary accent.
-     Themes set --hero-card-overlay-opacity: 0 to disable. */
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--surface-dark) 55%, transparent) 0%,
-    color-mix(in srgb, var(--accent-primary) 30%, transparent) 100%
-  );
-  mix-blend-mode: multiply;
-  opacity: var(--hero-card-overlay-opacity);
+  bottom: -6%;
+  right: -4%;
+  width: 28%;
+  height: auto;
+  filter: drop-shadow(6px 6px 0 var(--hero-card-shadow-color));
+  z-index: 2;
 }
 
 /* Now lives top-right, filling the spot the removed badge used to occupy.
@@ -2771,9 +2763,10 @@ main { display: contents; }
 
 @media (max-width: 1024px) {
   .hero { grid-template-columns: 1fr; gap: 56px; }
-  /* Mobile: less aggressive portrait so the card doesn't dominate the fold */
-  .hero-card { aspect-ratio: 4/3; }
-  .hero-result-card { top: auto; right: 16px; bottom: -28px; }
+  /* Mobile: stack mockups, drop the absolute mobile-on-desktop overlap */
+  .hero-mockup--desktop { width: 100%; transform: none; }
+  .hero-mockup--mobile { display: none; }
+  .hero-result-card { top: auto; left: auto; right: 8px; bottom: -24px; max-width: 220px; }
   .cases-nav button { width: 44px; height: 44px; font-size: 18px; }
   .section-head { grid-template-columns: 1fr; gap: 24px; }
   .services-grid { grid-template-columns: 1fr; }

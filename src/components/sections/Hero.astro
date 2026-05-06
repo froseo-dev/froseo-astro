@@ -2,6 +2,8 @@
 import { Image } from 'astro:assets';
 import EyebrowPill from '../ui/EyebrowPill.astro';
 import type { ImageMetadata } from 'astro';
+import desktopMock from '@assets/hero/renovatie-desktop.webp';
+import mobileMock from '@assets/hero/renovatie-mobile.webp';
 
 interface Props {
   eyebrow?: string;
@@ -18,8 +20,12 @@ interface Props {
   resultLabel?: string;
   resultValue?: string;
   resultMeta?: string;
-  heroImage?: ImageMetadata | string;
-  heroAlt?: string;
+  /** Optional override for the desktop mockup. Defaults to Renovatie Totaal. */
+  desktopMockup?: ImageMetadata;
+  desktopAlt?: string;
+  /** Optional override for the mobile mockup that overlaps the desktop. */
+  mobileMockup?: ImageMetadata;
+  mobileAlt?: string;
 }
 
 const {
@@ -38,13 +44,13 @@ const {
   secondaryCta = { label: 'Bekijk projecten', href: '#projecten' },
   reviewsLabel = '4,9/5',
   resultLabel = '★ Recent',
-  resultValue = '+312% verkeer',
-  resultMeta = 'Top Dakdekker Zeist',
-  heroImage,
-  heroAlt = 'Recente case van Froseo',
+  resultValue = '+180% verkeer',
+  resultMeta = 'Renovatie Totaal',
+  desktopMockup = desktopMock,
+  desktopAlt = 'Renovatie Totaal — desktop website mockup',
+  mobileMockup = mobileMock,
+  mobileAlt = 'Renovatie Totaal — mobile website mockup',
 } = Astro.props;
-
-const heroSrc = typeof heroImage === 'string' ? heroImage : heroImage?.src;
 ---
 
 <div class="hero-wrap">
@@ -78,44 +84,34 @@ const heroSrc = typeof heroImage === 'string' ? heroImage : heroImage?.src;
     </div>
 
     <div class="hero-right">
-      <div class="hero-card">
-        {
-          heroImage && typeof heroImage !== 'string' ? (
-            <Image
-              src={heroImage}
-              alt={heroAlt}
-              class="hero-card-img"
-              widths={[640, 960, 1280]}
-              sizes="(max-width: 1024px) 100vw, 600px"
-              loading="eager"
-              fetchpriority="high"
-            />
-          ) : (
-            <div class="hero-card-img" style={heroSrc ? `background-image: url('${heroSrc}')` : ''}></div>
-          )
-        }
-        <div class="hero-card-overlay"></div>
-      </div>
-      <div class="hero-result-card">
-        <div class="result-icon">↗</div>
-        <div class="result-content">
-          <div class="label">{resultLabel}</div>
-          <div class="value">{resultValue}</div>
-          <div class="meta">{resultMeta}</div>
+      <div class="hero-mockups">
+        <Image
+          src={desktopMockup}
+          alt={desktopAlt}
+          class="hero-mockup hero-mockup--desktop"
+          widths={[640, 960, 1280, 1600]}
+          sizes="(max-width: 1024px) 100vw, 640px"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <Image
+          src={mobileMockup}
+          alt={mobileAlt}
+          class="hero-mockup hero-mockup--mobile"
+          widths={[240, 360, 480]}
+          sizes="220px"
+          loading="eager"
+        />
+        <div class="hero-result-card">
+          <div class="result-icon">↗</div>
+          <div class="result-content">
+            <div class="label">{resultLabel}</div>
+            <div class="value">{resultValue}</div>
+            <div class="meta">{resultMeta}</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 </div>
 
-<style>
-  /* Astro <Image> renders an <img> tag; we need the same absolute positioning
-     as the reference's div.hero-card-img so the overlay stays correct. */
-  :global(.hero-card-img) {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-</style>
