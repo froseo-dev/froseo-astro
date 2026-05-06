@@ -6,13 +6,15 @@ interface Props {
   eyebrow?: string;
   titleLine1?: string;
   titleLine2?: string;
+  titleAccent?: string;
   stats?: Stat[];
 }
 
 const {
   eyebrow = 'De cijfers',
-  titleLine1 = 'Webdesign & marketing uit Utrecht,',
-  titleLine2 = 'voor heel Nederland.',
+  titleLine1 = 'Webdesign & marketing',
+  titleLine2 = 'uit Utrecht,',
+  titleAccent = 'voor heel Nederland.',
   stats = [
     { num: '80+', label: 'Projecten live' },
     { num: '25+', label: "Plaatsen #1 ranking" },
@@ -27,7 +29,7 @@ const {
     <div class="stats-head">
       <EyebrowPill variant="highlight" star="◆">{eyebrow}</EyebrowPill>
       <h2 class="title">
-        {titleLine1}<br /><em>{titleLine2}</em>
+        {titleLine1}<br />{titleLine2}<br /><em>{titleAccent}</em>
       </h2>
     </div>
     <div class="stats-grid">
