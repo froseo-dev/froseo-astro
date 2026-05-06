@@ -1,0 +1,76 @@
+---
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface Props {
+  eyebrow?: string;
+  titleLine1?: string;
+  titleAccent?: string;
+  text?: string;
+  features?: string[];
+  formTitle?: string;
+  submitLabel?: string;
+  formAction?: string;
+  /** `form` (default) renders the analyse-aanvraag form on the right.
+   *  `link`  renders a single CTA button (used for the secondary "plan een gesprek"). */
+  variant?: 'form' | 'link';
+  linkLabel?: string;
+  linkHref?: string;
+  linkMeta?: string;
+  /** Override the section id for anchor linking. */
+  sectionId?: string;
+}
+
+const {
+  eyebrow = 'Klaar voor groei?',
+  titleLine1 = 'Van onzichtbaar',
+  titleAccent = 'naar onmisbaar.',
+  text = 'Gratis website-analyse in 48 uur. We kijken naar SEO, snelheid en conversie van je huidige site. Geen verkoopgesprek — wel drie concrete aanbevelingen waar je direct iets mee kan.',
+  features = ['Binnen 48u', 'Vrijblijvend', 'Geen sales'],
+  formTitle = 'Start je analyse →',
+  submitLabel = 'Verstuur analyse-verzoek →',
+  formAction,
+  variant = 'form',
+  linkLabel = 'Plan een gesprek →',
+  linkHref = '/contact',
+  linkMeta = '30 minuten · vrijblijvend',
+  sectionId = 'cta',
+} = Astro.props;
+---
+
+<section class={`cta cta--${variant}`} id={sectionId}>
+  <div class="cta-card">
+    <div class="cta-left">
+      <EyebrowPill variant="highlight">{eyebrow}</EyebrowPill>
+      <h2 class="cta-title">
+        {titleLine1}<br /><em>{titleAccent}</em>
+      </h2>
+      <p class="cta-text">{text}</p>
+      {variant === 'form' && features.length > 0 && (
+        <div class="cta-features">
+          {features.map((f) => <span><span class="check">✓</span> {f}</span>)}
+        </div>
+      )}
+    </div>
+
+    {variant === 'form' ? (
+      <form class="cta-form" action={formAction} method="post">
+        <div class="cta-form-title">{formTitle}</div>
+        <div class="form-field">
+          <label for="cta-website">Jouw website</label>
+          <input id="cta-website" name="website" type="url" placeholder="www.jouwbedrijf.nl" required />
+        </div>
+        <div class="form-field">
+          <label for="cta-email">E-mailadres</label>
+          <input id="cta-email" name="email" type="email" placeholder="je@jouwbedrijf.nl" required />
+        </div>
+        <button class="form-btn" type="submit">{submitLabel}</button>
+        <div class="form-small">100% vrijblijvend</div>
+      </form>
+    ) : (
+      <div class="cta-action">
+        <a class="btn-primary cta-action-btn" href={linkHref}>{linkLabel}</a>
+        <div class="cta-action-meta">{linkMeta}</div>
+      </div>
+    )}
+  </div>
+</section>

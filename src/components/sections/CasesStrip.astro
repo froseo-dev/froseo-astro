@@ -1,0 +1,105 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface Props {
+  eyebrow?: string;
+  titleLine1?: string;
+  titleAccent?: string;
+  /** comma-separated slugs to override default order — optional */
+  pickSlugs?: string[];
+  moreLabel?: string;
+  moreHref?: string;
+}
+
+const {
+  eyebrow = 'Recent werk · 80+ projecten live',
+  titleLine1 = 'We maken het verschil',
+  titleAccent = 'ambitieus MKB',
+  pickSlugs,
+  moreLabel = 'Meer cases →',
+  moreHref = '/werk',
+} = Astro.props;
+
+const all = await getCollection('cases', ({ data }) => data.published !== false);
+const sorted = all.sort((a, b) => a.data.order - b.data.order);
+const cases = pickSlugs
+  ? pickSlugs.map((s) => sorted.find((c) => c.data.slug === s)).filter(Boolean)
+  : sorted.filter((c) => c.data.featured);
+---
+
+<section class="cases-strip" id="werk">
+  <div class="cases-strip-head">
+    <EyebrowPill variant="highlight">{eyebrow}</EyebrowPill>
+    <h2 class="cases-strip-title">
+      {titleLine1}<br />voor <em>{titleAccent}</em>
+    </h2>
+  </div>
+
+  <div class="cases-row-wrap">
+    <div class="cases-row" id="cases-row">
+      {
+        cases.map((c) => (
+          <article class="case-card">
+            <div class="case-card-media">
+              <Image
+                src={c!.data.hero}
+                alt={`${c!.data.client} — ${c!.data.tagline}`}
+                class="case-card-img"
+                widths={[400, 600, 800, 1000]}
+                sizes="(max-width: 640px) 280px, 410px"
+                loading="lazy"
+              />
+              <div class="case-tags">
+                {c!.data.tags.map((t) => (
+                  <span class={`case-tag ${t.color}`}>{t.label}</span>
+                ))}
+              </div>
+              {!c!.data.metrics && <div class="case-result">{c!.data.result}</div>}
+            </div>
+            <div class="case-card-body">
+              <div class="case-card-eyebrow">{c!.data.type}</div>
+              <h3 class="case-card-name">{c!.data.client}</h3>
+              <p class="case-card-tagline">{c!.data.description ?? c!.data.tagline}</p>
+              {c!.data.metrics && (
+                <div class="case-card-metrics">
+                  {c!.data.metrics.map((m) => (
+                    <div class="case-metric">
+                      <div class="case-metric-value">{m.value}</div>
+                      <div class="case-metric-label">{m.label}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div class="case-card-cta">
+                <span>Bekijk case</span>
+                <span class="arrow">→</span>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="cases-footer">
+      <a class="btn-ghost cases-more" href={moreHref}>{moreLabel}</a>
+      <div class="cases-nav">
+        <button id="prev-case" type="button" aria-label="Vorige case">←</button>
+        <button id="next-case" type="button" aria-label="Volgende case">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const row = document.getElementById('cases-row');
+  // Scroll one card width per click (card width + gap)
+  const STEP = 488;
+  document.getElementById('prev-case')?.addEventListener('click', () => {
+    row?.scrollBy({ left: -STEP, behavior: 'smooth' });
+  });
+  document.getElementById('next-case')?.addEventListener('click', () => {
+    row?.scrollBy({ left: STEP, behavior: 'smooth' });
+  });
+</script>

@@ -1,0 +1,121 @@
+---
+import { Image } from 'astro:assets';
+import EyebrowPill from '../ui/EyebrowPill.astro';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  eyebrow?: string;
+  titleLine1?: string;
+  titleLine2?: string;
+  accent?: string;
+  /** Optional single-paragraph sub. Ignored if `bullets` is provided. */
+  sub?: string;
+  /** When set, renders a magenta-checkmark list below the h1 instead of the sub paragraph. */
+  bullets?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  reviewsLabel?: string;
+  resultLabel?: string;
+  resultValue?: string;
+  resultMeta?: string;
+  heroImage?: ImageMetadata | string;
+  heroAlt?: string;
+}
+
+const {
+  eyebrow = 'Digital Agency Utrecht · 15+ jaar ervaring',
+  titleLine1 = 'Van onzichtbaar',
+  titleLine2 = 'naar',
+  accent = 'onmisbaar.',
+  sub,
+  bullets = [
+    'AI-powered maatwerk WordPress-websites met een eigen smoel.',
+    'Marketing die niet alleen bezoekers, maar ook klanten oplevert.',
+    'Voor ambitieus MKB dat serieus online wil groeien.',
+    'Of een AI-website abbo vanaf €99/m — alles inbegrepen.',
+  ],
+  primaryCta = { label: 'Plan gratis analyse →', href: '#cta' },
+  secondaryCta = { label: 'Bekijk ons werk', href: '#werk' },
+  reviewsLabel = '4,9/5',
+  resultLabel = '★ Recent',
+  resultValue = '+312% verkeer',
+  resultMeta = 'Top Dakdekker Zeist',
+  heroImage,
+  heroAlt = 'Recente case van Froseo',
+} = Astro.props;
+
+const heroSrc = typeof heroImage === 'string' ? heroImage : heroImage?.src;
+---
+
+<div class="hero-wrap">
+  <section class="hero">
+    <div class="hero-left">
+      <EyebrowPill>{eyebrow}</EyebrowPill>
+      <h1 class="hero-title">
+        {titleLine1}<br />
+        {titleLine2} <span class="accent">{accent}</span>
+      </h1>
+      {bullets && bullets.length > 0 ? (
+        <ul class="hero-bullets">
+          {bullets.map((b) => <li>{b}</li>)}
+        </ul>
+      ) : (
+        <p class="hero-sub">{sub}</p>
+      )}
+      <div class="hero-actions">
+        <a class="btn-primary" href={primaryCta.href}>{primaryCta.label}</a>
+        <a class="btn-ghost" href={secondaryCta.href}>{secondaryCta.label}</a>
+      </div>
+      <div class="reviews-inline">
+        <div class="review-avatars">
+          <div class="review-avatar"></div>
+          <div class="review-avatar"></div>
+          <div class="review-avatar"></div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <span><strong>{reviewsLabel}</strong> · 80+ reviews</span>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-card">
+        {
+          heroImage && typeof heroImage !== 'string' ? (
+            <Image
+              src={heroImage}
+              alt={heroAlt}
+              class="hero-card-img"
+              widths={[640, 960, 1280]}
+              sizes="(max-width: 1024px) 100vw, 600px"
+              loading="eager"
+              fetchpriority="high"
+            />
+          ) : (
+            <div class="hero-card-img" style={heroSrc ? `background-image: url('${heroSrc}')` : ''}></div>
+          )
+        }
+        <div class="hero-card-overlay"></div>
+      </div>
+      <div class="hero-result-card">
+        <div class="result-icon">↗</div>
+        <div class="result-content">
+          <div class="label">{resultLabel}</div>
+          <div class="value">{resultValue}</div>
+          <div class="meta">{resultMeta}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  /* Astro <Image> renders an <img> tag; we need the same absolute positioning
+     as the reference's div.hero-card-img so the overlay stays correct. */
+  :global(.hero-card-img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>

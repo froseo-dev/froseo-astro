@@ -1,0 +1,16 @@
+---
+/**
+ * Decorative section break — a faded oversized "FROSEO." watermark that bridges
+ * two sections without adding new content. Subtle by design (~7% opacity) and
+ * masked with a radial fade so the edges trail off into the page.
+ */
+interface Props {
+  /** Visual context: light = on cream surface; dark = on navy. */
+  surface?: 'light' | 'dark';
+}
+const { surface = 'light' } = Astro.props;
+---
+
+<section class={`logo-break logo-break--${surface}`} aria-hidden="true">
+  <span class="logo-break-text">FROSEO<span class="logo-break-dot">.</span></span>
+</section>

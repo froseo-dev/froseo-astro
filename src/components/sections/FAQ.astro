@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface Props {
+  eyebrow?: string;
+  titleLine1?: string;
+  titleAccent?: string;
+}
+
+const {
+  eyebrow = 'Veelgestelde vragen',
+  titleLine1 = 'Nog',
+  titleAccent = 'vragen?',
+} = Astro.props;
+
+const faq = (await getCollection('faq')).sort((a, b) => a.data.order - b.data.order);
+
+/* JSON-LD FAQPage schema — every Q/A becomes a Question entity Google can
+   surface as a rich result. Single source: same content collection. */
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.data.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.data.answer,
+    },
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="faq-head">
+      <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
+      <h2 class="title">
+        {titleLine1} <em>{titleAccent}</em>
+      </h2>
+    </div>
+    <div class="faq-list">
+      {
+        faq.map((item, i) => (
+          <details class="faq-item" open={i === 0}>
+            <summary>
+              {item.data.question}
+              <span class="ico">+</span>
+            </summary>
+            <div class="answer">{item.data.answer}</div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

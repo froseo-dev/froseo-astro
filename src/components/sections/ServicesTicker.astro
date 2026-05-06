@@ -1,0 +1,52 @@
+---
+interface ServiceItem {
+  label: string;
+  num: string;
+  /** Semantic role — maps to .service-item.{color} in global.css */
+  color?: 'default' | 'primary' | 'rare' | 'highlight';
+}
+
+interface Props {
+  items?: ServiceItem[];
+  /** dot separator color cycle — maps to .service-sep.{class} */
+  separatorPattern?: ('default' | 'rare' | 'highlight')[];
+}
+
+const {
+  items = [
+    { label: 'Lokale SEO', num: '01' },
+    { label: 'Webdesign', num: '02' },
+    { label: 'SEO/GEO', num: '03' },
+    { label: 'Paid Advertising', num: '04' },
+    { label: 'WordPress Websites', num: '05' },
+    { label: 'Conversie-optimalisatie', num: '06' },
+    { label: 'Website Onderhoud', num: '07' },
+    { label: 'Google Business Profile', num: '08' },
+    { label: 'AI Implementaties', num: '09' },
+  ],
+  separatorPattern = ['default', 'rare', 'highlight'],
+} = Astro.props;
+
+// duplicate array for seamless infinite scroll
+const loop = [...items, ...items];
+---
+
+<section class="services-carousel">
+  <div class="services-strip">
+    {
+      loop.map((item, i) => {
+        const sep = separatorPattern[i % separatorPattern.length];
+        const sepClass = sep === 'default' ? 'service-sep' : `service-sep ${sep}`;
+        const itemClass = item.color && item.color !== 'default' ? `service-item ${item.color}` : 'service-item';
+        return (
+          <>
+            <span class={itemClass}>
+              {item.label}<span class="num">{item.num}</span>
+            </span>
+            <span class={sepClass}></span>
+          </>
+        );
+      })
+    }
+  </div>
+</section>

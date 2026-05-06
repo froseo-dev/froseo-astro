@@ -1,0 +1,36 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  label?: string;
+}
+
+const { label = 'Wij werken trots samen met:' } = Astro.props;
+
+// Pick up every WebP under src/assets/logos and render them in the ticker.
+// Add a logo? drop a PNG in _reference/cases/klant-logos and re-run `npm run assets`.
+const logoModules = import.meta.glob<{ default: ImageMetadata }>('/src/assets/logos/*.webp', {
+  eager: true,
+});
+const logos = Object.entries(logoModules)
+  .map(([path, mod]) => ({
+    src: mod.default,
+    name: path.split('/').pop()!.replace('.webp', '').replace(/-/g, ' '),
+  }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+// double for seamless loop
+const loop = [...logos, ...logos];
+---
+
+<section class="logos">
+  <div class="logos-inner">
+    <div class="logos-label"><span class="star">★</span> {label}</div>
+    <div class="logos-strip-wrap">
+      <div class="logos-strip">
+        {loop.map((logo) => <Image src={logo.src} alt={logo.name} loading="lazy" />)}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,78 @@
+---
+interface FooterLink { label: string; href: string; }
+interface FooterColumn { title: string; links?: FooterLink[]; html?: string; }
+
+interface Props {
+  columns?: FooterColumn[];
+  copyright?: string;
+  signoff?: string;
+}
+
+const {
+  columns = [
+    {
+      title: 'Gegevens',
+      html: `
+        <p>Froseo Digital Agency<br>Gevestigd in Utrecht</p>
+        <p><a href="tel:0302378053">030 237 8053</a></p>
+        <p><a href="mailto:info@froseo.nl">info@froseo.nl</a></p>
+      `,
+    },
+    {
+      title: 'Diensten',
+      links: [
+        { label: 'Webdesign', href: '/diensten/webdesign' },
+        { label: 'SEO', href: '/diensten/seo' },
+        { label: 'Lokale SEO', href: '/diensten/lokale-seo' },
+        { label: 'Paid Media', href: '/diensten/paid-media' },
+        { label: 'Onderhoud', href: '/diensten/onderhoud' },
+      ],
+    },
+    {
+      title: 'Bedrijf',
+      links: [
+        { label: 'Over ons', href: '/over-ons' },
+        { label: 'Werk', href: '/werk' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'Contact', href: '/contact' },
+        { label: 'Privacy', href: '/privacy' },
+      ],
+    },
+    {
+      title: 'Volg ons',
+      links: [
+        { label: 'Instagram', href: 'https://instagram.com' },
+        { label: 'LinkedIn', href: 'https://linkedin.com' },
+        { label: 'Google Reviews', href: '#' },
+      ],
+    },
+  ],
+  copyright = `© ${new Date().getFullYear()} Froseo · Digital Agency`,
+  signoff = 'Made with ♥ in Utrecht',
+} = Astro.props;
+---
+
+<footer class="footer">
+  <div class="footer-big">FROSEO<span class="dot">.</span></div>
+  <div class="footer-grid">
+    {
+      columns.map((col) => (
+        <div class="footer-col">
+          <h4>{col.title}</h4>
+          {col.html && <Fragment set:html={col.html} />}
+          {col.links && (
+            <ul>
+              {col.links.map((link) => (
+                <li><a href={link.href}>{link.label}</a></li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))
+    }
+  </div>
+  <div class="footer-bottom">
+    <span>{copyright}</span>
+    <span>{signoff}</span>
+  </div>
+</footer>

@@ -1,0 +1,32 @@
+---
+interface Stat {
+  num: string;
+  label: string;
+}
+
+interface Props {
+  stats?: Stat[];
+}
+
+const {
+  stats = [
+    { num: '80+', label: 'Live projecten' },
+    { num: '#1', label: "Rankings in regio's" },
+    { num: '4,9', label: 'Google reviews' },
+    { num: '15+', label: 'Jaar ervaring' },
+  ],
+} = Astro.props;
+---
+
+<section class="stats-strip">
+  <div class="stats-strip-inner">
+    {
+      stats.map((s) => (
+        <div class="stats-strip-item">
+          <div class="stats-strip-num">{s.num}</div>
+          <div class="stats-strip-lbl">{s.label}</div>
+        </div>
+      ))
+    }
+  </div>
+</section>

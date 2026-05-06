@@ -1,0 +1,41 @@
+---
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface Props {
+  eyebrow?: string;
+  amount?: string;
+  unit?: string;
+  title?: string;
+  body?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  eyebrow = 'Nieuw · AI-powered website',
+  amount = '€99',
+  unit = '/maand',
+  title = 'Een complete website met AI onder de motorkap.',
+  body = 'Ideaal voor ondernemers die zorgeloos hun website willen hebben. €99/m is de instap — verschillende pakketten beschikbaar, met custom maatwerk op aanvraag voor wie meer wil. Altijd transparant, vaak lager dan wat andere bureaus puur voor hosting rekenen.',
+  ctaLabel = 'Bekijk de pakketten →',
+  ctaHref = '/contact',
+} = Astro.props;
+---
+
+<section class="pricing-teaser">
+  <div class="pricing-teaser-inner">
+    <div class="pricing-teaser-amount">
+      <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
+      <div class="pricing-amount">
+        <span class="pricing-from">vanaf</span>
+        <span class="pricing-value">{amount}</span>
+        <span class="pricing-unit">{unit}</span>
+      </div>
+    </div>
+    <div class="pricing-teaser-content">
+      <h2 class="pricing-title">{title}</h2>
+      <p class="pricing-body">{body}</p>
+      <a class="btn-primary pricing-cta" href={ctaHref}>{ctaLabel}</a>
+    </div>
+  </div>
+</section>

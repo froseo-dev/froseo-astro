@@ -1,0 +1,100 @@
+---
+import '@styles/global.css';
+import PaletteSwitcher from '../components/dev/PaletteSwitcher.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Theme slug — falls back to default in tokens.css if omitted. */
+  theme?: string;
+  /** Canonical URL path. */
+  pathname?: string;
+}
+
+const {
+  title = 'Webdesign & SEO bureau Utrecht — Froseo Digital Agency',
+  description = 'Effectieve websites & SEO uit Utrecht voor ambitieus MKB. 15+ jaar ervaring, 80+ projecten live, 4,9/5 op Google reviews. Plan een gratis website-analyse.',
+  theme,
+  pathname = Astro.url.pathname,
+} = Astro.props;
+
+const canonical = new URL(pathname, Astro.site ?? 'https://froseo.nl').toString();
+
+/* JSON-LD: LocalBusiness + Organization on every page. Search engines use
+   this for rich snippets, the local pack and brand-knowledge graph. */
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': 'https://froseo.nl/#agency',
+  name: 'Froseo Digital Agency',
+  description: 'Webdesign, SEO en online marketing bureau in Utrecht voor ambitieus MKB.',
+  url: 'https://froseo.nl/',
+  telephone: '+31302378053',
+  email: 'info@froseo.nl',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Leidseveer 10',
+    postalCode: '3511 SB',
+    addressLocality: 'Utrecht',
+    addressCountry: 'NL',
+  },
+  areaServed: { '@type': 'Country', name: 'Nederland' },
+  priceRange: '€€',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '80',
+    bestRating: '5',
+  },
+  sameAs: [
+    'https://www.instagram.com/froseo',
+    'https://www.linkedin.com/company/froseo',
+  ],
+};
+---
+
+<!doctype html>
+<html lang="nl" data-theme={theme}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="nl_NL" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
+
+    {/* Apply persisted theme BEFORE body renders to avoid a flash.
+         Falls back to "calvin" so a fresh visitor sees Calvin's working palette. */}
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('froseo-theme');
+          document.documentElement.dataset.theme = t || 'calvin';
+        } catch (e) {
+          document.documentElement.dataset.theme = 'calvin';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+    <PaletteSwitcher />
+  </body>
+</html>

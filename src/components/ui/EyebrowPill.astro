@@ -1,0 +1,18 @@
+---
+interface Props {
+  /** Semantic role — maps to .eyebrow-pill.{variant} in global.css */
+  variant?: 'default' | 'highlight' | 'rare' | 'primary' | 'light';
+  star?: string;
+  onDark?: boolean;
+}
+
+const { variant = 'default', star = '★', onDark = false } = Astro.props;
+const classes = ['eyebrow-pill', variant !== 'default' && variant, onDark && 'on-dark']
+  .filter(Boolean)
+  .join(' ');
+---
+
+<div class={classes}>
+  {star && <span class="star">{star}</span>}
+  <slot />
+</div>

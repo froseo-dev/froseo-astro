@@ -1,0 +1,67 @@
+---
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface USPItem {
+  num: string;
+  headline: string;
+  body: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  titleLine1?: string;
+  titleAccent?: string;
+  items?: USPItem[];
+}
+
+const {
+  eyebrow = 'De aanpak',
+  titleLine1 = 'Waarom',
+  titleAccent = 'Froseo.',
+  items = [
+    {
+      num: '01',
+      headline: 'Direct contact met je expert.',
+      body: 'Geen accountmanagers, geen vertaling, geen vertraging. Je werkt rechtstreeks met de specialist die je site bouwt of je campagne draait.',
+    },
+    {
+      num: '02',
+      headline: 'Wekelijkse sprints.',
+      body: 'Elke week zichtbare voortgang en ruimte om bij te sturen. Geen weken stilte, geen kwartaal-cycles — je weet altijd waar we staan.',
+    },
+    {
+      num: '03',
+      headline: 'Webdesign én SEO in één hand.',
+      body: 'Geen versplinterde verantwoordelijkheid tussen drie verschillende bureaus. Van techniek tot rankings tot conversie — één doorgedacht geheel.',
+    },
+    {
+      num: '04',
+      headline: 'De kracht van AI benut.',
+      body: 'AI-powered websites, slimmere SEO-content en automatiseringen die rendement opleveren. We zetten AI alleen in waar het écht toegevoegde waarde heeft.',
+    },
+  ],
+} = Astro.props;
+---
+
+<section class="why-froseo">
+  <div class="why-froseo-inner">
+    <div class="why-froseo-head">
+      <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
+      <h2 class="why-froseo-title">
+        {titleLine1} <em>{titleAccent}</em>
+      </h2>
+    </div>
+
+    <ol class="why-froseo-list">
+      {
+        items.map((item) => (
+          <li class="why-item">
+            <span class="why-num">★ {item.num}</span>
+            <h3 class="why-headline">{item.headline}</h3>
+            <p class="why-body">{item.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

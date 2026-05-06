@@ -1,0 +1,33 @@
+---
+import Topbar from '../layout/Topbar.astro';
+import Nav from '../layout/Nav.astro';
+import Hero from '../sections/Hero.astro';
+import ServicesTicker from '../sections/ServicesTicker.astro';
+import CasesStrip from '../sections/CasesStrip.astro';
+import LogosTicker from '../sections/LogosTicker.astro';
+import ServicesGrid from '../sections/ServicesGrid.astro';
+import Stats from '../sections/Stats.astro';
+import LocalAgency from '../sections/LocalAgency.astro';
+import Approach from '../sections/Approach.astro';
+import Testimonial from '../sections/Testimonial.astro';
+import FAQ from '../sections/FAQ.astro';
+import CTA from '../sections/CTA.astro';
+import Footer from '../layout/Footer.astro';
+
+import heroImage from '@assets/cases/top-dakdekker/hero.webp';
+---
+
+<Topbar />
+<Nav />
+<Hero heroImage={heroImage} heroAlt="Top Dakdekker Zeist case — +312% verkeer" />
+<LogosTicker />
+<CasesStrip />
+<ServicesTicker />
+<ServicesGrid />
+<Stats />
+<LocalAgency />
+<Approach />
+<Testimonial />
+<FAQ />
+<CTA />
+<Footer />

@@ -1,0 +1,10 @@
+---
+interface Props {
+  text?: string;
+}
+const {
+  text = 'Nieuw — AI-powered website vanaf €99/m, inclusief hosting & onderhoud',
+} = Astro.props;
+---
+
+<div class="topbar"><span class="star">★</span> {text}</div>

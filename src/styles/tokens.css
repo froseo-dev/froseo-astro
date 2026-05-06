@@ -1,0 +1,347 @@
+/* ==========================================================================
+   DESIGN TOKENS
+   Two-layer system:
+     Layer 1 — palette (raw colors). Rename freely without touching components.
+     Layer 2 — semantic (roles). Components reference ONLY these.
+   Want to swap palettes? Pick / tweak a [data-theme="..."] block below.
+   ========================================================================== */
+
+:root {
+  /* ----- Layer 1 — palette (full color library, themes pick from this) ----- */
+  --color-magenta:        #B6007B;
+  --color-magenta-strong: #7C0054;
+  --color-magenta-soft:   #FF6BB8;
+
+  --color-teal:           #009692;
+  --color-teal-strong:    #006461;
+  --color-teal-soft:      #6EE3DE;
+
+  --color-purple:         #6901AA;
+  --color-purple-strong:  #3B006D;
+  --color-purple-deep:    #270060;
+
+  --color-yellow:         #FFD93D;
+  --color-yellow-soft:    #FFE986;
+  --color-amber:          #F2B544;
+  --color-gold:           #E0A800;
+
+  --color-coral:          #DC4F2A;
+  --color-coral-strong:   #9A3015;
+  --color-rust:           #C44E1F;
+
+  --color-plum:           #5C0A4D;
+  --color-wine:           #2A0E22;
+  --color-aubergine:      #1A0810;
+
+  --color-forest:         #2D5A4F;
+  --color-forest-deep:    #14302A;
+  --color-moss:           #6E8C68;
+
+  --color-cream:          #F6F2E8;
+  --color-cream-soft:     #FBF8EE;
+  --color-cream-deep:     #EAE3D2;
+  --color-bone:           #EBEEF4;
+  --color-sand:           #F2EAD7;
+
+  --color-ink:            #0A0A14;
+  --color-navy:           #0E1A33;
+  --color-navy-purple:    #150030;
+
+  --color-white:          #FFFFFF;
+  --color-black:          #000000;
+  --color-muted:          #7A7590;
+
+  /* ----- Layer 2 — semantic defaults (Royal Purple) ----- */
+  --accent-primary:        var(--color-purple);
+  --accent-primary-strong: var(--color-purple-strong);
+  --accent-rare:           var(--color-magenta);
+  --accent-rare-strong:    var(--color-magenta-strong);
+  --accent-highlight:      var(--color-yellow);
+
+  --surface-page:      var(--color-cream);
+  --surface-page-soft: var(--color-cream-soft);
+  --surface-page-deep: var(--color-cream-deep);
+  --surface-card:      var(--color-white);
+  --surface-dark:      var(--color-navy-purple);
+  --surface-dark-deep: #0A0018;
+
+  --text-primary:   var(--color-ink);
+  --text-on-dark:   var(--color-white);
+  --text-on-accent: var(--color-white);
+  --text-muted:     var(--color-muted);
+
+  --border-width: 2.5px;
+  --border-color: var(--line-color);
+  --border:       var(--border-width) solid var(--border-color);
+
+  --shadow-primary:   6px 6px 0 var(--accent-primary);
+  --shadow-highlight: 6px 6px 0 var(--accent-highlight);
+  --shadow-rare:      6px 6px 0 var(--accent-rare);
+  --shadow-dark:      6px 6px 0 var(--surface-dark);
+  --shadow-line:      6px 6px 0 var(--line-color);
+
+  /* Sectioned semantic tokens — themes can override individual elements
+     without having to redefine the whole accent system. */
+  --action-bg:           var(--accent-primary);          /* btn-primary, nav-cta */
+  --action-bg-hover:     var(--accent-primary-strong);
+  --hero-accent-color:   var(--accent-primary);          /* the "onmisbaar" word */
+  --hero-accent-underline: var(--accent-rare);           /* the bar underneath */
+  --cases-strip-bg:      var(--accent-primary);
+  --cases-strip-em:      var(--accent-highlight);        /* "ambitieus MKB" color */
+  --cases-strip-em-underline: var(--surface-dark);
+  --cases-strip-pill-bg: var(--accent-highlight);
+  --cases-strip-pill-text: var(--text-primary);
+
+  /* Radius tokens — components reference --radius-action, themes can soften pills */
+  --radius-action: var(--radius-full);                   /* button corner radius */
+
+  /* Topbar + hero — themable per palette */
+  --topbar-bg:   var(--surface-dark);
+  --topbar-text: var(--text-on-dark);
+  --hero-title-color: var(--text-primary);
+  --hero-eyebrow-bg:   var(--surface-dark);              /* eyebrow pill ABOVE the h1 */
+  --hero-eyebrow-text: var(--text-on-dark);
+  --hero-card-overlay-opacity: 1;                        /* set to 0 to disable the multiply tint */
+  --hero-card-shadow-color: var(--accent-primary);       /* the big drop shadow on the photo card */
+
+  /* Line color — used for borders + comic-line shadows. Default = pure black
+     for the crispest signature; themes can swap to e.g. deep navy. */
+  --line-color: var(--color-black);
+
+  /* Nav logo: PNG is already white. Themes set the drop-shadow filter that
+     gives it contrast on the (light) page background. */
+  --logo-shadow: drop-shadow(2px 2px 0 var(--color-black));
+
+  /* Adaptive surfaces — derived from current theme */
+  --nav-bg: color-mix(in srgb, var(--surface-page) 92%, transparent);
+  /* Decorative grid backdrop — three layers in `background-image`:
+       1. radial-gradient: bg color in corners → transparent center (= radial fade)
+       2. repeating-linear-gradient horizontal: 1px lines every 60px
+       3. repeating-linear-gradient vertical:   1px lines every 60px */
+  --bg-decoration-light:
+    radial-gradient(ellipse at center, transparent 22%, var(--surface-page) 78%),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--text-primary) 9%, transparent) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--text-primary) 9%, transparent) 0 1px, transparent 1px 60px);
+
+  --bg-decoration-dark:
+    radial-gradient(ellipse at center, transparent 22%, var(--surface-dark) 78%),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--color-white) 7%, transparent) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--color-white) 7%, transparent) 0 1px, transparent 1px 60px);
+
+  --backdrop-size:   cover, 60px 60px, 60px 60px;
+  --backdrop-repeat: no-repeat, repeat, repeat;
+
+  /* Typography */
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body:    'Inter Tight', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* Layout */
+  --container-max:    1280px;
+  --container-narrow: 1100px;
+  --container-text:   960px;
+  --gutter:           40px;
+  --gutter-mobile:    20px;
+
+  /* Radius */
+  --radius-sm:   10px;
+  --radius-md:   16px;
+  --radius-lg:   20px;
+  --radius-xl:   28px;
+  --radius-full: 999px;
+
+  /* Motion */
+  --ease-pop:          cubic-bezier(.34, 1.56, .64, 1);
+  --transition-fast:   0.15s;
+  --transition-medium: 0.2s;
+}
+
+/* ==========================================================================
+   THEME VARIANTS — toggle via PaletteSwitcher (sets [data-theme] on <html>).
+   Each block overrides ONLY semantic tokens. Layer 1 palette stays untouched.
+   ========================================================================== */
+
+/* ===== Royal — purple-led, magenta as rare pop, warm yellow highlight ===== */
+[data-theme='royal'] {
+  --accent-primary:        var(--color-purple);
+  --accent-primary-strong: var(--color-purple-strong);
+  --accent-rare:           var(--color-magenta);
+  --accent-rare-strong:    var(--color-magenta-strong);
+  --accent-highlight:      var(--color-yellow);
+
+  --surface-page:      var(--color-cream);
+  --surface-page-soft: var(--color-cream-soft);
+  --surface-page-deep: var(--color-cream-deep);
+  --surface-dark:      var(--color-navy-purple);
+  --surface-dark-deep: #0A0018;
+
+  --text-primary: var(--color-ink);
+}
+
+/* ===== Comic — original handover palette (magenta/teal/yellow) ===== */
+[data-theme='comic'] {
+  --accent-primary:        var(--color-magenta);
+  --accent-primary-strong: var(--color-magenta-strong);
+  --accent-rare:           var(--color-teal);
+  --accent-rare-strong:    var(--color-teal-strong);
+  --accent-highlight:      var(--color-yellow);
+
+  --surface-page:      var(--color-cream);
+  --surface-page-soft: var(--color-cream-soft);
+  --surface-page-deep: var(--color-cream-deep);
+  --surface-dark:      var(--color-ink);
+  --surface-dark-deep: #000;
+
+  --text-primary: var(--color-ink);
+}
+
+/* ===== Sunset — warm coral / deep plum / amber on warm cream ===== */
+[data-theme='sunset'] {
+  --accent-primary:        var(--color-coral);
+  --accent-primary-strong: var(--color-coral-strong);
+  --accent-rare:           var(--color-plum);
+  --accent-rare-strong:    #380630;
+  --accent-highlight:      var(--color-amber);
+
+  --surface-page:      #F8F2E5;
+  --surface-page-soft: #FCF8EE;
+  --surface-page-deep: #EFE5D0;
+  --surface-dark:      var(--color-aubergine);
+  --surface-dark-deep: #0E0408;
+
+  --text-primary: var(--color-aubergine);
+}
+
+/* ===== Forest — deep green / rust / cream-yellow on warm cream ===== */
+[data-theme='forest'] {
+  --accent-primary:        var(--color-forest);
+  --accent-primary-strong: var(--color-forest-deep);
+  --accent-rare:           var(--color-rust);
+  --accent-rare-strong:    #7E2F0F;
+  --accent-highlight:      var(--color-yellow-soft);
+
+  --surface-page:      var(--color-sand);
+  --surface-page-soft: #F8F2E0;
+  --surface-page-deep: #E5DAB8;
+  --surface-dark:      var(--color-forest-deep);
+  --surface-dark-deep: #08160F;
+
+  --text-primary: var(--color-forest-deep);
+}
+
+/* ===== Calvin — Royal base + per-element tweaks Calvin is iterating on ===== */
+[data-theme='calvin'] {
+  /* Base palette — same as Royal */
+  --accent-primary:        var(--color-purple);
+  --accent-primary-strong: var(--color-purple-strong);
+  --accent-rare:           var(--color-magenta);
+  --accent-rare-strong:    var(--color-magenta-strong);
+  --accent-highlight:      var(--color-yellow);
+
+  --surface-page:      var(--color-cream);
+  --surface-page-soft: var(--color-cream-soft);
+  --surface-page-deep: var(--color-cream-deep);
+  --surface-dark:      var(--color-navy-purple);
+  --surface-dark-deep: #0A0018;
+
+  --text-primary: var(--color-ink);
+
+  /* Calvin-specific overrides — these are what makes Calvin different from Royal.
+     Add new ones here as Calvin gives feedback; never edit the components. */
+  --action-bg:               var(--color-teal);
+  --action-bg-hover:         var(--color-teal-strong);
+  --hero-accent-color:       var(--color-teal);
+  --hero-accent-underline:   transparent;                /* kill the underline */
+  --cases-strip-bg:          var(--color-teal);
+  --cases-strip-em:          var(--color-white);
+  --cases-strip-em-underline: var(--color-purple-deep);
+  --cases-strip-pill-bg:     var(--color-purple);
+  --cases-strip-pill-text:   var(--color-white);
+  --radius-action:           14px;                        /* matches result-card */
+
+  --topbar-bg:               var(--color-purple-deep);
+  --topbar-text:             var(--color-white);
+  --hero-title-color:        var(--color-purple-deep);
+  --hero-eyebrow-bg:         var(--color-purple);
+  --hero-eyebrow-text:       var(--color-white);
+  --hero-card-overlay-opacity: 0;
+  --hero-card-shadow-color:  var(--color-purple-deep);     /* deep purple drop on hero photo */
+
+  /* "Alles dat zwart is naar dat hele diepe blauw" — the navy-purple from
+     the services ticker. Borders + shadows pick this up via --line-color. */
+  --line-color:              var(--color-navy-purple);
+
+  /* Logo: keep it WHITE on the cream nav, with a deep purple hard-offset drop. */
+  --logo-shadow: drop-shadow(3px 3px 0 var(--color-purple-deep));
+}
+
+/* ===== Calvin-2 — same DNA, warmer mood (aubergine + amber + teal action) ===== */
+[data-theme='calvin-2'] {
+  --accent-primary:        var(--color-purple);
+  --accent-primary-strong: var(--color-purple-strong);
+  --accent-rare:           var(--color-magenta);
+  --accent-rare-strong:    var(--color-magenta-strong);
+  --accent-highlight:      var(--color-amber);
+
+  --surface-page:      #F5EDD8;
+  --surface-page-soft: #FAF5E5;
+  --surface-page-deep: #E5DBC0;
+  --surface-dark:      var(--color-aubergine);
+  --surface-dark-deep: #0E0408;
+
+  --text-primary: var(--color-aubergine);
+
+  --action-bg:               var(--color-teal);
+  --action-bg-hover:         var(--color-teal-strong);
+  --hero-accent-color:       var(--color-teal);
+  --hero-accent-underline:   transparent;
+  --cases-strip-bg:          var(--color-teal);
+  --cases-strip-em:          var(--color-white);
+  --cases-strip-em-underline: var(--color-aubergine);
+  --cases-strip-pill-bg:     var(--color-aubergine);
+  --cases-strip-pill-text:   var(--color-white);
+  --radius-action:           14px;
+
+  --topbar-bg:               var(--color-aubergine);
+  --topbar-text:             var(--color-white);
+  --hero-title-color:        var(--color-aubergine);
+  --hero-eyebrow-bg:         var(--color-purple);
+  --hero-eyebrow-text:       var(--color-white);
+  --hero-card-overlay-opacity: 0;
+  --hero-card-shadow-color:  var(--color-aubergine);
+
+  --line-color:              var(--color-aubergine);
+  --logo-shadow: drop-shadow(3px 3px 0 var(--color-aubergine));
+}
+
+/* ===== Modern — the cool teal-dominant variant (kept for comparison) ===== */
+[data-theme='modern'] {
+  --accent-primary:        var(--color-teal);
+  --accent-primary-strong: var(--color-teal-strong);
+  --accent-rare:           var(--color-magenta);
+  --accent-rare-strong:    var(--color-magenta-strong);
+  --accent-highlight:      var(--color-teal-soft);
+
+  --surface-page:      var(--color-bone);
+  --surface-page-soft: #F4F6FA;
+  --surface-page-deep: #D8DEE8;
+  --surface-dark:      var(--color-navy);
+  --surface-dark-deep: #050A1A;
+
+  --text-primary: var(--color-navy);
+}
+
+/* ==========================================================================
+   ACCESSIBILITY
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

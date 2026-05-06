@@ -1,0 +1,89 @@
+---
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface USPItem {
+  num: string;
+  headline: string;
+}
+
+interface Props {
+  cities?: string[];
+  usps?: USPItem[];
+}
+
+const {
+  cities = [
+    'Utrecht',
+    'Amersfoort',
+    'Zeist',
+    'Rotterdam',
+    'Delft',
+    'Hoorn',
+    'Doetinchem',
+    'Deventer',
+    'Amsterdam',
+    'Haarlem',
+    'Den Bosch',
+    'Eindhoven',
+  ],
+  usps = [
+    { num: '01', headline: 'Direct contact met je expert.' },
+    { num: '02', headline: 'Geen lange wurgcontracten.' },
+    { num: '03', headline: 'Volledig ontzorgd, done-for-you.' },
+    { num: '04', headline: 'De kracht van AI volop benut.' },
+  ],
+} = Astro.props;
+
+// Duplicate cities for seamless infinite scroll
+const cityLoop = [...cities, ...cities];
+---
+
+<section class="over-froseo" id="over-ons">
+  <div class="over-froseo-inner">
+    <div class="over-froseo-head">
+      <EyebrowPill variant="highlight" star="◆">Over Froseo</EyebrowPill>
+      <h2 class="over-froseo-title">
+        Utrechtse eigenzinnigheid.<br /><em>Landelijk effectief.</em>
+      </h2>
+    </div>
+
+    <div class="over-froseo-body">
+      <div class="over-froseo-lead">
+        <p>
+          Froseo is geboren en getogen in Utrecht — en daar zijn we trots op. We benutten
+          onze Utrechtse eigenzinnigheid volop in elk webdesign- en marketingproject. Geen
+          'standaard agency' uit een willekeurig hoekje van het land.
+        </p>
+        <p>
+          Ons hoofdkwartier staat in de Domstad, maar we beperken ons niet tot Utrecht.
+          Met dezelfde passie werken we voor bedrijven in Amersfoort, Zeist, Rotterdam,
+          Delft, Hoorn, Doetinchem, Deventer en ver daarbuiten.
+        </p>
+      </div>
+
+      <ol class="over-froseo-usps">
+        {
+          usps.map((u) => (
+            <li class="over-usp">
+              <span class="over-usp-num">{u.num}</span>
+              <span class="over-usp-headline">{u.headline}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div class="over-froseo-cities">
+      <div class="cities-strip">
+        {
+          cityLoop.map((c, i) => (
+            <>
+              <span class="city">{c}</span>
+              {i < cityLoop.length - 1 && <span class="city-sep">★</span>}
+            </>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

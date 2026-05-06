@@ -1,0 +1,206 @@
+---
+/**
+ * Floating palette switcher — only renders in dev (`import.meta.env.DEV`).
+ * Sets the current theme on <html data-theme="..."> and persists to localStorage.
+ *
+ * Add a new theme:
+ *  1. Define `[data-theme="<slug>"] { ... }` in `src/styles/tokens.css`
+ *  2. Add an entry to `themes` below
+ */
+
+interface Theme {
+  slug: string;
+  name: string;
+  swatches: [string, string, string]; // primary, rare, highlight
+}
+
+const themes: Theme[] = [
+  { slug: 'calvin',   name: 'Calvin',   swatches: ['#6901AA', '#009692', '#FFD93D'] },
+  { slug: 'calvin-2', name: 'Calvin 2', swatches: ['#6901AA', '#009692', '#F2B544'] },
+  { slug: 'royal',    name: 'Royal',    swatches: ['#6901AA', '#B6007B', '#FFD93D'] },
+  { slug: 'comic',    name: 'Comic',    swatches: ['#B6007B', '#009692', '#FFD93D'] },
+  { slug: 'sunset',   name: 'Sunset',   swatches: ['#DC4F2A', '#5C0A4D', '#F2B544'] },
+  { slug: 'forest',   name: 'Forest',   swatches: ['#2D5A4F', '#C44E1F', '#FFE986'] },
+  { slug: 'modern',   name: 'Modern',   swatches: ['#009692', '#B6007B', '#6EE3DE'] },
+];
+
+const isDev = import.meta.env.DEV;
+---
+
+{isDev && (
+<aside class="palette-switcher" data-palette-switcher>
+  <div class="palette-header">
+    <span class="palette-title">★ Palet</span>
+    <button class="palette-collapse" type="button" aria-label="Inklappen" data-palette-collapse>−</button>
+  </div>
+  <div class="palette-options" data-palette-options>
+    {
+      themes.map((t) => (
+        <button class="palette-option" type="button" data-theme-slug={t.slug}>
+          <span class="palette-swatches">
+            <span style={`background:${t.swatches[0]}`}></span>
+            <span style={`background:${t.swatches[1]}`}></span>
+            <span style={`background:${t.swatches[2]}`}></span>
+          </span>
+          <span class="palette-name">{t.name}</span>
+        </button>
+      ))
+    }
+  </div>
+</aside>
+)}
+
+<script>
+  const STORAGE_KEY = 'froseo-theme';
+  const root = document.documentElement;
+  const switcher = document.querySelector<HTMLElement>('[data-palette-switcher]');
+  const collapseBtn = document.querySelector<HTMLButtonElement>('[data-palette-collapse]');
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-theme-slug]');
+
+  const COLLAPSED_KEY = 'froseo-theme-collapsed';
+
+  function paint(slug: string | null) {
+    buttons.forEach((b) => {
+      b.classList.toggle('active', b.dataset.themeSlug === slug);
+    });
+  }
+
+  function apply(slug: string) {
+    root.dataset.theme = slug;
+    try { localStorage.setItem(STORAGE_KEY, slug); } catch {}
+    paint(slug);
+  }
+
+  function setCollapsed(collapsed: boolean) {
+    switcher?.classList.toggle('collapsed', collapsed);
+    if (collapseBtn) collapseBtn.textContent = collapsed ? '+' : '−';
+    try { localStorage.setItem(COLLAPSED_KEY, collapsed ? '1' : '0'); } catch {}
+  }
+
+  buttons.forEach((b) => {
+    b.addEventListener('click', () => apply(b.dataset.themeSlug!));
+  });
+
+  collapseBtn?.addEventListener('click', () => {
+    setCollapsed(!switcher?.classList.contains('collapsed'));
+  });
+
+  // Initial paint based on whatever the inline-script in <head> already set,
+  // or fall back to the default theme defined in tokens.css (Royal).
+  paint(root.dataset.theme || 'calvin');
+
+  try {
+    if (localStorage.getItem(COLLAPSED_KEY) === '1') setCollapsed(true);
+  } catch {}
+</script>
+
+<style>
+  .palette-switcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: #fff;
+    color: #0A0A14;
+    border: 2.5px solid #000;
+    border-radius: 14px;
+    box-shadow: 5px 5px 0 #000;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    padding: 10px;
+    width: 180px;
+    transition: width 0.2s ease, padding 0.2s ease;
+  }
+  .palette-switcher.collapsed { width: 56px; padding: 8px; }
+  .palette-switcher.collapsed .palette-options { display: none; }
+
+  .palette-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4px 8px;
+    border-bottom: 1px dashed rgba(0,0,0,0.15);
+    margin-bottom: 8px;
+  }
+  .palette-switcher.collapsed .palette-header {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding: 0 2px;
+  }
+  .palette-title {
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+  .palette-collapse {
+    width: 22px;
+    height: 22px;
+    background: #FFD93D;
+    border: 1.5px solid #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 1;
+    color: #000;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .palette-options {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .palette-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    background: transparent;
+    border: 1.5px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+    color: inherit;
+    font: inherit;
+    width: 100%;
+    text-align: left;
+  }
+  .palette-option:hover {
+    background: rgba(0,0,0,0.05);
+  }
+  .palette-option.active {
+    background: rgba(0,0,0,0.06);
+    border-color: #000;
+  }
+
+  .palette-swatches {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+  .palette-swatches span {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    border: 1px solid #000;
+    display: block;
+  }
+
+  .palette-name {
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .palette-switcher { bottom: 12px; right: 12px; width: 160px; padding: 8px; }
+  }
+</style>

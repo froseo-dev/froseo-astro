@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  /** Testimonial id from data/testimonials.json. Defaults to first featured. */
+  id?: string;
+  /** Visual treatment. `card` = yellow card. `magazine` = full-bleed dark with big quote. */
+  variant?: 'card' | 'magazine';
+  /** Optional atmospheric image rendered behind the section (e.g. real-life client photo). */
+  bgImage?: ImageMetadata;
+  bgAlt?: string;
+  /** Optional avatar image for the speaker. Falls back to a coloured placeholder circle. */
+  avatar?: ImageMetadata;
+}
+
+const { id, variant = 'card', bgImage, bgAlt = '', avatar } = Astro.props;
+const all = await getCollection('testimonials');
+const t = (id ? all.find((x) => x.data.id === id) : all.find((x) => x.data.featured)) ?? all[0];
+const stars = '★'.repeat(t.data.rating);
+---
+
+<section class={`testi testi--${variant}${bgImage ? ' testi--with-bg' : ''}`}>
+  {bgImage && (
+    <Image src={bgImage} alt={bgAlt} class="testi-bg" widths={[800, 1280, 1920]} sizes="100vw" loading="lazy" />
+  )}
+  <div class="testi-card">
+    <div class="testi-quote-mark">"</div>
+    <div class="testi-avatar">
+      {avatar && (
+        <Image
+          src={avatar}
+          alt={`${t.data.name} — ${t.data.role}`}
+          class="testi-avatar-img"
+          widths={[180, 360]}
+          sizes="180px"
+          loading="lazy"
+        />
+      )}
+    </div>
+    <div class="testi-right">
+      <div class="testi-stars">{stars}</div>
+      <blockquote class="testi-quote">"{t.data.quote}"</blockquote>
+      <div class="testi-author">
+        <div class="name">{t.data.name}</div>
+        <div class="role">{t.data.role}</div>
+      </div>
+    </div>
+  </div>
+</section>

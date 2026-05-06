@@ -1,0 +1,68 @@
+---
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface Props {
+  eyebrow?: string;
+  titleLine1?: string;
+  titleAccent?: string;
+  body?: string[];
+  primaryLabel?: string;
+  primaryHref?: string;
+  phoneNumber?: string;
+  phoneLabel?: string;
+  rating?: string;
+  reviewCount?: string;
+}
+
+const {
+  eyebrow = 'Direct met de eigenaar',
+  titleLine1 = 'Better call',
+  titleAccent = 'Calvin.',
+  body = [
+    'Geen accountmanagers, geen tussenpartijen, geen schuiven. Mail of bel direct met Calvin — de man die je site bouwt en je marketing draait.',
+    'Even sparren over wat er beter kan? Of wil je gewoon weten of we passen? 30 minuten online, vrijblijvend.',
+  ],
+  primaryLabel = 'Neem contact op',
+  primaryHref = '/contact',
+  phoneNumber = '030 237 8053',
+  phoneLabel = '030 237 8053',
+  rating = '4,9',
+  reviewCount = '80+ reviews',
+} = Astro.props;
+---
+
+<section class="better-call" id="contact">
+  <div class="better-call-card">
+    <div class="better-call-content">
+      <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
+      <h2 class="better-call-title">
+        {titleLine1} <em>{titleAccent}</em>
+      </h2>
+      {body.map((p) => <p class="better-call-body">{p}</p>)}
+
+      <div class="better-call-actions">
+        <a class="btn-primary better-call-btn-primary" href={primaryHref}>{primaryLabel}</a>
+        <a
+          class="better-call-phone"
+          href={`tel:${phoneNumber.replace(/\s+/g, '')}`}
+          aria-label={`Bel Calvin direct op ${phoneLabel}`}
+        >
+          <span class="better-call-phone-icon" aria-hidden="true">★</span>
+          <span class="better-call-phone-num">{phoneLabel}</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="better-call-portrait">
+      <div class="better-call-photo" aria-label="Foto van Calvin (placeholder)">
+        <span class="better-call-photo-initial">C</span>
+      </div>
+      <div class="better-call-rating">
+        <span class="better-call-rating-stars">★★★★★</span>
+        <span class="better-call-rating-text">
+          <strong>{rating}</strong> · {reviewCount}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

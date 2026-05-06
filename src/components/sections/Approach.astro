@@ -1,0 +1,69 @@
+---
+import EyebrowPill from '../ui/EyebrowPill.astro';
+import logoWhite from '@assets/brand/froseo-logo-wit.webp';
+
+interface Step { num: string; title: string; description: string; tag: string; }
+interface Props {
+  eyebrow?: string;
+  titleLine1?: string;
+  titleAccent?: string;
+  titleLine3?: string;
+  desc1?: string;
+  desc2?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  steps?: Step[];
+  /** When true, renders the Froseo logo as a faded watermark behind the section. */
+  watermark?: boolean;
+}
+
+const {
+  eyebrow = 'Zo werken we',
+  titleLine1 = 'Een aanpak',
+  titleAccent = 'zonder',
+  titleLine3 = 'gedoe.',
+  desc1 = 'Geen maandenlange discovery-fases, geen onoverzichtelijke offertes, geen lagen van accountmanagers tussen jou en het werk. Vier stappen — en je hebt een website die werkt én een plan dat rankt.',
+  desc2 = 'We werken in sprints, houden je wekelijks op de hoogte en zorgen dat elke euro verantwoord besteed wordt.',
+  ctaLabel = 'Maak een afspraak →',
+  ctaHref = '#cta',
+  steps = [
+    { num: '01', title: 'Kennismaken', description: 'Vrijblijvend gesprek, fysiek in Utrecht of online. Jij vertelt waar je staat, wij vertellen wat we zien — inclusief eerste quick wins.', tag: 'Week 1' },
+    { num: '02', title: 'Strategie & plan', description: "Concrete aanpak op papier: welke pagina's, welke zoekwoorden, welke campagnes. Helder, meetbaar, met deadlines en budgetten.", tag: 'Week 2' },
+    { num: '03', title: 'Bouwen & launchen', description: 'Wij bouwen, jij kijkt mee via wekelijkse sprints. Elke week een update — geen weken stilte. Na livegang stoppen we niet, we beginnen dan pas.', tag: 'Week 3–8' },
+    { num: '04', title: 'Groeien & finetunen', description: 'Lancering is het begin, niet het eind. We monitoren rankings, testen varianten, rapporteren maandelijks en zorgen dat je elke maand beter presteert dan de vorige.', tag: 'Doorlopend' },
+  ],
+  watermark = false,
+} = Astro.props;
+---
+
+<section class={`approach${watermark ? ' approach--watermark' : ''}`} id="aanpak">
+  {watermark && (
+    <img src={logoWhite.src} alt="" class="approach-watermark" aria-hidden="true" loading="lazy" />
+  )}
+  <div class="approach-grid">
+    <div class="approach-left">
+      <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
+      <h2 class="title">
+        {titleLine1}<br /><em>{titleAccent}</em> {titleLine3}
+      </h2>
+      <p class="desc">{desc1}</p>
+      <p class="desc">{desc2}</p>
+      <a class="btn-primary" href={ctaHref}>{ctaLabel}</a>
+    </div>
+
+    <div class="steps">
+      {
+        steps.map((step) => (
+          <div class="step">
+            <div class="step-num">{step.num}</div>
+            <div class="step-content">
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </div>
+            <div class="step-tag">{step.tag}</div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

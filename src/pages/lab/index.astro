@@ -1,0 +1,34 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Froseo Lab" pathname="/lab">
+  <div class="lab-shell">
+    <div class="lab-inner">
+      <h1 class="lab-title">Lab</h1>
+      <p class="lab-sub">
+        Het palette switcher-widget rechtsonder werkt op elke pagina (alleen in dev).
+        Klik door naar de homepage en flip tussen de varianten — keuze blijft hangen na refresh.
+      </p>
+      <div class="lab-grid">
+        <a class="lab-card" href="/">
+          <div class="num">★ Live homepage</div>
+          <div class="name">V1 — Calvin theme</div>
+          <div class="desc">
+            Huidige build. Sectievolgorde: hero → logos → cases → ticker → grid → stats →
+            local-agency → approach → testimonial → FAQ → CTA. Switcher rechtsonder.
+          </div>
+        </a>
+        <a class="lab-card" href="/lab/v2">
+          <div class="num">★ V2 — CRO-optimized</div>
+          <div class="name">CRO + Calvin 2 theme</div>
+          <div class="desc">
+            Herschikte volgorde op basis van NN/g attention research: testimonial &
+            USPs hoger, stats compact, local-agency minimal. Manifesto-style WhyFroseo
+            sectie. Standaard op Calvin-2 palette (warmer, aubergine + amber).
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

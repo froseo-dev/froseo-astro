@@ -1,0 +1,59 @@
+---
+import Topbar from '../layout/Topbar.astro';
+import Nav from '../layout/Nav.astro';
+import Hero from '../sections/Hero.astro';
+import LogosTicker from '../sections/LogosTicker.astro';
+import CasesStrip from '../sections/CasesStrip.astro';
+import ServicesTicker from '../sections/ServicesTicker.astro';
+import ServicesGrid from '../sections/ServicesGrid.astro';
+import InlineCTA from '../sections/InlineCTA.astro';
+import Testimonial from '../sections/Testimonial.astro';
+import Stats from '../sections/Stats.astro';
+import OverFroseo from '../sections/OverFroseo.astro';
+import Approach from '../sections/Approach.astro';
+import PricingTeaser from '../sections/PricingTeaser.astro';
+import CTA from '../sections/CTA.astro';
+import FAQ from '../sections/FAQ.astro';
+import BetterCallCalvin from '../sections/BetterCallCalvin.astro';
+import Footer from '../layout/Footer.astro';
+
+import heroImage from '@assets/cases/top-dakdekker/hero.webp';
+import testiBg from '@assets/testimonials/renovatie-totaal-bg.webp';
+import basAvatar from '@assets/testimonials/bas-bertrams.webp';
+
+/* CRO ordering rationale (Calvin's Optie A):
+   - FAQ moves to the very bottom (objection handling, low intent, SEO body)
+   - Analyse-form CTA moves UP between OverFroseo and Approach so the two
+     conversion blocks (form-CTA + Better Call Calvin) aren't back-to-back. */
+---
+
+<Topbar />
+<Nav />
+<Hero heroImage={heroImage} heroAlt="Top Dakdekker Zeist case — +312% verkeer" />
+<LogosTicker />
+<CasesStrip />
+<PricingTeaser />
+<ServicesTicker />
+<ServicesGrid />
+<InlineCTA
+  primaryLabel="Plan een vrijblijvend gesprek →"
+  primaryHref="/contact"
+  secondaryLabel="of bekijk alle diensten →"
+  secondaryHref="/diensten"
+/>
+<Testimonial bgImage={testiBg} bgAlt="Renovatie Totaal aan het werk" avatar={basAvatar} />
+<Stats />
+<OverFroseo />
+<CTA
+  variant="form"
+  sectionId="analyse"
+  eyebrow="Gratis website-analyse"
+  titleLine1="Eerst weten waar je staat?"
+  titleAccent="Vraag een gratis analyse."
+  text="Ontvang een gratis analyse met concrete verbeterpunten. Zonder verplichtingen."
+  features={[]}
+/>
+<Approach watermark={true} />
+<BetterCallCalvin />
+<FAQ />
+<Footer />

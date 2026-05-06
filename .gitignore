@@ -1,0 +1,36 @@
+# build
+dist/
+.astro/
+
+# deps
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment
+.env
+.env.production
+.env.development
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+.idea/
+
+# os
+.DS_Store
+Thumbs.db
+
+# build artefacts (sharp temp etc)
+*.tmp
+
+# raw asset sources — kept locally for `npm run assets`. Compiled WebPs in
+# src/assets/ are committed; the originals contain real client photos and
+# don't belong on a (potentially) public repo.
+_reference/

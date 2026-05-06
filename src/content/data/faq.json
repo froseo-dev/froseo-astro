@@ -1,0 +1,62 @@
+[
+  {
+    "id": "doelgroep",
+    "order": 1,
+    "question": "Voor welke bedrijven werkt Froseo als webdesign bureau in Utrecht?",
+    "answer": "We werken voor ambitieus MKB in uiteenlopende branches: dakdekkers, aannemers, personal trainers, tandartsen, makelaars, interieurbouwers, auto-specialisten en veel meer. De rode draad: lokale of specialistische bedrijven die serieus online willen groeien maar geen eigen marketing-afdeling hebben. Onze gemiddelde klant heeft 2–25 medewerkers en draait op aanvragen of afspraken die via de website binnenkomen."
+  },
+  {
+    "id": "regio",
+    "order": 2,
+    "question": "Werkt Froseo ook buiten Utrecht?",
+    "answer": "Ja. We zijn gevestigd in Utrecht (Leidseveer), maar werken door heel Nederland. Het grootste deel van onze communicatie verloopt online of telefonisch — dus of je nu in Amsterdam, Groningen of Maastricht zit, maakt niet uit. We komen op locatie als dat waarde toevoegt, maar forceren dat nooit. Veel klanten hebben we nooit fysiek ontmoet en toch draaien hun sites als een tierelier."
+  },
+  {
+    "id": "kosten-website",
+    "order": 3,
+    "question": "Wat kost een professionele website laten maken bij Froseo?",
+    "answer": "Een eenvoudige WordPress-website start rond €2.500, een uitgebreide maatwerk site kan €10.000+ zijn. Voor doorlopende SEO en online marketing werken we met maandabonnementen vanaf €495 per maand. Het exacte budget hangt af van wat je nodig hebt — in het vrijblijvende kennismakingsgesprek maken we direct een grove inschatting, zodat je weet of onze prijsklasse past."
+  },
+  {
+    "id": "wordpress-vs-maatwerk",
+    "order": 4,
+    "question": "Bouwen jullie WordPress websites of maatwerk?",
+    "answer": "Beide. Voor het overgrote deel van het MKB is WordPress de slimste keuze: snel, schaalbaar, makkelijk te onderhouden, en veilig genoeg met de juiste setup. We bouwen WordPress sites met Elementor Pro of, voor uitgebreidere wensen, in maatwerk-thema. Heb je specifieke functionaliteit nodig die WordPress niet aankan? Dan adviseren we Astro of een andere headless oplossing."
+  },
+  {
+    "id": "seo-duur",
+    "order": 5,
+    "question": "Hoe lang duurt een SEO-traject voordat ik resultaten zie?",
+    "answer": "Eerlijk antwoord: de eerste verbeteringen zie je meestal binnen 4–8 weken (zoals technische scoreverbetering en betere indexering). Echte ranking-effecten op concurrerende zoekwoorden duren 3–6 maanden. Voor lokale SEO gaat het vaak sneller — daar zien we binnen 6–12 weken regelmatig nieuwe posities in de top 3. We rapporteren maandelijks zodat je precies ziet waar je staat."
+  },
+  {
+    "id": "lokale-vs-organisch",
+    "order": 6,
+    "question": "Wat is het verschil tussen lokale SEO en gewone (organische) SEO?",
+    "answer": "Lokale SEO richt zich op zoekopdrachten met een geografische intentie — denk 'dakdekker Zeist' of 'tandarts Utrecht Centrum'. Hier draait het om Google Business Profile, lokale landingspagina's en review-management. Gewone (of 'organische') SEO focust op landelijke of generieke zoekwoorden — denk 'dakkapel laten plaatsen' of 'website laten maken'. Beide vullen elkaar aan, maar de aanpak verschilt."
+  },
+  {
+    "id": "paid-media",
+    "order": 7,
+    "question": "Doen jullie ook Google Ads en social advertising?",
+    "answer": "Ja. Naast SEO en webdesign draaien we Google Ads (Search, Shopping, Performance Max), Meta-advertenties en LinkedIn-campagnes. We werken meetbaar — campagnes worden maandelijks bijgestuurd op basis van rendement. Geen schieten met hagel: heldere KPI's en transparante rapportage horen erbij."
+  },
+  {
+    "id": "onderscheid",
+    "order": 8,
+    "question": "Wat maakt Froseo anders dan andere webdesign bureaus?",
+    "answer": "Drie dingen. Eén: geen accountmanagers tussen jou en het werk — je spreekt direct degene die je site bouwt of campagne draait. Twee: we combineren webdesign én marketing onder één dak, dus je krijgt altijd een doorgedacht geheel. Drie: 15+ jaar ervaring in de Nederlandse MKB-markt betekent dat we geen trucjes hoeven uit te halen — we weten gewoon wat werkt voor welk type bedrijf."
+  },
+  {
+    "id": "overname",
+    "order": 9,
+    "question": "Kunnen jullie mijn bestaande WordPress site overnemen?",
+    "answer": "Ja, dat doen we regelmatig. We nemen bestaande WordPress-sites probleemloos over voor onderhoud, doorontwikkeling of SEO-optimalisatie. Bouwt je site op Webflow, Wix of een ander systeem? Dan kijken we of migreren de moeite waard is, of dat we het huidige platform gewoon beter gaan benutten. Eerst een audit, dan een advies."
+  },
+  {
+    "id": "ai-implementatie",
+    "order": 10,
+    "question": "Werken jullie ook aan AI-implementaties voor MKB?",
+    "answer": "Ja, dit is een groeiend onderdeel van wat we doen. AI-powered webdesign (slimmere zoekfuncties, gepersonaliseerde content), automatische SEO-content op basis van klantgegevens, en chatbots die echt nuttige antwoorden geven. We integreren AI alleen waar het meetbare waarde toevoegt — geen demo-ware op je site, wel tools die conversie of efficiëntie verbeteren."
+  }
+]

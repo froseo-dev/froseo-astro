@@ -1,0 +1,27 @@
+---
+interface Props {
+  /** Visual context: light = on cream surface; dark = on navy/aubergine surface. */
+  surface?: 'light' | 'dark';
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+
+const {
+  surface = 'light',
+  primaryLabel = 'Plan een vrijblijvend gesprek →',
+  primaryHref = '/contact',
+  secondaryLabel = 'Bekijk alle diensten →',
+  secondaryHref = '/diensten',
+} = Astro.props;
+---
+
+<section class={`inline-cta inline-cta--${surface}`}>
+  <div class="inline-cta-inner">
+    <a class="btn-primary" href={primaryHref}>{primaryLabel}</a>
+    {secondaryLabel && (
+      <a class="btn-ghost" href={secondaryHref}>{secondaryLabel}</a>
+    )}
+  </div>
+</section>

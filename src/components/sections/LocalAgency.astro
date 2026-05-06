@@ -1,0 +1,89 @@
+---
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface USP {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  titleLine1?: string;
+  titleAccent?: string;
+  lead?: string[];
+  usps?: USP[];
+  ctaLabel?: string;
+  ctaHref?: string;
+  /** `full` = original 2-col with USP cards. `minimal` = SEO body paragraph only, low visual weight. */
+  variant?: 'full' | 'minimal';
+}
+
+const {
+  eyebrow = 'Lokaal verankerd · Utrecht',
+  titleLine1 = 'Webdesign & SEO bureau',
+  titleAccent = 'uit hartje Utrecht.',
+  lead = [
+    'Froseo is een digital agency uit Utrecht voor ambitieus MKB. Vanuit ons kantoor op Leidseveer werken we aan webdesign, SEO en online marketing voor klanten door heel Nederland — van lokale dakdekkers en personal trainers tot landelijke specialisten.',
+    'Met 15+ jaar ervaring in de Nederlandse markt weten we wat werkt. We bouwen geen sites om te bouwen — we bouwen websites die ranken in Google, conversie genereren en bij je merkidentiteit passen. En als je site live staat, stoppen we niet: dan beginnen we pas met groeien.',
+  ],
+  usps = [
+    {
+      title: 'Geen accountmanagers',
+      body: 'Je spreekt direct met de specialist die je site bouwt of campagne draait — geen vertaling tussen jou en het werk.',
+    },
+    {
+      title: 'Wekelijkse sprints',
+      body: 'Geen weken stilte. Elke week een update, elke week zichtbare voortgang, elke week kun je bijsturen.',
+    },
+    {
+      title: 'Webdesign & SEO onder één dak',
+      body: 'Geen versplinterde verantwoordelijkheid. Eén team, één doorgedacht geheel — van techniek tot rankings.',
+    },
+  ],
+  ctaLabel = 'Lees meer over Froseo →',
+  ctaHref = '/over-ons',
+  variant = 'full',
+} = Astro.props;
+---
+
+{variant === 'minimal' ? (
+  <section class="local-agency local-agency--minimal" id="over-ons">
+    <div class="local-agency-inner">
+      <EyebrowPill variant="rare" star="◆">Lokaal verankerd</EyebrowPill>
+      <h2 class="local-agency-minimal-title">Webdesign &amp; SEO uit Utrecht.</h2>
+      <p class="local-agency-minimal-body">
+        {lead.join(' ')} <a class="local-agency-minimal-link" href={ctaHref}>{ctaLabel}</a>
+      </p>
+    </div>
+  </section>
+) : (
+<section class="local-agency" id="over-ons">
+  <div class="local-agency-inner">
+    <div class="local-agency-head">
+      <EyebrowPill variant="rare" star="◆">{eyebrow}</EyebrowPill>
+      <h2 class="local-agency-title">
+        {titleLine1}<br /><em>{titleAccent}</em>
+      </h2>
+    </div>
+
+    <div class="local-agency-body">
+      <div class="local-agency-lead">
+        {lead.map((p) => <p>{p}</p>)}
+        <a class="local-agency-link" href={ctaHref}>{ctaLabel}</a>
+      </div>
+
+      <ul class="local-agency-usps">
+        {
+          usps.map((usp) => (
+            <li class="usp-card">
+              <span class="usp-card-mark">★</span>
+              <h3 class="usp-card-title">{usp.title}</h3>
+              <p class="usp-card-body">{usp.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+)}

@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import logoWhite from '@assets/brand/froseo-logo-wit.webp';
+
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  items?: NavItem[];
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  items = [
+    { label: 'Diensten', href: '#diensten' },
+    { label: 'Werk', href: '#werk' },
+    { label: 'Aanpak', href: '#aanpak' },
+    { label: 'Over ons', href: '/over-ons' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Contact', href: '/contact' },
+  ],
+  ctaLabel = 'Plan gesprek →',
+  ctaHref = '#cta',
+} = Astro.props;
+---
+
+<nav class="nav">
+  <a class="logo" href="/" aria-label="Froseo home">
+    <Image src={logoWhite} alt="Froseo" class="logo-img" loading="eager" />
+  </a>
+  <div class="nav-links">
+    {items.map((item) => <a href={item.href}>{item.label}</a>)}
+  </div>
+  <div class="nav-right">
+    <a class="nav-cta" href={ctaHref}>{ctaLabel}</a>
+  </div>
+</nav>
+
+<style>
+  /* The source PNG is white-on-transparent. We keep it white and rely on
+     `--logo-shadow` (a `drop-shadow()` filter set per-theme in tokens.css)
+     for contrast against the cream nav background. */
+  :global(.logo-img) {
+    height: 32px;
+    width: auto;
+    display: block;
+    filter: var(--logo-shadow);
+  }
+  @media (max-width: 640px) {
+    :global(.logo-img) { height: 26px; }
+  }
+</style>
