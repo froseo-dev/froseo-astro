@@ -5,7 +5,7 @@ tagline: '3 locaties via Lokale SEO'
 description: 'Lokale SEO in drie steden opgezet voor betere vindbaarheid en meer aanvragen. Top-3 posities in Google Maps behaald.'
 type: Lokale SEO
 tags:
-  - { label: SEO, color: primary }
+  - { label: SEO/GEO, color: primary }
 result: '3 locaties'
 metrics:
   - { value: 'Top-3', label: 'Google rankings' }

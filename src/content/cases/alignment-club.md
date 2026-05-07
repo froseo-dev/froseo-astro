@@ -4,8 +4,8 @@ client: Alignment Club
 tagline: 'Personal training studio in Amersfoort'
 type: Webdesign + SEO
 tags:
-  - { label: Web, color: rare }
-  - { label: SEO, color: primary }
+  - { label: Webdesign, color: rare }
+  - { label: SEO/GEO, color: primary }
 result: 'Lokaal #1'
 hero: ../../assets/cases/alignment-club/hero.webp
 gallery:

@@ -5,7 +5,7 @@ tagline: '+180% via Webdesign'
 description: 'De oude site van Theo Mackaay deed weinig recht aan het werk. Volledige restyling met nadruk op portfolio en conversie, plus een snellere techniek-stack onder de motorkap. Het verkeer steeg met 180% en de conversieratio met de helft.'
 type: Webdesign
 tags:
-  - { label: Web, color: rare }
+  - { label: Webdesign, color: rare }
 result: '+180%'
 metrics:
   - { value: '+180%', label: 'Site verkeer' }

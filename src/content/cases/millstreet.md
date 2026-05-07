@@ -4,7 +4,7 @@ client: Millstreet
 tagline: 'Internationale paardensport site'
 type: Webdesign
 tags:
-  - { label: Web, color: rare }
+  - { label: Webdesign, color: rare }
 result: 'Live'
 hero: ../../assets/cases/millstreet/hero.webp
 gallery:

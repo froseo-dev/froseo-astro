@@ -1,0 +1,161 @@
+---
+/* Generic image lightbox with thumbnail strip.
+   Triggers: any element with `data-lightbox-trigger`,
+             `data-lightbox-set="<group-name>"`,
+             `data-lightbox-src="<full-size-url>"`,
+             optionally `data-lightbox-thumb="<small-url>"` (for thumb strip),
+             optionally `data-lightbox-alt="<alt>"`.
+   Triggers are grouped per set; prev/next + thumb strip cycle within the set
+   in DOM order. Native <dialog> handles Esc + focus trap + scroll-lock. */
+---
+
+<dialog class="lightbox" data-lightbox aria-label="Afbeelding bekijken">
+  <button class="lightbox-close" type="button" data-lightbox-close aria-label="Sluiten">×</button>
+  <button class="lightbox-nav lightbox-prev" type="button" data-lightbox-prev aria-label="Vorige">‹</button>
+  <button class="lightbox-nav lightbox-next" type="button" data-lightbox-next aria-label="Volgende">›</button>
+  <figure class="lightbox-figure">
+    <img class="lightbox-img" alt="" />
+    <figcaption class="lightbox-counter" data-lightbox-counter></figcaption>
+    <div class="lightbox-thumbs" data-lightbox-thumbs></div>
+  </figure>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+  if (dialog) {
+    const img = dialog.querySelector<HTMLImageElement>('.lightbox-img')!;
+    const counter = dialog.querySelector<HTMLElement>('[data-lightbox-counter]')!;
+    const thumbsRow = dialog.querySelector<HTMLElement>('[data-lightbox-thumbs]')!;
+    const prevBtn = dialog.querySelector<HTMLButtonElement>('[data-lightbox-prev]')!;
+    const nextBtn = dialog.querySelector<HTMLButtonElement>('[data-lightbox-next]')!;
+    const closeBtn = dialog.querySelector<HTMLButtonElement>('[data-lightbox-close]')!;
+
+    type Item = { el: HTMLElement; src: string; thumb: string; alt: string };
+    const triggers = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-lightbox-trigger]'),
+    );
+    const sets = new Map<string, Item[]>();
+    triggers.forEach((t) => {
+      const name = t.dataset.lightboxSet ?? 'default';
+      if (!sets.has(name)) sets.set(name, []);
+      sets.get(name)!.push({
+        el: t,
+        src: t.dataset.lightboxSrc ?? '',
+        thumb: t.dataset.lightboxThumb ?? t.dataset.lightboxSrc ?? '',
+        alt: t.dataset.lightboxAlt ?? '',
+      });
+    });
+
+    let currentSet: Item[] = [];
+    let currentIndex = 0;
+    let thumbButtons: HTMLButtonElement[] = [];
+
+    function buildThumbs() {
+      thumbsRow.innerHTML = '';
+      thumbButtons = [];
+      if (currentSet.length <= 1) {
+        thumbsRow.style.display = 'none';
+        return;
+      }
+      thumbsRow.style.display = '';
+      currentSet.forEach((item, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'lightbox-thumb';
+        btn.setAttribute('aria-label', `Beeld ${i + 1}`);
+        const t = document.createElement('img');
+        t.src = item.thumb;
+        t.alt = '';
+        t.loading = 'lazy';
+        btn.appendChild(t);
+        btn.addEventListener('click', () => {
+          currentIndex = i;
+          show();
+        });
+        thumbsRow.appendChild(btn);
+        thumbButtons.push(btn);
+      });
+    }
+
+    function show() {
+      const item = currentSet[currentIndex];
+      if (!item) return;
+      img.src = item.src;
+      img.alt = item.alt;
+      counter.textContent = `${currentIndex + 1} / ${currentSet.length}`;
+      const multi = currentSet.length > 1;
+      prevBtn.style.display = multi ? '' : 'none';
+      nextBtn.style.display = multi ? '' : 'none';
+      thumbButtons.forEach((b, i) => {
+        b.classList.toggle('is-active', i === currentIndex);
+      });
+      /* Scroll active thumb into view (smooth, centered). */
+      thumbButtons[currentIndex]?.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest',
+      });
+    }
+
+    function open(setName: string, index: number) {
+      const list = sets.get(setName);
+      if (!list || !list.length) return;
+      /* Rebuild thumb strip only when set changes. */
+      if (currentSet !== list) {
+        currentSet = list;
+        buildThumbs();
+      }
+      currentIndex = index;
+      show();
+      dialog!.showModal();
+    }
+
+    /* Public API: open the lightbox programmatically with an ad-hoc set
+       (no DOM triggers required). Used by the in-page case gallery. */
+    type ExternalItem = { src: string; thumb?: string; alt?: string };
+    (window as any).openLightbox = (items: ExternalItem[], startIndex = 0) => {
+      const adHoc: Item[] = items.map((it) => ({
+        el: document.createElement('span'),
+        src: it.src,
+        thumb: it.thumb ?? it.src,
+        alt: it.alt ?? '',
+      }));
+      currentSet = adHoc;
+      buildThumbs();
+      currentIndex = Math.max(0, Math.min(startIndex, adHoc.length - 1));
+      show();
+      dialog!.showModal();
+    };
+
+    triggers.forEach((t) => {
+      t.addEventListener('click', (e) => {
+        e.preventDefault();
+        const name = t.dataset.lightboxSet ?? 'default';
+        const list = sets.get(name) ?? [];
+        const idx = list.findIndex((x) => x.el === t);
+        if (idx >= 0) open(name, idx);
+      });
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + currentSet.length) % currentSet.length;
+      show();
+    });
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % currentSet.length;
+      show();
+    });
+    closeBtn.addEventListener('click', () => dialog.close());
+
+    /* Click on backdrop (the dialog itself, not its children) to close. */
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!dialog.open) return;
+      if (e.key === 'ArrowLeft' && currentSet.length > 1) prevBtn.click();
+      if (e.key === 'ArrowRight' && currentSet.length > 1) nextBtn.click();
+    });
+  }
+</script>

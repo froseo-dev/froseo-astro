@@ -32,6 +32,19 @@ const cases = defineCollection({
       hero: image(),
       gallery: z.array(image()).optional(),
       logo: image().optional(),
+      /** Branche van de klant — bv. "Renovatiebedrijf", "Personal training". Toont in meta-rij. */
+      industry: z.string().optional(),
+      /** Plaats/regio — bv. "Utrecht", "Amersfoort". Toont in meta-rij + lokale SEO-signaal. */
+      location: z.string().optional(),
+      /** Live website URL — opent in nieuwe tab vanuit case-pagina. */
+      liveUrl: z.string().url().optional(),
+      /** Slugs uit services collection die in dit project zijn ingezet. Gebruikt voor "Diensten ingezet" en filtering. */
+      services: z.array(z.string()).optional(),
+      /** Klant-quote — optioneel. Hergebruikt het Testimonial-blok-design. */
+      quote: z.string().optional(),
+      quoteName: z.string().optional(),
+      quoteRole: z.string().optional(),
+      quoteAvatar: image().optional(),
       order: z.number().default(0),
       featured: z.boolean().default(false),
       published: z.boolean().default(true),

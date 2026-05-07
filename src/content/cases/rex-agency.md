@@ -5,7 +5,7 @@ tagline: '+240% via Webdesign'
 description: 'Een professionele WordPress-site met focus op design, snelheid en conversie. Compleet redesign binnen 4 weken.'
 type: Webdesign
 tags:
-  - { label: Web, color: rare }
+  - { label: Webdesign, color: rare }
 result: '+240%'
 metrics:
   - { value: '+240%', label: 'Site verkeer' }

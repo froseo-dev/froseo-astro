@@ -1,0 +1,16 @@
+---
+interface Props {
+  label?: string;
+  href?: string;
+}
+
+const {
+  label = 'Vrijblijvend voorstel aanvragen',
+  href = '/contact',
+} = Astro.props;
+---
+
+<a class="mobile-cta" href={href} data-mobile-cta>
+  <span class="mobile-cta-label">{label}</span>
+  <span class="mobile-cta-arrow" aria-hidden="true">↗</span>
+</a>

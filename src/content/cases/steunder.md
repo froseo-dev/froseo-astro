@@ -4,7 +4,7 @@ client: Steunder
 tagline: 'EMVI-trajecten platform'
 type: Webdesign
 tags:
-  - { label: Web, color: rare }
+  - { label: Webdesign, color: rare }
 result: 'B2B'
 hero: ../../assets/cases/steunder/hero.webp
 gallery:

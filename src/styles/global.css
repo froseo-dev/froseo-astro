@@ -198,6 +198,10 @@ main { display: contents; }
 /* Hero eyebrow gets its own colorway via --hero-eyebrow-* tokens. */
 .hero-left .eyebrow-pill {
   background: var(--hero-eyebrow-bg);
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--hero-eyebrow-text);
 }
 
@@ -429,9 +433,9 @@ main { display: contents; }
 .hero-title {
   font-family: var(--font-display);
   font-weight: 900;
-  /* Capped so "Van onzichtbaar" + "naar onmisbaar." each fit on one line
-     in the wider left column (1.5fr / 1fr grid). Slight bump from previous round. */
-  font-size: clamp(52px, 7vw, 102px);
+  /* Schaal van mobile (40px) → desktop cap (102px). 8.5vw zorgt voor
+     stevige groei op iPad/tablet zoals Calvin wilde. */
+  font-size: clamp(48px, 8.5vw, 102px);
   line-height: 0.95;
   letter-spacing: -0.03em;
   color: var(--hero-title-color);
@@ -478,18 +482,28 @@ main { display: contents; }
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   margin-bottom: 28px;
+}
+/* Beide hero-knoppen even breed — flex: 1 vult de rij gelijk op. */
+.hero-actions > .btn-primary,
+.hero-actions > .btn-ghost {
+  flex: 1 1 0;
+  min-width: 160px;
+  text-align: center;
+  justify-content: center;
 }
 
 .reviews-inline {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--text-primary);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
+.reviews-inline strong { font-size: 17px; }
 .review-avatars { display: flex; align-items: center; }
 .review-avatar {
   width: 36px;
@@ -737,6 +751,7 @@ main { display: contents; }
   align-items: stretch;
 }
 .case-card--featured .case-card-media {
+  aspect-ratio: auto;
   height: auto;
   min-height: 360px;
   border-bottom: none;
@@ -795,7 +810,7 @@ main { display: contents; }
 
 .case-card-media {
   position: relative;
-  height: 280px;
+  aspect-ratio: 16 / 9;
   background: var(--surface-page-deep);
   border-bottom: var(--border);
   overflow: hidden;
@@ -820,13 +835,13 @@ main { display: contents; }
   z-index: 2;
 }
 .case-tag {
-  padding: 4px 10px;
+  padding: 7px 16px;
   background: var(--accent-highlight);
   color: var(--text-primary);
   border: 1.5px solid var(--text-primary);
   border-radius: var(--radius-full);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -2170,6 +2185,10 @@ main { display: contents; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Source bas-bertrams.webp heeft witruimte onderin — bias 0% (top-align)
+     en 1.08x scale zodat we de witmarges altijd buiten de cirkel duwen. */
+  object-position: center 0%;
+  transform: scale(1.08);
 }
 
 .testi-right { position: relative; z-index: 2; }
@@ -2239,7 +2258,7 @@ main { display: contents; }
   box-shadow: 6px 6px 0 var(--accent-highlight);
 }
 
-.faq-inner { max-width: var(--container-text); margin: 0 auto; }
+.faq-inner { max-width: var(--container-max); margin: 0 auto; }
 .faq-head { text-align: center; margin-bottom: 48px; }
 .faq-head .title {
   font-family: var(--font-display);
@@ -2644,8 +2663,8 @@ main { display: contents; }
   justify-content: center;
 }
 .better-call-photo {
-  width: clamp(180px, 20vw, 260px);
-  height: clamp(180px, 20vw, 260px);
+  width: clamp(200px, 26vw, 340px);
+  height: clamp(200px, 26vw, 340px);
   border-radius: 50%;
   background: var(--accent-rare);
   border: var(--border);
@@ -2660,12 +2679,14 @@ main { display: contents; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center 20%;
 }
-/* Rating callout overlapping the bottom of the portrait */
+/* Rating callout overlapping the bottom of the portrait — gecentreerd onder de cirkel */
 .better-call-rating {
   position: absolute;
   bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
   background: var(--surface-card);
   border: var(--border);
   border-radius: var(--radius-md);
@@ -2675,6 +2696,7 @@ main { display: contents; }
   align-items: center;
   gap: 12px;
   z-index: 2;
+  white-space: nowrap;
 }
 .better-call-rating-stars {
   color: var(--accent-highlight);
@@ -2696,11 +2718,12 @@ main { display: contents; }
 
 @media (max-width: 1024px) {
   .better-call-card { grid-template-columns: 1fr; gap: 40px; padding: 44px 32px; text-align: left; }
-  .better-call-portrait { justify-content: flex-start; }
+  .better-call-portrait { justify-content: center; }
 }
 @media (max-width: 640px) {
   .better-call { padding: 60px var(--gutter-mobile); }
   .better-call-card { padding: 36px 24px; }
+  .better-call-photo { width: 240px; height: 240px; }
 }
 
 /* ==========================================================================
@@ -2721,12 +2744,16 @@ main { display: contents; }
 .footer-big {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(100px, 16vw, 240px);
+  /* Min lager dan 16vw zodat "FROSEO." niet buiten een 320px viewport schuift. */
+  font-size: clamp(56px, 16vw, 240px);
   line-height: 0.85;
   letter-spacing: -0.05em;
   color: var(--text-on-dark);
   margin-bottom: 48px;
   text-align: center;
+  /* Defensief — nooit horizontaal overflowen, ook niet bij rare lettering. */
+  max-width: 100%;
+  overflow: hidden;
 }
 .footer-big .dot { color: var(--accent-primary); }
 
@@ -2854,12 +2881,14 @@ main { display: contents; }
    ========================================================================== */
 
 @media (max-width: 1024px) {
-  /* Hero: smaller h1, mockup at column width, comfortable padding */
-  .hero-wrap { padding: 36px var(--gutter) 32px; }
+  /* Hero op iPad: h1 groter (Calvin), mockup iets kleiner met buffer onder. */
+  .hero-wrap { padding: 36px var(--gutter) 80px; }
   .hero { grid-template-columns: 1fr; gap: 36px; }
-  .hero-title { font-size: clamp(44px, 6.5vw, 72px); }
-  .hero-mockup { width: 100%; max-width: 100%; }
+  .hero-title { font-size: clamp(56px, 8.5vw, 84px); }
+  .hero-mockup { width: 88%; max-width: 88%; margin-bottom: 24px; }
   .hero-result-card { top: auto; left: auto; right: 8px; bottom: -24px; max-width: 220px; }
+  /* Eyebrow: pas iets compactere padding/font op tablet zodat 1 regel haalbaar is. */
+  .hero-left .eyebrow-pill { font-size: 11px; padding: 6px 14px; letter-spacing: 0.08em; }
 
   .cases-nav button { width: 44px; height: 44px; font-size: 18px; }
   .section-head { grid-template-columns: 1fr; gap: 24px; }
@@ -2891,9 +2920,20 @@ main { display: contents; }
   .topbar { padding: 10px var(--gutter-mobile); font-size: 10px; }
   .nav { padding: 14px var(--gutter-mobile); }
   .nav-links { display: none; }
-  .hero-wrap { padding: 28px var(--gutter-mobile) 32px; }
-  .hero-title { font-size: clamp(36px, 7.2vw, 56px); }
+  .hero-wrap { padding: 28px var(--gutter-mobile) 72px; }
+  .hero-title { font-size: clamp(44px, 9.5vw, 72px); }
   .hero-bullets li { font-size: 16px; }
+  /* Eyebrow op mobile: kleinere font + tracking zodat 1 regel past op iPhone (375px+). */
+  .hero-left .eyebrow-pill { font-size: 10px; letter-spacing: 0.06em; padding: 6px 12px; }
+  /* Mockup mobile: nog iets kleiner met buffer onder. */
+  .hero-mockup { width: 96%; max-width: 96%; margin-bottom: 16px; }
+  /* Reviews-inline blijft op 1 regel — geen kolom-stack zoals voorheen. */
+  .reviews-inline { flex-wrap: nowrap; flex-direction: row; align-items: center; gap: 10px; font-size: 14px; }
+  .reviews-inline strong { font-size: 15px; }
+  .review-avatar { width: 30px; height: 30px; }
+  /* Cases-strip mobile padding gelijk met andere secties. */
+  .cases-strip { padding: 56px var(--gutter-mobile); }
+  .cases-grid { grid-template-columns: 1fr; gap: 16px; }
   .services, .stats, .approach, .faq, .testi, .cta, .local-agency { padding: 60px var(--gutter-mobile); }
   .local-agency-body { grid-template-columns: 1fr; gap: 40px; }
   .local-agency-head { margin-bottom: 36px; }
@@ -2905,7 +2945,855 @@ main { display: contents; }
   .case-card { flex: 0 0 240px; }
   .footer { padding: 40px var(--gutter-mobile) 24px; }
   .footer-grid { grid-template-columns: 1fr; }
-  .reviews-inline { flex-direction: column; align-items: flex-start; gap: 8px; }
   .testi-quote-mark { font-size: 120px; top: 12px; right: 16px; }
   .lab-shell { padding: 48px var(--gutter-mobile); }
+}
+
+/* ============================================================
+   === CASE DETAIL PAGE ========================================
+   /projecten/[slug] — alle classes onder .case-page om botsing
+   met homepage classes (.case-card, .case-metric) te vermijden.
+   ============================================================ */
+
+.case-page {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 80px var(--gutter) 0;
+}
+
+/* --- Hero --- */
+.case-page-hero {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 64px;
+  align-items: start;
+  margin-bottom: 96px;
+}
+.case-page-hero-text { display: flex; flex-direction: column; gap: 24px; }
+.case-page-title {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 5.6vw, 76px);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin: 0;
+}
+.case-page-title em {
+  font-style: normal;
+  color: var(--accent-rare);
+  display: block;
+}
+.case-page-lead {
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.85;
+  margin: 0;
+  max-width: 52ch;
+}
+.case-page-meta {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 14px 24px;
+  list-style: none;
+  padding: 20px 0;
+  margin: 8px 0 0;
+  border-top: 2px solid var(--line-color);
+  border-bottom: 2px solid var(--line-color);
+}
+.case-page-meta li { display: contents; }
+.case-page-meta .meta-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.55;
+  align-self: center;
+}
+.case-page-meta .meta-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  align-self: center;
+}
+.case-page-meta .meta-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.case-page-live {
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+/* Hero media: main + thumbnail-strip eronder (WordPress PDP-stijl) */
+.case-page-hero-media {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.case-page-hero-main {
+  position: relative;
+  border-radius: var(--radius-lg);
+  /* Reset button styling */
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: zoom-in;
+  font: inherit;
+  text-align: inherit;
+  width: 100%;
+  display: block;
+}
+.case-page-hero-main:hover .case-page-hero-zoom {
+  opacity: 1;
+  transform: translate(-2px, -2px);
+}
+.case-page-hero-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 10px 10px 0 var(--accent-rare);
+  background: var(--surface-card);
+  /* Smoothly cross-fade when src wordt geswapt door thumb-click. */
+  transition: opacity 0.18s ease;
+}
+.case-page-hero-zoom {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent-rare);
+  color: var(--text-on-accent, #fff);
+  border: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: 3px 3px 0 var(--line-color);
+  opacity: 0;
+  transform: translate(0, 0);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  pointer-events: none;
+  z-index: 4;
+}
+.case-page-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+/* Thumb strip — WordPress-stijl: rij van klein, klikbaar, actieve heeft accent */
+.case-page-hero-thumbs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-rare) transparent;
+}
+.case-page-hero-thumbs::-webkit-scrollbar { height: 6px; }
+.case-page-hero-thumbs::-webkit-scrollbar-thumb { background: var(--accent-rare); border-radius: 3px; }
+.case-page-hero-thumb {
+  flex: 0 0 auto;
+  width: 92px;
+  height: 64px;
+  padding: 0;
+  margin: 0;
+  border: 2px solid var(--text-primary);
+  border-radius: 10px;
+  background: var(--surface-card);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  opacity: 0.65;
+}
+.case-page-hero-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.case-page-hero-thumb:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+.case-page-hero-thumb.is-active {
+  opacity: 1;
+  border-color: var(--accent-rare);
+  box-shadow: 3px 3px 0 var(--accent-rare);
+}
+.case-page-hero-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 10px 10px 0 var(--accent-rare);
+  background: var(--surface-card);
+}
+/* Comic result-badge — magenta circle with rotation, hangs over hero image. */
+.case-page-hero-badge {
+  position: absolute;
+  top: -22px;
+  right: -22px;
+  width: 124px;
+  height: 124px;
+  background: var(--accent-highlight);
+  border: var(--border);
+  border-radius: 50%;
+  box-shadow: 4px 4px 0 var(--line-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transform: rotate(-8deg);
+  z-index: 3;
+  text-align: center;
+  padding: 8px;
+}
+.case-page-hero-badge .badge-value {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+.case-page-hero-badge .badge-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.8;
+  line-height: 1.2;
+}
+
+/* --- Metrics — losse offset cards i.p.v. één blok --- */
+.case-page-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 28px;
+  margin-bottom: 96px;
+}
+.case-page .metric-card {
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  text-align: left;
+  position: relative;
+}
+.case-page .metric-card-0 {
+  box-shadow: var(--shadow-rare);
+  transform: rotate(-1deg);
+}
+.case-page .metric-card-1 {
+  box-shadow: var(--shadow-primary);
+  transform: rotate(1deg);
+}
+.case-page .metric-card-2 {
+  box-shadow: var(--shadow-highlight);
+  transform: rotate(-0.5deg);
+}
+.case-page .metric-card-value {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 5.5vw, 72px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin: 0;
+}
+.case-page .metric-card-0 .metric-card-value { color: var(--accent-rare); }
+.case-page .metric-card-1 .metric-card-value { color: var(--accent-primary); }
+.case-page .metric-card-2 .metric-card-value { color: var(--accent-highlight); }
+.case-page .metric-card-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-top: 12px;
+  opacity: 0.7;
+}
+
+/* --- Story (markdown body) --- */
+.case-page-story { margin-bottom: 96px; }
+.case-page-story-inner {
+  max-width: 740px;
+  margin: 0 auto;
+}
+.case-page-story-inner h2 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.8vw, 44px);
+  font-weight: 900;
+  line-height: 1.05;
+  margin: 56px 0 20px;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  position: relative;
+  padding-left: 20px;
+}
+.case-page-story-inner h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 6px;
+  background: var(--accent-rare);
+  border-radius: 3px;
+}
+.case-page-story-inner h2:first-child { margin-top: 0; }
+.case-page-story-inner h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  margin: 32px 0 12px;
+  color: var(--text-primary);
+}
+.case-page-story-inner p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  margin: 0 0 20px;
+}
+.case-page-story-inner ul, .case-page-story-inner ol {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  padding-left: 24px;
+  margin: 0 0 24px;
+}
+.case-page-story-inner li { margin-bottom: 8px; }
+.case-page-story-inner ul li::marker { color: var(--accent-rare); font-size: 1.1em; }
+.case-page-story-inner a {
+  color: var(--accent-rare);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+
+/* --- Gallery — full-bleed dark section + bento grid --- */
+.case-page-gallery-wrap {
+  /* Full-bleed escape uit .case-page (max-width 1240px). */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  background: var(--surface-dark);
+  padding: 96px var(--gutter);
+  margin-bottom: 96px;
+  overflow: hidden;
+}
+.case-page-gallery {
+  display: grid;
+  gap: 20px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.case-page-gallery .gallery-tile {
+  position: relative;
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 8px 8px 0 var(--accent-rare);
+  background: var(--surface-page-deep);
+  min-height: 220px;
+  /* Reset button styling — tile is een <button> ivm lightbox. */
+  padding: 0;
+  margin: 0;
+  cursor: zoom-in;
+  font: inherit;
+  text-align: inherit;
+  width: 100%;
+  display: block;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.case-page-gallery .gallery-tile:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0 var(--accent-rare);
+}
+.case-page-gallery .gallery-tile:hover .gallery-tile-zoom {
+  opacity: 1;
+}
+.gallery-tile-zoom {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-card);
+  color: var(--text-primary);
+  border: 1.5px solid var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+  z-index: 4;
+}
+.case-page-gallery .gallery-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* 1 image: full width */
+.case-page-gallery[data-count="1"] {
+  grid-template-columns: 1fr;
+}
+.case-page-gallery[data-count="1"] .gallery-tile { min-height: 480px; }
+/* 2 images: side-by-side */
+.case-page-gallery[data-count="2"] {
+  grid-template-columns: 1fr 1fr;
+}
+.case-page-gallery[data-count="2"] .gallery-tile { min-height: 360px; }
+/* 3 images: bento — 1 big left, 2 stacked right */
+.case-page-gallery[data-count="3"] {
+  grid-template-columns: 1.6fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  min-height: 560px;
+}
+.case-page-gallery[data-count="3"] .is-primary {
+  grid-row: span 2;
+  grid-column: 1;
+}
+.case-page-gallery[data-count="3"] .gallery-tile { min-height: 0; }
+/* 4 images: bento — 1 big left spanning 2 rows, 3 in right column */
+.case-page-gallery[data-count="4"] {
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  min-height: 720px;
+}
+.case-page-gallery[data-count="4"] .is-primary {
+  grid-row: span 3;
+  grid-column: 1;
+}
+.case-page-gallery[data-count="4"] .gallery-tile { min-height: 0; }
+/* 5+ images: 1 big + 4 small in 2x2 right grid */
+.case-page-gallery[data-count="5"] {
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  min-height: 560px;
+}
+.case-page-gallery[data-count="5"] .is-primary {
+  grid-row: span 2;
+  grid-column: 1;
+}
+.case-page-gallery[data-count="5"] .gallery-tile { min-height: 0; }
+
+/* --- Quote — uses homepage .testi-card markup, with margin-tuning here. --- */
+.case-page-testi {
+  margin: 0 auto 96px;
+  padding: 0;
+  max-width: 1100px;
+}
+
+/* --- Section heads (services-used + related) --- */
+.case-page-section-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.case-page-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.case-page-h2 em { font-style: normal; color: var(--accent-rare); }
+
+/* Diensten ingezet — compacte pill-row i.p.v. cards, want het zou anders
+   te veel lijken op de homepage diensten-grid. Internal links blijven
+   intact via /diensten/[slug]. */
+.case-page-services {
+  margin-bottom: 96px;
+  text-align: center;
+}
+.case-page-services-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+.case-page-services-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.6;
+}
+.case-page-services-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.4vw, 40px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.case-page-services-title em { font-style: normal; color: var(--accent-rare); }
+
+.service-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+.service-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 22px 14px 18px;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 4px 4px 0 var(--line-color);
+}
+.service-pill:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--line-color); }
+.service-pill.primary-pill   { box-shadow: 4px 4px 0 var(--accent-primary); }
+.service-pill.rare-pill      { box-shadow: 4px 4px 0 var(--accent-rare); }
+.service-pill.highlight-pill { box-shadow: 4px 4px 0 var(--accent-highlight); }
+.service-pill.dark-pill      { box-shadow: 4px 4px 0 var(--surface-dark); }
+.service-pill.teal-pill      { box-shadow: 4px 4px 0 var(--color-teal, var(--accent-rare)); }
+.service-pill.primary-pill:hover   { box-shadow: 6px 6px 0 var(--accent-primary); }
+.service-pill.rare-pill:hover      { box-shadow: 6px 6px 0 var(--accent-rare); }
+.service-pill.highlight-pill:hover { box-shadow: 6px 6px 0 var(--accent-highlight); }
+.service-pill.dark-pill:hover      { box-shadow: 6px 6px 0 var(--surface-dark); }
+.service-pill.teal-pill:hover      { box-shadow: 6px 6px 0 var(--color-teal, var(--accent-rare)); }
+
+.service-pill-icon {
+  font-size: 22px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--surface-page-soft);
+  border: 1.5px solid var(--text-primary);
+}
+.service-pill-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+}
+.service-pill-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.55;
+}
+.service-pill-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.service-pill-arrow {
+  font-size: 18px;
+  color: var(--accent-rare);
+  font-weight: 700;
+}
+
+/* Testi-card cleanup binnen .case-page — minder gestapelde shadows. */
+.case-page-testi .testi-card {
+  box-shadow: 8px 8px 0 var(--accent-rare);
+}
+.case-page-testi .testi-avatar {
+  box-shadow: none;
+}
+
+/* Related: hergebruikt .case-card. Alleen grid-overrides hier. */
+.case-page-related { margin-bottom: 64px; }
+.case-page-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.case-page-related-foot {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .case-page { padding: 56px var(--gutter) 0; }
+  .case-page-hero { grid-template-columns: 1fr; gap: 40px; margin-bottom: 64px; }
+  .case-page-hero-badge {
+    width: 104px; height: 104px; top: -16px; right: -10px;
+  }
+  .case-page-hero-badge .badge-value { font-size: 24px; }
+  .case-page-metrics { gap: 20px; margin-bottom: 64px; }
+  .case-page-story, .case-page-testi, .case-page-services, .case-page-gallery-wrap { margin-bottom: 64px; }
+  .case-page-gallery-wrap { padding: 64px var(--gutter); }
+  .case-page-related-grid { grid-template-columns: repeat(2, 1fr); }
+  /* Gallery: simplify bento on tablet — primary full-width on top */
+  .case-page-gallery[data-count="3"],
+  .case-page-gallery[data-count="4"],
+  .case-page-gallery[data-count="5"] {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    min-height: 0;
+  }
+  .case-page-gallery[data-count="3"] .is-primary,
+  .case-page-gallery[data-count="4"] .is-primary,
+  .case-page-gallery[data-count="5"] .is-primary {
+    grid-row: auto;
+    grid-column: 1 / -1;
+  }
+  .case-page-gallery .gallery-tile { min-height: 240px; }
+  .case-page-gallery[data-count="1"] .gallery-tile { min-height: 320px; }
+}
+@media (max-width: 640px) {
+  .case-page { padding: 40px var(--gutter-mobile) 0; }
+  .case-page-hero { gap: 28px; margin-bottom: 48px; }
+  .case-page-meta { grid-template-columns: 1fr; gap: 12px; padding: 18px 0; }
+  .case-page-meta li { display: flex; flex-direction: column; gap: 4px; }
+  .case-page-hero-badge {
+    width: 88px; height: 88px; top: -14px; right: -8px;
+  }
+  .case-page-hero-badge .badge-value { font-size: 20px; }
+  .case-page-hero-badge .badge-label { font-size: 8px; }
+  .case-page-metrics { grid-template-columns: 1fr; gap: 20px; margin-bottom: 48px; }
+  .case-page .metric-card { padding: 24px; }
+  .case-page-story, .case-page-testi, .case-page-services, .case-page-gallery-wrap, .case-page-related { margin-bottom: 48px; }
+  .case-page-gallery-wrap { padding: 48px var(--gutter-mobile); }
+  .case-page-gallery { grid-template-columns: 1fr !important; }
+  .case-page-gallery .gallery-tile,
+  .case-page-gallery[data-count="3"] .is-primary,
+  .case-page-gallery[data-count="4"] .is-primary,
+  .case-page-gallery[data-count="5"] .is-primary { grid-column: auto; min-height: 220px; }
+  .case-page-related-grid { grid-template-columns: 1fr; }
+  .case-page-story-inner h2 { padding-left: 16px; }
+  .case-page-story-inner h2::before { width: 4px; }
+}
+
+/* ============================================================
+   === LIGHTBOX ================================================
+   Native <dialog> overlay voor full-size image-viewer.
+   Component: src/components/ui/Lightbox.astro
+   ============================================================ */
+
+.lightbox {
+  border: none;
+  padding: 0;
+  background: rgba(8, 8, 28, 0.92);
+  color: #fff;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  margin: 0;
+  /* Native dialog defaults to inset-position; override to full screen. */
+  position: fixed;
+  inset: 0;
+}
+.lightbox::backdrop {
+  /* dialog::backdrop is rendered when shown via showModal() */
+  background: rgba(8, 8, 28, 0.6);
+  backdrop-filter: blur(4px);
+}
+.lightbox[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-figure {
+  margin: 0;
+  max-width: 92vw;
+  max-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.lightbox-img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  background: #1a1a2e;
+}
+.lightbox-counter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+}
+.lightbox-thumbs {
+  display: flex;
+  gap: 10px;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 4px 4px 8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.3) transparent;
+}
+.lightbox-thumbs::-webkit-scrollbar { height: 6px; }
+.lightbox-thumbs::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 3px; }
+.lightbox-thumb {
+  flex: 0 0 auto;
+  width: 80px;
+  height: 56px;
+  padding: 0;
+  margin: 0;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.lightbox-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lightbox-thumb:hover { opacity: 0.85; transform: translateY(-1px); }
+.lightbox-thumb.is-active {
+  opacity: 1;
+  border-color: var(--accent-rare);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.4);
+}
+.lightbox-close,
+.lightbox-nav {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.lightbox-close:hover,
+.lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+.lightbox-close {
+  top: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  font-size: 28px;
+  line-height: 1;
+}
+.lightbox-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  font-size: 36px;
+  line-height: 1;
+}
+.lightbox-nav:hover { transform: translateY(-50%) scale(1.05); }
+.lightbox-prev { left: 24px; }
+.lightbox-next { right: 24px; }
+
+@media (max-width: 640px) {
+  .lightbox-close { top: 12px; right: 12px; width: 40px; height: 40px; font-size: 22px; }
+  .lightbox-nav { width: 44px; height: 44px; font-size: 28px; }
+  .lightbox-prev { left: 8px; }
+  .lightbox-next { right: 8px; }
+  .lightbox-figure { max-width: 96vw; }
+  .lightbox-img { max-height: 64vh; }
+  .lightbox-thumb { width: 60px; height: 42px; }
+}
+
+/* ============================================================
+   === MOBILE FIXED CTA ========================================
+   Sticky bar onderaan op mobile met "Vrijblijvend voorstel"
+   knop naar /contact. Verborgen op desktop/tablet.
+   ============================================================ */
+
+.mobile-cta {
+  display: none;
+}
+@media (max-width: 640px) {
+  .mobile-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: fixed;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    z-index: 90;
+    padding: 16px 22px;
+    background: var(--action-bg, var(--accent-rare));
+    color: var(--text-on-accent, #fff);
+    border: var(--border);
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    box-shadow: 4px 4px 0 var(--line-color);
+  }
+  .mobile-cta:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--line-color); }
+  .mobile-cta-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent-highlight);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  /* Reserveer onderaan ruimte zodat de bar geen content overlapt
+     (drawer, footer). 76px = bar height + safe-area. */
+  body { padding-bottom: 76px; }
+  /* Wanneer drawer open is, mag de CTA niet bovenop het menu staan. */
+  body:has([data-menu-drawer="open"]) .mobile-cta { display: none; }
 }

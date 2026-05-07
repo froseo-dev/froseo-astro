@@ -46,7 +46,7 @@ const services = (await getCollection('services', ({ data }) => data.featured))
           <ul class="service-list">
             {service.data.bullets.map((b) => <li>{b}</li>)}
           </ul>
-          <div class="service-arrow">→</div>
+          <div class="service-arrow">↗</div>
         </a>
       ))
     }

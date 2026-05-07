@@ -5,8 +5,8 @@ tagline: '3× groei via SEO + Webdesign'
 description: 'Club 12 had een nieuwe site nodig én een rankings-strategie om de drukbevochten branche aan te kunnen. Combinatie van fris webdesign en gerichte SEO leverde een verdrievoudiging van online aanvragen op binnen het eerste jaar.'
 type: SEO + Webdesign
 tags:
-  - { label: SEO, color: light }
-  - { label: Web, color: rare }
+  - { label: SEO/GEO, color: light }
+  - { label: Webdesign, color: rare }
 result: '3× groei'
 metrics:
   - { value: '3×', label: 'Omzetgroei' }

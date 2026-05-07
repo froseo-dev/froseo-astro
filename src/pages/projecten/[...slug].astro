@@ -1,0 +1,327 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import Lightbox from '@components/ui/Lightbox.astro';
+import { Image, getImage } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const cases = await getCollection('cases', ({ data }) => data.published !== false);
+  return cases.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const c = entry.data;
+
+const allCases = await getCollection('cases', ({ data }) => data.published !== false);
+const allServices = await getCollection('services');
+
+/* Related: rank by overlap (services 2x, tags 1x), top 3. */
+const related = allCases
+  .filter((x) => x.data.slug !== c.slug)
+  .map((x) => {
+    const sOverlap = (c.services ?? []).filter((s) => (x.data.services ?? []).includes(s)).length;
+    const tOverlap = c.tags.filter((t) => x.data.tags.some((xt) => xt.label === t.label)).length;
+    return { entry: x, overlap: sOverlap * 2 + tOverlap };
+  })
+  .sort((a, b) => b.overlap - a.overlap)
+  .slice(0, 3)
+  .map((x) => x.entry);
+
+const servicesUsed = (c.services ?? [])
+  .map((slug) => allServices.find((s) => s.data.slug === slug))
+  .filter((s): s is NonNullable<typeof s> => Boolean(s));
+
+const heroMetric = c.metrics?.[0];
+const pageTitle = `${c.client} — ${c.tagline} | Froseo`;
+const pageDesc = c.description ?? c.tagline;
+
+/* Per beeld: thumb (160) voor de strip, main (1200) voor de hero-swap,
+   full (1600) voor de lightbox. Allemaal WebP. */
+async function buildSrcs(src: typeof c.hero) {
+  const [thumb, main, full] = await Promise.all([
+    getImage({ src, width: 160, format: 'webp' }),
+    getImage({ src, width: 1200, format: 'webp' }),
+    getImage({ src, width: 1600, format: 'webp' }),
+  ]);
+  return { thumb: thumb.src, main: main.src, full: full.src };
+}
+
+const galleryImages = [
+  { ...(await buildSrcs(c.hero)), alt: `${c.client} — ${c.tagline}` },
+  ...(c.gallery
+    ? await Promise.all(
+        c.gallery.map(async (img, i) => ({
+          ...(await buildSrcs(img)),
+          alt: `${c.client} — beeld ${i + 2}`,
+        })),
+      )
+    : []),
+];
+const galleryCount = galleryImages.length;
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="case-page">
+      <!-- Hero -->
+      <section class="case-page-hero">
+        <div class="case-page-hero-text">
+          <EyebrowPill variant="rare">{c.type}</EyebrowPill>
+          <h1 class="case-page-title">
+            {c.client} <em>{c.tagline}</em>
+          </h1>
+          {c.description && <p class="case-page-lead">{c.description}</p>}
+
+          <ul class="case-page-meta">
+            {c.industry && (
+              <li><span class="meta-label">Branche</span><span class="meta-value">{c.industry}</span></li>
+            )}
+            {c.location && (
+              <li><span class="meta-label">Locatie</span><span class="meta-value">{c.location}</span></li>
+            )}
+            {c.tags && c.tags.length > 0 && (
+              <li>
+                <span class="meta-label">Werk</span>
+                <span class="meta-value meta-tags">
+                  {c.tags.map((t) => <span class={`case-tag ${t.color}`}>{t.label}</span>)}
+                </span>
+              </li>
+            )}
+          </ul>
+
+          <div class="case-page-hero-actions">
+            {c.liveUrl && (
+              <a class="btn-primary case-page-live" href={c.liveUrl} target="_blank" rel="noopener noreferrer">
+                Bezoek website ↗
+              </a>
+            )}
+          </div>
+        </div>
+
+        <div class="case-page-hero-media">
+          <button type="button" class="case-page-hero-main" data-gallery-main aria-label={`Bekijk ${galleryImages[0].alt} fullscreen`}>
+            <img
+              src={galleryImages[0].main}
+              alt={galleryImages[0].alt}
+              class="case-page-hero-img"
+              data-gallery-main-img
+              loading="eager"
+            />
+            {heroMetric && (
+              <div class="case-page-hero-badge" aria-hidden="true">
+                <span class="badge-value">{heroMetric.value}</span>
+                <span class="badge-label">{heroMetric.label}</span>
+              </div>
+            )}
+            <div class="case-page-hero-zoom" aria-hidden="true">⤢</div>
+          </button>
+
+          {galleryCount > 1 && (
+            <div class="case-page-hero-thumbs" role="tablist" aria-label="Screenshots">
+              {galleryImages.map((g, i) => (
+                <button
+                  type="button"
+                  class={`case-page-hero-thumb ${i === 0 ? 'is-active' : ''}`}
+                  role="tab"
+                  aria-selected={i === 0 ? 'true' : 'false'}
+                  aria-label={`Toon ${g.alt}`}
+                  data-gallery-thumb
+                  data-gallery-index={i}
+                >
+                  <img src={g.thumb} alt="" loading="lazy" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      <!-- Gallery data ↗ JSON voor de inline gallery + lightbox open() -->
+      <script type="application/json" data-gallery-data set:html={JSON.stringify(galleryImages)} />
+
+      <!-- Metrics — losse comic cards met accent shadows -->
+      {c.metrics && c.metrics.length > 0 && (
+        <section class="case-page-metrics">
+          {c.metrics.map((m, i) => (
+            <div class={`metric-card metric-card-${i}`}>
+              <div class="metric-card-value">{m.value}</div>
+              <div class="metric-card-label">{m.label}</div>
+            </div>
+          ))}
+        </section>
+      )}
+
+      <!-- Story (markdown body) -->
+      <section class="case-page-story">
+        <div class="case-page-story-inner">
+          <Content />
+        </div>
+      </section>
+
+
+      <!-- Quote — hergebruikt homepage .testi-card markup met avatar -->
+      {c.quote && c.quoteName && (
+        <section class="testi testi--card case-page-testi">
+          <div class="testi-card">
+            <div class="testi-quote-mark">"</div>
+            <div class="testi-avatar">
+              {c.quoteAvatar && (
+                <Image
+                  src={c.quoteAvatar}
+                  alt={`${c.quoteName} — ${c.quoteRole ?? ''}`}
+                  class="testi-avatar-img"
+                  widths={[180, 360]}
+                  sizes="180px"
+                  loading="lazy"
+                />
+              )}
+            </div>
+            <div class="testi-right">
+              <div class="testi-stars">★★★★★</div>
+              <blockquote class="testi-quote">"{c.quote}"</blockquote>
+              <div class="testi-author">
+                <div class="name">{c.quoteName}</div>
+                {c.quoteRole && <div class="role">{c.quoteRole}</div>}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <!-- Diensten ingezet — compacte pill-row met internal links naar /diensten/x -->
+      {servicesUsed.length > 0 && (
+        <section class="case-page-services">
+          <div class="case-page-services-head">
+            <span class="case-page-services-label">Voor dit project ingezet</span>
+            <h2 class="case-page-services-title">
+              Diensten <em>ingezet.</em>
+            </h2>
+          </div>
+          <div class="service-pills">
+            {servicesUsed.map((s) => (
+              <a class={`service-pill ${s.data.shadow}-pill`} href={`/diensten/${s.data.slug}`}>
+                <span class="service-pill-icon" aria-hidden="true">{s.data.icon}</span>
+                <span class="service-pill-body">
+                  <span class="service-pill-eyebrow">{s.data.eyebrow}</span>
+                  <span class="service-pill-name">{s.data.title}</span>
+                </span>
+                <span class="service-pill-arrow" aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Related cases — hergebruikt homepage .case-card stijl -->
+      {related.length > 0 && (
+        <section class="case-page-related">
+          <div class="case-page-section-head">
+            <EyebrowPill variant="rare">Meer projecten</EyebrowPill>
+            <h2 class="case-page-h2">
+              Andere <em>succesverhalen.</em>
+            </h2>
+          </div>
+          <div class="cases-grid case-page-related-grid">
+            {related.map((r) => (
+              <a class="case-card" href={`/projecten/${r.data.slug}`}>
+                <div class="case-card-media">
+                  <Image
+                    src={r.data.hero}
+                    alt={`${r.data.client} — ${r.data.tagline}`}
+                    class="case-card-img"
+                    widths={[400, 600, 800]}
+                    sizes="(max-width: 1024px) 100vw, 380px"
+                    loading="lazy"
+                  />
+                  <div class="case-tags">
+                    {r.data.tags.map((t) => <span class={`case-tag ${t.color}`}>{t.label}</span>)}
+                  </div>
+                  {!r.data.metrics && <div class="case-result">{r.data.result}</div>}
+                </div>
+                <div class="case-card-body">
+                  <h3 class="case-card-name">{r.data.client}</h3>
+                  <p class="case-card-tagline">{r.data.description ?? r.data.tagline}</p>
+                  <div class="case-card-cta">
+                    <span>Bekijk project</span>
+                    <span class="arrow">↗</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+          <div class="case-page-related-foot">
+            <a class="btn-ghost" href="/projecten">Alle projecten ↗</a>
+          </div>
+        </section>
+      )}
+    </article>
+
+    <BetterCallCalvin
+      eyebrow="Vergelijkbaar resultaat?"
+      titleLine1="Ook groeien zoals"
+      titleAccent={`${c.client}?`}
+      body={[
+        `Wil je weten of een vergelijkbare aanpak ook voor jou werkt? Plan een vrijblijvend gesprek met Calvin — geen verkooppraatje, wel concrete inzichten.`,
+        `In 30 minuten kijken we samen naar je website, vindbaarheid en groeikansen.`,
+      ]}
+    />
+  </main>
+  <Footer />
+
+  <Lightbox />
+
+  <script>
+    /* In-page gallery: thumbs swappen het hoofdbeeld; klik op hoofdbeeld
+       opent de lightbox bij de actieve index via window.openLightbox(). */
+    type GalleryItem = { thumb: string; main: string; full: string; alt: string };
+
+    const dataEl = document.querySelector<HTMLScriptElement>('[data-gallery-data]');
+    const mainBtn = document.querySelector<HTMLButtonElement>('[data-gallery-main]');
+    const mainImg = document.querySelector<HTMLImageElement>('[data-gallery-main-img]');
+    const thumbs = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('[data-gallery-thumb]'),
+    );
+
+    if (dataEl && mainBtn && mainImg) {
+      const items: GalleryItem[] = JSON.parse(dataEl.textContent ?? '[]');
+      const img = mainImg;
+      let activeIndex = 0;
+
+      function setActive(index: number) {
+        if (!items[index]) return;
+        activeIndex = index;
+        img.src = items[index].main;
+        img.alt = items[index].alt;
+        thumbs.forEach((t, i) => {
+          const isActive = i === index;
+          t.classList.toggle('is-active', isActive);
+          t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+      }
+
+      thumbs.forEach((t) => {
+        t.addEventListener('click', () => {
+          const idx = Number(t.dataset.galleryIndex ?? 0);
+          setActive(idx);
+        });
+      });
+
+      mainBtn.addEventListener('click', () => {
+        const lightboxItems = items.map((it) => ({
+          src: it.full,
+          thumb: it.thumb,
+          alt: it.alt,
+        }));
+        (window as any).openLightbox?.(lightboxItems, activeIndex);
+      });
+    }
+  </script>
+</BaseLayout>

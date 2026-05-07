@@ -4,7 +4,7 @@ client: Independent Artists Agency
 tagline: 'Webdesign voor artiestenboekingsbureau'
 type: Webdesign
 tags:
-  - { label: Web, color: rare }
+  - { label: Webdesign, color: rare }
 result: 'Maatwerk'
 hero: ../../assets/cases/independent-artists-agency/hero.webp
 gallery:
