@@ -1,0 +1,256 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { stats } from '@data/site-config';
+
+const cases = (await getCollection('cases', ({ data }) => data.published !== false))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const services = (await getCollection('services'))
+  .sort((a, b) => a.data.order - b.data.order);
+
+/* Telling per dienst — zodat de filter-pills "(N)" kunnen tonen
+   en alleen verschijnen als er daadwerkelijk cases voor zijn. */
+const serviceFilters = services
+  .map((s) => ({
+    slug: s.data.slug,
+    /* shortTitle voor de filter-pill ("Webdesign") in plaats van de
+       sales-y title ("Sites met een eigen smoel"). */
+    title: s.data.shortTitle ?? s.data.title,
+    count: cases.filter((c) => (c.data.services ?? []).includes(s.data.slug)).length,
+  }))
+  .filter((s) => s.count > 0);
+
+---
+
+<BaseLayout
+  title="Projecten — webdesign en SEO cases | Froseo"
+  description="80+ MKB-projecten live. Bekijk onze cases per dienst: webdesign, SEO/GEO en lokale SEO. Met cijfers, screenshots en uitleg over de aanpak."
+>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="projects-page">
+      <!-- ============================================================
+           Page hero — eyebrow + H1 + lead + stats-ribbon
+           ============================================================ -->
+      <section class="projects-hero">
+        <div class="projects-hero-inner">
+          <div class="projects-hero-text">
+            <EyebrowPill variant="rare">Onze projecten</EyebrowPill>
+            <h1 class="projects-hero-title">
+              Werk waar we <em>trots op zijn.</em>
+            </h1>
+            <p class="projects-hero-lead">
+              Hieronder een selectie van projecten die we recent opleverden. Per case
+              zie je wat we deden, de cijfers en de schermen. De volledige klantenlijst
+              is langer dan dit, maar dit zijn de verhalen waar we het meeste van kunnen
+              laten zien.
+            </p>
+          </div>
+
+          <ul class="projects-hero-stats" aria-label="Resultaten in cijfers">
+            {stats.map((s) => (
+              <li>
+                <strong>{s.value}</strong>
+                <span>{s.label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Filter bar
+           ============================================================ -->
+      <section class="projects-filter" data-projects-filter>
+        <div class="projects-filter-inner">
+          <span class="projects-filter-label">Filter:</span>
+          <div class="projects-filter-pills" role="tablist" aria-label="Filter per dienst">
+            <button
+              type="button"
+              class="projects-filter-pill is-active"
+              data-filter="all"
+              role="tab"
+              aria-selected="true"
+            >
+              Alle <span class="count">({cases.length})</span>
+            </button>
+            {serviceFilters.map((s) => (
+              <button
+                type="button"
+                class="projects-filter-pill"
+                data-filter={s.slug}
+                role="tab"
+                aria-selected="false"
+              >
+                {s.title} <span class="count">({s.count})</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Cases grid — alle cases uniform, responsive auto-fit
+           ============================================================ -->
+      <section class="projects-grid-section">
+        <div class="projects-grid" data-projects-grid>
+          {cases.map((c) => (
+            <article
+              class="project-card"
+              data-services={(c.data.services ?? []).join(',')}
+            >
+              <a class="project-card-media-link" href={`/projecten/${c.data.slug}`} aria-label={`Bekijk ${c.data.client} project`}>
+                <div class="project-card-media">
+                  <Image
+                    src={c.data.hero}
+                    alt={`${c.data.client} — ${c.data.tagline}`}
+                    class="project-card-img"
+                    widths={[400, 600, 800, 1000]}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                    loading="lazy"
+                  />
+                  <div class="project-card-tags">
+                    {c.data.tags.map((t) => (
+                      <span class={`case-tag ${t.color}`}>{t.label}</span>
+                    ))}
+                  </div>
+                  {c.data.result && (
+                    <div class="project-card-result">{c.data.result}</div>
+                  )}
+                </div>
+              </a>
+
+              <div class="project-card-body">
+                <h3 class="project-card-name">{c.data.client}</h3>
+                <p class="project-card-tagline">
+                  {c.data.description ?? c.data.tagline}
+                </p>
+
+                {c.data.metrics && c.data.metrics.length > 0 && (
+                  <ul class="project-card-metrics">
+                    {c.data.metrics.slice(0, 2).map((m) => (
+                      <li>
+                        <strong>{m.value}</strong>
+                        <span>{m.label}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <div class="project-card-actions">
+                  <a class="project-card-primary" href={`/projecten/${c.data.slug}`}>
+                    Lees case ↗
+                  </a>
+                  {c.data.liveUrl && (
+                    <a
+                      class="project-card-live"
+                      href={c.data.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${c.data.client} live website (opent in nieuwe tab)`}
+                    >
+                      Live ↗
+                    </a>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <!-- Empty state — verschijnt wanneer een filter geen cases oplevert -->
+        <div class="projects-grid-empty" data-projects-empty hidden>
+          <p>Nog geen project online voor deze dienst.</p>
+          <button type="button" class="btn-ghost" data-clear-filter>
+            Toon alle projecten ↗
+          </button>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Mid-page bridge CTA: "Branche niet zien staan?"
+           ============================================================ -->
+      <section class="projects-bridge">
+        <div class="projects-bridge-card">
+          <div class="projects-bridge-content">
+            <EyebrowPill>Branche niet gezien?</EyebrowPill>
+            <h2 class="projects-bridge-title">
+              We werken in <em>veel meer branches.</em>
+            </h2>
+            <p class="projects-bridge-body">
+              Renovatiebedrijven, dakdekkers, dansscholen, music agencies, tandartsen,
+              makelaars en veel meer. De cases hierboven zijn een selectie, niet de
+              volledige klantenlijst. Zoek je iets specifieks of wil je weten of we
+              ervaring hebben in jouw markt? Vraag het ons even.
+            </p>
+            <div class="projects-bridge-actions">
+              <a class="btn-primary" href="/contact">Bespreek je project ↗</a>
+              <a class="projects-bridge-secondary" href="/aanpak">
+                Of lees hoe we werken ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <BetterCallCalvin
+        eyebrow="Een gesprek inplannen?"
+        titleLine1="Een case starten met"
+        titleAccent="Calvin."
+        body={[
+          'Elke case op deze pagina begon met een kennismaking van 30 minuten. Daarin kijken we samen waar je staat, wat er beter kan en of er een match is.',
+          'Natuurlijk geheel vrijblijvend. Past het niet, dan zeggen we dat eerlijk.'
+        ]}
+      />
+    </article>
+  </main>
+  <Footer />
+
+  <script>
+    /* Filter-logica: toggle .is-hidden op cards op basis van data-services.
+       Update active-state op pills + counter + empty-state. */
+    type FilterValue = string;
+
+    const grid = document.querySelector<HTMLElement>('[data-projects-grid]');
+    const pills = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('[data-filter]'),
+    );
+    const cards = Array.from(
+      document.querySelectorAll<HTMLElement>('.project-card'),
+    );
+    const empty = document.querySelector<HTMLElement>('[data-projects-empty]');
+    const clearBtn = document.querySelector<HTMLButtonElement>('[data-clear-filter]');
+
+    function applyFilter(filter: FilterValue) {
+      let visible = 0;
+      cards.forEach((card) => {
+        const services = (card.dataset.services ?? '')
+          .split(',')
+          .filter(Boolean);
+        const show = filter === 'all' || services.includes(filter);
+        card.classList.toggle('is-hidden', !show);
+        if (show) visible++;
+      });
+      pills.forEach((p) => {
+        const isActive = p.dataset.filter === filter;
+        p.classList.toggle('is-active', isActive);
+        p.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      if (empty) empty.hidden = visible > 0;
+      if (grid) grid.classList.toggle('is-empty', visible === 0);
+    }
+
+    pills.forEach((p) => {
+      p.addEventListener('click', () => applyFilter(p.dataset.filter ?? 'all'));
+    });
+    clearBtn?.addEventListener('click', () => applyFilter('all'));
+  </script>
+</BaseLayout>

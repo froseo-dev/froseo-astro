@@ -1,5 +1,6 @@
 ---
 import EyebrowPill from '../ui/EyebrowPill.astro';
+import { stats as configStats } from '@data/site-config';
 
 interface Stat { num: string; label: string; }
 interface Props {
@@ -15,12 +16,9 @@ const {
   titleLine1 = 'Webdesign & marketing',
   titleLine2 = 'uit Utrecht,',
   titleAccent = 'voor heel Nederland.',
-  stats = [
-    { num: '80+', label: 'Projecten live' },
-    { num: '25+', label: "Plaatsen #1 ranking" },
-    { num: '5/5', label: 'Op Google reviews' },
-    { num: '15+', label: 'Jaar ervaring' },
-  ],
+  /* Default vanuit site-config — zo passen alle pagina's met Stats-blok
+     zich automatisch aan als je een cijfer wijzigt. */
+  stats = configStats.map((s) => ({ num: s.value, label: s.label })),
 } = Astro.props;
 ---
 

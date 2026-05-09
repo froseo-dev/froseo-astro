@@ -10,24 +10,24 @@ interface Props {
   body?: string[];
   primaryLabel?: string;
   primaryHref?: string;
-  phoneNumber?: string;
-  phoneLabel?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
   rating?: string;
   reviewCount?: string;
 }
 
 const {
-  eyebrow = 'Direct met de eigenaar',
+  eyebrow = 'Kennismaken',
   titleLine1 = 'Better call',
   titleAccent = 'Calvin.',
   body = [
     'Even sparren over wat er beter kan? Of wil je gewoon weten of Froseo bij je past? Plan dan direct een afspraak met onze maestro Calvin.',
     'Tijdens een vrijblijvend gesprek van 30 minuten kijken we samen naar je website, vindbaarheid en groeikansen.',
   ],
-  primaryLabel = 'Neem contact op',
+  primaryLabel = 'Plan een afspraak ↗',
   primaryHref = '/contact',
-  phoneNumber = '030 237 8053',
-  phoneLabel = '030 237 8053',
+  secondaryLabel = 'Stuur bericht',
+  secondaryHref = '/contact',
   rating = '5/5',
   reviewCount = 'Google reviews',
 } = Astro.props;
@@ -44,14 +44,9 @@ const {
 
       <div class="better-call-actions">
         <a class="btn-primary better-call-btn-primary" href={primaryHref}>{primaryLabel}</a>
-        <a
-          class="better-call-phone"
-          href={`tel:${phoneNumber.replace(/\s+/g, '')}`}
-          aria-label={`Bel Calvin direct op ${phoneLabel}`}
-        >
-          <span class="better-call-phone-icon" aria-hidden="true">★</span>
-          <span class="better-call-phone-num">{phoneLabel}</span>
-        </a>
+        {secondaryLabel && secondaryHref && (
+          <a class="btn-ghost better-call-btn-secondary" href={secondaryHref}>{secondaryLabel}</a>
+        )}
       </div>
     </div>
 

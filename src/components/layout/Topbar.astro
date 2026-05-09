@@ -1,9 +1,11 @@
 ---
+import { pricing } from '@data/site-config';
+
 interface Props {
   text?: string;
 }
 const {
-  text = 'Nieuw — AI-powered website vanaf €99/m, inclusief hosting & onderhoud',
+  text = `Nieuw, AI-powered website vanaf ${pricing.abboFromShort}, inclusief hosting en onderhoud`,
 } = Astro.props;
 ---
 

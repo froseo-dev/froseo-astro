@@ -1,0 +1,8 @@
+# Cloudflare Pages — 301 redirects van oude URL-slugs naar nieuwe.
+# Format:  <from>  <to>  <status>
+#
+# Doel: oude SEO-equity behouden wanneer slugs/structuur veranderen.
+# Nieuwe rules onderaan toevoegen, zodat we historie kunnen terugvinden.
+
+# Service-pagina's: oude slug → nieuwe slug
+/zoekmachine-optimalisatie  /seo  301

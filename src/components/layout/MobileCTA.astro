@@ -14,3 +14,23 @@ const {
   <span class="mobile-cta-label">{label}</span>
   <span class="mobile-cta-arrow" aria-hidden="true">↗</span>
 </a>
+
+<script>
+  /* Toon de mobile CTA pas nadat de gebruiker de hero/logos voorbij is — geeft
+     de fold ruimte om eerst te ademen. Trigger: window.scrollY > 600px. */
+  const cta = document.querySelector<HTMLAnchorElement>('[data-mobile-cta]');
+  if (cta) {
+    let ticking = false;
+    function update() {
+      cta!.classList.toggle('is-visible', window.scrollY > 600);
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+    update();
+  }
+</script>

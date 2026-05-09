@@ -6,6 +6,10 @@ description: 'Met een nieuwe SEO-strategie en geoptimaliseerde homepage stegen w
 type: Lokale SEO
 tags:
   - { label: SEO/GEO, color: primary }
+  - { label: Lokale SEO, color: rare }
+services:
+  - lokale-seo
+  - seo
 result: '#1 Zeist'
 metrics:
   - { value: '+312%', label: 'Organisch verkeer' }

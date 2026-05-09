@@ -1,0 +1,46 @@
+---
+/**
+ * Inline persoonlijke note van Calvin, kleiner dan BetterCallCalvin.
+ * Bedoeld voor mid-page momenten waar de bezoeker een persoonlijk
+ * vertrouwens-anker kan gebruiken zonder dat het een full-screen close-CTA
+ * wordt. Foto + 1-2 zinnen + 1 button.
+ */
+import { Image } from 'astro:assets';
+import calvinPhoto from '@assets/team/calvin.webp';
+
+interface Props {
+  /** De korte uitspraak. Default sluit aan op de algemene Froseo-tone. */
+  message?: string;
+  /** Naam + functie onder de quote. */
+  byline?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  message = 'Heb je plannen voor een nieuwe website? Stuur je wensen door of plan een kennismaking. Dan kijken we samen wat we voor je kunnen doen en of we een match zijn.',
+  byline = 'Calvin, Digital Specialist Froseo',
+  ctaLabel = 'Plan een kennismaking ↗',
+  ctaHref = '/contact',
+} = Astro.props;
+---
+
+<aside class="calvin-note">
+  <div class="calvin-note-card">
+    <div class="calvin-note-avatar">
+      <Image
+        src={calvinPhoto}
+        alt="Calvin van Froseo"
+        class="calvin-note-avatar-img"
+        widths={[120, 200, 280]}
+        sizes="120px"
+        loading="lazy"
+      />
+    </div>
+    <div class="calvin-note-body">
+      <p class="calvin-note-quote">"{message}"</p>
+      <span class="calvin-note-byline">— {byline}</span>
+    </div>
+    <a class="btn-primary calvin-note-cta" href={ctaHref}>{ctaLabel}</a>
+  </div>
+</aside>

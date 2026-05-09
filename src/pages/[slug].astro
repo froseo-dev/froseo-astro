@@ -1,0 +1,304 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import LogosTicker from '@components/sections/LogosTicker.astro';
+import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
+import CalvinNote from '@components/sections/CalvinNote.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import { interpolate, review } from '@data/site-config';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const s = entry.data;
+
+/* Cases die deze service gebruiken — auto-gefilterd voor de "Cases" sectie. */
+const allCases = await getCollection('cases', ({ data }) => data.published !== false);
+const relatedCases = allCases
+  .filter((c) => (c.data.services ?? []).includes(s.slug))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 6);
+
+/* Voor de visuele WebsitesShowcase tonen we ALLE cases (visueel-eerst proof,
+   niet beperkt tot de specifieke dienst). Slice op 6 voor een nette 3x2 grid. */
+const showcaseCases = allCases
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 6);
+
+/* Featured-case-config opbouwen als de service een featuredCaseSlug heeft. */
+const featuredCaseEntry = s.showcaseFeatured
+  ? allCases.find((c) => c.data.slug === s.showcaseFeatured!.caseSlug)
+  : undefined;
+const showcaseFeatured = featuredCaseEntry
+  ? { caseEntry: featuredCaseEntry, headline: s.showcaseFeatured?.headline }
+  : undefined;
+
+const heroLead = s.heroLead ?? s.description;
+const pageTitle = `${s.shortTitle ?? s.title} — Froseo`;
+const pageDesc = s.description;
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="service-page">
+      <!-- ============================================================
+           Hero
+           ============================================================ -->
+      <section class={`service-hero ${s.heroImage ? 'has-image' : ''}`}>
+        <div class="service-hero-inner">
+          <div class="service-hero-text">
+            <EyebrowPill variant="rare">{s.eyebrow}</EyebrowPill>
+            <h1 class="service-hero-title">
+              {s.heroTitle ?? s.title}
+              {s.heroAccent && <em>{s.heroAccent}</em>}
+            </h1>
+            <p class="service-hero-lead">{interpolate(heroLead)}</p>
+            <div class="service-hero-actions">
+              <a class="btn-primary" href="/contact">Plan een kennismaking ↗</a>
+              <a class="btn-ghost" href="/projecten">Bekijk projecten ↗</a>
+            </div>
+            <div class="service-hero-reviews reviews-inline">
+              <div class="review-avatars">
+                <div class="review-avatar"></div>
+                <div class="review-avatar"></div>
+                <div class="review-avatar"></div>
+              </div>
+              <div class="stars">★★★★★</div>
+              <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
+            </div>
+          </div>
+
+          {s.heroImage && (
+            <div class="service-hero-media">
+              <Image
+                src={s.heroImage}
+                alt={`${s.shortTitle ?? s.title} — Froseo`}
+                class="service-hero-img"
+                widths={[640, 960, 1280, 1600]}
+                sizes="(max-width: 1024px) 100vw, 640px"
+                loading="eager"
+                fetchpriority="high"
+              />
+            </div>
+          )}
+        </div>
+      </section>
+
+      <!-- Logo carousel — proof / brand recognition direct na hero -->
+      <LogosTicker />
+
+      <!-- ============================================================
+           Propositie-paden — bv. Maatwerk vs. Abonnement
+           ============================================================ -->
+      {s.propositionPaths && s.propositionPaths.length > 0 && (
+        <section class="service-paths">
+          <div class="service-paths-head">
+            <EyebrowPill>Kies je route</EyebrowPill>
+            <h2 class="service-paths-title">
+              {s.propositionPaths.length === 2
+                ? <>Maatwerk of <em>abonnement.</em></>
+                : `${s.propositionPaths.length} manieren om dit te doen.`}
+            </h2>
+            <p class="service-paths-lead">
+              Volledig maatwerk waarin we vanaf de basis bouwen, of een doordachte basis voor één vast bedrag per maand. Beide leveren een professionele site die bij je merk past. Het verschil zit in tempo, prijs en hoeveel je zelf bepaalt.
+            </p>
+          </div>
+          <div class={`service-paths-grid count-${s.propositionPaths.length}`}>
+            {s.propositionPaths.map((p) => (
+              <article class={`service-path-card ${p.isFeatured ? 'is-featured' : ''}`}>
+                {p.tag && <span class="service-path-tag">{interpolate(p.tag)}</span>}
+                <h3 class="service-path-title">{p.title}</h3>
+                <p class="service-path-body">{interpolate(p.body)}</p>
+                {p.checks && p.checks.length > 0 && (
+                  <ul class="service-path-checks">
+                    {p.checks.map((c) => (
+                      <li>
+                        <span class="check-icon" aria-hidden="true">✓</span>
+                        <span>{interpolate(c)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- ============================================================
+           Visuele showcase — websites die we bouwden (statisch grid)
+           ============================================================ -->
+      {showcaseCases.length > 0 && (
+        <WebsitesShowcase
+          cases={showcaseCases}
+          eyebrow={s.showcaseEyebrow}
+          title={s.showcaseTitle}
+          titleAccent={s.showcaseTitleAccent}
+          featured={showcaseFeatured}
+        />
+      )}
+
+      <!-- ============================================================
+           Body / "Wat we doen" — markdown content
+           ============================================================ -->
+      <section class="service-body">
+        <div class="service-body-inner">
+          <Content />
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Spotlights — 2-koloms tekst+image cross-sell secties
+           Image-positie wisselt per index voor visueel ritme.
+           ============================================================ -->
+      {s.spotlights && s.spotlights.length > 0 && (
+        <section class="service-spotlights">
+          {s.spotlights.map((sp, i) => (
+            <div class={`service-spotlight ${i % 2 === 1 ? 'is-reversed' : ''}`}>
+              <div class="service-spotlight-text">
+                {sp.eyebrow && <EyebrowPill variant="rare">{sp.eyebrow}</EyebrowPill>}
+                <h2 class="service-spotlight-title">{sp.title}</h2>
+                <p class="service-spotlight-body">{interpolate(sp.body)}</p>
+                {sp.link && (
+                  <a class="btn-primary service-spotlight-cta" href={sp.link.href}>
+                    {sp.link.label} ↗
+                  </a>
+                )}
+              </div>
+              <div class="service-spotlight-media">
+                <Image
+                  src={sp.image}
+                  alt={sp.title}
+                  class="service-spotlight-img"
+                  widths={[400, 600, 800, 1000]}
+                  sizes="(max-width: 1024px) 100vw, 540px"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          ))}
+        </section>
+      )}
+
+      <!-- ============================================================
+           Pijlers — accordion-deep-dive (technisch / content / etc.)
+           Houdt de pagina scannable maar levert lengte voor SEO-body.
+           ============================================================ -->
+      {s.pillars && s.pillars.length > 0 && (
+        <section class="service-pillars">
+          <div class="service-pillars-head">
+            <EyebrowPill>Onder de motorkap</EyebrowPill>
+            <h2 class="service-pillars-title">
+              {s.pillarsTitle ?? <>Wat dit <em>inhoudt.</em></>}
+            </h2>
+          </div>
+          <div class="service-pillars-list">
+            {s.pillars.map((p, i) => (
+              <details class="service-pillar-item" open={i === 0}>
+                <summary>
+                  <span class="pillar-num">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="pillar-title">{p.title}</span>
+                  <span class="pillar-ico" aria-hidden="true">+</span>
+                </summary>
+                <div class="pillar-body">
+                  <p>{interpolate(p.body)}</p>
+                  {p.link && <a class="pillar-link" href={p.link.href}>{p.link.label} ↗</a>}
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Inline persoonlijke note — earlier-page personality-anchor. -->
+      <CalvinNote />
+
+      <!-- ============================================================
+           Aanpak (4 stappen) — full-bleed donker blok
+           ============================================================ -->
+      {s.approachSteps && s.approachSteps.length > 0 && (
+        <section class="service-approach">
+          <div class="service-approach-inner">
+            <div class="service-approach-head">
+              <EyebrowPill>Aanpak</EyebrowPill>
+              <h2 class="service-approach-title">
+                Hoe we dit <em>aanpakken.</em>
+              </h2>
+            </div>
+            <ol class="service-approach-steps">
+              {s.approachSteps.map((step, i) => (
+                <li class="service-approach-step">
+                  <div class="step-num">{String(i + 1).padStart(2, '0')}</div>
+                  <div class="step-content">
+                    <h3 class="step-title">{step.title}</h3>
+                    <p class="step-body">{interpolate(step.body)}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
+
+      <!-- ============================================================
+           Waarom Froseo — USPs grid
+           ============================================================ -->
+      {s.usps && s.usps.length > 0 && (
+        <section class="service-usps">
+          <div class="service-usps-head">
+            <EyebrowPill variant="rare">Waarom Froseo</EyebrowPill>
+            <h2 class="service-usps-title">
+              Wat ons <em>onderscheidt.</em>
+            </h2>
+          </div>
+          <div class="service-usps-grid">
+            {s.usps.map((u, i) => (
+              <article class={`service-usp-card usp-${i % 4}`}>
+                <h3 class="usp-title">{u.title}</h3>
+                <p class="usp-body">{interpolate(u.body)}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- ============================================================
+           Cases met deze dienst — auto-gefilterd
+           ============================================================ -->
+      <!-- (Cases-detail block verwijderd uit service-template: WebsitesShowcase
+           hierboven is de single projecten-block. "Alle projecten ↗" CTA zit
+           daar al in. Voorkomt duplicate projecten-content op één pagina.) -->
+
+      <BetterCallCalvin
+        eyebrow="Een gesprek inplannen?"
+        titleLine1="Klaar om dit"
+        titleAccent="te bespreken?"
+        body={[
+          `Wil je weten of ${s.shortTitle ?? s.title} bij jouw bedrijf past? Plan een vrijblijvende kennismaking van 30 minuten. We kijken samen waar je staat en wat een logische volgende stap is.`,
+          'Natuurlijk geheel vrijblijvend. Past het niet, dan zeggen we dat eerlijk.'
+        ]}
+      />
+    </article>
+
+    <!-- FAQ na de close-CTA, in dezelfde styling als de homepage. -->
+    {s.faqs && s.faqs.length > 0 && (
+      <FAQ items={s.faqs} />
+    )}
+  </main>
+  <Footer />
+</BaseLayout>

@@ -7,7 +7,7 @@ type: SEO + Content
 tags:
   - { label: SEO/GEO, color: primary }
   - { label: Lokale SEO, color: rare }
-  - { label: Content, color: light }
+  - { label: Webdesign, color: light }
 result: '+180%'
 metrics:
   - { value: '+180%', label: 'Organisch verkeer' }

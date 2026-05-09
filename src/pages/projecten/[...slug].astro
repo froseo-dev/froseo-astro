@@ -71,76 +71,81 @@ const galleryCount = galleryImages.length;
   <Nav />
   <main>
     <article class="case-page">
-      <!-- Hero -->
+      <!-- Hero — title bovenaan full-width, daaronder 2/3 image + 1/3 sidebar -->
       <section class="case-page-hero">
-        <div class="case-page-hero-text">
+        <header class="case-page-hero-headline">
           <EyebrowPill variant="rare">{c.type}</EyebrowPill>
           <h1 class="case-page-title">
             {c.client} <em>{c.tagline}</em>
           </h1>
-          {c.description && <p class="case-page-lead">{c.description}</p>}
+        </header>
 
-          <ul class="case-page-meta">
-            {c.industry && (
-              <li><span class="meta-label">Branche</span><span class="meta-value">{c.industry}</span></li>
-            )}
-            {c.location && (
-              <li><span class="meta-label">Locatie</span><span class="meta-value">{c.location}</span></li>
-            )}
-            {c.tags && c.tags.length > 0 && (
-              <li>
-                <span class="meta-label">Werk</span>
-                <span class="meta-value meta-tags">
-                  {c.tags.map((t) => <span class={`case-tag ${t.color}`}>{t.label}</span>)}
-                </span>
-              </li>
-            )}
-          </ul>
+        <div class="case-page-hero-grid">
+          <div class="case-page-hero-media">
+            <button type="button" class="case-page-hero-main" data-gallery-main aria-label={`Bekijk ${galleryImages[0].alt} fullscreen`}>
+              <img
+                src={galleryImages[0].main}
+                alt={galleryImages[0].alt}
+                class="case-page-hero-img"
+                data-gallery-main-img
+                loading="eager"
+              />
+              {heroMetric && (
+                <div class="case-page-hero-badge" aria-hidden="true">
+                  <span class="badge-value">{heroMetric.value}</span>
+                  <span class="badge-label">{heroMetric.label}</span>
+                </div>
+              )}
+              <div class="case-page-hero-zoom" aria-hidden="true">⤢</div>
+            </button>
 
-          <div class="case-page-hero-actions">
-            {c.liveUrl && (
-              <a class="btn-primary case-page-live" href={c.liveUrl} target="_blank" rel="noopener noreferrer">
-                Bezoek website ↗
-              </a>
-            )}
-          </div>
-        </div>
-
-        <div class="case-page-hero-media">
-          <button type="button" class="case-page-hero-main" data-gallery-main aria-label={`Bekijk ${galleryImages[0].alt} fullscreen`}>
-            <img
-              src={galleryImages[0].main}
-              alt={galleryImages[0].alt}
-              class="case-page-hero-img"
-              data-gallery-main-img
-              loading="eager"
-            />
-            {heroMetric && (
-              <div class="case-page-hero-badge" aria-hidden="true">
-                <span class="badge-value">{heroMetric.value}</span>
-                <span class="badge-label">{heroMetric.label}</span>
+            {galleryCount > 1 && (
+              <div class="case-page-hero-thumbs" role="tablist" aria-label="Screenshots">
+                {galleryImages.map((g, i) => (
+                  <button
+                    type="button"
+                    class={`case-page-hero-thumb ${i === 0 ? 'is-active' : ''}`}
+                    role="tab"
+                    aria-selected={i === 0 ? 'true' : 'false'}
+                    aria-label={`Toon ${g.alt}`}
+                    data-gallery-thumb
+                    data-gallery-index={i}
+                  >
+                    <img src={g.thumb} alt="" loading="lazy" />
+                  </button>
+                ))}
               </div>
             )}
-            <div class="case-page-hero-zoom" aria-hidden="true">⤢</div>
-          </button>
+          </div>
 
-          {galleryCount > 1 && (
-            <div class="case-page-hero-thumbs" role="tablist" aria-label="Screenshots">
-              {galleryImages.map((g, i) => (
-                <button
-                  type="button"
-                  class={`case-page-hero-thumb ${i === 0 ? 'is-active' : ''}`}
-                  role="tab"
-                  aria-selected={i === 0 ? 'true' : 'false'}
-                  aria-label={`Toon ${g.alt}`}
-                  data-gallery-thumb
-                  data-gallery-index={i}
-                >
-                  <img src={g.thumb} alt="" loading="lazy" />
-                </button>
-              ))}
+          <aside class="case-page-hero-sidebar">
+            {c.description && <p class="case-page-lead">{c.description}</p>}
+
+            <div class="case-page-hero-actions">
+              {c.liveUrl && (
+                <a class="btn-primary case-page-live" href={c.liveUrl} target="_blank" rel="noopener noreferrer">
+                  Bezoek website ↗
+                </a>
+              )}
             </div>
-          )}
+
+            <ul class="case-page-meta">
+              {c.industry && (
+                <li><span class="meta-label">Branche</span><span class="meta-value">{c.industry}</span></li>
+              )}
+              {c.location && (
+                <li><span class="meta-label">Locatie</span><span class="meta-value">{c.location}</span></li>
+              )}
+              {c.tags && c.tags.length > 0 && (
+                <li>
+                  <span class="meta-label">Werk</span>
+                  <span class="meta-value meta-tags">
+                    {c.tags.map((t) => <span class={`case-tag ${t.color}`}>{t.label}</span>)}
+                  </span>
+                </li>
+              )}
+            </ul>
+          </aside>
         </div>
       </section>
 
@@ -196,7 +201,7 @@ const galleryCount = galleryImages.length;
         </section>
       )}
 
-      <!-- Diensten ingezet — compacte pill-row met internal links naar /diensten/x -->
+      <!-- Diensten ingezet — compacte pill-row met internal links naar /x -->
       {servicesUsed.length > 0 && (
         <section class="case-page-services">
           <div class="case-page-services-head">
@@ -207,7 +212,7 @@ const galleryCount = galleryImages.length;
           </div>
           <div class="service-pills">
             {servicesUsed.map((s) => (
-              <a class={`service-pill ${s.data.shadow}-pill`} href={`/diensten/${s.data.slug}`}>
+              <a class={`service-pill ${s.data.shadow}-pill`} href={`/${s.data.slug}`}>
                 <span class="service-pill-icon" aria-hidden="true">{s.data.icon}</span>
                 <span class="service-pill-body">
                   <span class="service-pill-eyebrow">{s.data.eyebrow}</span>
@@ -269,8 +274,8 @@ const galleryCount = galleryImages.length;
       titleLine1="Ook groeien zoals"
       titleAccent={`${c.client}?`}
       body={[
-        `Wil je weten of een vergelijkbare aanpak ook voor jou werkt? Plan een vrijblijvend gesprek met Calvin — geen verkooppraatje, wel concrete inzichten.`,
-        `In 30 minuten kijken we samen naar je website, vindbaarheid en groeikansen.`,
+        `Wil je weten of een vergelijkbare aanpak ook voor jou werkt? Plan een kennismaking van 30 minuten met Calvin. We kijken samen naar je website, vindbaarheid en groeikansen.`,
+        `Natuurlijk geheel vrijblijvend. Past het niet, dan zeggen we dat eerlijk.`,
       ]}
     />
   </main>

@@ -1,5 +1,6 @@
 ---
 import EyebrowPill from '../ui/EyebrowPill.astro';
+import { pricing } from '@data/site-config';
 
 interface Props {
   eyebrow?: string;
@@ -13,10 +14,10 @@ interface Props {
 
 const {
   eyebrow = 'Nieuw · AI-powered website',
-  amount = '€99',
-  unit = '/maand',
+  amount = pricing.abboFromAmount,
+  unit = `/${pricing.abboFromUnit}`,
   title = 'Een complete website met AI onder de motorkap.',
-  body = 'Ideaal voor ondernemers die zorgeloos hun website willen hebben. €99/m is de instap — verschillende pakketten beschikbaar, met custom maatwerk op aanvraag voor wie meer wil. Altijd transparant, vaak lager dan wat andere bureaus puur voor hosting rekenen.',
+  body = `Ideaal voor ondernemers die zorgeloos hun website willen hebben. ${pricing.abboFromShort} is de instap, met verschillende pakketten beschikbaar en custom maatwerk op aanvraag voor wie meer wil. Altijd transparant, vaak lager dan wat andere bureaus puur voor hosting rekenen.`,
   ctaLabel = 'Bekijk de pakketten ↗',
   ctaHref = '/contact',
 } = Astro.props;

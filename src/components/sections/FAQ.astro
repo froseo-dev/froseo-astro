@@ -1,32 +1,47 @@
 ---
 import { getCollection } from 'astro:content';
 import EyebrowPill from '../ui/EyebrowPill.astro';
+import { interpolate } from '@data/site-config';
+
+interface FaqItem { q: string; a: string; }
 
 interface Props {
   eyebrow?: string;
   titleLine1?: string;
   titleAccent?: string;
+  /** Custom FAQ items (per-pagina). Als afwezig: pakt de generieke FAQ-collection
+      die op de homepage wordt gebruikt. Zo deelt elke pagina dezelfde styling
+      maar kan inhoud per pagina verschillen. */
+  items?: FaqItem[];
 }
 
 const {
   eyebrow = 'Veelgestelde vragen',
   titleLine1 = 'Nog',
   titleAccent = 'vragen?',
+  items,
 } = Astro.props;
 
-const faq = (await getCollection('faq')).sort((a, b) => a.data.order - b.data.order);
+/* Resolve items: prop > collection-fallback. Normaliseer naar { q, a } shape. */
+let resolved: FaqItem[];
+if (items && items.length > 0) {
+  resolved = items;
+} else {
+  const collection = (await getCollection('faq')).sort((a, b) => a.data.order - b.data.order);
+  resolved = collection.map((c) => ({ q: c.data.question, a: c.data.answer }));
+}
 
 /* JSON-LD FAQPage schema — every Q/A becomes a Question entity Google can
-   surface as a rich result. Single source: same content collection. */
+   surface as a rich result. Werkt op zowel collection-FAQ als per-pagina items. */
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faq.map((item) => ({
+  mainEntity: resolved.map((item) => ({
     '@type': 'Question',
-    name: item.data.question,
+    name: interpolate(item.q),
     acceptedAnswer: {
       '@type': 'Answer',
-      text: item.data.answer,
+      text: interpolate(item.a),
     },
   })),
 };
@@ -42,18 +57,29 @@ const faqSchema = {
         {titleLine1} <em>{titleAccent}</em>
       </h2>
     </div>
-    <div class="faq-list">
-      {
-        faq.map((item, i) => (
-          <details class="faq-item" open={i === 0}>
-            <summary>
-              {item.data.question}
-              <span class="ico">+</span>
-            </summary>
-            <div class="answer">{item.data.answer}</div>
-          </details>
-        ))
-      }
-    </div>
+    <!-- Splits items in 2 onafhankelijke kolommen — voorkomt dat een
+         opening/sluiting van een item in kolom-1 items in kolom-2 doet
+         verschuiven (probleem met CSS column-count). -->
+    {(() => {
+      const half = Math.ceil(resolved.length / 2);
+      const cols = [resolved.slice(0, half), resolved.slice(half)];
+      return (
+        <div class="faq-list">
+          {cols.map((col, ci) => (
+            <div class="faq-col">
+              {col.map((item, i) => (
+                <details class="faq-item" open={ci === 0 && i === 0}>
+                  <summary>
+                    {interpolate(item.q)}
+                    <span class="ico">+</span>
+                  </summary>
+                  <div class="answer">{interpolate(item.a)}</div>
+                </details>
+              ))}
+            </div>
+          ))}
+        </div>
+      );
+    })()}
   </div>
 </section>

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import EyebrowPill from '../ui/EyebrowPill.astro';
+import { interpolate } from '@data/site-config';
 
 interface Props {
   eyebrow?: string;
@@ -38,13 +39,13 @@ const services = (await getCollection('services', ({ data }) => data.featured))
   <div class="services-grid">
     {
       services.map((service) => (
-        <a href={`/diensten/${service.data.slug}`} class={`service-card ${service.data.shadow}-shadow`}>
+        <a href={`/${service.data.slug}`} class={`service-card ${service.data.shadow}-shadow`}>
           <div class="service-icon">{service.data.icon}</div>
           <div class="service-num">{service.data.eyebrow}</div>
           <h3 class="service-title">{service.data.title}</h3>
           <p class="service-desc">{service.data.description}</p>
           <ul class="service-list">
-            {service.data.bullets.map((b) => <li>{b}</li>)}
+            {service.data.bullets.map((b) => <li>{interpolate(b)}</li>)}
           </ul>
           <div class="service-arrow">↗</div>
         </a>
