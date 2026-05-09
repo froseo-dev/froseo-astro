@@ -79,7 +79,15 @@ const services = defineCollection({
     heroLead: z.string().optional(),
     /** Optionele h1-tagline (em-block onder de main h1). */
     heroAccent: z.string().optional(),
-    /** Twee/drie "paden" om de dienst af te nemen — bv. maatwerk vs. abonnement. */
+    /** Section-overrides voor het propositionPaths-blok. Wanneer leeg gebruikt
+        het template defaults (eyebrow "Kies je route", title "Maatwerk of
+        abonnement"). Bij pakketten of een ander narratief: zet hier eigen copy. */
+    proposalsEyebrow: z.string().optional(),
+    proposalsTitle: z.string().optional(),
+    proposalsLead: z.string().optional(),
+
+    /** Twee/drie "paden" om de dienst af te nemen — bv. maatwerk vs. abonnement,
+        of een pakket-tier (Beheer/Groei/Pro). */
     propositionPaths: z
       .array(
         z.object({

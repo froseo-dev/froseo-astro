@@ -108,14 +108,16 @@ const pageDesc = s.description;
       {s.propositionPaths && s.propositionPaths.length > 0 && (
         <section class="service-paths">
           <div class="service-paths-head">
-            <EyebrowPill>Kies je route</EyebrowPill>
+            <EyebrowPill>{s.proposalsEyebrow ?? 'Kies je route'}</EyebrowPill>
             <h2 class="service-paths-title">
-              {s.propositionPaths.length === 2
-                ? <>Maatwerk of <em>abonnement.</em></>
-                : `${s.propositionPaths.length} manieren om dit te doen.`}
+              {s.proposalsTitle
+                ? interpolate(s.proposalsTitle)
+                : s.propositionPaths.length === 2
+                  ? <>Maatwerk of <em>abonnement.</em></>
+                  : `${s.propositionPaths.length} pakketten op een rij.`}
             </h2>
             <p class="service-paths-lead">
-              Volledig maatwerk waarin we vanaf de basis bouwen, of een doordachte basis voor één vast bedrag per maand. Beide leveren een professionele site die bij je merk past. Het verschil zit in tempo, prijs en hoeveel je zelf bepaalt.
+              {s.proposalsLead ?? 'Volledig maatwerk waarin we vanaf de basis bouwen, of een doordachte basis voor één vast bedrag per maand. Beide leveren een professionele site die bij je merk past. Het verschil zit in tempo, prijs en hoeveel je zelf bepaalt.'}
             </p>
           </div>
           <div class={`service-paths-grid count-${s.propositionPaths.length}`}>

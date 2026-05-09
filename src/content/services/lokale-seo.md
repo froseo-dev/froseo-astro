@@ -25,24 +25,40 @@ showcaseFeatured:
   caseSlug: top-dakdekker
   headline: 'Hoe Top Dakdekker al 4 jaar lang #1 staat in Zeist.'
 
+proposalsEyebrow: 'Pakketten'
+proposalsTitle: 'Drie pakketten, één doel: lokaal scoren.'
+proposalsLead: 'Lokale SEO werkt het beste met doorlopend beheer. Daarom werken we hier alleen met vaste maandelijkse pakketten. Je kiest het niveau dat past bij je ambitie en concurrentie. Doorgroeien tussen pakketten kan op elk moment.'
+
 propositionPaths:
-  - title: Lokale SEO-traject
-    tag: Eenmalig of in fases
-    body: 'Volledige analyse van je lokale aanwezigheid en optimalisatie van alles wat ertoe doet: Google Business Profile, NAP-consistentie, lokale content en technische signalen. Voor wie nu nog onzichtbaar is in eigen regio en serieus wil starten.'
+  - title: Lokaal Beheer
+    tag: '€400 per maand'
+    body: 'Je profiel werkt zoals het hoort. Volledig beheer van je Google Business Profile zodat het actief, volledig en up-to-date blijft. Voor bedrijven die nu nog niets aan lokale SEO doen en de basis goed willen neerzetten.'
     checks:
-      - Audit van Google Business Profile en lokale rankings
-      - NAP-cleanup en citation building
-      - Lokale landingspagina's per regio of plaats
-      - Schema.org markup voor LocalBusiness
+      - Beheer en updates van je Google Business Profile
+      - 4 lokale posts per maand in je profiel
+      - Reageren op reviews en Q&A
+      - Review-systeem met QR-kaartjes voor klanten
+      - Maandrapportage met basisstatistieken
+    isFeatured: false
+  - title: Lokaal Groei
+    tag: '€800 per maand'
+    body: 'Je gaat stijgen in zichtbaarheid. Bovenop het beheer optimaliseren we je website lokaal en sturen we actief op rankings in Google Maps en lokale zoekresultaten. De meest gekozen optie voor groeiende bedrijven.'
+    checks:
+      - Alles uit Lokaal Beheer
+      - On-page optimalisatie voor lokale zoektermen
+      - Technische verbeteringen die Maps-rankings beïnvloeden
+      - Concurrent-analyse en strategische bijsturing
+      - Uitgebreide maandrapportage met rankings en benchmarks
     isFeatured: true
-  - title: Lokale SEO-abonnement
-    tag: Doorlopend onderhoud
-    body: 'Continue optimalisatie en monitoring zodat je positie in Google Maps stabiel blijft of verder groeit. Inclusief reviews-strategie, posts in Google Business Profile en concurrent-monitoring.'
+  - title: Lokaal Pro
+    tag: 'Vanaf €1000 per maand'
+    body: 'Je pakt meerdere posities en wordt dominanter. Voor bedrijven die actief bovenaan willen staan en meerdere zoekwoorden of regio''s tegelijk willen claimen.'
     checks:
-      - Maandelijks rankings monitoren in jouw regio
-      - Google Business Profile bijhouden (posts, foto''s, Q&A)
-      - Review-strategie en respons-management
-      - Lokale concurrent-analyse en bijsturing
+      - Alles uit Lokaal Groei
+      - Lichte linkbuilding en digital PR
+      - Citation building op relevante directories
+      - Content-uitbreiding met extra lokale landingspagina''s
+      - Strategische sessie per kwartaal
 
 pillarsTitle: 'Waar lokale SEO uit bestaat.'
 pillars:
@@ -72,8 +88,8 @@ approachSteps:
 usps:
   - title: Lokale SEO als eigen specialisatie
     body: 'Veel bureaus pakken lokale SEO als een addendum bij algemene SEO. Wij behandelen het als eigen specialisatie met eigen pijlers, eigen meting en eigen strategie. Dat hoor je terug in de resultaten en in onze rapportages.'
-  - title: Echte Utrechtse aanwezigheid
-    body: 'We zitten zelf in Utrecht en kennen de regio en de markt. Of je nu klanten zoekt in Utrecht, Amersfoort, Hilversum, Zeist, Maarssen of verder: we weten welke lokale signalen werken en welke directories en platforms voor jouw branche relevant zijn.'
+  - title: Werkbaar voor heel Nederland
+    body: 'We zijn niet beperkt tot één regio. Onze lokale SEO-aanpak werkt voor bedrijven door heel Nederland, van Groningen tot Maastricht. De pijlers zijn universeel, de implementatie passen we aan op jouw specifieke markt en concurrentie.'
   - title: Doorlopend, niet één keer optimaliseren
     body: 'Lokale rankings veranderen constant. Concurrenten worden actiever, Google past algoritmes aan, reviews komen erbij. Wij zien lokale SEO als doorlopend proces, niet als een one-time-fix die je over zes maanden weer inhaalt.'
   - title: Concrete cijfers, geen vage groei-praat
