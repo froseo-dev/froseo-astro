@@ -195,8 +195,11 @@ main { display: contents; }
 .eyebrow-pill .star     { color: var(--accent-highlight); }
 .eyebrow-pill.on-dark   { box-shadow: 4px 4px 0 var(--accent-rare); }
 
-/* Hero eyebrow gets its own colorway via --hero-eyebrow-* tokens. */
-.hero-left .eyebrow-pill {
+/* Hero eyebrow gets its own colorway via --hero-eyebrow-* tokens.
+   Geldt voor homepage hero én service-hero zodat alle hero-pills
+   dezelfde brand-look hebben. */
+.hero-left .eyebrow-pill,
+.service-hero-text .eyebrow-pill {
   background: var(--hero-eyebrow-bg);
   white-space: nowrap;
   max-width: 100%;
@@ -2933,8 +2936,16 @@ main { display: contents; }
 }
 
 @media (max-width: 640px) {
-  .topbar { padding: 10px var(--gutter-mobile); font-size: 10px; }
-  .nav { padding: 14px var(--gutter-mobile); }
+  /* Mobiele menu-balk slanker — Topbar + Nav samen waren te dik. */
+  .topbar { padding: 7px var(--gutter-mobile); font-size: 10px; letter-spacing: 0.08em; }
+  .nav { padding: 10px var(--gutter-mobile); }
+  .nav-cta { padding: 8px 14px; font-size: 12px; box-shadow: 2px 2px 0 var(--line-color); }
+  .menu-toggle { width: 42px; height: 42px; border-radius: 10px; box-shadow: 2px 2px 0 var(--line-color); }
+  .menu-toggle-bar:nth-child(1) { top: 13px; width: 20px; }
+  .menu-toggle-bar:nth-child(2) { top: 19px; width: 14px; }
+  .menu-toggle-bar:nth-child(3) { top: 25px; width: 20px; }
+  .menu-toggle[aria-expanded='true'] .menu-toggle-bar:nth-child(1) { top: 19px; width: 20px; }
+  .menu-toggle[aria-expanded='true'] .menu-toggle-bar:nth-child(3) { top: 19px; width: 20px; }
   .nav-links { display: none; }
   .hero-wrap { padding: 28px var(--gutter-mobile) 72px; }
   .hero-title { font-size: clamp(44px, 9.5vw, 72px); }
@@ -4955,9 +4966,13 @@ main { display: contents; }
   background-position: center, 0 0, 0 0;
 }
 
-/* --- Hero — center-aligned by default, 2-koloms wanneer .has-image --- */
+/* --- Hero — center-aligned by default, 2-koloms wanneer .has-image.
+   Spacing & title-scale matchen de homepage hero (Hero.astro) zodat de
+   service-hero hetzelfde geoptimaliseerde gevoel heeft als de homepage.
+   Eyebrow-pill → expliciete margin-bottom op pill (24px, via .eyebrow-pill
+   default). Daarna ritme via margin-bottom per element, niet via gap. */
 .service-hero {
-  padding: 88px var(--gutter) 64px;
+  padding: 48px var(--gutter) 56px;
 }
 .service-hero-inner {
   max-width: var(--container-max);
@@ -4967,14 +4982,16 @@ main { display: contents; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 22px;
   text-align: center;
 }
 /* Met hero-image: 2-koloms (text + visual) */
 .service-hero.has-image .service-hero-inner {
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 56px;
+  /* 2fr 1fr ipv 1.5fr 1fr — tekstkolom krijgt meer ruimte zodat
+     langere h1's ("Website onderhoud zonder kopzorgen.") in 2 regels
+     passen i.p.v. elke woord op een nieuwe regel. */
+  grid-template-columns: 2fr 1fr;
+  gap: 48px;
   align-items: center;
 }
 .service-hero.has-image .service-hero-text {
@@ -4994,60 +5011,75 @@ main { display: contents; }
 }
 .service-hero-title {
   font-family: var(--font-display);
-  font-size: clamp(40px, 5.4vw, 84px);
+  /* Cap op 84px (niet 102px zoals homepage). Homepage forceert
+     regelafbreking via expliciete <br>; service-hero rendert h1 als
+     één string + inline em, dus moeten woorden natuurlijk kunnen
+     wrappen zonder vier-regel-rampen bij langere titels. */
+  font-size: clamp(48px, 7vw, 84px);
   line-height: 0.98;
   font-weight: 900;
   letter-spacing: -0.03em;
   color: var(--text-primary);
-  margin: 0;
+  margin: 0 0 28px;
 }
+/* Default: accent inline na de titel (cleurig splitsen binnen één zin). */
 .service-hero-title em {
   font-style: normal;
   color: var(--color-teal);
+  display: inline;
+}
+/* Block-accent variant: zet de teal-zin op een nieuwe regel onder
+   de titel-zin. Voor lange koppen waar titel + accent samen niet
+   op één regel passen. Activeer via frontmatter `heroAccentBlock: true`. */
+.service-hero-title.accent-block em {
   display: block;
-  font-size: clamp(28px, 3.6vw, 56px);
-  line-height: 1.1;
-  margin-top: 8px;
-  letter-spacing: -0.02em;
+  margin-top: 6px;
+  line-height: 0.98;
 }
 .service-hero-lead {
   font-size: 18px;
-  line-height: 1.6;
+  line-height: 1.55;
   color: var(--text-primary);
-  opacity: 0.85;
-  max-width: 620px;
-  margin: 0;
+  max-width: 520px;
+  margin: 0 0 32px;
+  font-weight: 400;
 }
 .service-hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
   justify-content: center;
-  margin-top: 8px;
+  margin: 0 0 28px;
 }
 .service-hero-reviews {
-  margin-top: 18px;
   justify-content: center;
 }
 /* In has-image variant left-aligned ipv center */
 .service-hero.has-image .service-hero-actions { justify-content: flex-start; }
 .service-hero.has-image .service-hero-reviews { justify-content: flex-start; }
 
-/* Hero USP-checks (homepage-stijl met magenta vinkjes) */
+/* USP-checks: 1:1 spiegel van .hero-bullets zodat de styling identiek is.
+   Magenta vinkjes erven via --accent-rare default (geen scope-override
+   nodig op de hero want we willen dáár juist pink houden — zie memory
+   feedback_brand_color_teal.md). */
 .service-hero-checks {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin: 0;
+  gap: 12px;
+  margin: 0 0 32px;
   padding: 0;
   max-width: 520px;
+  /* Het ul-blok wordt door de flex-parent (.service-hero-text) gecentreerd
+     wanneer die align-items:center heeft. Binnenin altijd left-aligned
+     zodat de checks netjes onder elkaar staan, ook bij wrapping. */
+  text-align: left;
 }
 .service-hero-checks li {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   align-items: flex-start;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.45;
   font-weight: 500;
   color: var(--text-primary);
@@ -5056,7 +5088,7 @@ main { display: contents; }
   content: '✓';
   color: var(--accent-rare);
   font-weight: 900;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1;
   flex-shrink: 0;
   margin-top: 1px;
@@ -6154,12 +6186,14 @@ main { display: contents; }
 
 /* --- Responsive --- */
 @media (max-width: 1024px) {
-  .service-hero { padding: 56px var(--gutter) 48px; }
+  .service-hero { padding: 36px var(--gutter) 48px; }
   .service-hero.has-image .service-hero-inner { grid-template-columns: 1fr; gap: 36px; }
   .service-hero.has-image .service-hero-text { align-items: center; text-align: center; }
   .service-hero.has-image .service-hero-actions { justify-content: center; }
   .service-hero.has-image .service-hero-reviews { justify-content: center; }
   .service-hero-img { max-width: 100%; }
+  .service-hero-title { font-size: clamp(48px, 7.5vw, 76px); margin-bottom: 24px; }
+  .service-hero-text .eyebrow-pill { font-size: 11px; padding: 6px 14px; letter-spacing: 0.08em; }
   .service-paths { padding: 56px var(--gutter); }
   .service-paths-grid.count-2,
   .service-paths-grid.count-3 { grid-template-columns: 1fr; }
@@ -6172,7 +6206,13 @@ main { display: contents; }
   .service-faq { padding: 64px var(--gutter); }
 }
 @media (max-width: 640px) {
-  .service-hero { padding: 40px var(--gutter-mobile) 32px; }
+  .service-hero { padding: 24px var(--gutter-mobile) 48px; }
+  .service-hero-title { font-size: clamp(44px, 9.5vw, 72px); margin-bottom: 22px; }
+  .service-hero-title em { font-size: clamp(26px, 6.5vw, 44px); margin-top: 8px; }
+  .service-hero-checks { margin-bottom: 26px; }
+  .service-hero-checks li { font-size: 16px; }
+  .service-hero-actions { margin-bottom: 22px; }
+  .service-hero-text .eyebrow-pill { font-size: 10px; letter-spacing: 0.06em; padding: 6px 12px; }
   .service-paths { padding: 40px var(--gutter-mobile); }
   .service-path-card { padding: 28px 24px; }
   .service-body { padding: 40px var(--gutter-mobile); }

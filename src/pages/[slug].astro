@@ -73,8 +73,8 @@ const pageDesc = s.description;
       <section class={`service-hero ${s.heroImage ? 'has-image' : ''}`}>
         <div class="service-hero-inner">
           <div class="service-hero-text">
-            <EyebrowPill variant="rare">{s.eyebrow}</EyebrowPill>
-            <h1 class="service-hero-title">
+            <EyebrowPill>{s.heroEyebrow ?? '15+ jaar ervaring · 80+ MKB-projecten'}</EyebrowPill>
+            <h1 class={`service-hero-title${s.heroAccentBlock ? ' accent-block' : ''}`}>
               {s.heroTitle ?? s.title}
               {s.heroAccent && <em>{s.heroAccent}</em>}
             </h1>
@@ -88,9 +88,6 @@ const pageDesc = s.description;
             <div class="service-hero-actions">
               <a class="btn-primary" href={s.heroPrimaryCta?.href ?? '/contact'}>
                 {s.heroPrimaryCta?.label ?? 'Plan een kennismaking ↗'}
-              </a>
-              <a class="btn-ghost" href={s.heroSecondaryCta?.href ?? '/projecten'}>
-                {s.heroSecondaryCta?.label ?? 'Bekijk projecten ↗'}
               </a>
             </div>
             <div class="service-hero-reviews reviews-inline">

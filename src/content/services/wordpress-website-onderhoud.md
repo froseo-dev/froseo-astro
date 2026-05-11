@@ -2,20 +2,19 @@
 slug: wordpress-website-onderhoud
 title: WordPress-onderhoud
 shortTitle: WordPress-onderhoud
-heroTitle: Je WordPress-site in goede handen.
-heroAccent: 'Veilig, snel en altijd bijgewerkt.'
+heroTitle: WordPress-onderhoud
+heroAccent: 'zonder kopzorgen.'
+heroAccentBlock: true
 heroImage: ../../assets/hero/froseo-mockup.webp
+heroEyebrow: '60+ WordPress-sites in beheer'
 heroChecks:
-  - 'Updates op WordPress, plug-ins en thema''s, één voor één gecontroleerd'
-  - Backups die we niet alleen maken maar ook testen
-  - Elementor Pro, WP Rocket en Gravity Forms onder ons agency-account
-  - Bel, mail of WhatsApp ons als er iets niet klopt
+  - Jouw WordPress-site altijd veilig, snel en bijgewerkt
+  - Handmatige updates met automatisch restore-point
+  - Dagelijkse backups en beveiligingsscans
+  - Premium plug-inlicenties t.w.v. €350+/jaar inbegrepen
 heroPrimaryCta:
   label: 'Bekijk pakketten ↓'
   href: '#pakketten'
-heroSecondaryCta:
-  label: 'Vraag advies aan ↗'
-  href: '/contact?onderwerp=advies-wp-onderhoud'
 
 statsRibbon:
   - value: '60+'

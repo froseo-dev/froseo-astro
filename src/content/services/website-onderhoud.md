@@ -2,20 +2,19 @@
 slug: website-onderhoud
 title: Website onderhoud
 shortTitle: Website onderhoud
-heroTitle: Website onderhoud zonder kopzorgen.
-heroAccent: 'Altijd veilig & up-to-date.'
+heroTitle: Website onderhoud
+heroAccent: 'zonder kopzorgen.'
+heroAccentBlock: true
 heroImage: ../../assets/hero/froseo-mockup.webp
+heroEyebrow: '60+ WordPress-sites in beheer'
 heroChecks:
+  - Jouw website altijd veilig, snel en up-to-date
   - Handmatige updates met automatisch restore-point
-  - Dagelijkse backups en beveiligings-scans
-  - Premium plug-in-licenties t.w.v. €350+/jaar inbegrepen
-  - Direct contact met WordPress-specialisten
+  - Dagelijkse backups en beveiligingsscans
+  - Premium plug-inlicenties t.w.v. €350+/jaar inbegrepen
 heroPrimaryCta:
   label: 'Bekijk pakketten ↓'
   href: '#pakketten'
-heroSecondaryCta:
-  label: 'Vraag advies aan ↗'
-  href: '/contact?onderwerp=advies-onderhoud'
 
 statsRibbon:
   - value: '60+'

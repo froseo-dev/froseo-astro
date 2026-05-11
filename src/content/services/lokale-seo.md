@@ -2,10 +2,15 @@
 slug: lokale-seo
 title: Lokale SEO die écht rankt
 shortTitle: Lokale SEO
-heroTitle: Lokale SEO en Google Maps optimalisatie.
-heroAccent: 'Vindbaar zijn waar je klanten zoeken.'
+heroTitle: Lokaal scoren in
+heroAccent: 'Google.'
 heroImage: ../../assets/hero/froseo-mockup.webp
 eyebrow: 'Lokale SEO'
+heroEyebrow: 'Top-3 in Google Maps · klanten in heel NL'
+heroChecks:
+  - Sterk gericht op de top-3 in Google Maps voor jouw regio
+  - Google Business Profile compleet uitgewerkt
+  - Maandelijks bijsturen op rankings en reviews
 description: 'Lokale SEO en Google Maps optimalisatie voor MKB en ZZP. Beter scoren in Google Maps, lokale zoekresultaten en het local pack van jouw regio.'
 icon: '◎'
 shadow: rare
@@ -15,8 +20,6 @@ bullets:
   - Lokale rankings en local pack
   - NAP-consistentie en citations
   - Reviews-strategie en lokale autoriteit
-
-heroLead: 'Tot 80% van de gebruikers bij lokale zoekopdrachten klikt niet voorbij de top-3 in Google Maps. Lokale SEO bepaalt of jij in die top-3 zichtbaar bent voor mensen die nu zoeken naar jouw dienst in jouw regio.'
 
 showcaseEyebrow: 'Lokale resultaten'
 showcaseTitle: 'Lokaal scoren in de'

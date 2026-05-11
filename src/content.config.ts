@@ -81,9 +81,22 @@ const services = defineCollection({
     heroAccent: z.string().optional(),
     /** Als gevuld: rendert USP-checks (homepage-stijl) i.p.v. heroLead. */
     heroChecks: z.array(z.string()).optional(),
-    /** Optionele override voor de hero-knoppen. Zonder override: defaults
-        ("Plan een kennismaking" + "Bekijk projecten") blijven gebruikt. */
+    /** Trust-pill content voor de hero (eyebrow boven de h1). Andere
+        rol dan `eyebrow` (category-label voor services-grid). Bewust
+        kort en geloofwaardig — bv. "15+ JAAR ERVARING · 80+ MKB-PROJECTEN"
+        of een service-specifiek concreet resultaat. Default = homepage-pill. */
+    heroEyebrow: z.string().optional(),
+
+    /** Wanneer true: `heroAccent` rendert op een nieuwe regel onder de
+        titel (block-display) in plaats van inline kleur-split. Voor
+        langere koppen waar titel + accent samen niet op één regel passen
+        (bv. "Website onderhoud zonder kopzorgen."). */
+    heroAccentBlock: z.boolean().default(false),
+
+    /** Optionele override voor de hero-knop. Service-hero toont één CTA. */
     heroPrimaryCta: z.object({ label: z.string(), href: z.string() }).optional(),
+    /** @deprecated Service-hero toont nu één CTA. Veld blijft voor backwards-
+        compatibiliteit maar wordt niet meer gerenderd. */
     heroSecondaryCta: z.object({ label: z.string(), href: z.string() }).optional(),
 
     /** Stats-ribbon — 4 credibility-cijfers naast elkaar (60+ sites, 15+ jaar, etc). */

@@ -2,10 +2,15 @@
 slug: seo
 title: SEO/GEO
 shortTitle: SEO/GEO
-heroTitle: Zoekmachine optimalisatie.
-heroAccent: 'Beter scoren in Google én AI.'
+heroTitle: Zoekmachine
+heroAccent: 'optimalisatie.'
 heroImage: ../../assets/hero/froseo-mockup.webp
 eyebrow: 'Zoekmachine optimalisatie'
+heroEyebrow: 'Scoren in Google en AI'
+heroChecks:
+  - Geen losse SEO-trucjes, maar een compleet plan
+  - Vindbaar in Google, Maps en AI-zoekmachines
+  - Maandelijks bijsturen op rankings, verkeer en aanvragen
 description: 'Techniek, content en autoriteit, in die volgorde. We bouwen SEO-strategieën waar Google én de nieuwe AI-zoekmachines niet omheen kunnen.'
 icon: '⌕'
 shadow: rare
@@ -15,8 +20,6 @@ bullets:
   - Contentstrategie voor SEO en GEO
   - AI-zoekmachine optimalisatie (ChatGPT, Gemini, Perplexity)
   - Linkbuilding en autoriteit-opbouw
-
-heroLead: 'Google verandert constant. AI-zoekmachines zoals ChatGPT en Gemini veranderen het zoekgedrag nog sneller. We bouwen SEO-strategieën die op beide werken, met techniek en content die elkaar versterken. Geen loze beloftes, wel concrete groei.'
 
 showcaseEyebrow: 'Recente cases'
 showcaseTitle: 'Resultaat in de'

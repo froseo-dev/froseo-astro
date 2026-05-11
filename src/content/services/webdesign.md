@@ -2,9 +2,15 @@
 slug: webdesign
 title: Maatwerk webdesign
 shortTitle: Webdesign
-heroTitle: Maatwerk websites in WordPress of Astro.
+heroTitle: Websites
+heroAccent: 'die werken.'
 heroImage: ../../assets/hero/froseo-mockup.webp
 eyebrow: 'Webdesign'
+heroEyebrow: 'AI-powered websites'
+heroChecks:
+  - Een eigen WordPress- of Astro-site zonder standaard template
+  - Strategie, design, SEO, hosting en onderhoud
+  - 'Nieuw: all-inclusive website abonnement vanaf {{abboFromShort}}'
 description: 'Maatwerk websites in WordPress of Astro. Bij je merk passend, snel en mobile-first.'
 icon: '◆'
 shadow: dark
@@ -14,8 +20,6 @@ bullets:
   - WordPress en Astro
   - All-inclusive abonnementen vanaf {{abboFromShort}}
   - Mobile-first, snel en AVG-proof
-
-heroLead: 'Een goede website is meer dan een mooi ontwerp. Hij moet snel laden, logisch werken en de juiste mensen overtuigen om iets te doen. Dat is precies waar wij ons werk van maken.'
 
 showcaseEyebrow: 'Recent werk'
 showcaseTitle: 'Websites die we'

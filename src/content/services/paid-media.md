@@ -2,20 +2,17 @@
 slug: paid-media
 title: Advertenties die leveren
 shortTitle: Paid Media
-heroTitle: Online adverteren.
-heroAccent: 'Sturen op winst, niet op kliks.'
+heroTitle: Online
+heroAccent: 'adverteren.'
 heroImage: ../../assets/hero/froseo-mockup.webp
+heroEyebrow: 'Google Ads · Meta · LinkedIn'
 heroChecks:
-  - Google Ads, Meta en LinkedIn vanuit één team
-  - Sturen op winst en kosten per conversie
-  - Maandrapport in begrijpelijke taal
-  - Vaste maandfee, geen percentage van je budget
+  - Campagnes gericht op omzet, niet alleen op kliks
+  - Meer aanvragen, minder verspild budget
+  - Vaste maandfee, geen percentage van je advertentiebudget
 heroPrimaryCta:
   label: 'Bespreek je campagnes ↗'
   href: '/contact?onderwerp=advies-paid-media'
-heroSecondaryCta:
-  label: 'Bekijk projecten ↗'
-  href: '/projecten'
 
 calvinNote:
   message: 'Draait er ergens al een Google- of Meta-account waarvan je het gevoel hebt dat het beter kan? Stuur ons toegang, dan kijken we ernaar en zeggen we eerlijk wat er aan rendement te halen valt.'
