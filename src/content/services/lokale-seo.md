@@ -5,7 +5,7 @@ shortTitle: Lokale SEO
 heroTitle: Lokale SEO en Google Maps optimalisatie.
 heroAccent: 'Vindbaar zijn waar je klanten zoeken.'
 heroImage: ../../assets/hero/froseo-mockup.webp
-eyebrow: '02 — Lokale SEO'
+eyebrow: 'Lokale SEO'
 description: 'Lokale SEO en Google Maps optimalisatie voor MKB en ZZP. Beter scoren in Google Maps, lokale zoekresultaten en het local pack van jouw regio.'
 icon: '◎'
 shadow: rare

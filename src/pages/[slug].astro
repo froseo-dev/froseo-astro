@@ -9,6 +9,13 @@ import LogosTicker from '@components/sections/LogosTicker.astro';
 import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
 import CalvinNote from '@components/sections/CalvinNote.astro';
 import FAQ from '@components/sections/FAQ.astro';
+import PricingPackages from '@components/sections/PricingPackages.astro';
+import PainPoints from '@components/sections/PainPoints.astro';
+import Comparison from '@components/sections/Comparison.astro';
+import StatsRibbon from '@components/sections/StatsRibbon.astro';
+import CTABand from '@components/sections/CTABand.astro';
+import OnboardingTimeline from '@components/sections/OnboardingTimeline.astro';
+import Testimonial from '@components/sections/Testimonial.astro';
 import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import { interpolate, review } from '@data/site-config';
@@ -24,6 +31,10 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const s = entry.data;
+
+/* Detecteer of de markdown-body content bevat. Bij lege body slaan we
+   de service-body sectie over om geen lege padding-band te tonen. */
+const hasBodyContent = (entry.body ?? '').trim().length > 0;
 
 /* Cases die deze service gebruiken — auto-gefilterd voor de "Cases" sectie. */
 const allCases = await getCollection('cases', ({ data }) => data.published !== false);
@@ -67,10 +78,20 @@ const pageDesc = s.description;
               {s.heroTitle ?? s.title}
               {s.heroAccent && <em>{s.heroAccent}</em>}
             </h1>
-            <p class="service-hero-lead">{interpolate(heroLead)}</p>
+            {s.heroChecks && s.heroChecks.length > 0 ? (
+              <ul class="service-hero-checks">
+                {s.heroChecks.map((c) => <li>{interpolate(c)}</li>)}
+              </ul>
+            ) : (
+              <p class="service-hero-lead">{interpolate(heroLead)}</p>
+            )}
             <div class="service-hero-actions">
-              <a class="btn-primary" href="/contact">Plan een kennismaking ↗</a>
-              <a class="btn-ghost" href="/projecten">Bekijk projecten ↗</a>
+              <a class="btn-primary" href={s.heroPrimaryCta?.href ?? '/contact'}>
+                {s.heroPrimaryCta?.label ?? 'Plan een kennismaking ↗'}
+              </a>
+              <a class="btn-ghost" href={s.heroSecondaryCta?.href ?? '/projecten'}>
+                {s.heroSecondaryCta?.label ?? 'Bekijk projecten ↗'}
+              </a>
             </div>
             <div class="service-hero-reviews reviews-inline">
               <div class="review-avatars">
@@ -103,9 +124,40 @@ const pageDesc = s.description;
       <LogosTicker />
 
       <!-- ============================================================
-           Propositie-paden — bv. Maatwerk vs. Abonnement
+           Onderhouds-pakketten (3 cards + custom-strip + maand/jaar toggle).
+           Renderd alleen wanneer service.showMaintenancePackages = true.
            ============================================================ -->
-      {s.propositionPaths && s.propositionPaths.length > 0 && (
+      {s.showMaintenancePackages && (
+        <PricingPackages
+          eyebrow={s.pricingEyebrow}
+          title={s.pricingTitle}
+          titleAccent={s.pricingTitleAccent}
+          lead={s.pricingLead}
+        />
+      )}
+
+      <!-- ============================================================
+           Stats-ribbon — 4 credibility-cijfers. Rustig proof-strookje
+           tussen pakketten en pain-points.
+           ============================================================ -->
+      {s.statsRibbon && s.statsRibbon.length > 0 && (
+        <StatsRibbon items={s.statsRibbon} />
+      )}
+
+      <!-- ============================================================
+           Optionele testimonial-quote — proof-blok tussen StatsRibbon
+           en PainPoints. Pakt een testimonial-id uit frontmatter.
+           ============================================================ -->
+      {s.testimonialId && (
+        <Testimonial id={s.testimonialId} variant="card" />
+      )}
+
+      <!-- ============================================================
+           Propositie-paden — bv. Maatwerk vs. Abonnement.
+           Voor onderhoud-pagina's gebruiken we PricingPackages hierboven
+           in plaats van propositionPaths.
+           ============================================================ -->
+      {!s.showMaintenancePackages && s.propositionPaths && s.propositionPaths.length > 0 && (
         <section class="service-paths">
           <div class="service-paths-head">
             <EyebrowPill>{s.proposalsEyebrow ?? 'Kies je route'}</EyebrowPill>
@@ -145,7 +197,7 @@ const pageDesc = s.description;
       <!-- ============================================================
            Visuele showcase — websites die we bouwden (statisch grid)
            ============================================================ -->
-      {showcaseCases.length > 0 && (
+      {!s.hideShowcase && showcaseCases.length > 0 && (
         <WebsitesShowcase
           cases={showcaseCases}
           eyebrow={s.showcaseEyebrow}
@@ -155,14 +207,76 @@ const pageDesc = s.description;
         />
       )}
 
+      <!-- Pain-points grid (negatieve framing, visuele urgency) -->
+      {s.painPoints && s.painPoints.length > 0 && (
+        <PainPoints
+          title={s.painPointsTitle}
+          titleAccent={s.painPointsTitleAccent}
+          lead={s.painPointsLead}
+          items={s.painPoints}
+        />
+      )}
+
+      <!-- Met-vs-zonder comparison-blok (CRO-trigger) -->
+      {s.comparison && (
+        <Comparison
+          title={s.comparison.title}
+          titleAccent={s.comparison.titleAccent}
+          withoutLabel={s.comparison.withoutLabel}
+          withLabel={s.comparison.withLabel}
+          items={s.comparison.items}
+        />
+      )}
+
       <!-- ============================================================
-           Body / "Wat we doen" — markdown content
+           Mid-page actie-moment tussen Comparison en Body. Twee opties:
+           - calvinNote (foto + quote + CTA) wanneer service-specifieke
+             prompt nodig is, bv. "niet zeker welk pakket past?"
+           - ctaBand (eyebrow + titel + body + 2 buttons) als algemener
+             tussen-CTA.
+           Als calvinNote gezet is heeft die voorrang en wordt de
+           default-positie na de Pillars overgeslagen.
            ============================================================ -->
-      <section class="service-body">
-        <div class="service-body-inner">
-          <Content />
-        </div>
-      </section>
+      {s.calvinNote ? (
+        <CalvinNote
+          message={s.calvinNote.message}
+          ctaLabel={s.calvinNote.ctaLabel}
+          ctaHref={s.calvinNote.ctaHref}
+        />
+      ) : s.ctaBand ? (
+        <CTABand
+          eyebrow={s.ctaBand.eyebrow}
+          title={s.ctaBand.title}
+          body={s.ctaBand.body}
+          primaryLabel={s.ctaBand.primaryLabel}
+          primaryHref={s.ctaBand.primaryHref}
+          secondaryLabel={s.ctaBand.secondaryLabel}
+          secondaryHref={s.ctaBand.secondaryHref}
+        />
+      ) : null}
+
+      <!-- ============================================================
+           Body / "Wat we doen" — markdown content. Skip de hele sectie
+           wanneer de body leeg is (sommige service-pagina's hebben geen
+           markdown body en gebruiken alleen frontmatter-blokken).
+           ============================================================ -->
+      {hasBodyContent && (
+        <section class="service-body">
+          <div class="service-body-inner">
+            <Content />
+          </div>
+        </section>
+      )}
+
+      <!-- ============================================================
+           Onboarding-tijdslijn — alternatieve render van approachSteps.
+           Verschijnt hier in de pagina-flow (i.p.v. onderaan als cards)
+           wanneer approachStyle='timeline'. De cards-render lager in de
+           pagina wordt dan overgeslagen.
+           ============================================================ -->
+      {s.approachStyle === 'timeline' && s.approachSteps && s.approachSteps.length > 0 && (
+        <OnboardingTimeline items={s.approachSteps} />
+      )}
 
       <!-- ============================================================
            Spotlights — 2-koloms tekst+image cross-sell secties
@@ -206,7 +320,9 @@ const pageDesc = s.description;
           <div class="service-pillars-head">
             <EyebrowPill>Onder de motorkap</EyebrowPill>
             <h2 class="service-pillars-title">
-              {s.pillarsTitle ?? <>Wat dit <em>inhoudt.</em></>}
+              {s.pillarsTitle
+                ? <Fragment set:html={s.pillarsTitle} />
+                : <>Wat dit <em>inhoudt.</em></>}
             </h2>
           </div>
           <div class="service-pillars-list">
@@ -227,13 +343,16 @@ const pageDesc = s.description;
         </section>
       )}
 
-      <!-- Inline persoonlijke note — earlier-page personality-anchor. -->
-      <CalvinNote />
+      <!-- Inline persoonlijke note — default-positie na de Pillars.
+           Wanneer een service een eigen `calvinNote` in frontmatter heeft,
+           is die hierboven al gerenderd op de mid-page slot; dan slaan
+           we hier over om dubbel-rendering te voorkomen. -->
+      {!s.calvinNote && <CalvinNote />}
 
       <!-- ============================================================
            Aanpak (4 stappen) — full-bleed donker blok
            ============================================================ -->
-      {s.approachSteps && s.approachSteps.length > 0 && (
+      {s.approachStyle !== 'timeline' && s.approachSteps && s.approachSteps.length > 0 && (
         <section class="service-approach">
           <div class="service-approach-inner">
             <div class="service-approach-head">
@@ -286,15 +405,29 @@ const pageDesc = s.description;
            hierboven is de single projecten-block. "Alle projecten ↗" CTA zit
            daar al in. Voorkomt duplicate projecten-content op één pagina.) -->
 
-      <BetterCallCalvin
-        eyebrow="Een gesprek inplannen?"
-        titleLine1="Klaar om dit"
-        titleAccent="te bespreken?"
-        body={[
-          `Wil je weten of ${s.shortTitle ?? s.title} bij jouw bedrijf past? Plan een vrijblijvende kennismaking van 30 minuten. We kijken samen waar je staat en wat een logische volgende stap is.`,
-          'Natuurlijk geheel vrijblijvend. Past het niet, dan zeggen we dat eerlijk.'
-        ]}
-      />
+      {s.calvinNote ? (
+        <BetterCallCalvin
+          eyebrow="Advies aanvragen"
+          titleLine1="Vraag vrijblijvend"
+          titleAccent="advies."
+          body={[
+            `Stuur even wat je hebt staan, dan kijken we naar de staat van je site en adviseren we welk pakket past. Of dat een Custom-traject logischer is.`,
+            'Geen verplichtingen. Als jouw situatie niet bij onze pakketten past, zeggen we dat.'
+          ]}
+          primaryLabel="Vraag advies aan ↗"
+          primaryHref="/contact?onderwerp=advies-onderhoud"
+        />
+      ) : (
+        <BetterCallCalvin
+          eyebrow="Een gesprek inplannen?"
+          titleLine1="Klaar om dit"
+          titleAccent="te bespreken?"
+          body={[
+            `Wil je weten of ${s.shortTitle ?? s.title} bij jouw bedrijf past? Plan een vrijblijvende kennismaking van 30 minuten. We kijken samen waar je staat en wat een logische volgende stap is.`,
+            'Natuurlijk geheel vrijblijvend. Past het niet, dan zeggen we dat eerlijk.'
+          ]}
+        />
+      )}
     </article>
 
     <!-- FAQ na de close-CTA, in dezelfde styling als de homepage. -->

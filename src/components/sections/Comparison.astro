@@ -1,0 +1,70 @@
+---
+/**
+ * Met-vs-zonder comparison: 2-koloms side-by-side blok dat het verschil
+ * tussen "doen of niet doen" visueel laat zien. Sterke CRO-trigger.
+ */
+
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface ComparisonItem {
+  without: string;
+  with: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  titleAccent?: string;
+  withoutLabel: string;
+  withLabel: string;
+  items: ComparisonItem[];
+}
+
+const {
+  eyebrow = 'Het verschil',
+  title,
+  titleAccent,
+  withoutLabel,
+  withLabel,
+  items,
+} = Astro.props;
+---
+
+<section class="comparison">
+  <div class="comparison-head">
+    <EyebrowPill>{eyebrow}</EyebrowPill>
+    <h2 class="comparison-title">
+      {title} {titleAccent && <em>{titleAccent}</em>}
+    </h2>
+  </div>
+  <div class="comparison-grid">
+    <div class="comparison-col comparison-col--without">
+      <header class="comparison-col-head">
+        <span class="comparison-col-icon" aria-hidden="true">✕</span>
+        <h3>{withoutLabel}</h3>
+      </header>
+      <ul class="comparison-list">
+        {items.map((item) => (
+          <li>
+            <span class="comparison-bullet" aria-hidden="true">✕</span>
+            <span>{item.without}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="comparison-col comparison-col--with">
+      <header class="comparison-col-head">
+        <span class="comparison-col-icon" aria-hidden="true">✓</span>
+        <h3>{withLabel}</h3>
+      </header>
+      <ul class="comparison-list">
+        {items.map((item) => (
+          <li>
+            <span class="comparison-bullet" aria-hidden="true">✓</span>
+            <span>{item.with}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

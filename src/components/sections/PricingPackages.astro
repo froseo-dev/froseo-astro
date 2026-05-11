@@ -1,0 +1,128 @@
+---
+/**
+ * Pricing-pakket-sectie met 3 cards naast elkaar (basis/standaard/premium)
+ * + Custom-strip eronder + maand/jaar toggle.
+ *
+ * Data komt uit src/data/maintenance-packages.ts (single source of truth).
+ * Wijzig prijzen of features daar; deze component pakt automatisch de update.
+ */
+
+import EyebrowPill from '../ui/EyebrowPill.astro';
+import {
+  maintenancePackages,
+  maintenanceCustom,
+} from '@data/maintenance-packages';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  titleAccent?: string;
+  lead?: string;
+}
+
+const {
+  eyebrow = 'Pakketten',
+  title = 'Onze',
+  titleAccent = 'onderhoudspakketten.',
+  lead = 'Drie pakketten met heldere prijzen. Maandelijks opzegbaar, of jaarlijks met één maand gratis. Doorgroeien tussen pakketten kan op elk moment.',
+} = Astro.props;
+---
+
+<section class="pricing-packages" id="pakketten">
+  <div class="pricing-head">
+    <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
+    <h2 class="pricing-title">
+      {title} <em>{titleAccent}</em>
+    </h2>
+    <p class="pricing-lead">{lead}</p>
+
+    <!-- Maand/jaar toggle. Default = jaarlijks (CRO-strategie: lagere
+         effectieve maandprijs zichtbaar bij landing). -->
+    <div class="pricing-toggle" role="tablist" aria-label="Betalingsfrequentie">
+      <button type="button" class="pricing-toggle-btn" data-frequency="monthly" role="tab" aria-selected="false">
+        Per maand
+      </button>
+      <button type="button" class="pricing-toggle-btn is-active" data-frequency="yearly" role="tab" aria-selected="true">
+        Per jaar <span class="pricing-toggle-badge">1 maand gratis</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="pricing-grid">
+    {maintenancePackages.map((pkg) => {
+      /* Effectieve maandprijs bij jaarlijkse facturatie = yearly / 12. */
+      const yearlyMonthly = (pkg.yearlyPrice / 12).toFixed(2).replace('.', ',');
+      return (
+      <article class={`pricing-card ${pkg.isFeatured ? 'is-featured' : ''}`}>
+        {pkg.isFeatured && <span class="pricing-card-badge">Meest gekozen</span>}
+        <header class="pricing-card-head">
+          <h3 class="pricing-card-name">{pkg.name}</h3>
+          <p class="pricing-card-tagline">{pkg.tagline}</p>
+          <div class="pricing-card-price">
+            <span class="pricing-amount-prefix">€</span>
+            <span class="pricing-amount" data-monthly={pkg.monthlyPrice} data-yearly-effective={yearlyMonthly}>
+              {yearlyMonthly}
+            </span>
+            <span class="pricing-period">/maand</span>
+          </div>
+          <p class="pricing-billing">
+            <span data-frequency-label="monthly" hidden>Maandelijks gefactureerd</span>
+            <span data-frequency-label="yearly">Jaarlijks gefactureerd, €{pkg.yearlyPrice}/jaar</span>
+          </p>
+          <p class="pricing-card-for">{pkg.forWhom}</p>
+        </header>
+        <ul class="pricing-card-features">
+          {pkg.features.map((f) => (
+            <li class={f.highlight ? 'is-highlight' : ''}>
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <span>{f.label}</span>
+            </li>
+          ))}
+        </ul>
+        <a class={pkg.isFeatured ? 'btn-primary pricing-card-cta' : 'btn-ghost pricing-card-cta'} href={`/contact?onderwerp=${pkg.slug}`}>
+          Kies {pkg.shortName ?? pkg.name} ↗
+        </a>
+      </article>
+      );
+    })}
+  </div>
+
+  <!-- Custom-strip onder de drie cards -->
+  <div class="pricing-custom">
+    <div class="pricing-custom-text">
+      <h3 class="pricing-custom-title">{maintenanceCustom.title}</h3>
+      <p class="pricing-custom-body">{maintenanceCustom.body}</p>
+    </div>
+    <a class="btn-ghost pricing-custom-cta" href={maintenanceCustom.ctaHref}>{maintenanceCustom.ctaLabel}</a>
+  </div>
+</section>
+
+<script>
+  /* Toggle tussen maand/jaar prijzen — switcht prijsbedrag + periode-label
+     in elke card. Geen reload, geen flicker. */
+  const toggleBtns = document.querySelectorAll<HTMLButtonElement>('.pricing-toggle-btn');
+  const amounts = document.querySelectorAll<HTMLElement>('.pricing-amount');
+  const periodLabels = document.querySelectorAll<HTMLElement>('[data-frequency-label]');
+
+  function setFrequency(freq: 'monthly' | 'yearly') {
+    toggleBtns.forEach((b) => {
+      const active = b.dataset.frequency === freq;
+      b.classList.toggle('is-active', active);
+      b.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    /* Bij maandelijks: gewone monthlyPrice. Bij jaarlijks: yearly/12 (=
+       effectieve maandprijs). Periode-label blijft altijd "/maand", alleen
+       de billing-tekst eronder wisselt. */
+    amounts.forEach((el) => {
+      const value = freq === 'monthly' ? el.dataset.monthly : el.dataset.yearlyEffective;
+      el.textContent = value ?? '';
+    });
+    periodLabels.forEach((el) => {
+      el.hidden = el.dataset.frequencyLabel !== freq;
+    });
+  }
+
+  toggleBtns.forEach((b) => {
+    b.addEventListener('click', () => setFrequency(b.dataset.frequency as 'monthly' | 'yearly'));
+  });
+</script>

@@ -5,7 +5,7 @@ shortTitle: SEO/GEO
 heroTitle: Zoekmachine optimalisatie.
 heroAccent: 'Beter scoren in Google én AI.'
 heroImage: ../../assets/hero/froseo-mockup.webp
-eyebrow: '03 — Zoekmachine optimalisatie'
+eyebrow: 'Zoekmachine optimalisatie'
 description: 'Techniek, content en autoriteit, in die volgorde. We bouwen SEO-strategieën waar Google én de nieuwe AI-zoekmachines niet omheen kunnen.'
 icon: '⌕'
 shadow: rare

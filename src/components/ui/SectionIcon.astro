@@ -1,0 +1,115 @@
+---
+/**
+ * SectionIcon — inline SVG-icon op naam. Outline-stijl, currentColor.
+ *
+ * Gebruik:
+ *   <SectionIcon name="blackbox" />
+ *
+ * Inheriteren kleur via CSS (color op parent). Stroke-based zodat de icon
+ * in elke accent-kleur kan renderen. Houd de set bewust klein en visueel
+ * consistent; voeg een nieuw icon toe als 'n bestaande niet past, niet
+ * als 'n bestaande "ongeveer past".
+ *
+ * Bedoeld als vervanger voor standaard-emoji in painPoints en vergelijkbare
+ * card-grids (zie memory: feedback_no_emoji.md).
+ */
+
+interface Props {
+  /** Icon-naam uit de map hieronder. Onbekende naam = niets renderen. */
+  name: string;
+  /** Pixel-grootte (vierkant). Default 40. */
+  size?: number;
+  class?: string;
+}
+
+const { name, size = 40, class: className = '' } = Astro.props;
+
+/* Alle paths binnen viewBox 0 0 40 40. Stroke-attributes zitten op het
+   <svg>-element; per icon alleen de paths/shapes. */
+const icons: Record<string, string> = {
+  /* Gesloten doos met sleuf — adspend dat erin verdwijnt zonder dat je
+     ziet wat eruit komt. */
+  blackbox: `
+    <rect x="7" y="13" width="26" height="22" rx="2"/>
+    <path d="M7 19h26"/>
+    <path d="M16 10l4-4 4 4"/>
+    <path d="M17 27h6"/>
+  `,
+  /* Cog/tandwiel met cirkel-pijl — autopilot, automatisering zonder
+     menselijke controle. */
+  autopilot: `
+    <circle cx="20" cy="20" r="6"/>
+    <path d="M20 8v4"/>
+    <path d="M20 28v4"/>
+    <path d="M8 20h4"/>
+    <path d="M28 20h4"/>
+    <path d="M11.5 11.5l2.8 2.8"/>
+    <path d="M25.7 25.7l2.8 2.8"/>
+    <path d="M11.5 28.5l2.8-2.8"/>
+    <path d="M25.7 14.3l2.8-2.8"/>
+  `,
+  /* Crosshair met kruis erover — tracking dat niet klopt. */
+  crosshairOff: `
+    <circle cx="20" cy="20" r="9"/>
+    <path d="M20 6v6"/>
+    <path d="M20 28v6"/>
+    <path d="M6 20h6"/>
+    <path d="M28 20h6"/>
+    <path d="M14 14l12 12"/>
+    <path d="M26 14L14 26"/>
+  `,
+  /* Oog met losse dots eromheen — kijkers zonder doel, awareness-only. */
+  eyeScatter: `
+    <path d="M6 20s5-8 14-8 14 8 14 8-5 8-14 8-14-8-14-8z"/>
+    <circle cx="20" cy="20" r="3"/>
+    <circle cx="7" cy="9" r="1" fill="currentColor"/>
+    <circle cx="33" cy="9" r="1" fill="currentColor"/>
+    <circle cx="6" cy="32" r="1" fill="currentColor"/>
+    <circle cx="34" cy="32" r="1" fill="currentColor"/>
+  `,
+  /* Twee gekruiste zwaarden — concurrenten die bieden op je merknaam. */
+  swordsCross: `
+    <path d="M10 6l-2 4 18 18 4 2-2 4-4-2L6 14l4-2-2-2z"/>
+    <path d="M30 6l2 4-18 18-4 2 2 4 4-2L34 14l-4-2 2-2z"/>
+    <path d="M8 32l4 4"/>
+    <path d="M32 32l-4 4"/>
+  `,
+  /* Lijngrafiek dalend met pijl — ongetunde performance, SEO-drift. */
+  chartDown: `
+    <path d="M6 8v24h28"/>
+    <path d="M11 14l6 6 5-4 10 11"/>
+    <path d="M32 21v6h-6"/>
+  `,
+  /* Burst/explosie — iets dat onverwacht breekt (plug-in-conflict). */
+  alertBurst: `
+    <path d="M20 6l3 9 9-2-6 7 7 7-9-1-1 9-7-7-7 7-1-9-9 1 7-7-6-7 9 2z"/>
+  `,
+  /* Stapel archief-boxen — backups die er wel zijn op papier. */
+  archiveStack: `
+    <rect x="6" y="10" width="28" height="6" rx="1"/>
+    <rect x="8" y="16" width="24" height="9"/>
+    <rect x="10" y="25" width="20" height="9"/>
+    <path d="M17 19h6"/>
+    <path d="M16 28h8"/>
+  `,
+};
+
+const path = icons[name];
+---
+
+{path && (
+  <svg
+    viewBox="0 0 40 40"
+    width={size}
+    height={size}
+    class={className}
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <Fragment set:html={path} />
+  </svg>
+)}

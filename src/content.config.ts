@@ -79,12 +79,102 @@ const services = defineCollection({
     heroLead: z.string().optional(),
     /** Optionele h1-tagline (em-block onder de main h1). */
     heroAccent: z.string().optional(),
+    /** Als gevuld: rendert USP-checks (homepage-stijl) i.p.v. heroLead. */
+    heroChecks: z.array(z.string()).optional(),
+    /** Optionele override voor de hero-knoppen. Zonder override: defaults
+        ("Plan een kennismaking" + "Bekijk projecten") blijven gebruikt. */
+    heroPrimaryCta: z.object({ label: z.string(), href: z.string() }).optional(),
+    heroSecondaryCta: z.object({ label: z.string(), href: z.string() }).optional(),
+
+    /** Stats-ribbon — 4 credibility-cijfers naast elkaar (60+ sites, 15+ jaar, etc). */
+    statsRibbon: z
+      .array(
+        z.object({
+          value: z.string(),
+          label: z.string(),
+        }),
+      )
+      .optional(),
+
+    /** Inline CTA-band met eyebrow + title + body + 2 buttons. */
+    ctaBand: z
+      .object({
+        eyebrow: z.string().optional(),
+        title: z.string(),
+        body: z.string().optional(),
+        primaryLabel: z.string(),
+        primaryHref: z.string(),
+        secondaryLabel: z.string().optional(),
+        secondaryHref: z.string().optional(),
+      })
+      .optional(),
+    /** Override voor de inline Calvin-note (foto + quote + CTA). Wanneer
+        gezet rendert de Calvin-balk op de mid-page positie (tussen
+        Comparison en Body) met deze copy, en wordt de default-positie
+        na de Pillars overgeslagen. Voor service-specifieke prompts zoals
+        "niet zeker welk pakket past?". */
+    calvinNote: z
+      .object({
+        message: z.string(),
+        ctaLabel: z.string().optional(),
+        ctaHref: z.string().optional(),
+      })
+      .optional(),
     /** Section-overrides voor het propositionPaths-blok. Wanneer leeg gebruikt
         het template defaults (eyebrow "Kies je route", title "Maatwerk of
         abonnement"). Bij pakketten of een ander narratief: zet hier eigen copy. */
     proposalsEyebrow: z.string().optional(),
     proposalsTitle: z.string().optional(),
     proposalsLead: z.string().optional(),
+
+    /** Wanneer true: rendert de PricingPackages-sectie (3 onderhouds-pakketten
+        + custom-strip + maand/jaar toggle) met data uit
+        src/data/maintenance-packages.ts. Voor /website-onderhoud en
+        /wordpress-website-onderhoud. */
+    showMaintenancePackages: z.boolean().default(false),
+
+    /** Wanneer true: verberg de WebsitesShowcase-sectie. Voor pagina's waar
+        portfolio-cases minder relevant zijn (zoals onderhoud). */
+    hideShowcase: z.boolean().default(false),
+
+    /** Pain-points grid: visuele "wat gaat er fout zonder dit"-sectie. */
+    painPointsTitle: z.string().optional(),
+    painPointsTitleAccent: z.string().optional(),
+    painPointsLead: z.string().optional(),
+
+    /** Overrides voor de PricingPackages-section header. Laat leeg voor
+        component-defaults ("Onze onderhoudspakketten."). */
+    pricingEyebrow: z.string().optional(),
+    pricingTitle: z.string().optional(),
+    pricingTitleAccent: z.string().optional(),
+    pricingLead: z.string().optional(),
+    painPoints: z
+      .array(
+        z.object({
+          icon: z.string().optional(),
+          title: z.string(),
+          body: z.string(),
+          /** Optioneel concreet cijfer (bv. "40%" of "90%"). */
+          stat: z.string().optional(),
+        }),
+      )
+      .optional(),
+
+    /** Met-vs-zonder comparison-tabel. */
+    comparison: z
+      .object({
+        title: z.string(),
+        titleAccent: z.string().optional(),
+        withoutLabel: z.string(),
+        withLabel: z.string(),
+        items: z.array(
+          z.object({
+            without: z.string(),
+            with: z.string(),
+          }),
+        ),
+      })
+      .optional(),
 
     /** Twee/drie "paden" om de dienst af te nemen — bv. maatwerk vs. abonnement,
         of een pakket-tier (Beheer/Groei/Pro). */
@@ -106,6 +196,15 @@ const services = defineCollection({
     approachSteps: z
       .array(z.object({ title: z.string(), body: z.string() }))
       .optional(),
+    /** Render-stijl voor approachSteps. 'cards' = default (donker blok met
+        2x2 grid). 'timeline' = horizontale tijdslijn (gestapeld op mobiel),
+        renderd dan ook hoger op de pagina i.p.v. onderaan. */
+    approachStyle: z.enum(['cards', 'timeline']).default('cards'),
+
+    /** ID van een testimonial uit content/data/testimonials.json om
+        tussen StatsRibbon en PainPoints te tonen. Voor proof-momenten
+        op service-pagina's (bv. een onderhoud-klant quote). */
+    testimonialId: z.string().optional(),
     /** 3-4 USPs / "Waarom Froseo" cards */
     usps: z.array(z.object({ title: z.string(), body: z.string() })).optional(),
     /** "Pijlers" / deep-dive accordion-secties. Voor SEO bv. technisch / content

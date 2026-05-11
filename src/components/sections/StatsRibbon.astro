@@ -1,0 +1,29 @@
+---
+/**
+ * Stats-ribbon: 4 credibility-cijfers naast elkaar. Compact blok, geen
+ * eyebrow/title — bedoeld als rustig proof-strookje tussen twee grotere
+ * secties. Per stat: groot getal (value) + korte label eronder.
+ */
+
+interface Stat {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  items: Stat[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="stats-ribbon">
+  <div class="stats-ribbon-inner">
+    {items.map((s) => (
+      <div class="stats-ribbon-cell">
+        <div class="stats-ribbon-value">{s.value}</div>
+        <div class="stats-ribbon-label">{s.label}</div>
+      </div>
+    ))}
+  </div>
+</section>

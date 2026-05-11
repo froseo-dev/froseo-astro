@@ -1,0 +1,57 @@
+---
+/**
+ * Horizontale onboarding-tijdslijn — 4 stappen naast elkaar op desktop,
+ * onder elkaar op mobiel, met een doorlopende connector-lijn tussen de
+ * genummerde circles. Bedoeld als visuele samenvatting van het pakket-
+ * onboarding-traject (Aanmelden → Audit → Onderhoud → Maandrapport).
+ *
+ * Data komt uit dezelfde `approachSteps`-frontmatter als de cards-variant
+ * (zie [slug].astro). Wisselen tussen de twee gebeurt via
+ * `approachStyle: 'timeline' | 'cards'` in frontmatter.
+ */
+
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface Step {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  titleAccent?: string;
+  items: Step[];
+}
+
+const {
+  eyebrow = 'Hoe begin je',
+  title = 'Van aanmelden tot',
+  titleAccent = 'maandrapport.',
+  items,
+} = Astro.props;
+---
+
+<section class="onboarding-timeline">
+  <div class="onboarding-timeline-inner">
+    <div class="onboarding-timeline-head">
+      <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
+      <h2 class="onboarding-timeline-title">
+        {title} <em>{titleAccent}</em>
+      </h2>
+    </div>
+    <ol class="onboarding-timeline-track">
+      {items.map((step, i) => (
+        <li class="onboarding-timeline-step">
+          <div class="onboarding-timeline-marker">
+            <span class="onboarding-timeline-num">{String(i + 1).padStart(2, '0')}</span>
+          </div>
+          <div class="onboarding-timeline-content">
+            <h3 class="onboarding-timeline-step-title">{step.title}</h3>
+            <p class="onboarding-timeline-step-body">{step.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

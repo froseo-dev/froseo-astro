@@ -46,6 +46,8 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
   const phone = (data.get('phone') ?? '').toString().trim();
   const website = (data.get('current_website') ?? '').toString().trim();
   const message = (data.get('message') ?? '').toString().trim();
+  /* Optioneel context-veld vanaf service-CTA's (?onderwerp=...). */
+  const onderwerp = (data.get('onderwerp') ?? '').toString().trim().slice(0, 120);
 
   /* Spam: honeypot moet leeg zijn (verborgen veld). */
   const honeypot = (data.get('website_url') ?? '').toString();
@@ -71,6 +73,7 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
   const html = `
     <h2>Nieuw bericht via froseo.nl</h2>
     <table cellpadding="6" style="font-family: system-ui, sans-serif; font-size: 14px; border-collapse: collapse;">
+      ${onderwerp ? `<tr><td><strong>Onderwerp</strong></td><td>${escapeHtml(onderwerp)}</td></tr>` : ''}
       <tr><td><strong>Naam</strong></td><td>${escapeHtml(name)}</td></tr>
       <tr><td><strong>E-mail</strong></td><td><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
       ${phone ? `<tr><td><strong>Telefoon</strong></td><td>${escapeHtml(phone)}</td></tr>` : ''}
@@ -90,7 +93,9 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
       from: `Froseo Website <${env.CONTACT_FROM_EMAIL}>`,
       to: [env.CONTACT_TO_EMAIL],
       reply_to: email,
-      subject: `Nieuw bericht van ${name}`,
+      subject: onderwerp
+        ? `[${onderwerp}] Nieuw bericht van ${name}`
+        : `Nieuw bericht van ${name}`,
       html,
     }),
   });

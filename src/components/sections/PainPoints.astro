@@ -1,0 +1,72 @@
+---
+/**
+ * Pain-points grid: visuele "wat gaat er fout zonder X"-sectie.
+ * 6 cards in 3-col grid (responsive). Per card: icon, optional stat, title, body.
+ * Negatieve framing met rode accent-shadow voor visual urgency.
+ *
+ * `icon` veld: óf een naam uit SectionIcon (bv. "blackbox") → rendert
+ * inline SVG, óf elke andere string → rendert als tekst (fallback voor
+ * bv. een Unicode-glyph). Standaard-emoji vermijden.
+ */
+
+import EyebrowPill from '../ui/EyebrowPill.astro';
+import SectionIcon from '../ui/SectionIcon.astro';
+
+const sectionIconNames = new Set([
+  'blackbox',
+  'autopilot',
+  'crosshairOff',
+  'eyeScatter',
+  'swordsCross',
+  'chartDown',
+  'alertBurst',
+  'archiveStack',
+]);
+
+interface PainPoint {
+  icon?: string;
+  title: string;
+  body: string;
+  stat?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  titleAccent?: string;
+  lead?: string;
+  items: PainPoint[];
+}
+
+const {
+  eyebrow = 'Waarom dit ertoe doet',
+  title = 'Wat gaat er fout',
+  titleAccent = 'zonder onderhoud?',
+  lead,
+  items,
+} = Astro.props;
+---
+
+<section class="pain-points">
+  <div class="pain-points-head">
+    <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
+    <h2 class="pain-points-title">
+      {title} <em>{titleAccent}</em>
+    </h2>
+    {lead && <p class="pain-points-lead">{lead}</p>}
+  </div>
+  <div class="pain-points-grid">
+    {items.map((item) => (
+      <article class="pain-card">
+        {item.stat && <div class="pain-stat">{item.stat}</div>}
+        {item.icon && !item.stat && (
+          sectionIconNames.has(item.icon)
+            ? <SectionIcon name={item.icon} class="pain-icon-svg" />
+            : <div class="pain-icon">{item.icon}</div>
+        )}
+        <h3 class="pain-card-title">{item.title}</h3>
+        <p class="pain-card-body">{item.body}</p>
+      </article>
+    ))}
+  </div>
+</section>

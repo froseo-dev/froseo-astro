@@ -1,0 +1,45 @@
+---
+/**
+ * Inline CTA-band: eyebrow + title + body + 2 buttons. Brede horizontale
+ * strip die als rust-breker tussen dichte secties werkt en de bezoeker
+ * een tweede actie-moment geeft midden op de pagina.
+ */
+
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  body?: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  body,
+  primaryLabel,
+  primaryHref,
+  secondaryLabel,
+  secondaryHref,
+} = Astro.props;
+---
+
+<section class="cta-band">
+  <div class="cta-band-inner">
+    <div class="cta-band-text">
+      {eyebrow && <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>}
+      <h2 class="cta-band-title">{title}</h2>
+      {body && <p class="cta-band-body">{body}</p>}
+    </div>
+    <div class="cta-band-actions">
+      <a class="btn-primary" href={primaryHref}>{primaryLabel}</a>
+      {secondaryLabel && secondaryHref && (
+        <a class="btn-ghost" href={secondaryHref}>{secondaryLabel}</a>
+      )}
+    </div>
+  </div>
+</section>

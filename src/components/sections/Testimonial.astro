@@ -3,6 +3,9 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import type { ImageMetadata } from 'astro';
 
+import basAvatar from '@assets/testimonials/bas-bertrams.webp';
+import aukeAvatar from '@assets/testimonials/auke-van-der-heijden.webp';
+
 interface Props {
   /** Testimonial id from data/testimonials.json. Defaults to first featured. */
   id?: string;
@@ -11,14 +14,25 @@ interface Props {
   /** Optional atmospheric image rendered behind the section (e.g. real-life client photo). */
   bgImage?: ImageMetadata;
   bgAlt?: string;
-  /** Optional avatar image for the speaker. Falls back to a coloured placeholder circle. */
+  /** Optional avatar image for the speaker. Falls back to a per-id lookup
+      (see avatarMap), of een gekleurde placeholder-circle als laatste fallback. */
   avatar?: ImageMetadata;
 }
+
+/* Per-testimonial avatar-resolver. Houdt de caller schoon: een service-
+   pagina hoeft alleen `id` door te geven, en deze map kiest het juiste
+   portret-bestand. Nieuwe testimonial met portret? Importeer hierboven
+   en voeg een entry toe. */
+const avatarMap: Record<string, ImageMetadata> = {
+  'bas-renovatie-totaal': basAvatar,
+  'auke-club12': aukeAvatar,
+};
 
 const { id, variant = 'card', bgImage, bgAlt = '', avatar } = Astro.props;
 const all = await getCollection('testimonials');
 const t = (id ? all.find((x) => x.data.id === id) : all.find((x) => x.data.featured)) ?? all[0];
 const stars = '★'.repeat(t.data.rating);
+const resolvedAvatar = avatar ?? avatarMap[t.data.id];
 ---
 
 <section class={`testi testi--${variant}${bgImage ? ' testi--with-bg' : ''}`}>
@@ -27,11 +41,11 @@ const stars = '★'.repeat(t.data.rating);
   )}
   <div class="testi-card">
     <div class="testi-quote-mark">"</div>
-    <div class="testi-avatar">
-      {avatar && (
+    <div class={`testi-avatar testi-avatar--${t.data.id}`}>
+      {resolvedAvatar && (
         <Image
-          src={avatar}
-          alt={`${t.data.name} — ${t.data.role}`}
+          src={resolvedAvatar}
+          alt={`${t.data.name}, ${t.data.role}`}
           class="testi-avatar-img"
           widths={[180, 360]}
           sizes="180px"

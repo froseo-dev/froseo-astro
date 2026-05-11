@@ -4,7 +4,7 @@ title: Maatwerk webdesign
 shortTitle: Webdesign
 heroTitle: Maatwerk websites in WordPress of Astro.
 heroImage: ../../assets/hero/froseo-mockup.webp
-eyebrow: '01 — Webdesign'
+eyebrow: 'Webdesign'
 description: 'Maatwerk websites in WordPress of Astro. Bij je merk passend, snel en mobile-first.'
 icon: '◆'
 shadow: dark

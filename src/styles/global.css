@@ -2193,8 +2193,11 @@ main { display: contents; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Source bas-bertrams.webp heeft witruimte onderin — bias 0% (top-align)
-     en 1.08x scale zodat we de witmarges altijd buiten de cirkel duwen. */
+  object-position: center;
+}
+/* Bas-specifieke fix: bas-bertrams.webp heeft witruimte onderin. Top-align
+   + 1.08x scale duwt de witmarges altijd buiten de cirkel. */
+.testi-avatar--bas-renovatie-totaal .testi-avatar-img {
   object-position: center 0%;
   transform: scale(1.08);
 }
@@ -3782,6 +3785,650 @@ main { display: contents; }
 }
 
 /* ============================================================
+   === PAIN POINTS GRID ========================================
+   "Wat gaat er fout zonder X" — 6-card grid met urgency-styling.
+   ============================================================ */
+
+.pain-points {
+  /* Brand-teal in deze sectie: eyebrow, em-title, stat-cijfers en
+     card-shadows worden teal in plaats van de magenta default. */
+  --accent-rare:        var(--color-teal);
+  --accent-rare-strong: var(--color-teal-strong);
+
+  padding: 80px var(--gutter);
+  background: var(--surface-page-soft);
+}
+.pain-points-head {
+  max-width: 760px;
+  margin: 0 auto 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.pain-points-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0;
+}
+.pain-points-title em { font-style: normal; color: var(--accent-rare); display: inline; }
+.pain-points-lead {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.75;
+  margin: 0;
+  max-width: 56ch;
+}
+.pain-points-grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.pain-card {
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 26px;
+  box-shadow: 5px 5px 0 var(--accent-rare);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.pain-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--accent-rare);
+}
+.pain-stat {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4.2vw, 48px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--accent-rare);
+}
+.pain-icon {
+  font-size: 36px;
+  line-height: 1;
+}
+/* SVG-variant van de pain-icon. Stroke erft via currentColor van
+   pain-card → --accent-rare (teal in .pain-points scope). */
+.pain-icon-svg {
+  color: var(--accent-rare);
+  display: block;
+}
+.pain-card-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.pain-card-body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.78;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .pain-points { padding: 64px var(--gutter); }
+  .pain-points-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+}
+@media (max-width: 640px) {
+  .pain-points { padding: 48px var(--gutter-mobile); }
+  .pain-points-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   === STATS RIBBON ============================================
+   Volgt dezelfde layout als de homepage .stats-strip: dark band,
+   mono uppercase labels, grote nummers in --accent-rare (teal op
+   service-pages via .service-page scope-override), vertical
+   dividers tussen cells.
+   ============================================================ */
+
+.stats-ribbon {
+  padding: 36px var(--gutter);
+  background-color: var(--surface-dark);
+  background-image: var(--bg-decoration-dark);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+  border-top: var(--border);
+  border-bottom: var(--border);
+  color: var(--text-on-dark);
+}
+.stats-ribbon-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  align-items: center;
+}
+.stats-ribbon-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-left: 1.5px solid rgba(255, 255, 255, 0.18);
+  padding: 4px 0;
+}
+.stats-ribbon-cell:first-child { border-left: none; }
+.stats-ribbon-value {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(36px, 4.5vw, 60px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  /* Geel op donkere achtergrond — hoogste contrast en matcht de
+     homepage stats-strip. Teal/groen leest slecht op surface-dark. */
+  color: var(--accent-highlight);
+  margin-bottom: 6px;
+}
+.stats-ribbon-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
+@media (max-width: 1024px) {
+  .stats-ribbon-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .stats-ribbon-cell:nth-child(3) { border-left: none; }
+}
+@media (max-width: 640px) {
+  .stats-ribbon { padding: 28px var(--gutter-mobile); }
+}
+
+/* ============================================================
+   === CTA BAND ================================================
+   Inline tweede-actie-strip: eyebrow + title + body + 2 buttons.
+   ============================================================ */
+
+.cta-band {
+  padding: 64px var(--gutter);
+}
+.cta-band-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 32px;
+  align-items: center;
+  box-shadow: 5px 5px 0 var(--accent-rare);
+}
+.cta-band-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.cta-band-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.6vw, 32px);
+  line-height: 1.2;
+  font-weight: 800;
+  margin: 0;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.cta-band-body {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.78;
+}
+.cta-band-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+}
+@media (max-width: 820px) {
+  .cta-band { padding: 48px var(--gutter-mobile); }
+  .cta-band-inner { grid-template-columns: 1fr; padding: 28px; gap: 20px; }
+  .cta-band-actions { justify-content: flex-start; }
+}
+
+/* ============================================================
+   === COMPARISON BLOCK ========================================
+   Met / zonder side-by-side — sterke CRO-trigger.
+   ============================================================ */
+
+.comparison {
+  /* Met-kant gebruikt brand-teal accent (groen vinkje, em-titel),
+     zonder-kant blijft neutraal/grijs. */
+  --accent-rare:        var(--color-teal);
+  --accent-rare-strong: var(--color-teal-strong);
+
+  padding: 80px var(--gutter);
+}
+.comparison-head {
+  max-width: 760px;
+  margin: 0 auto 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.comparison-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0;
+}
+.comparison-title em { font-style: normal; color: var(--accent-rare); display: inline; }
+.comparison-grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+.comparison-col {
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.comparison-col--without {
+  background: var(--surface-card);
+  box-shadow: 5px 5px 0 var(--line-color);
+  opacity: 0.85;
+}
+.comparison-col--with {
+  background: var(--surface-card);
+  box-shadow: 6px 6px 0 var(--color-teal, var(--accent-rare));
+  border-color: var(--text-primary);
+}
+.comparison-col-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--line-color);
+}
+.comparison-col-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.comparison-col--without .comparison-col-icon {
+  background: var(--surface-page-deep);
+  color: var(--text-primary);
+  border: 1.5px solid var(--text-primary);
+}
+.comparison-col--with .comparison-col-icon {
+  background: var(--color-teal, var(--accent-rare));
+  color: #fff;
+}
+.comparison-col h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.comparison-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.comparison-list li {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 12px;
+  align-items: start;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.comparison-col--without .comparison-list li { opacity: 0.7; }
+.comparison-bullet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 900;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.comparison-col--without .comparison-bullet {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--text-primary);
+}
+.comparison-col--with .comparison-bullet {
+  background: var(--color-teal, var(--accent-rare));
+  color: #fff;
+}
+
+@media (max-width: 1024px) {
+  .comparison { padding: 64px var(--gutter); }
+  .comparison-grid { grid-template-columns: 1fr; gap: 20px; }
+}
+@media (max-width: 640px) {
+  .comparison { padding: 48px var(--gutter-mobile); }
+  .comparison-col { padding: 24px 22px; }
+}
+
+/* ============================================================
+   === PRICING PACKAGES (WP-onderhoud) =========================
+   3 cards + custom-strip + maand/jaar toggle.
+   Gebruikt door /website-onderhoud en /wordpress-website-onderhoud.
+   ============================================================ */
+
+.pricing-packages {
+  padding: 64px var(--gutter) 80px;
+  background: var(--surface-page);
+}
+.pricing-head {
+  max-width: 760px;
+  margin: 0 auto 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.pricing-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0;
+}
+.pricing-title em { font-style: normal; color: var(--accent-rare); display: inline; }
+.pricing-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.78;
+  margin: 0;
+  max-width: 56ch;
+}
+.pricing-toggle {
+  display: inline-flex;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: 999px;
+  padding: 4px;
+  margin-top: 8px;
+  box-shadow: 4px 4px 0 var(--line-color);
+}
+.pricing-toggle-btn {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 18px;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.pricing-toggle-btn.is-active {
+  background: var(--surface-dark);
+  color: var(--text-on-dark);
+}
+.pricing-toggle-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-highlight);
+  color: var(--text-primary);
+}
+.pricing-toggle-btn.is-active .pricing-toggle-badge { background: var(--accent-highlight); }
+
+.pricing-grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.pricing-card {
+  position: relative;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  box-shadow: 5px 5px 0 var(--line-color);
+}
+.pricing-card.is-featured {
+  background: var(--surface-dark);
+  color: var(--text-on-dark);
+  box-shadow: 6px 6px 0 var(--accent-rare);
+  /* Lichte vergroting van de meest gekozen kaart om 'm visueel te onderscheiden. */
+  transform: translateY(-12px);
+}
+.pricing-card-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent-highlight);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--text-primary);
+  white-space: nowrap;
+}
+
+.pricing-card-head { display: flex; flex-direction: column; gap: 6px; }
+.pricing-card-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: inherit;
+}
+.pricing-card-tagline {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.8;
+  color: inherit;
+}
+.pricing-card-price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 8px;
+}
+.pricing-amount-prefix {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 800;
+  color: var(--accent-rare);
+  align-self: flex-start;
+  margin-top: 6px;
+}
+.pricing-card.is-featured .pricing-amount-prefix { color: var(--accent-highlight); }
+.pricing-amount {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 4.4vw, 56px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--accent-rare);
+}
+.pricing-card.is-featured .pricing-amount { color: var(--accent-highlight); }
+.pricing-period {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+  color: inherit;
+}
+.pricing-billing {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  opacity: 0.65;
+  margin: 4px 0 0;
+  color: inherit;
+}
+.pricing-card-for {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin: 8px 0 0;
+  color: inherit;
+}
+
+.pricing-card-features {
+  list-style: none;
+  padding: 16px 0 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px dashed currentColor;
+  flex-grow: 1;
+}
+.pricing-card.is-featured .pricing-card-features {
+  border-top-color: rgba(255, 255, 255, 0.2);
+}
+.pricing-card-features li {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 14px;
+  line-height: 1.45;
+  color: inherit;
+  opacity: 0.95;
+}
+.pricing-card-features li.is-highlight {
+  font-weight: 700;
+  opacity: 1;
+}
+.pricing-card-features .check-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent-rare);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.pricing-card.is-featured .pricing-card-features .check-icon {
+  background: var(--accent-highlight);
+  color: var(--text-primary);
+}
+
+.pricing-card-cta { width: 100%; justify-content: center; text-align: center; }
+
+/* Custom-strip onder de pakketten */
+.pricing-custom {
+  max-width: var(--container-max);
+  margin: 56px auto 0;
+  background: var(--surface-card);
+  border: 2px dashed var(--line-color);
+  border-radius: var(--radius-lg);
+  padding: 28px 36px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 28px;
+  align-items: center;
+}
+.pricing-custom-text { display: flex; flex-direction: column; gap: 4px; }
+.pricing-custom-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.pricing-custom-body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.8;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .pricing-grid { grid-template-columns: 1fr; gap: 36px; max-width: 540px; }
+  .pricing-card.is-featured { transform: none; }
+  .pricing-custom { grid-template-columns: 1fr; gap: 18px; padding: 24px 28px; }
+}
+@media (max-width: 640px) {
+  .pricing-packages { padding: 48px var(--gutter-mobile) 64px; }
+  .pricing-card { padding: 28px 24px; }
+}
+
+/* ============================================================
    === MOBILE FIXED CTA ========================================
    Sticky bar onderaan op mobile met "Vrijblijvend voorstel"
    knop naar /contact. Verborgen op desktop/tablet.
@@ -4326,7 +4973,7 @@ main { display: contents; }
 /* Met hero-image: 2-koloms (text + visual) */
 .service-hero.has-image .service-hero-inner {
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
+  grid-template-columns: 1.5fr 1fr;
   gap: 56px;
   align-items: center;
 }
@@ -4341,13 +4988,13 @@ main { display: contents; }
 }
 .service-hero-img {
   width: 100%;
-  max-width: 640px;
+  max-width: 520px;
   height: auto;
   display: block;
 }
 .service-hero-title {
   font-family: var(--font-display);
-  font-size: clamp(48px, 7vw, 104px);
+  font-size: clamp(40px, 5.4vw, 84px);
   line-height: 0.98;
   font-weight: 900;
   letter-spacing: -0.03em;
@@ -4385,6 +5032,35 @@ main { display: contents; }
 /* In has-image variant left-aligned ipv center */
 .service-hero.has-image .service-hero-actions { justify-content: flex-start; }
 .service-hero.has-image .service-hero-reviews { justify-content: flex-start; }
+
+/* Hero USP-checks (homepage-stijl met magenta vinkjes) */
+.service-hero-checks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  max-width: 520px;
+}
+.service-hero-checks li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 16px;
+  line-height: 1.45;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.service-hero-checks li::before {
+  content: '✓';
+  color: var(--accent-rare);
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
 
 /* --- WebsitesShowcase (herbruikbaar; 2 modes: grid + featured) --- */
 .websites-showcase {
@@ -4826,7 +5502,10 @@ main { display: contents; }
 
 /* --- Body / "Wat we doen" markdown --- */
 .service-body {
-  padding: 80px var(--gutter);
+  /* 80→48 verticaal — voorkomt overdaad aan witruimte rond korte body's
+     (zoals op /website-onderhoud waar de body kort is naast veel andere
+     visuele blokken). */
+  padding: 48px var(--gutter);
 }
 .service-body-inner {
   max-width: 760px;
@@ -5055,6 +5734,155 @@ main { display: contents; }
 }
 
 /* --- Aanpak (donkere sectie met genummerde stappen) --- */
+/* ============================================================
+   === ONBOARDING TIMELINE =====================================
+   Horizontale 4-staps tijdslijn op desktop, verticaal op mobiel.
+   Doorlopende lijn tussen markers; titel + body onder elke marker.
+   Brand-teal accent (huisstijl-groen) als rare-override.
+   ============================================================ */
+
+.onboarding-timeline {
+  --accent-rare:        var(--color-teal);
+  --accent-rare-strong: var(--color-teal-strong);
+
+  padding: 80px var(--gutter);
+  background: var(--surface-page);
+}
+.onboarding-timeline-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.onboarding-timeline-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 56px;
+}
+.onboarding-timeline-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.onboarding-timeline-title em {
+  font-style: normal;
+  color: var(--accent-rare);
+  display: inline;
+}
+
+/* Track: 4 koloms op desktop, gestapeld op mobiel. */
+.onboarding-timeline-track {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  align-items: start;
+}
+
+/* Elke stap is een mini-grid: marker + content gestapeld op desktop.
+   De connector is een ::before pseudo die NAAR LINKS loopt vanaf het
+   midden van deze step naar het midden van de vorige step. */
+.onboarding-timeline-step {
+  position: relative;
+  display: grid;
+  grid-template-rows: 56px auto;
+  justify-items: center;
+  align-items: start;
+  gap: 18px;
+  padding: 0 14px;
+  text-align: center;
+}
+.onboarding-timeline-step::before {
+  content: '';
+  position: absolute;
+  top: 27px; /* (marker 56 - 2 lijn) / 2 = 27 */
+  left: 0;
+  width: 50%;
+  height: 2px;
+  background: var(--accent-rare);
+  z-index: 0;
+}
+.onboarding-timeline-step:first-child::before { display: none; }
+
+.onboarding-timeline-marker {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--surface-card);
+  border: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 4px 0 var(--accent-rare);
+}
+.onboarding-timeline-num {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--accent-rare);
+}
+.onboarding-timeline-content {
+  max-width: 28ch;
+}
+.onboarding-timeline-step-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+.onboarding-timeline-step-body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.78;
+  margin: 0;
+}
+
+/* Mobiel (≤720px): 1 kolom, marker links + content rechts per stap.
+   Verticale connector loopt LANGS de marker-kolom van stap 2..n
+   omhoog naar de vorige marker. */
+@media (max-width: 720px) {
+  .onboarding-timeline { padding: 56px var(--gutter-mobile); }
+  .onboarding-timeline-head { margin-bottom: 36px; }
+  .onboarding-timeline-track { grid-template-columns: 1fr; }
+  .onboarding-timeline-step {
+    grid-template-columns: 56px 1fr;
+    grid-template-rows: auto;
+    gap: 18px 20px;
+    padding: 0 0 28px;
+    text-align: left;
+    justify-items: stretch;
+  }
+  .onboarding-timeline-step::before {
+    /* Verticale lijn: zit links uitgelijnd op het midden van de marker
+       (28px) en loopt vanaf de bovenkant van deze stap tot de bovenkant
+       van de eigen marker. */
+    top: 0;
+    left: 27px;
+    width: 2px;
+    height: 28px;
+  }
+  .onboarding-timeline-marker { grid-column: 1; grid-row: 1; }
+  .onboarding-timeline-content {
+    grid-column: 2;
+    grid-row: 1;
+    max-width: none;
+  }
+}
+
 .service-approach {
   padding: 88px var(--gutter);
   background: var(--surface-dark);
@@ -5447,6 +6275,33 @@ main { display: contents; }
   color: var(--text-primary);
   opacity: 0.7;
   margin: 0;
+}
+/* Context-badge boven het form, alleen zichtbaar bij ?onderwerp=...
+   in de URL. Toont waar de bezoeker vandaan komt zodat we direct het
+   juiste antwoord kunnen geven. */
+.contact-onderwerp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 8px 14px;
+  background: var(--surface-page-soft);
+  border: var(--border);
+  border-radius: 999px;
+  font-size: 13px;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+.contact-onderwerp-label {
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  font-weight: 600;
+}
+.contact-onderwerp-value {
+  font-weight: 600;
+  color: var(--accent-rare);
 }
 
 .contact-form { display: flex; flex-direction: column; gap: 18px; }

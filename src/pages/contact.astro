@@ -10,6 +10,20 @@ import { contact, review, calendly } from '@data/site-config';
 
 /* WhatsApp deep-link volgens wa.me-pattern. Tekst wordt URL-encoded. */
 const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(contact.whatsappMessage)}`;
+
+/* === Onderwerp-context via querystring ===========================
+   Wanneer een bezoeker via een CTA op een service-pagina hier komt,
+   geven we de context (`?onderwerp=...`) door en tonen een badge +
+   hidden field. Algemene bezoekers zien dit niet — dropdown-chaos
+   voorkomen door alleen badge te tonen bij bekende keys. */
+const onderwerpLabels: Record<string, string> = {
+  'basic-care': 'Basic Care Package (€29/m)',
+  'standard-care': 'Standard Care Package (€39/m)',
+  'pro-care': 'Pro Care Package (€59/m)',
+  'advies-onderhoud': 'Advies website-onderhoud',
+};
+const onderwerpKey = (Astro.url.searchParams.get('onderwerp') ?? '').trim();
+const onderwerpLabel = onderwerpLabels[onderwerpKey];
 ---
 
 <BaseLayout
@@ -56,8 +70,17 @@ const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent
               <p class="contact-form-sub">
                 Vul de basics in. We reageren persoonlijk, niet met een autoresponder.
               </p>
+              {onderwerpLabel && (
+                <div class="contact-onderwerp-badge" data-onderwerp-badge>
+                  <span class="contact-onderwerp-label">Onderwerp:</span>
+                  <span class="contact-onderwerp-value">{onderwerpLabel}</span>
+                </div>
+              )}
             </div>
             <form class="contact-form" method="POST" action="/api/contact" data-contact-form novalidate>
+              {onderwerpLabel && (
+                <input type="hidden" name="onderwerp" value={onderwerpLabel} />
+              )}
               <div class="form-row">
                 <label class="form-field">
                   <span class="form-label">Naam <em>*</em></span>

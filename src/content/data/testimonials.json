@@ -6,5 +6,13 @@
     "role": "Eigenaar Renovatie Totaal",
     "rating": 5,
     "featured": true
+  },
+  {
+    "id": "auke-club12",
+    "quote": "Updates, backups, beveiliging: ik snap er eerlijk gezegd niks van en hoef me er gelukkig ook niet meer mee bezig te houden. Onze site draait gewoon. En als ik een keer wat aangepast wil hebben, pakken de boys dat snel op.",
+    "name": "Auke van der Heijden",
+    "role": "Eigenaar Club 12",
+    "rating": 5,
+    "featured": false
   }
 ]
