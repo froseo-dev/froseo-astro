@@ -12,7 +12,11 @@
   --color-magenta-strong: #7C0054;
   --color-magenta-soft:   #FF6BB8;
 
-  --color-teal:           #009692;
+  /* Brand-teal: #00807d ~4.75:1 contrast op wit (WCAG AA). Was eerder
+     #009692 maar die laatste haalt geen contrast-eis voor groene knoppen
+     en groene accenttekst. #00807d zit dichter bij #009692 dan het oudere
+     #006461, dus blijft visueel teal-genoeg. */
+  --color-teal:           #00807d;
   --color-teal-strong:    #006461;
   --color-teal-soft:      #6EE3DE;
 
