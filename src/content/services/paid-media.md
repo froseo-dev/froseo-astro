@@ -100,7 +100,7 @@ pillars:
   - title: Conversion-tracking dat klopt
     body: 'Het saaiste maar belangrijkste deel. Optimaliseren heeft geen zin als je meet wat niet klopt. Wij zetten je conversion-tracking op of valideren wat er staat, via Google Tag Manager en gekoppeld aan Google Analytics 4, Google Ads en Meta Pixel. Bij webshops koppelen we waar mogelijk op order-niveau, zodat we op echte omzet kunnen sturen. Interne bezoekers en testbestellingen filteren we eruit.'
   - title: Maandelijkse rapportage die je leest
-    body: 'Geen dashboard waar je doorheen moet klikken. Aan het einde van de maand krijg je een korte mail of PDF: wat heeft elk kanaal opgeleverd, wat kostte een conversie, wat hebben we bijgestuurd en wat staat er voor volgende maand op de planning. In vijf minuten weet je waar je geld heen ging.'
+    body: 'Geen dashboard waar je doorheen moet klikken. Aan het einde van de maand krijg je een korte mail of PDF: wat heeft elk kanaal opgeleverd, wat kostte een conversie, wat hebben we bijgestuurd en wat staat er voor volgende maand op de planning. In vijf minuten heb je een helder beeld.'
 
 faqs:
   - q: Wat kost paid media bij jullie?

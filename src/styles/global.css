@@ -454,6 +454,18 @@ main { display: contents; }
   font-weight: 400;
 }
 
+/* Lead-zin onder h1, boven bullets. Gebruikt body-font (zelfde als
+   .hero-sub) zodat het naadloos in de homepage-stijl past — display-font
+   ging vechten met de h1 ernaast. */
+.hero-subtitle {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  max-width: 520px;
+  margin: -12px 0 24px;
+  font-weight: 500;
+}
+
 .hero-bullets {
   list-style: none;
   display: flex;
@@ -1657,10 +1669,16 @@ main { display: contents; }
 .local-agency-title {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(40px, 5vw, 76px);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
+  margin: 0;
+}
+.local-agency-title em {
+  font-style: normal;
+  color: var(--color-teal);
+  display: inline;
 }
 
 .local-agency-body {
@@ -1881,7 +1899,9 @@ main { display: contents; }
   color: var(--color-white);
   opacity: 0.85;
 }
-.pricing-title {
+/* Scoped naar .pricing-teaser zodat de duplicate `.pricing-title` in de
+   PricingPackages-sectie (lichte bg, dark color) dit niet overschrijft. */
+.pricing-teaser .pricing-title {
   font-family: var(--font-display);
   font-weight: 800;
   font-size: clamp(24px, 2.6vw, 36px);
@@ -7517,99 +7537,46 @@ main { display: contents; }
 /* Sneak-pakketten-card — een mini-versie van de Standard Care
    pricing-card uit /website-onderhoud. Decoratief (aria-hidden) maar
    geeft direct visueel houvast aan het cross-sell-aanbod. */
-.opfris-cross-card {
-  background: var(--color-white);
-  border: var(--border);
-  border-radius: var(--radius-xl);
-  padding: 28px 28px 28px;
-  box-shadow: 8px 8px 0 var(--color-purple-deep);
+/* Sneak-peek-card hergebruikt .pricing-card structuur volledig.
+   Overrides voor de teal-context:
+     - Tekstkleur expliciet naar text-primary (omhullende .opfris-cross
+       zet color:white voor white-on-teal body-tekst; in deze witte
+       card moet de tekst weer donker).
+     - Paarse drop-shadow i.p.v. line-color, past op de teal-bg. */
+.opfris-cross-card.pricing-card {
   color: var(--text-primary);
+  box-shadow: 8px 8px 0 var(--color-purple-deep);
 }
-/* Eyebrow als kop-typografie i.p.v. mono-label — past beter bij de
-   "preview-card" vibe. */
-.opfris-cross-card-eyebrow {
+/* Header-content gecentreerd. De feature-list onder de divider blijft
+   left-aligned (standaard .pricing-card-features styling). */
+.opfris-cross-card-head {
+  align-items: center;
+  text-align: center;
+}
+.opfris-cross-card-head .pricing-card-for {
+  margin: 4px 0 0;
+}
+/* Prijs-row gecentreerd + "Vanaf" prominent als prefix vóór het bedrag. */
+.opfris-cross-card-price {
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.opfris-cross-vanaf {
   font-family: var(--font-display);
   font-size: 15px;
-  font-weight: 800;
-  letter-spacing: -0.005em;
-  color: var(--color-purple);
-  margin: 0 0 8px;
-}
-/* Prijsblok als kolom: "Vanaf" caption boven, grote prijs eronder.
-   Alle elementen in dezelfde display-font, één visueel geheel. */
-.opfris-cross-card-price {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  font-family: var(--font-display);
-  margin-bottom: 18px;
-  color: var(--color-teal);
-  line-height: 1;
-}
-.opfris-cross-card-prefix {
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-primary);
-  opacity: 0.6;
-  margin-bottom: 4px;
-  letter-spacing: -0.005em;
-}
-.opfris-cross-card-price-row {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-}
-.opfris-cross-card-currency {
-  font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 900;
-  align-self: flex-start;
-  margin-top: 12px;
-  letter-spacing: -0.03em;
-}
-.opfris-cross-card-amount {
-  font-family: var(--font-display);
-  font-size: 64px;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-.opfris-cross-card-period {
-  font-family: var(--font-display);
-  font-size: 18px;
   font-weight: 700;
+  letter-spacing: -0.005em;
   color: var(--text-primary);
-  opacity: 0.55;
-  letter-spacing: -0.01em;
-  margin-left: 2px;
-}
-.opfris-cross-card-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.opfris-cross-card-list li {
-  position: relative;
-  padding-left: 22px;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--text-primary);
-}
-.opfris-cross-card-list li::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--color-teal);
-  font-weight: 900;
+  opacity: 0.65;
+  align-self: center;
+  margin-right: 2px;
 }
 @media (max-width: 900px) {
   .opfris-cross-inner { grid-template-columns: 1fr; gap: 40px; }
-  .opfris-cross-right { justify-self: start; }
+  /* Op mobile/tablet: stack + center. Card + knop visueel centraal
+     uitgelijnd in de viewport zodat ze niet links plakken. */
+  .opfris-cross-right { justify-self: center; }
 }
 @media (max-width: 640px) {
   .opfris-cross { padding: 64px var(--gutter-mobile); }
@@ -7646,5 +7613,1322 @@ main { display: contents; }
 .opfris-waarom-cta { align-self: flex-start; margin-top: 12px; }
 @media (max-width: 640px) {
   .opfris-waarom { padding: 56px var(--gutter-mobile); }
+}
+
+/* ============================================================
+   === OPTIMALISATIE-PAGINA (src/pages/website-optimalisatie.astro)
+   Veel patronen leunen op de opfris-aanpak, met eigen class-set
+   zodat beide pagina's los kunnen evolueren.
+   ============================================================ */
+
+.opt-page {
+  background: var(--surface-page);
+  background-image: var(--bg-decoration-light);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+}
+
+/* --- BeforeAfter wrap --- */
+.opt-ba {
+  padding: 64px var(--gutter) 80px;
+}
+.opt-ba-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.opt-ba-head {
+  max-width: 720px;
+  margin: 0 auto 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.opt-ba-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.opt-ba-title em { font-style: normal; color: var(--color-teal); }
+.opt-ba-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.85;
+  max-width: 56ch;
+  margin: 0;
+}
+.opt-ba-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+@media (max-width: 640px) {
+  .opt-ba { padding: 48px var(--gutter-mobile) 56px; }
+  .opt-ba-head { margin-bottom: 28px; }
+}
+
+/* --- USP-grid (4 cards) — naadloos in page-bg, teal shadow op cards. --- */
+.opt-usps {
+  padding: 56px var(--gutter) 72px;
+}
+.opt-usps-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.opt-usps-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+.opt-usps-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.opt-usps-title em { font-style: normal; color: var(--color-teal); }
+.opt-usps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.opt-usp-card {
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 22px;
+  box-shadow: 5px 5px 0 var(--color-teal);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.opt-usp-icon {
+  color: var(--color-teal);
+  margin-bottom: 4px;
+}
+.opt-usp-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.opt-usp-body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.78;
+  margin: 0;
+}
+@media (max-width: 1024px) {
+  .opt-usps-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .opt-usps { padding: 40px var(--gutter-mobile) 56px; }
+  .opt-usps-grid { grid-template-columns: 1fr; }
+}
+
+/* --- Waarom-blok (cream, klassiek text-blok) --- */
+.opt-waarom {
+  padding: 64px var(--gutter) 72px;
+}
+.opt-waarom-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.opt-waarom-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 6px 0 8px;
+  color: var(--text-primary);
+}
+.opt-waarom-title em { font-style: normal; color: var(--color-teal); }
+.opt-waarom p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  margin: 0;
+}
+.opt-waarom-cta { align-self: flex-start; margin-top: 12px; }
+@media (max-width: 640px) {
+  .opt-waarom { padding: 48px var(--gutter-mobile) 56px; }
+}
+
+/* --- CRO/A-B-testen sectie: 2-koloms tekst+image. --- */
+.opt-cro {
+  padding: 80px var(--gutter) 88px;
+  background: var(--surface-page-soft);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.opt-cro-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+.opt-cro-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.opt-cro-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.8vw, 48px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 4px 0 8px;
+  color: var(--text-primary);
+}
+.opt-cro-title em { font-style: normal; color: var(--color-teal); }
+.opt-cro-body {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  opacity: 0.88;
+  margin: 0;
+  max-width: 56ch;
+}
+.opt-cro-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.opt-cro-list li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.opt-cro-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 1px;
+  color: var(--color-teal);
+  font-weight: 900;
+  font-size: 18px;
+}
+
+/* Image-kant met overlay-badge die een concreet resultaat citeert. */
+.opt-cro-media {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: var(--border);
+  box-shadow: 8px 8px 0 var(--color-teal);
+}
+.opt-cro-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.opt-cro-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: 4px 4px 0 var(--color-purple-deep);
+  max-width: 80%;
+}
+.opt-cro-badge-stat {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.2vw, 36px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-teal);
+}
+.opt-cro-badge-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.75;
+}
+@media (max-width: 900px) {
+  .opt-cro-inner { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 640px) {
+  .opt-cro { padding: 56px var(--gutter-mobile); }
+  .opt-cro-media { box-shadow: 5px 5px 0 var(--color-teal); }
+  .opt-cro-badge { padding: 10px 14px; bottom: 12px; left: 12px; }
+}
+
+/* --- 5 Pijlers op donkere bg met FROSEO-watermark.
+   Auto-fit grid: 3 op desktop, 2 op tablet, 1 op mobiel. --- */
+.opt-pillars {
+  position: relative;
+  overflow: hidden;
+  padding: 96px var(--gutter);
+  background-color: var(--surface-dark);
+  background-image: var(--bg-decoration-dark);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+  color: var(--text-on-dark);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.opt-pillars-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(380px, 70vw, 1200px);
+  height: auto;
+  opacity: 0.08;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(ellipse at center, black 35%, transparent 80%);
+  mask-image: radial-gradient(ellipse at center, black 35%, transparent 80%);
+}
+.opt-pillars-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.opt-pillars-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 48px;
+}
+.opt-pillars-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.8vw, 52px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-on-dark);
+}
+.opt-pillars-title em {
+  font-style: normal;
+  color: var(--accent-highlight);
+}
+.opt-pillars-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 60ch;
+  margin: 0;
+}
+.opt-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.opt-pillar-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-lg);
+  padding: 28px 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.opt-pillar-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  color: var(--accent-highlight);
+  margin-bottom: 4px;
+}
+.opt-pillar-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-on-dark);
+}
+.opt-pillar-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+@media (max-width: 720px) {
+  .opt-pillars { padding: 64px var(--gutter-mobile); }
+  .opt-pillars-watermark { width: 90vw; }
+}
+
+/* --- Routes-accordion (3 scenario's). --- */
+.opt-routes {
+  --accent-rare:        var(--color-teal);
+  --accent-rare-strong: var(--color-teal-strong);
+
+  padding: 80px var(--gutter);
+}
+.opt-routes-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.opt-routes-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+.opt-routes-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.opt-routes-title em {
+  font-style: normal;
+  color: var(--accent-rare);
+}
+.opt-routes-lead {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.8;
+  max-width: 56ch;
+  margin: 0;
+}
+.opt-routes-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.opt-route-item {
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  transition: box-shadow 0.15s ease;
+}
+.opt-route-item[open] {
+  box-shadow: 4px 4px 0 var(--accent-rare);
+}
+.opt-route-item summary {
+  list-style: none;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 44px 1fr 24px;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  color: var(--text-primary);
+}
+.opt-route-item summary::-webkit-details-marker { display: none; }
+.opt-route-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--accent-rare);
+  font-weight: 700;
+}
+.opt-route-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0;
+  color: inherit;
+}
+.opt-route-ico {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--accent-rare);
+  transition: transform 0.2s ease;
+}
+.opt-route-item[open] .opt-route-ico { transform: rotate(45deg); }
+.opt-route-body {
+  padding: 0 22px 22px 80px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.88;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.opt-route-body p { margin: 0; }
+.opt-route-link {
+  align-self: flex-start;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent-rare);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.opt-route-link:hover { color: var(--accent-rare-strong); }
+@media (max-width: 640px) {
+  .opt-routes { padding: 56px var(--gutter-mobile); }
+  .opt-route-item summary {
+    grid-template-columns: 36px 1fr 22px;
+    padding: 16px 18px;
+    gap: 10px;
+  }
+  .opt-route-title { font-size: 16px; }
+  .opt-route-body { padding: 0 18px 18px 64px; font-size: 14px; }
+}
+
+/* =============================================================
+   /maarssen — lokale SEO landingspagina. Drie custom secties bovenop
+   de homepage-componenten:
+     1. .maarssen-waarom — body + 3 USP-cards (geen opstart, geen
+        contracten, direct contact)
+     2. .maarssen-localseo — 2-koloms blok (tekst links, image rechts)
+        met een floating badge over de afbeelding
+     3. .maarssen-branches — branche-pills voor entity-spreiding en
+        herkenbaarheid bij MKB/ZZP-bezoekers
+   ============================================================= */
+
+/* --- Waarom Froseo uit Maarssen --- */
+.maarssen-waarom {
+  padding: 88px var(--gutter);
+}
+.maarssen-waarom-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.maarssen-waarom-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.maarssen-waarom-title {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.maarssen-waarom-title em { font-style: normal; color: var(--color-teal); }
+.maarssen-waarom-body {
+  max-width: 720px;
+  margin: 0 auto 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.maarssen-waarom-body p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  margin: 0;
+}
+.maarssen-waarom-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.maarssen-waarom-card {
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 26px 26px;
+  box-shadow: 5px 5px 0 var(--color-teal);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.maarssen-waarom-card-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent-rare);
+  margin-bottom: 4px;
+}
+.maarssen-waarom-card-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.maarssen-waarom-card-body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.82;
+  margin: 0;
+}
+
+/* Inline branche-strip binnen .maarssen-waarom: subkop + pill-grid.
+   Geen aparte sectie meer; visueel onderdeel van het waarom-blok zodat
+   het niet als losse "tussen geprakte" section leest. */
+.maarssen-waarom-branches {
+  text-align: center;
+  margin: 8px auto 48px;
+  max-width: 900px;
+}
+.maarssen-waarom-branches-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0 0 20px;
+}
+.maarssen-waarom-branches-title em { font-style: normal; color: var(--color-teal); }
+.maarssen-waarom-branches .maarssen-branches-grid {
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .maarssen-waarom-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .maarssen-waarom { padding: 56px var(--gutter-mobile); }
+}
+
+/* --- Lokale SEO: centered head bovenaan, eronder een 2-koloms grid
+       met body+list+cta links en image+badge rechts. Geeft de h2
+       ruimte om te ademen en houdt de body-tekst niet meer in een
+       smalle kolom geklemd. --- */
+.maarssen-localseo {
+  padding: 88px var(--gutter);
+  background-color: var(--color-cream-deep);
+  background-image: var(--bg-decoration-light);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+}
+.maarssen-localseo-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+.maarssen-localseo-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto;
+}
+.maarssen-localseo-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.maarssen-localseo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.maarssen-localseo-title {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.maarssen-localseo-title em { font-style: normal; color: var(--color-teal); }
+.maarssen-localseo-intro {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.85;
+  max-width: 60ch;
+  margin: 0;
+}
+.maarssen-localseo-text p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  margin: 0;
+}
+.maarssen-localseo-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.maarssen-localseo-list li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.maarssen-localseo-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-teal);
+}
+.maarssen-localseo-cta { align-self: flex-start; margin-top: 12px; }
+
+.maarssen-localseo-media {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: visible;
+}
+.maarssen-localseo-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: var(--border);
+  box-shadow: 8px 8px 0 var(--color-teal);
+  display: block;
+}
+.maarssen-localseo-badge {
+  position: absolute;
+  bottom: -22px;
+  left: -22px;
+  background: var(--accent-rare);
+  color: white;
+  padding: 18px 22px 14px;
+  border-radius: var(--radius-lg);
+  border: var(--border);
+  box-shadow: 5px 5px 0 var(--color-deep);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 2;
+}
+.maarssen-localseo-badge-stat {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.maarssen-localseo-badge-label {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.9;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 1024px) {
+  .maarssen-localseo-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .maarssen-localseo-media { max-width: 540px; margin: 0 auto; }
+}
+@media (max-width: 640px) {
+  .maarssen-localseo { padding: 56px var(--gutter-mobile); }
+  .maarssen-localseo-badge {
+    bottom: -16px;
+    left: -12px;
+    padding: 14px 18px 12px;
+  }
+  .maarssen-localseo-badge-stat { font-size: 24px; }
+}
+
+/* --- Branches: "Van dakdekker tot personal trainer." --- */
+.maarssen-branches {
+  padding: 88px var(--gutter);
+}
+.maarssen-branches-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  text-align: center;
+}
+.maarssen-branches-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+.maarssen-branches-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.8vw, 48px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.maarssen-branches-title em { font-style: normal; color: var(--color-teal); }
+.maarssen-branches-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.85;
+  max-width: 60ch;
+  margin: 0;
+}
+.maarssen-branches-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  max-width: 900px;
+  margin: 0 auto 28px;
+}
+.maarssen-branch-pill {
+  display: inline-block;
+  padding: 10px 18px;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  box-shadow: 3px 3px 0 var(--color-teal);
+  transition: transform var(--transition-fast);
+}
+.maarssen-branch-pill:hover { transform: translate(-1px, -1px); }
+.maarssen-branches-note {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.7;
+  max-width: 50ch;
+  margin: 0 auto;
+  font-style: italic;
+}
+@media (max-width: 640px) {
+  .maarssen-branches { padding: 56px var(--gutter-mobile); }
+  .maarssen-branch-pill { padding: 8px 14px; font-size: 14px; }
+}
+
+/* =============================================================
+   /website-laten-maken-utrecht — SEO-landingspagina voor het
+   primaire keyword "website laten maken Utrecht". Reuse-first:
+   hero gebruikt .service-hero, USPs hergebruiken .zzp-usps,
+   branche-accordion hergebruikt .zzp-segments, routes-blok
+   gebruikt .service-paths. Eigen .utrecht-* classes voor de
+   Utrecht-specifieke blokken (intro, before/after, localseo,
+   werkgebied).
+   ============================================================= */
+.utrecht-page {
+  background: var(--surface-page);
+  background-image: var(--bg-decoration-light);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+}
+
+/* --- 4 USP-cards sectie met Froseo-logo watermark voor visuele
+       textuur. Voorkomt dat de pagina een lange reeks platte light-
+       secties met dunne top-borders wordt. --- */
+.utrecht-usps {
+  position: relative;
+  overflow: hidden;
+  padding: 80px var(--gutter) 96px;
+}
+.utrecht-usps-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(380px, 65vw, 1100px);
+  height: auto;
+  opacity: 0.06;
+  filter: invert(1);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+.utrecht-usps-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.utrecht-usps-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 44px;
+}
+.utrecht-usps-title {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.utrecht-usps-title em { font-style: normal; color: var(--color-teal); }
+.utrecht-usps-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.85;
+  max-width: 56ch;
+  margin: 0;
+}
+.utrecht-usps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.utrecht-usp-card {
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 22px;
+  box-shadow: 5px 5px 0 var(--color-teal);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.utrecht-usp-icon {
+  color: var(--color-teal);
+  margin-bottom: 4px;
+}
+.utrecht-usp-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.utrecht-usp-body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.82;
+  margin: 0;
+}
+@media (max-width: 1024px) {
+  .utrecht-usps-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .utrecht-usps { padding: 56px var(--gutter-mobile) 64px; }
+  .utrecht-usps-grid { grid-template-columns: 1fr; }
+}
+
+/* Per-card CTA-knop onderaan de service-path-cards. Niet stretchen,
+   wel natuurlijk-aligned op flex-start + iets kleinere padding zodat
+   de knop niet zwaarder weegt dan de card-inhoud. */
+.service-path-cta {
+  margin-top: auto;
+  align-self: flex-start;
+  padding: 12px 22px;
+  font-size: 14px;
+}
+
+/* =============================================================
+   /website-laten-maken-utrecht — scoped visuele overrides om de
+   monotone reeks light-secties te doorbreken. Per Calvin's feedback:
+   minder wit-met-streepjes, meer kleur en patroon.
+   ============================================================= */
+
+/* Service-paths op donkerpaars met pattern, naadloos in de Froseo-
+   brand. Maatwerk-featured card flipt naar cream zodat beide cards
+   helder uitkomen tegen de purple bg. Tekstkleur alleen op de head,
+   niet op de hele sectie (anders erven de cards 't ook). */
+.utrecht-page .service-paths {
+  background: var(--color-purple-deep);
+  background-image: var(--bg-decoration-dark);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+  border-top: none;
+  border-bottom: none;
+}
+.utrecht-page .service-paths-head { color: var(--text-on-dark); }
+.utrecht-page .service-paths-title { color: var(--text-on-dark); }
+.utrecht-page .service-paths-title em { color: var(--color-yellow); }
+.utrecht-page .service-paths-lead { color: rgba(255, 255, 255, 0.82); opacity: 1; }
+.utrecht-page .service-path-card { color: var(--text-primary); }
+.utrecht-page .service-path-card.is-featured {
+  background: var(--surface-card);
+  color: var(--text-primary);
+  box-shadow: 6px 6px 0 var(--color-yellow);
+}
+.utrecht-page .service-path-card.is-featured:hover { box-shadow: 9px 9px 0 var(--color-yellow); }
+.utrecht-page .service-path-card .service-path-checks { border-top-color: rgba(0, 0, 0, 0.15); }
+
+/* PainPoints op forest-green met pattern. Tekst gaat licht. Cards
+   blijven cream/wit zodat ze duidelijk afsteken tegen de groene bg.
+   "groen" hier = teal-strong (#006461), naadloos in het brand-pallet. */
+.utrecht-page .pain-points {
+  background: var(--color-teal-strong);
+  background-image: var(--bg-decoration-dark);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+}
+.utrecht-page .pain-points-title { color: var(--text-on-dark); }
+.utrecht-page .pain-points-title em { color: var(--color-yellow); }
+.utrecht-page .pain-points-lead { color: rgba(255, 255, 255, 0.85); opacity: 1; }
+.utrecht-page .pain-card { box-shadow: 5px 5px 0 var(--color-yellow); }
+.utrecht-page .pain-card:hover { box-shadow: 7px 7px 0 var(--color-yellow); }
+
+/* Lokale SEO base styling staat nu in .maarssen-localseo zelf (cream-deep
+   met pattern); de utrecht-page scope hoeft 'm niet meer te overriden. */
+
+/* Stub: de daadwerkelijke override voor consistente section-h2 sizing
+   staat onderaan dit bestand zodat hij na alle individuele class-rules
+   in de cascade komt. */
+
+/* --- Utrecht-trots body-blok (single column, links uitgelijnd). --- */
+/* --- Before/After sectie. Container + head, slider zelf gestyled
+       door het BeforeAfter component (.before-after). --- */
+.utrecht-ba {
+  padding: 56px var(--gutter) 72px;
+}
+.utrecht-ba-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.utrecht-ba-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+.utrecht-ba-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.utrecht-ba-title em { font-style: normal; color: var(--color-teal); }
+.utrecht-ba-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.85;
+  max-width: 60ch;
+  margin: 0;
+}
+.utrecht-ba-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+@media (max-width: 640px) {
+  .utrecht-ba { padding: 40px var(--gutter-mobile) 56px; }
+}
+
+/* --- CTA-rij onder de service-paths op deze landing. --- */
+.utrecht-paths-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+/* --- Werkgebied-strook (3 cards: werkgebied, contact, KvK).
+       Rendert ONDER de FAQ op deze pagina. --- */
+.utrecht-area {
+  padding: 72px var(--gutter) 80px;
+  background: var(--surface-card);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.utrecht-area-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.utrecht-area-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+.utrecht-area-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.utrecht-area-title em { font-style: normal; color: var(--color-teal); }
+.utrecht-area-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.85;
+  max-width: 60ch;
+  margin: 0;
+}
+.utrecht-area-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.utrecht-area-card {
+  background: var(--surface-page);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.utrecht-area-card-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.utrecht-area-card-body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0;
+}
+.utrecht-area-card-body a {
+  color: var(--text-primary);
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--color-teal);
+  transition: color var(--transition-fast);
+}
+.utrecht-area-card-body a:hover { color: var(--color-teal); }
+@media (max-width: 900px) {
+  .utrecht-area-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .utrecht-area { padding: 56px var(--gutter-mobile) 64px; }
+}
+
+/* =============================================================
+   /seo-bureau-utrecht — tekst-zwaar voor SEO. Page-wrapper krijgt
+   dezelfde cream + pattern als de andere SEO-landings. Custom blok
+   .seo-bu-body voor lange uitleg-tekst (single-column, bredere
+   container dan .maarssen-waarom omdat de paragrafen vol zitten).
+   ============================================================= */
+.seo-utrecht-page {
+  background: var(--surface-page);
+  background-image: var(--bg-decoration-light);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+}
+
+/* Service-paths op donkerpaars met pattern, zelfde treatment als
+   .utrecht-page. Voorkomt dat de routes-sectie als een wit blok
+   met streepjes ertussen knalt. */
+.seo-utrecht-page .service-paths {
+  background: var(--color-purple-deep);
+  background-image: var(--bg-decoration-dark);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+  border-top: none;
+  border-bottom: none;
+}
+.seo-utrecht-page .service-paths-head { color: var(--text-on-dark); }
+.seo-utrecht-page .service-paths-title { color: var(--text-on-dark); }
+.seo-utrecht-page .service-paths-title em { color: var(--color-yellow); }
+.seo-utrecht-page .service-paths-lead { color: rgba(255, 255, 255, 0.82); opacity: 1; }
+.seo-utrecht-page .service-path-card { color: var(--text-primary); }
+.seo-utrecht-page .service-path-card.is-featured {
+  background: var(--surface-card);
+  color: var(--text-primary);
+  box-shadow: 6px 6px 0 var(--color-yellow);
+}
+.seo-utrecht-page .service-path-card.is-featured:hover { box-shadow: 9px 9px 0 var(--color-yellow); }
+.seo-utrecht-page .service-path-card .service-path-checks { border-top-color: rgba(0, 0, 0, 0.15); }
+
+.seo-bu-body {
+  padding: 88px var(--gutter);
+}
+.seo-bu-body-inner {
+  max-width: 820px;
+  margin: 0 auto;
+}
+.seo-bu-body-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  margin-bottom: 36px;
+}
+.seo-bu-body-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.seo-bu-body-title em { font-style: normal; color: var(--color-teal); }
+.seo-bu-body-text {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.seo-bu-body-text p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  margin: 0;
+}
+.seo-bu-body-sub {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin: 18px 0 4px;
+}
+@media (max-width: 640px) {
+  .seo-bu-body { padding: 56px var(--gutter-mobile); }
+  .seo-bu-body-text p { font-size: 16px; line-height: 1.65; }
+}
+
+/* =============================================================
+   SECTION-H2 SIZING — MOET ALS LAATSTE BLOK IN HET BESTAND STAAN
+   zodat het de individuele class-rules (zoals .utrecht-ba-title)
+   in de cascade overschrijft. Verplaats niet zonder reden.
+   ============================================================= */
+
+/* Consistent homepage-grade h2 sizing voor alle dienst-page section-
+   koppen sitewide. Originele dienst-page CSS gebruikte kleine clamps
+   (~28-44px); homepage h2's zitten op ~40-76px.
+   Dekt: custom pagina's (utrecht/maarssen/opfrissen/optimalisatie/zzp)
+   én de dynamische [slug].astro pagina's (webdesign/seo/paid-media/etc). */
+.service-paths-title,
+.utrecht-ba-title,
+.pain-points-title,
+.comparison-title,
+.local-agency-title,
+.utrecht-usps-title,
+.zzp-segments-title,
+.zzp-body-title,
+.maarssen-localseo-title,
+.maarssen-waarom-title,
+.maarssen-services-title,
+.opfris-ba-title,
+.opfris-usps-title,
+.opfris-waarom-title,
+.opfris-modules-title,
+.opfris-cross-title,
+.opt-usps-title,
+.opt-waarom-title,
+.opt-cro-title,
+.opt-ba-title,
+.opt-pillars-title,
+.opt-routes-title,
+.websites-showcase-title,
+.service-spotlight-title,
+.service-pillars-title,
+.service-approach-title,
+.service-usps-title,
+.service-cases-title,
+.onboarding-timeline-title,
+.cta-band-title,
+.seo-bu-body-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 76px);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  max-width: none;
+}
+
+/* Lead-paragraafjes breder zetten zodat ze niet als smal pilaartje
+   onder de grote h2's hangen. 56ch was raar krap; 64ch leest beter. */
+.service-paths-lead,
+.utrecht-ba-lead,
+.utrecht-usps-lead,
+.pain-points-lead,
+.maarssen-localseo-intro,
+.opfris-ba-lead,
+.opfris-modules-lead,
+.opt-usps-lead,
+.maarssen-branches-lead {
+  max-width: 64ch;
 }
 

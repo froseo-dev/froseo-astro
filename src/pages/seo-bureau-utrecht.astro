@@ -1,0 +1,604 @@
+---
+/**
+ * SEO-landingspagina /seo-bureau-utrecht.
+ *
+ * Hoofd-keyword: "SEO bureau Utrecht" (+ varianten: "SEO Utrecht",
+ * "lokale SEO Utrecht", "SEO bureau in Utrecht").
+ *
+ * Bewust tekst-zwaar: deze pagina moet ranken op Google, dus body-
+ * content gaat voor pure esthetiek. Veel concreet uitlegwerk over
+ * wat een SEO bureau doet, hoe wij dat in Utrecht aanpakken en wat
+ * het oplevert. Alle copy is uniek voor deze pagina, niets letterlijk
+ * uit /seo, /lokale-seo of /website-laten-maken-utrecht overgenomen.
+ *
+ * Volgorde:
+ *   1. Hero (h1 met keyword + 4 trust-checks)
+ *   2. LogosTicker
+ *   3. Wat een SEO bureau Utrecht doet (rich body 4 alinea's)
+ *   4. CasesStrip (Renovatie Totaal featured + Utrechtse cases)
+ *   5. Twee routes (audit-eenmalig vs maandelijks pakket)
+ *   6. Hoe wij Utrechtse bedrijven hoger krijgen (8 work-items in pillars)
+ *   7. Lokale SEO 2-koloms met case-image
+ *   8. Testimonial (Bas met bgImage)
+ *   9. Werkwijze (Approach met watermark)
+ *  10. 4 USP-cards "Waarom Froseo als SEO bureau in Utrecht"
+ *  11. Voor-wie body-blok (branches)
+ *  12. BetterCallCalvin
+ *  13. FAQ (12 items, lange antwoorden voor SEO-body)
+ *
+ * Stijl: hergebruik bestaande classes (maarssen-localseo, maarssen-
+ * waarom, utrecht-usps) zodat h2-sizing en watermark-treatments
+ * direct goed staan. Wrapper-class .seo-utrecht-page voor eventuele
+ * scoped overrides.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import SectionIcon from '@components/ui/SectionIcon.astro';
+import LogosTicker from '@components/sections/LogosTicker.astro';
+import CasesStrip from '@components/sections/CasesStrip.astro';
+import CalvinNote from '@components/sections/CalvinNote.astro';
+import Testimonial from '@components/sections/Testimonial.astro';
+import Approach from '@components/sections/Approach.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import { Image } from 'astro:assets';
+import { review, pricing } from '@data/site-config';
+import heroMockup from '@assets/hero/froseo-mockup.webp';
+import localseoImage from '@assets/cases/renovatie-totaal/hero.webp';
+import froseoLogoWit from '@assets/brand/froseo-logo-wit.webp';
+import testiBg from '@assets/testimonials/renovatie-totaal-bg.webp';
+import basAvatar from '@assets/testimonials/bas-bertrams.webp';
+
+const pageTitle = 'SEO bureau Utrecht | Hoger in Google + Maps | Froseo';
+const pageDesc =
+  'SEO bureau Utrecht voor MKB en ZZP. Doorlopende SEO-pakketten vanaf €399 per maand, eenmalige audits vanaf €499. Hoger in Google en de map-pack, gemeten met cijfers.';
+
+/* Pijlers: wat een SEO bureau in Utrecht concreet doet. Acht onderdelen,
+   elk met lange body-tekst zodat de accordion ook tekst-gewicht heeft
+   voor Google. Gebruikt het .seo-bu-pillars patroon. */
+const pillars = [
+  {
+    icon: 'searchGlass',
+    title: 'Technische SEO-audit',
+    body: 'We beginnen met een doorlichting van wat er onder de motorkap staat. Core Web Vitals (laadtijd, interactiviteit, layout-stabiliteit), schema.org markup, robots.txt en sitemap, interne linkstructuur, gestructureerde data, indexatie-status in Google Search Console en de manier waarop je site door Google gecrawld wordt. Voor Utrechtse MKB-sites zit hier vaak de snelste winst: een trage WordPress-site met te zware plug-ins of een verkeerd geconfigureerde sitemap kost je rankings zonder dat je het doorhebt.',
+  },
+  {
+    icon: 'target',
+    title: 'Keyword-onderzoek voor Utrechtse zoekers',
+    body: 'Welke zoekwoorden tikt jouw klant in op zijn telefoon? We brengen in kaart wat mensen in Utrecht en omgeving daadwerkelijk zoeken: zoekvolume, intentie, concurrentie en commerciële waarde. Generieke termen ("dakdekker"), lokale variaties ("dakdekker Utrecht Oost"), longtail-vragen ("hoeveel kost een nieuw dak in Utrecht") en branche-specifieke termen. Per zoekwoord bepalen we of het haalbaar is om voor te scoren en hoeveel werk dat ongeveer kost. Geen lijst van honderd termen waar je niets mee kunt, wel een gerichte selectie waarop we kunnen sturen.',
+  },
+  {
+    icon: 'paletteSwatch',
+    title: 'On-page optimalisatie',
+    body: 'Per pagina kijken we wat Google nu ziet en wat dat completer of relevanter kan maken. Title-tags en meta-descriptions die zowel bij Google als bij de bezoeker werken. Koppen-structuur (H1, H2, H3) die hiërarchie aanbrengt zonder gekunsteld te worden. Tekst-lengte en zoekintentie-dekking die past bij wat de top-10 doet. Schema-markup voor LocalBusiness, Service, Product of FAQPage waar het zin heeft. Interne links die de juiste pagina\'s versterken in plaats van verwateren. Veel sites laten hier rendement liggen omdat de basis nooit goed is ingericht.',
+  },
+  {
+    icon: 'archiveStack',
+    title: 'Content die zoekintentie raakt',
+    body: 'Nieuwe of herschreven pagina\'s die antwoord geven op wat mensen écht zoeken. We schrijven geen blog-vulling om het volume, wel pagina\'s die per zoekvraag de meest relevante en complete bron zijn. Voor Utrechtse bedrijven betekent dat vaak: dienst-pagina\'s per regio of buurt, case-content die laat zien dat je in de praktijk levert wat je belooft, en uitleg-pagina\'s die de overweging van een potentiële klant beantwoorden. Met heldere structuur, tussenkoppen die scannen, en interne links die de bezoeker de volgende stap aanreiken.',
+  },
+  {
+    icon: 'shieldCheck',
+    title: 'Autoriteit en linkbuilding',
+    body: 'Google kijkt naar wie er naar jou verwijst en hoe relevant die bronnen zijn. Wij werken aan autoriteit-opbouw via digital PR, vermeldingen in branche-platforms, gastartikelen op relevante sites en partnerships met andere ondernemers in de regio. Geen linkfarms, geen netwerksites die je over een half jaar terugziet als spam. Duurzame links uit bronnen die ook door Google als waardevol worden gezien. Voor SEO bureau Utrecht-zoekers is dit de reden dat we kunnen concurreren met grotere landelijke bureaus zonder dat we hun budget hoeven te matchen.',
+  },
+  {
+    icon: 'locationPin',
+    title: 'Lokale SEO en Google Maps',
+    body: 'Voor Utrechtse zoekopdrachten met lokale intentie (denk "tandarts Utrecht", "loodgieter Utrecht Oost", "kapper in de buurt") gebruikt Google een eigen algoritme. Bovenaan staat een blok met drie zaken op de kaart, het zogenoemde local pack. Daar gaat tot wel 80 procent van de klikken naartoe. Wij optimaliseren je Google Business Profile, zorgen voor consistente bedrijfsgegevens (NAP) op het hele web, bouwen citations bij relevante directories en richten een review-proces in dat natuurlijk binnenkomt. Voor lokaal-gerichte ondernemers in Utrecht is dit vaak de snelste weg naar zichtbaarheid.',
+  },
+  {
+    icon: 'chartUp',
+    title: 'Rapportage en bijsturen',
+    body: 'Elke maand ontvang je een overzicht waar je iets aan hebt. Welke posities zijn gestegen, welke gedaald, hoeveel organisch verkeer er binnen kwam en hoeveel aanvragen daar uit voortkwamen. Plus wat we afgelopen maand hebben aangepast en wat er voor volgende maand op de planning staat. Geen veertig pagina\'s Google Analytics-screenshots maar concrete cijfers waar je een besluit op kunt baseren. We koppelen Google Search Console, GA4 en je conversie-tracking, zodat we sturen op aanvragen en omzet in plaats van op kliks alleen.',
+  },
+  {
+    icon: 'swordsCross',
+    title: 'Concurrentie-analyse',
+    body: 'Voor Utrechtse markten is de concurrentie soms scherp en soms verrassend zwak. Voor "tandarts Utrecht centrum" vechten tientallen praktijken om de top-3, terwijl voor "interieurbouwer Utrecht" de bovenste posities vaak nog door bedrijven met kale websites worden gevuld. Wij analyseren wie er in jouw markt staat, waar hun rankings vandaan komen en welke afstand je hebt te overbruggen. Dat bepaalt of het realistisch is om binnen drie maanden de top-10 te halen of dat we een langere route moeten lopen.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Wat doet een SEO bureau in Utrecht precies?',
+    a: 'Een SEO bureau zorgt dat jouw website beter vindbaar wordt in Google en, voor lokale zoekopdrachten, in Google Maps. Dat gebeurt op drie fronten tegelijk: techniek (snelheid, structuur, schema-markup, indexatie), content (pagina\'s die antwoord geven op wat mensen zoeken) en autoriteit (links en vermeldingen vanuit andere sites). Een goede aanpak combineert die drie. Bij ons komt daar lokale SEO bij voor Utrecht en omgeving, met focus op Google Business Profile, reviews en consistente bedrijfsgegevens overal op het web.',
+  },
+  {
+    q: 'Wat kost een SEO bureau in Utrecht?',
+    a: `Een eenmalige SEO-audit start vanaf €499. Doorlopende SEO-pakketten beginnen vanaf €399 per maand voor lokale SEO, en lopen op naar €1.000 per maand of meer voor combinaties van landelijke en lokale SEO met content en linkbuilding. Wat het bij jou wordt hangt af van je concurrentie, het aantal zoekwoorden en hoeveel content we maandelijks schrijven of herschrijven. Tijdens een vrijblijvende kennismaking maken we een concreet voorstel met heldere prijzen, zonder verrassingen achteraf en zonder percentage-van-spend constructies. Vraag je liever eerst om een complete website? Bekijk dan ook /website-laten-maken-utrecht of het abonnement vanaf ${pricing.abboFromInline}.`,
+  },
+  {
+    q: 'Hoe snel zie ik resultaat van SEO?',
+    a: 'De eerste technische winsten zijn vaak binnen vier weken zichtbaar in Google Search Console: betere crawl-efficiëntie, snellere indexatie van nieuwe pagina\'s en hogere posities op longtail-termen. Voor structurele rankings op concurrerende termen reken je op drie tot zes maanden voordat je echte beweging ziet. Lokale SEO gaat vaak sneller: voor een goed ingericht Google Business Profile zien we regelmatig binnen acht tot twaalf weken nieuwe posities in het local pack. SEO is geen sprint, maar wel een traject met tussentijdse cijfers waar je op kunt sturen.',
+  },
+  {
+    q: 'Zitten jullie echt in Utrecht?',
+    a: 'Ja, ons kantoor zit op Leidseveer 10, twee minuten lopen vanaf Utrecht Centraal. Daarnaast werkt een deel van het team vanuit Maarssen, dus voor ondernemers in heel de regio zijn we makkelijk te bereiken. We kennen de Utrechtse markt, de wijken en de typen bedrijven die hier zitten. Voor een werksessie ben je welkom op kantoor of we komen naar je toe.',
+  },
+  {
+    q: 'Doen jullie alleen lokale SEO of ook landelijk?',
+    a: 'Allebei. Voor lokale ondernemers (dakdekkers, tandartsen, personal trainers, kappers, advocaten en andere bedrijven met klanten uit de regio) is lokale SEO meestal het sterkste vertrekpunt. Voor specialistische bedrijven, webshops en B2B-spelers richten we ons vaak op landelijke termen. Veel klanten combineren beide: een lokale strategie voor zichtbaarheid in en rond Utrecht, plus een landelijke laag voor brede zoektermen waar hun expertise op gevonden moet worden.',
+  },
+  {
+    q: 'Wat zijn de belangrijkste rankingfactoren in 2026?',
+    a: 'Snelheid en Core Web Vitals blijven belangrijk, samen met mobiele bruikbaarheid. Daarnaast wegen content-kwaliteit en zoekintentie-match zwaar: een pagina die exact antwoord geeft op een zoekvraag scoort beter dan een vagere maar uitgebreidere tekst. Autoriteit via natuurlijke backlinks weegt nog steeds, maar de kwaliteit van die links telt meer dan het aantal. Voor lokale zoekopdrachten zijn Google Business Profile, reviews en NAP-consistentie doorslaggevend. En nieuw in 2026: structuur die ook voor AI-zoekmachines werkt (GEO).',
+  },
+  {
+    q: 'Wat is het verschil tussen on-page en off-page SEO?',
+    a: 'On-page SEO speelt zich af op je eigen website: title-tags, meta-descriptions, koppen-structuur, content, interne links, snelheid en schema-markup. Off-page SEO gebeurt buiten je site: backlinks van andere websites, vermeldingen in branche-directories, reviews op Google en Trustpilot, en signalen vanuit social media. Een goede SEO-aanpak combineert beide. On-page is wat je zelf in handen hebt en het snelst kunt verbeteren. Off-page is een langere route waar autoriteit langzaam mee opbouwt.',
+  },
+  {
+    q: 'Wat is technische SEO en waarom is het belangrijk?',
+    a: 'Technische SEO gaat over hoe goed Google je website kan crawlen, indexeren en begrijpen. Concreet: laadsnelheid en Core Web Vitals, mobiele weergave, gestructureerde data via schema.org, interne linkstructuur, schone URLs, robots.txt, sitemaps en bij meertalige sites hreflang. Als de techniek niet klopt, helpt de mooiste content je niet. Veel Utrechtse MKB-sites hebben hier de eerste grote winst te halen, vooral oudere WordPress-sites met te zware plug-ins of een verkeerd ingericht caching-systeem.',
+  },
+  {
+    q: 'Hebben jullie ervaring met Utrechtse bedrijven?',
+    a: 'Ja. We hebben de afgelopen jaren gewerkt voor uiteenlopende bedrijven in en rond Utrecht: Renovatie Totaal (renovatie-specialist met 180 procent meer organisch verkeer), Top Dakdekker (al jaren op #1 voor dakdekker Zeist), Theo Mackaay (kunstenaar uit Utrecht), Independent Artists Agency (artiestenbureau aan de Oudegracht), Club 12 (horeca) en meer. De Utrechtse markt kennen we niet alleen vanuit Google Search Console: we weten welke ondernemers er zitten, welke vakgenoten je tegenkomt op netwerkborrels en wat hier wel en niet werkt.',
+  },
+  {
+    q: 'Optimaliseren jullie ook voor Google Maps?',
+    a: 'Ja, lokale SEO is een vast onderdeel van wat we doen. Voor Utrechtse ondernemers met klanten uit de regio is het local pack (de drie zaken op de kaart bovenaan lokale zoekresultaten) vaak waardevoller dan landelijke rankings. We optimaliseren je Google Business Profile compleet (categorieën, openingstijden, foto\'s, producten, posts), bouwen citations op relevante platforms, zorgen voor NAP-consistentie en richten een review-flow in. Daarnaast versterken we lokale signalen op je website zelf met locatie-pagina\'s en schema-markup.',
+  },
+  {
+    q: 'Kunnen jullie ook GEO doen voor AI-zoekmachines?',
+    a: 'Ja. Generative Engine Optimization (GEO) is optimalisatie voor AI-zoekmachines zoals ChatGPT, Gemini en Perplexity die antwoorden direct genereren in plaats van een lijst blauwe links te tonen. De signalen die je geeft, hoe je content gestructureerd is en hoe je merk in datasets voorkomt, verschillen van klassieke SEO. We pakken het tegelijk aan met SEO omdat de overlap groot is en het strategisch slim is om voor allebei vindbaar te zijn. Voor de meeste Utrechtse MKB-bedrijven is dit nog vroeg, maar wel een goed moment om de basis te leggen.',
+  },
+  {
+    q: 'Kan ik overstappen vanaf mijn huidige SEO-bureau?',
+    a: 'Ja, dat doen we regelmatig. We starten met een audit van wat er nu staat: welke zoekwoorden lopen, welke rankings je hebt, hoe je technische basis ervoor staat en wat je vorige bureau heeft gedaan. Op basis daarvan bepalen we waar we voortbouwen en waar we iets anders aanpakken. Belangrijk om vooraf te weten: rapportages, accounts (Google Search Console, Analytics, Ads) en eventuele afgenomen content blijven van jou. Geen vendor-lock-in waardoor je vastzit aan een partij.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="seo-utrecht-page">
+      {/* ============================================================
+           Hero — h1 draagt "SEO bureau in Utrecht" als primaire term,
+           bullets benoemen de vier sterkste differentiators.
+           ============================================================ */}
+      <section class="service-hero has-image">
+        <div class="service-hero-inner">
+          <div class="service-hero-text">
+            <EyebrowPill>SEO bureau Utrecht · MKB en ZZP</EyebrowPill>
+            <h1 class="service-hero-title">
+              SEO bureau in <em>Utrecht.</em>
+            </h1>
+            <ul class="service-hero-checks">
+              <li>Doorlopende SEO-pakketten vanaf €399 per maand, eenmalige audits vanaf €499</li>
+              <li>Hoger in Google én in de map-pack op Google Maps</li>
+              <li>Lokale en landelijke zoektermen, in één strategie</li>
+              <li>Maandelijkse rapportage met rankings, verkeer en aanvragen</li>
+            </ul>
+            <div class="service-hero-actions">
+              <a class="btn-primary" href="/contact?onderwerp=seo-bureau-utrecht">
+                Gratis SEO-analyse ↗
+              </a>
+            </div>
+            <div class="service-hero-reviews reviews-inline">
+              <div class="review-avatars">
+                <div class="review-avatar"></div>
+                <div class="review-avatar"></div>
+                <div class="review-avatar"></div>
+              </div>
+              <div class="stars">★★★★★</div>
+              <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
+            </div>
+          </div>
+
+          <div class="service-hero-media">
+            <Image
+              src={heroMockup}
+              alt="SEO bureau Utrecht — Froseo helpt MKB hoger in Google"
+              class="service-hero-img"
+              widths={[640, 960, 1280, 1600]}
+              sizes="(max-width: 1024px) 100vw, 640px"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+      </section>
+
+      <LogosTicker />
+
+      {/* ============================================================
+           Body-blok 1: wat een SEO bureau in Utrecht voor je doet.
+           Lange uitleg-tekst, 4 alinea's. Tekst-zwaar omdat ranken
+           op "SEO bureau Utrecht" body-content vraagt.
+           ============================================================ */}
+      <section class="seo-bu-body">
+        <div class="seo-bu-body-inner">
+          <div class="seo-bu-body-head">
+            <EyebrowPill variant="rare">Wat een SEO bureau doet</EyebrowPill>
+            <h2 class="seo-bu-body-title">
+              Wat een SEO bureau in Utrecht <em>voor je doet.</em>
+            </h2>
+          </div>
+          <div class="seo-bu-body-text">
+            <p>
+              Een SEO bureau in Utrecht zorgt dat jouw bedrijf gevonden wordt op het
+              moment dat een potentiële klant in Google zoekt naar wat jij aanbiedt.
+              Niet op pagina drie waar niemand komt, maar bovenaan de eerste pagina.
+              Voor lokale termen ook in het map-pack: het blok met drie bedrijven dat
+              Google bovenaan de zoekresultaten op de kaart laat zien. Daar gaat het
+              grootste deel van de klikken op lokale zoekopdrachten naartoe.
+            </p>
+
+            <h3 class="seo-bu-body-sub">Techniek, content en autoriteit als één geheel</h3>
+            <p>
+              Concreet werken we aan drie dingen tegelijk. Eén: de techniek onder je
+              site, zodat Google je pagina's snel en goed kan crawlen, indexeren en
+              begrijpen. Twee: de content, zodat je pagina's precies antwoord geven
+              op wat mensen in jouw markt zoeken. Drie: de autoriteit van je domein,
+              zodat Google ziet dat andere relevante bronnen op het web naar je
+              verwijzen en je bedrijf erkennen.
+            </p>
+            <p>
+              Die drie versterken elkaar. Een sterke tekst zonder technische basis
+              komt niet boven, en techniek zonder relevante content geeft Google niets
+              om te ranken. Veel bureaus pakken alleen één hoek aan. Wij behandelen
+              het als één samenhangend traject.
+            </p>
+
+            <h3 class="seo-bu-body-sub">Lokale SEO voor Utrechtse ondernemers</h3>
+            <p>
+              Voor Utrechtse ondernemers komt daar lokale SEO bij. Een goed ingericht
+              Google Business Profile, kloppende bedrijfsgegevens (NAP) op het hele
+              web, een review-flow die natuurlijk binnenkomt en lokale citations op
+              relevante directories. Voor dienstverleners met klanten uit de regio
+              (dakdekkers, tandartsen, advocaten, kappers, personal trainers,
+              installateurs en anderen) is dit vaak de snelste route naar zichtbare
+              aanvragen. Tot wel 80 procent van de klikken op lokale zoekopdrachten
+              gaat naar de drie bedrijven in het map-pack.
+            </p>
+
+            <h3 class="seo-bu-body-sub">Wat we wél en niet beloven</h3>
+            <p>
+              Wat we niet doen: garanties beloven op #1-posities, want niemand heeft
+              controle over Google's algoritme of dat van je concurrenten. Wat we
+              wél leveren: een strategie op basis van de officiële richtlijnen van
+              Google, transparante voortgang, en oplossingen waar je over een jaar
+              nog steeds blij mee bent. Geen trucs die je over zes maanden inhalen,
+              wel een opbouw die meegroeit met hoe Google en de nieuwere AI-zoekmachines
+              zich ontwikkelen.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+           Cases — Utrechtse bedrijven die we al verder hebben gebracht.
+           Featured Renovatie Totaal met +180% headline.
+           ============================================================ */}
+      <CasesStrip
+        eyebrow="Utrechtse cases"
+        titleLine1="Bedrijven die we hoger"
+        titleLead="in Google"
+        titleAccent="brachten."
+        lead="Een greep uit de Utrechtse en omliggende klanten waar onze SEO-aanpak meetbaar verschil heeft gemaakt. Renovatie, dakwerk, kunst, dienstverlening. Cijfers staan erbij, vaag groeipraatje achterwege."
+        pickSlugs={['renovatie-totaal', 'top-dakdekker', 'theo-mackaay', 'independent-artists-agency']}
+        moreLabel="Bekijk alle projecten ↗"
+      />
+
+      {/* ============================================================
+           Twee routes: eenmalige audit OF doorlopend pakket. Reuse
+           van de service-paths-classes; krijgt automatisch de homepage-
+           grade h2-sizing en (via .seo-utrecht-page) eventueel
+           scoped styling later.
+           ============================================================ */}
+      <section class="service-paths">
+        <div class="service-paths-head">
+          <EyebrowPill>Kies je route</EyebrowPill>
+          <h2 class="service-paths-title">
+            Eenmalige audit of <em>doorlopende SEO.</em>
+          </h2>
+        </div>
+        <div class="service-paths-grid count-2">
+          <article class="service-path-card is-featured">
+            <span class="service-path-tag">Vanaf €499</span>
+            <h3 class="service-path-title">Eenmalige SEO-audit</h3>
+            <p class="service-path-body">
+              Een grondige doorlichting van je site, je rankings en je concurrentie. Je
+              krijgt een concreet rapport met de belangrijkste verbeterpunten en een
+              prioriteiten-lijst. Geschikt voor wie zelf wil weten waar de winst zit.
+            </p>
+            <ul class="service-path-checks">
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Technische audit van je site</span></li>
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Keyword-onderzoek en concurrentie-analyse</span></li>
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Prioriteiten-lijst met acties</span></li>
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Adviesgesprek van een uur</span></li>
+            </ul>
+            <a class="btn-primary service-path-cta" href="/contact?onderwerp=seo-audit-utrecht">
+              Plan een gesprek ↗
+            </a>
+          </article>
+          <article class="service-path-card">
+            <span class="service-path-tag">Vanaf €399/m</span>
+            <h3 class="service-path-title">Doorlopend SEO-pakket</h3>
+            <p class="service-path-body">
+              Maandelijkse optimalisatie van techniek, content, autoriteit en lokale
+              signalen. Inclusief rapportage, bijsturen en periodieke strategie-sessies.
+              Per maand opzegbaar, geen jaarcontract.
+            </p>
+            <ul class="service-path-checks">
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Maandelijkse SEO-werkzaamheden</span></li>
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Content, technische verbeteringen en linkbuilding</span></li>
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Lokale SEO voor Utrecht en omgeving</span></li>
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Heldere maandrapportage</span></li>
+            </ul>
+            <a class="btn-primary service-path-cta" href="/contact?onderwerp=seo-pakket-utrecht">
+              Plan een kennismaking ↗
+            </a>
+          </article>
+        </div>
+      </section>
+
+      {/* ============================================================
+           Pijlers / werkonderdelen — accordion-stijl, 8 items met
+           lange body-tekst. Reuse van de zzp-segments-classes voor
+           accordion-styling.
+           ============================================================ */}
+      <section class="zzp-segments">
+        <div class="zzp-segments-inner">
+          <div class="zzp-segments-head">
+            <EyebrowPill variant="rare">Onze werkonderdelen</EyebrowPill>
+            <h2 class="zzp-segments-title">
+              Hoe wij Utrechtse bedrijven hoger in <em>Google krijgen.</em>
+            </h2>
+            <p class="zzp-segments-lead">
+              Acht onderdelen die we in elk SEO-traject in Utrecht aanpakken, in
+              wisselende volgorde en intensiteit. Klik op een onderdeel voor de uitleg
+              over wat we precies doen en waarom.
+            </p>
+          </div>
+          <div class="zzp-segments-list">
+            {pillars.map((p, i) => (
+              <details class="zzp-segment-item" open={i === 0}>
+                <summary>
+                  <span class="zzp-segment-num">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 class="zzp-segment-title">{p.title}</h3>
+                  <span class="zzp-segment-ico" aria-hidden="true">+</span>
+                </summary>
+                <div class="zzp-segment-body">
+                  <p>{p.body}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+           Lokale SEO sectie met case-image rechts en +180% badge.
+           Reuse van .maarssen-localseo patroon.
+           ============================================================ */}
+      <section class="maarssen-localseo">
+        <div class="maarssen-localseo-inner">
+          <div class="maarssen-localseo-head">
+            <EyebrowPill variant="rare">Lokale SEO voor Utrecht</EyebrowPill>
+            <h2 class="maarssen-localseo-title">
+              Bovenaan in het Utrechtse <em>map-pack staan.</em>
+            </h2>
+          </div>
+          <div class="maarssen-localseo-grid">
+            <div class="maarssen-localseo-text">
+              <p>
+                Voor zoekopdrachten als "kapper Utrecht centrum", "loodgieter Utrecht
+                Oost" of "tandarts in de buurt" laat Google bovenaan een blok zien met
+                drie bedrijven op de kaart. Daar gaat tot wel 80 procent van de klikken
+                naartoe. De rest van de zoekresultaten krijgt het overblijfsel.
+              </p>
+              <p>
+                In dat groepje komen draait om je Google Business Profile, kloppende
+                bedrijfsgegevens overal op het web, recente reviews en signalen die
+                zeggen "deze zaak hoort echt bij Utrecht". Voor de meeste Utrechtse
+                MKB-bedrijven is dit de snelste en goedkoopste route naar zichtbare
+                aanvragen. Bij Renovatie Totaal hebben we deze aanpak gecombineerd
+                met landelijke SEO: het organisch verkeer ging in de eerste maanden
+                180 procent omhoog en het bedrijf staat nu in de top-3 voor meerdere
+                Utrechtse zoektermen.
+              </p>
+              <ul class="maarssen-localseo-list">
+                <li>Volledige inrichting van je Google Business Profile</li>
+                <li>NAP-consistentie en lokale citations</li>
+                <li>Review-flow met QR-kaartjes en automatische uitnodigingen</li>
+                <li>Lokale landingspagina's per buurt of dienst-combinatie</li>
+                <li>Maandelijkse rankings en concurrent-bewegingen in beeld</li>
+              </ul>
+              <a class="btn-ghost maarssen-localseo-cta" href="/lokale-seo">
+                Bekijk onze lokale SEO-aanpak ↗
+              </a>
+            </div>
+            <div class="maarssen-localseo-media">
+              <Image
+                src={localseoImage}
+                alt="Renovatie Totaal — Utrechtse SEO-case waarin het organisch verkeer met 180 procent steeg"
+                class="maarssen-localseo-img"
+                widths={[600, 900, 1200]}
+                sizes="(max-width: 1024px) 100vw, 540px"
+                loading="lazy"
+              />
+              <div class="maarssen-localseo-badge" aria-hidden="true">
+                <div class="maarssen-localseo-badge-stat">+180%</div>
+                <div class="maarssen-localseo-badge-label">verkeer · Renovatie Totaal</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Testimonial id="bas-renovatie-totaal" bgImage={testiBg} bgAlt="Renovatie Totaal aan het werk" avatar={basAvatar} />
+
+      {/* ============================================================
+           Werkwijze met watermark — 4 stappen.
+           ============================================================ */}
+      <Approach
+        eyebrow="Zo werken we"
+        titleLine1="Onze SEO-aanpak"
+        titleAccent="in vier"
+        titleLine3="stappen."
+        desc1="SEO werkt het beste vanuit een concreet plan. We beginnen met een grondige audit van je huidige situatie en stellen daarna een strategie op met heldere prioriteiten. Geen kant-en-klare templates die we voor elke klant hergebruiken, wel een aanpak die past bij jouw branche, je concurrentie en je doelen."
+        desc2="Tijdens de uitvoering houden we de cijfers in de gaten, sturen we maandelijks bij en houden we je op de hoogte. SEO is geen project met een eindpunt: we blijven inspelen op veranderingen in Google en de nieuwere AI-zoekmachines."
+        steps={[
+          {
+            num: '01',
+            title: 'Audit en nul-meting',
+            description: 'We brengen je huidige situatie volledig in kaart. Techniek, content, autoriteit en lokale signalen. We weten daarna precies waar de quick wins zitten en waar we structureel moeten bouwen.',
+          },
+          {
+            num: '02',
+            title: 'Strategie en keyword-plan',
+            description: 'Op basis van de audit kiezen we een richting. Welke zoektermen, welke pagina\'s, welke prioriteit. Met een tijdslijn en heldere doelen waar we maandelijks op kunnen sturen.',
+          },
+          {
+            num: '03',
+            title: 'Implementatie',
+            description: 'Technische optimalisaties, nieuwe of herziene content, gestructureerde data, interne links, lokale signalen en autoriteit-opbouw. Stap voor stap, met focus op wat het meeste oplevert.',
+          },
+          {
+            num: '04',
+            title: 'Meten en bijsturen',
+            description: 'SEO is geen project dat ooit klaar is. We meten maandelijks rankings, verkeer en conversies, sturen bij waar nodig en blijven inspelen op veranderingen in Google en AI-zoekmachines.',
+          },
+        ]}
+        watermark={true}
+      />
+
+      {/* ============================================================
+           Waarom Froseo als SEO bureau in Utrecht — 4 USP-cards met
+           Froseo-logo watermark op de achtergrond. Reuse van
+           .utrecht-usps voor de styling.
+           ============================================================ */}
+      <section class="utrecht-usps">
+        <Image
+          src={froseoLogoWit}
+          alt=""
+          class="utrecht-usps-watermark"
+          aria-hidden="true"
+          widths={[800, 1200, 1600]}
+          sizes="(max-width: 1024px) 90vw, 1200px"
+          loading="lazy"
+        />
+        <div class="utrecht-usps-inner">
+          <div class="utrecht-usps-head">
+            <EyebrowPill>Waarom Froseo</EyebrowPill>
+            <h2 class="utrecht-usps-title">
+              Waarom kiezen voor ons als <em>SEO bureau in Utrecht.</em>
+            </h2>
+            <p class="utrecht-usps-lead">
+              Vier dingen die we structureel anders doen dan veel bureaus, en die
+              tegelijk de reden zijn dat klanten bij ons blijven.
+            </p>
+          </div>
+          <div class="utrecht-usps-grid">
+            <article class="utrecht-usp-card">
+              <SectionIcon name="shieldCheck" class="utrecht-usp-icon" size={44} />
+              <h3 class="utrecht-usp-title">Geen valse beloftes</h3>
+              <p class="utrecht-usp-body">
+                Niemand kan #1 in Google garanderen, ook wij niet. Wat we wel beloven:
+                een strategie op basis van de officiële Google-richtlijnen, transparante
+                voortgang en oplossingen waar je over een jaar nog blij mee bent.
+              </p>
+            </article>
+            <article class="utrecht-usp-card">
+              <SectionIcon name="locationPin" class="utrecht-usp-icon" size={44} />
+              <h3 class="utrecht-usp-title">Utrechtse markt-kennis</h3>
+              <p class="utrecht-usp-body">
+                We weten welke ondernemers in welke wijken zitten, hoe de concurrentie
+                in jouw branche eruit ziet en wat de Utrechtse markt aan zoekgedrag
+                laat zien. Niet alleen vanuit Search Console maar ook uit ervaring.
+              </p>
+            </article>
+            <article class="utrecht-usp-card">
+              <SectionIcon name="chartUp" class="utrecht-usp-icon" size={44} />
+              <h3 class="utrecht-usp-title">Rapportage zonder bullshit</h3>
+              <p class="utrecht-usp-body">
+                Elke maand een helder overzicht van rankings, organisch verkeer en
+                aanvragen. Plus wat we hebben gedaan en wat er voor volgende maand op
+                de planning staat. Geen veertig pagina's Analytics-screenshots.
+              </p>
+            </article>
+            <article class="utrecht-usp-card">
+              <SectionIcon name="toolbox" class="utrecht-usp-icon" size={44} />
+              <h3 class="utrecht-usp-title">SEO, GEO en lokale SEO onder één dak</h3>
+              <p class="utrecht-usp-body">
+                Klassieke SEO voor Google, GEO voor AI-zoekmachines en lokale SEO voor
+                het map-pack. Eén strategie, één team, één rapportage. Geen drie losse
+                bureaus die naar elkaar wijzen als er iets niet werkt.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+           Voor-wie body-blok — branches die we vaak bedienen in
+           Utrecht. Reuse .maarssen-waarom patroon.
+           ============================================================ */}
+      <section class="maarssen-waarom">
+        <div class="maarssen-waarom-inner">
+          <div class="maarssen-waarom-head">
+            <EyebrowPill variant="rare">Voor wie werkt het</EyebrowPill>
+            <h2 class="maarssen-waarom-title">
+              SEO bureau Utrecht voor <em>MKB en ZZP.</em>
+            </h2>
+          </div>
+          <div class="maarssen-waarom-body">
+            <p>
+              We werken voor uiteenlopende type ondernemers in en rond Utrecht. Vaak
+              zijn het lokale dienstverleners die merken dat ze in Google verdwijnen
+              tussen concurrenten met grotere marketingbudgetten. Dakdekkers, schilders,
+              loodgieters, hoveniers, tandartsen, fysiotherapeuten, advocaten,
+              makelaars, horeca-ondernemers, kappers, schoonheidsspecialisten en
+              personal trainers. Voor deze branches zit de winst meestal in een
+              combinatie van lokale SEO en gerichte content rond service-pagina's
+              per buurt of dienst-variant.
+            </p>
+            <p>
+              Daarnaast werken we voor specialistische bedrijven en B2B-dienstverleners
+              waarbij landelijke termen zwaarder wegen dan lokale. Interieurbouwers,
+              auto-specialisten, consultants, agencies, software-bedrijven en
+              ondernemers met een niche-aanbod. Voor deze groep is de aanpak
+              technischer en content-zwaarder, en draait het vaker om autoriteit-
+              opbouw via gerichte content en links uit branche-relevante bronnen.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <CalvinNote
+        message="Twijfel je of jouw site genoeg uit Google haalt? Stuur de URL even op, dan kijk ik er een halfuur naar en mail ik terug wat ik zou aanpakken. Eerlijk advies, zonder dat je iets hoeft af te nemen."
+        ctaLabel="Stuur mij je URL ↗"
+        ctaHref="/contact?onderwerp=seo-utrecht-advies"
+      />
+
+      <BetterCallCalvin
+        eyebrow="Klaar om hoger in Google te staan?"
+        titleLine1="SEO bureau in Utrecht."
+        titleAccent="Hoe nu verder?"
+        body={[
+          'Plan een korte kennismaking in. We lopen samen door je huidige rankings, wat er beter kan en wat een realistisch traject voor jouw situatie is.',
+          'Je krijgt een eerste richting mee, een ruwe planning en een eerlijke inschatting van wat het ongeveer gaat kosten. Past het, dan maken we een voorstel. Past het niet, dan hoor je dat ook gewoon.',
+        ]}
+        primaryLabel="Plan een kennismaking ↗"
+        primaryHref="/contact?onderwerp=seo-bureau-utrecht"
+      />
+    </article>
+
+    <FAQ
+      eyebrow="Veelgestelde vragen"
+      titleLine1="Vragen over"
+      titleAccent="SEO bureau Utrecht."
+      items={faqs}
+    />
+  </main>
+  <Footer />
+</BaseLayout>

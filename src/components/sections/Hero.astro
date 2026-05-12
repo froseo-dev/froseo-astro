@@ -12,6 +12,11 @@ interface Props {
   accent?: string;
   /** Optional single-paragraph sub. Ignored if `bullets` is provided. */
   sub?: string;
+  /** Optional lead-zin tussen h1 en bullets. Renders boven de bullets (of
+      boven de sub-paragraph) als een grotere display-regel. Bedoeld voor
+      pagina's waar je naast bullets ook een sterke positionerings-zin wilt
+      tonen — zie /maarssen. */
+  subtitle?: string;
   /** When set, renders a magenta-checkmark list below the h1 instead of the sub paragraph. */
   bullets?: string[];
   primaryCta?: { label: string; href: string };
@@ -32,6 +37,7 @@ const {
   titleLine2 = 'naar',
   accent = 'onmisbaar.',
   sub,
+  subtitle,
   bullets = [
     'AI-powered websites met een eigen smoel.',
     'Marketing die niet alleen bezoekers, maar klanten oplevert.',
@@ -57,6 +63,7 @@ const {
         {titleLine1}<br />
         {titleLine2} <span class="accent">{accent}</span>
       </h1>
+      {subtitle && <p class="hero-subtitle">{subtitle}</p>}
       {bullets && bullets.length > 0 ? (
         <ul class="hero-bullets">
           {bullets.map((b) => <li>{b}</li>)}

@@ -27,7 +27,7 @@ statsRibbon:
     label: 'Aan plug-in-licenties per jaar'
 
 calvinNote:
-  message: 'Twijfel je of jouw WordPress-site goed wordt onderhouden? Stuur ons toegang of een paar screenshots, dan kijken we even mee. Geen verkooppraat, gewoon onze eerlijke take.'
+  message: 'Twijfel je of jouw WordPress-site goed wordt onderhouden? Stuur ons toegang of een paar screenshots, dan kijken we mee en zeggen we eerlijk wat we zouden doen.'
   ctaLabel: 'Vraag advies aan ↗'
   ctaHref: '/contact?onderwerp=advies-wp-onderhoud'
 

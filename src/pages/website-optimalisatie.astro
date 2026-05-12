@@ -1,0 +1,521 @@
+---
+/**
+ * SEO-service-pagina /website-optimalisatie.
+ *
+ * Primair keyword: "website optimalisatie".
+ * Longtail-targets verwerkt in koppen, body en FAQ:
+ *   - website optimaliseren
+ *   - website snelheid verbeteren
+ *   - conversie optimalisatie website
+ *   - core web vitals verbeteren
+ *   - website laten optimaliseren
+ *   - verschil onderhoud opfrissen optimalisatie
+ *
+ * Positioning t.o.v. de andere "site-gezond"-pagina's:
+ *   - /website-onderhoud  → preventief, blijft draaien
+ *   - /website-opfrissen  → eenmalige catch-up
+ *   - /website-optimalisatie → doorlopend gericht op groei (deze)
+ *
+ * Geen prijzen op deze pagina (per Calvin's instructie).
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import SectionIcon from '@components/ui/SectionIcon.astro';
+import LogosTicker from '@components/sections/LogosTicker.astro';
+import BeforeAfter from '@components/sections/BeforeAfter.astro';
+import CalvinNote from '@components/sections/CalvinNote.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
+import OnboardingTimeline from '@components/sections/OnboardingTimeline.astro';
+import Testimonial from '@components/sections/Testimonial.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { review } from '@data/site-config';
+import heroMockup from '@assets/hero/froseo-mockup.webp';
+import froseoLogoWit from '@assets/brand/froseo-logo-wit.webp';
+import studioContenidoBefore from '@assets/before-after/studio-contenido-before.webp';
+import studioContenidoAfter from '@assets/before-after/studio-contenido-after.webp';
+import renovatieTotaalHero from '@assets/cases/renovatie-totaal/hero.webp';
+
+const pageTitle = 'Website optimalisatie · sneller, beter vindbaar en meer aanvragen | Froseo';
+const pageDesc =
+  'Doorlopende website optimalisatie gericht op snelheid, conversie en vindbaarheid. Wij meten waar de winst zit en sturen maandelijks bij, op basis van echte data.';
+
+/* Cases — mix die de "voor en na"-resultaten van optimalisatie laat
+   zien (snelheid, ranking, conversie). */
+const allCases = await getCollection('cases', ({ data }) => data.published !== false);
+const showcaseSlugs = [
+  'renovatie-totaal',
+  'top-dakdekker',
+  'club12',
+  'alignment-club',
+  'theo-mackaay',
+  'studio-max',
+];
+const showcaseCases = showcaseSlugs
+  .map((slug) => allCases.find((c) => c.data.slug === slug))
+  .filter((c): c is NonNullable<typeof c> => Boolean(c));
+
+/* 4 USPs — de hoofd-disciplines die we onder website optimalisatie
+   verstaan. Iconen erven currentColor in teal via .opfris-usp-icon
+   (we hergebruiken die styling hieronder). */
+const usps = [
+  {
+    icon: 'chartUp',
+    title: 'Snelheid & Core Web Vitals',
+    body: 'Zware afbeeldingen, slechte caching, vergeten plug-ins. We meten waar de echte rem zit en pakken alleen wat het laadprofiel ook daadwerkelijk verbetert.',
+  },
+  {
+    icon: 'target',
+    title: 'Conversie & gedrag',
+    body: 'Waar haken bezoekers af, welke knop wordt niet gevonden, waarom converteert pagina X wel en Y niet. Data eerst, dan bijsturen waar het loont.',
+  },
+  {
+    icon: 'searchGlass',
+    title: 'SEO & vindbaarheid',
+    body: 'Technische SEO-basis op orde, content waar Google iets aan heeft en interne links die je sterke pagina\'s omhoog helpen. Niet één keer, doorlopend.',
+  },
+  {
+    icon: 'paletteSwatch',
+    title: 'UX & uitstraling',
+    body: 'Mensen scannen, klikken en haken af. We brengen die route in beeld en halen de frustratie eruit, zonder dat je site visueel overhoop hoeft.',
+  },
+];
+
+/* De 5 pijlers van website optimalisatie — vaste indeling uit de
+   bestaande Froseo-uitleg. Rendert in een eigen dark-section met
+   logo-watermark, mirror van de opfris-modules-aanpak. */
+const pillars = [
+  {
+    title: 'Techniek',
+    body: 'Caching, schone code, lichte assets, geen kapotte stukjes onder de motorkap. Hier wint je site snelheid, stabiliteit en vertrouwen van Google.',
+  },
+  {
+    title: 'Gebruiksvriendelijkheid',
+    body: 'Mobiel werkt soepel, knoppen staan waar bezoekers ze zoeken en pagina\'s leiden naar de volgende stap zonder dat je over je beslissingen na hoeft te denken.',
+  },
+  {
+    title: 'Conversie',
+    body: 'We brengen in beeld waar bezoekers haperen en waarom dat is. Pagina\'s, formulieren en CTA\'s sturen we bij op wat werkt voor jouw doelgroep.',
+  },
+  {
+    title: 'Content',
+    body: 'Teksten die scannen, koppen die kloppen, pagina\'s met een duidelijk doel. Geen ruis, wel een verhaal dat aansluit op de zoekvraag waar mensen mee binnenkomen.',
+  },
+  {
+    title: 'SEO',
+    body: 'Technische basis, content die rankt en interne links die je sterke pagina\'s versterken. Doorlopend gericht op de zoekwoorden die voor jouw bedrijf tellen.',
+  },
+];
+
+/* 4-staps aanpak — gemodelleerd op de onderhoud-onboarding-timeline,
+   maar gericht op de optimalisatie-cyclus. */
+const approachSteps = [
+  {
+    title: 'Audit en meten',
+    body: 'We brengen je site in kaart: Core Web Vitals, gedrag in Analytics, zoekprestaties en de plekken waar bezoekers haperen. Geen aannames, alleen wat er werkelijk gebeurt.',
+  },
+  {
+    title: 'Plan op prioriteit',
+    body: 'Uit de audit volgt een lijst. We pakken altijd eerst wat het meest oplevert en het minst risico draagt. Jij weet vooraf wat we doen en in welke volgorde.',
+  },
+  {
+    title: 'Doen, in kleine stappen',
+    body: 'Verbeteringen gaan live per stuk, niet als één grote ingreep. Zo kunnen we per verandering meten of het werkt en terugschakelen als iets tegenvalt.',
+  },
+  {
+    title: 'Meten en bijsturen',
+    body: 'Elke maand kijken we wat de wijzigingen hebben gedaan. Wat werkte, wat niet. Op basis daarvan plannen we de volgende ronde, in jouw tempo.',
+  },
+];
+
+/* "Welke route past bij jouw site?" — accordion met 3 scenario's en
+   cross-links naar de bijbehorende services. Helpt bezoekers de
+   juiste pagina kiezen en levert interne linking-bonus voor SEO. */
+const routes = [
+  {
+    title: 'Mijn site werkt prima, maar ik wil dat zo houden.',
+    body: 'Dan ben je op zoek naar website-onderhoud. Een vast maandbedrag voor updates, backups, beveiliging en monitoring zodat je site stilletjes blijft draaien. Geen actieve verbeterronde, wel zekerheid.',
+    link: { label: 'Bekijk website-onderhoud ↗', href: '/website-onderhoud' },
+  },
+  {
+    title: 'Mijn site voelt verouderd of werkt slechter dan vroeger.',
+    body: 'Dan past website opfrissen beter. Een gerichte, eenmalige opknapbeurt op techniek, design en content waar het achterloopt. Niet alles opnieuw, wel terug naar het niveau van vandaag.',
+    link: { label: 'Bekijk website opfrissen ↗', href: '/website-opfrissen' },
+  },
+  {
+    title: 'Mijn site werkt op zich, maar levert te weinig op.',
+    body: 'Dan is website optimalisatie wat je zoekt. Geen eenmalige actie, maar doorlopende verbetering op basis van echte data: meer aanvragen uit hetzelfde verkeer, snellere pagina\'s en betere vindbaarheid.',
+    link: { label: 'Je bent al op deze pagina ↓', href: '#optimalisatie-aanpak' },
+  },
+];
+
+/* FAQ — gericht op longtail-keywords rondom website-optimalisatie.
+   Tegelijk eerlijk en uitlegerig, geen verkooppraat. */
+const faqs = [
+  {
+    q: 'Wat is website optimalisatie?',
+    a: 'Website optimalisatie is het structureel verbeteren van een bestaande website op de punten waar nog winst te halen valt: snelheid, gebruiksgemak, conversie, content en SEO. Het is geen eenmalige actie maar een doorlopend proces: meten waar het misgaat, bijsturen op wat het meeste oplevert, en opnieuw meten of het werkt. Voor de meeste sites zit er meer in dan eigenaren denken. Vaak loopt er duur verkeer binnen dat zonder optimalisatie gewoon weer wegloopt.',
+  },
+  {
+    q: 'Wat is het verschil tussen website opfrissen, optimalisatie en onderhoud?',
+    a: 'Onderhoud houdt je site stilletjes draaiend: updates, backups en monitoring, zonder dat er iets verandert aan hoe je site werkt. Een opfris-traject is een eenmalige catch-up als je site verouderd voelt of merkbaar slechter werkt dan vroeger. Optimalisatie is iets anders: een doorlopend traject waarin we systematisch verbeteren wat het meeste oplevert. Snelheid, conversie, vindbaarheid. Welke route bij jou past, hangt af van hoe je site er nu voor staat en wat je doel is.',
+  },
+  {
+    q: 'Hoe vaak moet ik mijn website laten optimaliseren?',
+    a: 'Optimalisatie is geen eenmalige aktie maar een doorlopend proces. Een typisch traject start met een grondige audit en daarna maandelijkse verbeter-rondes. Hoe vaak we precies bijsturen hangt af van hoeveel verkeer je hebt: bij veel verkeer kunnen we sneller iets testen, bij weinig verkeer pakken we grotere wijzigingen tegelijk. In de meeste gevallen lopen we elke maand een vaste cyclus van meten, bijsturen en opnieuw meten.',
+  },
+  {
+    q: 'Welke tools gebruiken jullie voor website-analyse?',
+    a: 'Voor snelheid en Core Web Vitals werken we met Google PageSpeed Insights en Chrome User Experience Report. Voor gedrag op je site kijken we naar Google Analytics 4 en Microsoft Clarity (heatmaps en session-recording). Voor SEO gebruiken we Google Search Console en een eigen rank-tracker. Conclusies trekken we niet uit één tool maar uit waar meerdere bronnen op elkaar wijzen.',
+  },
+  {
+    q: 'Doen jullie A/B-tests bij website optimalisatie?',
+    a: 'Waar het zin heeft, ja. Een A/B-test zet twee versies van een pagina, knop of formulier naast elkaar en laat een deel van je bezoekers de ene versie zien, een ander deel de andere. Pas als één duidelijk beter presteert rolt die als winnaar uit. We zetten alleen tests op als je voldoende verkeer hebt om statistisch significante uitslagen te krijgen — anders is het gokken met een wiskundige saus. Bij minder verkeer kiezen we voor beredeneerde wijzigingen op basis van heatmap-data en analytics, en meten we het effect over een langere periode.',
+  },
+  {
+    q: 'Hoe lang duurt een optimalisatie-traject?',
+    a: 'Een initiële audit is meestal in één tot twee weken klaar, afhankelijk van de omvang van je site. Daarna lopen optimalisatie-rondes per maand. Resultaten op snelheid en techniek zie je vaak al binnen de eerste maand. Conversie- en SEO-verbeteringen vragen meer tijd om zichtbaar te worden: drie tot zes maanden voordat je serieuze trendlijnen ziet, omdat Google tijd nodig heeft om wijzigingen op te pakken en omdat bezoekersgedrag een paar weken aanloop nodig heeft.',
+  },
+  {
+    q: 'Verlies ik mijn Google-rankings tijdens optimalisatie?',
+    a: 'Nee, daar zijn we juist heel voorzichtig in. We veranderen je URL-structuur niet zonder migratie-plan, we vervangen content niet zomaar en SEO-relevante wijzigingen lopen via een vast proces: meten vóór, doorvoeren, meten erna. Bij grotere ingrepen zetten we redirects op zodat eventuele waarde van oude URL\'s netjes overgaat. Rankings winnen door optimalisatie is bijna altijd het doel, niet verliezen.',
+  },
+  {
+    q: 'Hoe meten jullie het resultaat van website optimalisatie?',
+    a: 'Per pijler werken we met concrete metrics: laadtijd en Core Web Vitals voor techniek, conversiepercentage en bounce rate voor UX en conversie, organisch verkeer en positie op zoekwoorden voor SEO. In het maandrapport zie je de cijfers naast de wijzigingen die we hebben doorgevoerd, zodat je per ingreep kunt zien wat het heeft gedaan. Geen losse cijfers zonder context, wel een patroon dat richting geeft aan de volgende ronde.',
+  },
+  {
+    q: 'Werken jullie alleen met WordPress-websites?',
+    a: 'Voor doorlopende optimalisatie-trajecten is WordPress ons specialisme en daar halen we de meeste winst uit. Voor andere platforms (Webflow, Shopify, Squarespace) doen we incidenteel een audit of losse opdracht, maar de modulaire optimalisatie-route is specifiek voor WordPress ingericht. Heb je een ander platform en wil je weten of we wat voor je kunnen doen? Stuur de URL even op, dan kijken we mee.',
+  },
+  {
+    q: 'Kan ik mijn website zelf optimaliseren?',
+    a: 'Een deel zeker. Voor wie de techniek niet schuwt: caching aanzetten, afbeeldingen comprimeren, een spam-plug-in eruit slopen en je belangrijkste pagina\'s scannen op laadtijd is iets wat je zelf kunt aanpakken. Voor het bredere werk (conversie-analyse, structurele SEO, content-tuning) heb je tools en tijd nodig die de meeste ondernemers niet hebben. Onze take: pak eerst zelf de quick-wins, en kom ons bellen als je verder wilt zonder het zelf in de avonden te doen.',
+  },
+  {
+    q: 'Heeft optimalisatie zin als ik nog weinig verkeer heb?',
+    a: 'Vaak heeft het méér zin, niet minder. Bij weinig verkeer is elke bezoeker waardevoller, dus telt het zwaarder als je site er niet voor klaar is. We pakken bij kleinere sites eerst de SEO- en vindbaarheids-kant aan om verkeer aan te trekken, en parallel daaraan de conversie-kant zodat dat verkeer ook iets oplevert zodra het binnenkomt. Geen advertentiebudget nodig, wel een paar maanden geduld.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="opt-page">
+      <!-- ============================================================
+           Hero. Keyword "website optimalisatie" in h1 zelf, geen
+           deferred-h1-truc nodig — pagina-URL en titel dragen het
+           primaire SEO-target.
+           ============================================================ -->
+      <section class="service-hero has-image">
+        <div class="service-hero-inner">
+          <div class="service-hero-text">
+            <EyebrowPill>Snelheid · Conversie · SEO</EyebrowPill>
+            <h1 class="service-hero-title">
+              Website <em>optimalisatie.</em>
+            </h1>
+            <ul class="service-hero-checks">
+              <li>Snellere pagina's en betere Core Web Vitals</li>
+              <li>Meer bezoekers die ook écht klant worden</li>
+              <li>Maandelijks data, maandelijks bijsturen</li>
+            </ul>
+            <div class="service-hero-actions">
+              <a class="btn-primary" href="/contact?onderwerp=website-optimalisatie">
+                Vraag een website-analyse aan ↗
+              </a>
+            </div>
+            <div class="service-hero-reviews reviews-inline">
+              <div class="review-avatars">
+                <div class="review-avatar"></div>
+                <div class="review-avatar"></div>
+                <div class="review-avatar"></div>
+              </div>
+              <div class="stars">★★★★★</div>
+              <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
+            </div>
+          </div>
+
+          <div class="service-hero-media">
+            <Image
+              src={heroMockup}
+              alt="Voorbeeld van een door Froseo geoptimaliseerde website"
+              class="service-hero-img"
+              widths={[640, 960, 1280, 1600]}
+              sizes="(max-width: 1024px) 100vw, 640px"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+      </section>
+
+      <LogosTicker />
+
+      <!-- ============================================================
+           Interactieve before/after — visuele teaser hoog op pagina.
+           Toon dat optimalisatie tastbaar resultaat oplevert.
+           ============================================================ -->
+      <section class="opt-ba">
+        <div class="opt-ba-inner">
+          <div class="opt-ba-head">
+            <EyebrowPill variant="rare">Voor en na</EyebrowPill>
+            <h2 class="opt-ba-title">
+              Wat optimalisatie voor je site <em>doet.</em>
+            </h2>
+            <p class="opt-ba-lead">
+              Niet alleen mooier, vooral beter. Sneller, scherper en gericht op wat
+              bezoekers eigenlijk komen doen. Sleep de handle om Studio Contenido
+              voor en na te vergelijken.
+            </p>
+          </div>
+          <BeforeAfter
+            before={studioContenidoBefore}
+            after={studioContenidoAfter}
+            beforeAlt="Studio Contenido, website voor de optimalisatie-ronde"
+            afterAlt="Studio Contenido, website na de optimalisatie-ronde"
+          />
+          <div class="opt-ba-cta">
+            <a class="btn-ghost" href="/projecten">Bekijk meer projecten ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           4 USP-cards — de vier hoofd-disciplines (snelheid, conversie,
+           SEO, UX) in compacte cards met SVG-icons.
+           ============================================================ -->
+      <section class="opt-usps">
+        <div class="opt-usps-inner">
+          <div class="opt-usps-head">
+            <EyebrowPill>Waar de meeste winst zit</EyebrowPill>
+            <h2 class="opt-usps-title">
+              Dit pakken we aan tijdens een <em>optimalisatie-traject.</em>
+            </h2>
+          </div>
+          <div class="opt-usps-grid">
+            {usps.map((u) => (
+              <article class="opt-usp-card">
+                <SectionIcon name={u.icon} class="opt-usp-icon" size={44} />
+                <h3 class="opt-usp-title">{u.title}</h3>
+                <p class="opt-usp-body">{u.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Waarom-blok — pijn framing. "Verkeer dat niets oplevert".
+           Direct na de USPs zodat het probleem-perspectief landt
+           voordat we de details van onze aanpak laten zien.
+           ============================================================ -->
+      <section class="opt-waarom">
+        <div class="opt-waarom-inner">
+          <EyebrowPill variant="rare">Waarom optimalisatie</EyebrowPill>
+          <h2 class="opt-waarom-title">
+            Verkeer dat niets oplevert is <em>verspild geld.</em>
+          </h2>
+          <p>
+            Veel ondernemers betalen voor advertenties, SEO-werk of een nieuwe website,
+            en zien het verkeer wel binnenkomen. Maar daarna gebeurt er weinig.
+            Bezoekers haken af, formulieren blijven leeg en de cijfers in Analytics
+            laten een patroon zien dat niemand goed leest.
+          </p>
+          <p>
+            Website optimalisatie is precies dat patroon ontleden en stap voor stap
+            bijsturen. Niet één grote ingreep, maar slimme verbeteringen op basis van
+            wat we werkelijk zien gebeuren. Voor de meeste sites zit er meer in dan je
+            denkt.
+          </p>
+          <a class="btn-ghost opt-waarom-cta" href="/contact?onderwerp=website-optimalisatie">
+            Plan een kennismaking ↗
+          </a>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           CRO / A-B-testen sectie — methodologie-blok dat onze
+           data-gedreven aanpak laat zien. Tussen Waarom-blok en
+           CalvinNote zodat het direct na de probleem-framing een
+           concreet verschil-makend antwoord geeft.
+           ============================================================ -->
+      <section class="opt-cro">
+        <div class="opt-cro-inner">
+          <div class="opt-cro-text">
+            <EyebrowPill variant="rare">Data-gedreven</EyebrowPill>
+            <h2 class="opt-cro-title">
+              We beslissen op <em>cijfers, niet op gevoel.</em>
+            </h2>
+            <p class="opt-cro-body">
+              Een mooie aanname is geen verbetering. Bij belangrijke wijzigingen
+              zetten we waar mogelijk een A/B-test op: twee versies van een
+              pagina, knop of formulier naast elkaar, en we kijken welke versie
+              ook werkelijk beter scoort. Pas dan rolt de winnaar uit.
+            </p>
+            <p class="opt-cro-body">
+              Het gedrag van je bezoekers brengen we in beeld met Microsoft
+              Clarity en Google Analytics 4. Waar wordt gescrolld, waar wordt
+              geklikt, op welke pagina haakt iemand af. Niet om bezoekers te
+              volgen, wel om te zien wat wel en niet werkt voor jouw doelgroep.
+            </p>
+            <ul class="opt-cro-list">
+              <li>A/B-tests op koppen, knoppen, formulieren en paginastructuur</li>
+              <li>Heatmap en session-recording analyse op echte bezoekers</li>
+              <li>Conversie-tracking gekoppeld aan jouw daadwerkelijke doelen</li>
+              <li>Wijzigingen op basis van patroon, niet van eenmalige uitschieters</li>
+            </ul>
+          </div>
+          <div class="opt-cro-media">
+            <Image
+              src={renovatieTotaalHero}
+              alt="Renovatie Totaal, een door Froseo geoptimaliseerde WordPress-website"
+              class="opt-cro-img"
+              widths={[640, 960, 1280]}
+              sizes="(max-width: 1024px) 100vw, 540px"
+              loading="lazy"
+            />
+            <div class="opt-cro-badge">
+              <span class="opt-cro-badge-stat">+180%</span>
+              <span class="opt-cro-badge-label">verkeer · Renovatie Totaal</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Klant-quote — Auke (Club 12) over zijn optimalisatie-traject.
+           Directly na de CRO-methodologie zodat de pitch landt met
+           people-proof voor het laagdrempelige advies-CTA volgt.
+           ============================================================ -->
+      <Testimonial id="auke-club12-optimalisatie" variant="card" />
+
+      <!-- Mid-page Calvin-balk met advies-CTA. -->
+      <CalvinNote
+        message="Twijfel je waar de meeste winst in jouw site zit? Stuur ons toegang of de URL, dan kijken we onder de motorkap en sturen je een nuchtere take terug."
+        ctaLabel="Vraag een audit aan ↗"
+        ctaHref="/contact?onderwerp=website-optimalisatie-audit"
+      />
+
+      <!-- ============================================================
+           5 pijlers — kernen van wat optimalisatie inhoudt. Donker
+           blok met logo-watermark, mirror van de opfris-modules
+           structuur maar met 5 items i.p.v. 4.
+           ============================================================ -->
+      <section class="opt-pillars" id="optimalisatie-aanpak">
+        <Image
+          src={froseoLogoWit}
+          alt=""
+          class="opt-pillars-watermark"
+          aria-hidden="true"
+          widths={[800, 1200, 1600]}
+          sizes="(max-width: 1024px) 90vw, 1200px"
+          loading="lazy"
+        />
+        <div class="opt-pillars-inner">
+          <div class="opt-pillars-head">
+            <EyebrowPill onDark>Hoe we het opbouwen</EyebrowPill>
+            <h2 class="opt-pillars-title">
+              De vijf pijlers van <em>website optimalisatie.</em>
+            </h2>
+            <p class="opt-pillars-lead">
+              Goede optimalisatie raakt vijf onderdelen die samen het verschil maken.
+              Welke we als eerste oppakken hangt af van waar jouw site het meest
+              winst kan halen.
+            </p>
+          </div>
+          <div class="opt-pillars-grid">
+            {pillars.map((p, i) => (
+              <article class="opt-pillar-card">
+                <div class="opt-pillar-num">{String(i + 1).padStart(2, '0')}</div>
+                <h3 class="opt-pillar-title">{p.title}</h3>
+                <p class="opt-pillar-body">{p.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Aanpak — onze 4-staps optimalisatie-cyclus.
+           ============================================================ -->
+      <OnboardingTimeline
+        eyebrow="Hoe wij werken"
+        title="Onze optimalisatie-cyclus,"
+        titleAccent="elke maand opnieuw."
+        items={approachSteps}
+      />
+
+      <!-- ============================================================
+           "Welke route past bij jou?" — accordion met 3 scenario's en
+           cross-links naar onderhoud, opfrissen en deze pagina. Helpt
+           bezoekers de juiste service kiezen + interne linking voor SEO.
+           ============================================================ -->
+      <section class="opt-routes">
+        <div class="opt-routes-inner">
+          <div class="opt-routes-head">
+            <EyebrowPill variant="rare">Welke route past bij jouw site?</EyebrowPill>
+            <h2 class="opt-routes-title">
+              Optimalisatie, opfrissen of <em>onderhoud?</em>
+            </h2>
+            <p class="opt-routes-lead">
+              Soms past optimalisatie niet, maar iets anders wel. Drie scenario's die
+              we vaak tegenkomen en wat erbij hoort.
+            </p>
+          </div>
+          <div class="opt-routes-list">
+            {routes.map((r, i) => (
+              <details class="opt-route-item" open={i === 2}>
+                <summary>
+                  <span class="opt-route-num">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 class="opt-route-title">{r.title}</h3>
+                  <span class="opt-route-ico" aria-hidden="true">+</span>
+                </summary>
+                <div class="opt-route-body">
+                  <p>{r.body}</p>
+                  <a class="opt-route-link" href={r.link.href}>{r.link.label}</a>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Visuele showcase — cases waar we al optimalisatie of
+           rebuilds hebben uitgevoerd. -->
+      <WebsitesShowcase
+        cases={showcaseCases}
+        eyebrow="Recent werk"
+        title="Sites die we eerder"
+        titleAccent="hebben opgepoetst."
+      />
+
+      <BetterCallCalvin
+        eyebrow="Klaar voor de eerste stap?"
+        titleLine1="Begin met een"
+        titleAccent="audit."
+        body={[
+          'Een audit-gesprek van 30 minuten geeft je vaak al een paar concrete punten waar je zelf mee aan de slag kunt. Vrijblijvend, geen pakket dat je per se moet afnemen.',
+          'Past een traject niet, dan zeggen we dat. Wat we onder de motorkap zien krijg je sowieso terug, ook als we niet verder samenwerken.',
+        ]}
+        primaryLabel="Plan een audit-gesprek ↗"
+        primaryHref="/contact?onderwerp=website-optimalisatie-audit"
+      />
+    </article>
+
+    <FAQ
+      eyebrow="Veelgestelde vragen"
+      titleLine1="Vragen over"
+      titleAccent="website optimalisatie."
+      items={faqs}
+    />
+  </main>
+  <Footer />
+</BaseLayout>

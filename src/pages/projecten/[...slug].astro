@@ -38,7 +38,7 @@ const servicesUsed = (c.services ?? [])
   .filter((s): s is NonNullable<typeof s> => Boolean(s));
 
 const heroMetric = c.metrics?.[0];
-const pageTitle = `${c.client} — ${c.tagline} | Froseo`;
+const pageTitle = `${c.client}: ${c.tagline} | Froseo`;
 const pageDesc = c.description ?? c.tagline;
 
 /* Per beeld: thumb (160) voor de strip, main (1200) voor de hero-swap,

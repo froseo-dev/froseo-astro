@@ -1,0 +1,400 @@
+---
+/**
+ * SEO-landingspagina /maarssen — gekoppeld aan het tweede Google Business
+ * Profile (service-area: Maarssen e.o., adres verborgen omdat het Calvin's
+ * thuisbasis is).
+ *
+ * Doel: ranken op "webdesign maarssen", "seo maarssen", "marketing bureau
+ * maarssen" en "website laten maken maarssen".
+ *
+ * Compositie: homepage-componenten (Hero, CasesStrip, PricingTeaser, Stats,
+ * Testimonial, Approach, BetterCallCalvin, FAQ) met unieke Maarssen-copy.
+ * Géén tekst die letterlijk uit andere pagina's komt — alle koppen, body
+ * en FAQ-antwoorden zijn voor deze pagina geschreven.
+ *
+ * Drie custom secties: een lokaal-positionering blok lager op de pagina,
+ * een lokale-SEO blok met case-image, en branche-pills die het brede
+ * MKB/ZZP-aanbod illustreren.
+ *
+ * CRO-volgorde: hero → social proof → product (cases + pricing) → diepte
+ * (lokale SEO + branches) → relationeel (waarom + CalvinNote + stats +
+ * testimonial) → werkwijze → close → FAQ.
+ *
+ * Schema: eigen LocalBusiness JSON-LD met areaServed (Maarssen,
+ * Maarssenbroek, Tienhoven, Oud Zuilen) zonder streetAddress, eigen @id
+ * naast de Utrecht-listing in BaseLayout.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import Hero from '@components/sections/Hero.astro';
+import LogosTicker from '@components/sections/LogosTicker.astro';
+import CasesStrip from '@components/sections/CasesStrip.astro';
+import PricingTeaser from '@components/sections/PricingTeaser.astro';
+import ServicesTicker from '@components/sections/ServicesTicker.astro';
+import CalvinNote from '@components/sections/CalvinNote.astro';
+import Testimonial from '@components/sections/Testimonial.astro';
+import Stats from '@components/sections/Stats.astro';
+import Approach from '@components/sections/Approach.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import { Image } from 'astro:assets';
+import { pricing } from '@data/site-config';
+import localseoImage from '@assets/cases/renovatie-totaal/hero.webp';
+import testiBg from '@assets/testimonials/renovatie-totaal-bg.webp';
+import basAvatar from '@assets/testimonials/bas-bertrams.webp';
+
+const pageTitle = 'Webdesign, SEO & marketing in Maarssen | Froseo';
+const pageDesc =
+  'Webdesign, SEO en advertenties voor MKB en ZZP uit Maarssen e.o. Korte lijnen, geen opstartkosten en website abonnementen vanaf €99 per maand.';
+
+const branches = [
+  'Aannemers',
+  'Dakdekkers',
+  'Schilders',
+  'Loodgieters',
+  'Hoveniers',
+  'Personal trainers',
+  'Fysiotherapeuten',
+  'Tandartsen',
+  'Advocaten',
+  'Makelaars',
+  'Horeca',
+  'Kappers',
+  'Schoonheidssalons',
+  'Coaches',
+  'Webshops',
+  'ZZP-dienstverleners',
+];
+
+const faqs = [
+  {
+    q: 'Werken jullie als webdesign bureau in Maarssen?',
+    a: 'Ja, dat is letterlijk een van onze thuisbases. Een deel van het team woont in Maarssen en werkt vanuit daar voor ondernemers in Maarssen, Maarssenbroek, Tienhoven en alles wat daaromheen ligt. Korte lijnen, dezelfde middag terugbellen als dat nodig is.',
+  },
+  {
+    q: 'Wat kost een website laten maken in Maarssen?',
+    a: 'Een nieuwe site bouwen kost meestal tussen de €1.500 en €5.000, afhankelijk van wat erin moet. Geen zin om in één keer zo\'n bedrag op tafel te leggen? Dan kan het ook via een abonnement vanaf €99 per maand. Complete site, hosting, onderhoud en updates zitten allemaal in dat bedrag.',
+  },
+  {
+    q: 'Wat kost SEO in Maarssen?',
+    a: 'Lokale SEO werkt alleen als je het doorlopend doet, dus we werken hier met maandelijkse pakketten. Voor Maarssen e.o. begint dat rond de €400 per maand. Wil je daarnaast ook landelijk scoren, dan komt daar wat bij. Tijdens een eerste gesprek krijg je een eerlijke inschatting van wat realistisch is voor jouw concurrentie.',
+  },
+  {
+    q: 'Doen jullie ook advertenties voor MKB in Maarssen?',
+    a: 'Ja. Google Ads, Meta-ads en de strategie eronder. We sturen op aanvragen, niet op kliks of impressies, want daar koop je weinig voor. Elke maand krijg je een overzicht dat je begrijpt, plus wat we de volgende maand anders gaan doen.',
+  },
+  {
+    q: 'In welke regio rondom Maarssen werken jullie?',
+    a: 'Naast Maarssen zelf ook Maarssenbroek, Tienhoven, Oud Zuilen, Breukelen, Loenen, Vleuten, De Meern en Utrecht. Een flink deel van onze klanten zit verder weg in het land, dus locatie maakt qua werk niet uit. Wel kennen we de Utrechtse markt het beste.',
+  },
+  {
+    q: 'Hoe verschilt lokale SEO in Maarssen van landelijke SEO?',
+    a: 'Bij lokale zoekopdrachten zoals "loodgieter Maarssen" of "kapper in de buurt" laat Google een ander resultaat zien dan bij brede termen. Bovenaan staat een kaartje met drie bedrijven, en daar gaat tot wel 80% van de klikken naartoe. Lokaal scoren is in die top-3 staan. Dat vraagt om een actief Google Business Profile, reviews en kloppende bedrijfsgegevens. Landelijke SEO draait meer om content en autoriteit. Bedrijven met lokale klanten hebben meestal beide nodig.',
+  },
+  {
+    q: 'Hoe zit dat website abonnement van €99 per maand in elkaar?',
+    a: 'Een compleet pakket: site, hosting, onderhoud, beveiliging en doorlopende verbeteringen, allemaal in één maandbedrag. Geen losse facturen voor updates of plug-in-licenties. Verschillende pakketten beschikbaar als je meer wilt. Per maand opzegbaar, geen contract van twee jaar.',
+  },
+  {
+    q: 'Hebben jullie opstartkosten of lange contracten?',
+    a: 'Nee, geen opstartkosten en geen jarenlange contracten. Veel bureaus rekenen dat wel, en als jij vastzit hoeven zij minder hun best te doen. Wij doen het andersom: je betaalt voor het werk dat we leveren en je kunt per maand opzeggen. Als wij niet leveren, ben jij niet vast.',
+  },
+  {
+    q: 'Kan ik bij jullie langskomen in Maarssen?',
+    a: 'We hebben geen open kantoor waar je binnen kunt lopen, maar afspreken kan altijd. Bij jou op de zaak, online via Teams of ergens neutraal voor een koffie. Wat het beste werkt.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+
+  {/* ============================================================
+       LocalBusiness JSON-LD voor de Maarssen-vestiging. Eigen @id
+       zodat Google dit los van de Utrecht-listing in BaseLayout
+       behandelt. areaServed met Maarssen + omliggende kernen, geen
+       streetAddress (service-area zonder publiek adres).
+       ============================================================ */}
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': 'https://froseo.nl/maarssen/#agency',
+    name: 'Froseo Digital Agency Maarssen',
+    description: 'Webdesign, SEO en online marketing voor MKB en ZZP in Maarssen en omgeving.',
+    url: 'https://froseo.nl/maarssen/',
+    telephone: '+31302378053',
+    email: 'info@froseo.nl',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Maarssen',
+      addressRegion: 'Utrecht',
+      addressCountry: 'NL',
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Maarssen' },
+      { '@type': 'City', name: 'Maarssenbroek' },
+      { '@type': 'City', name: 'Tienhoven' },
+      { '@type': 'City', name: 'Oud Zuilen' },
+      { '@type': 'City', name: 'Breukelen' },
+      { '@type': 'City', name: 'Loenen' },
+    ],
+    priceRange: '€€',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '5',
+      reviewCount: '13',
+      bestRating: '5',
+    },
+    sameAs: [
+      'https://www.instagram.com/froseo',
+      'https://www.linkedin.com/company/froseo',
+    ],
+  })} />
+
+  <main>
+    {/* ============================================================
+         Hero — h1 "Local Proof by Froseo." met subtitel-prop voor
+         Calvin's gewenste Maarssen-positionering. Eén CTA in lijn
+         met de homepage-hero; de tweede knop stretchte over de hele
+         breedte wat visueel niet klopte.
+         ============================================================ */}
+    <Hero
+      eyebrow="Local Proof by Froseo"
+      titleLine1="Webdesign & marketing"
+      titleLine2="voor ambitieuze"
+      accent="ondernemers uit Maarssen."
+      bullets={[
+        'Webdesign, SEO en advertenties, allemaal vanuit één bureau',
+        'Geen opstartkosten en geen contract dat je twee jaar vastzet',
+        'Werk dat je terugziet in je aanvragen, niet alleen in een rapportage',
+        `Nieuw: nu ook all-inclusive website abonnementen vanaf ${pricing.abboFromShort}`,
+      ]}
+      primaryCta={{ label: 'Gratis analyse ↗', href: '/contact?onderwerp=maarssen' }}
+      resultLabel="★ Lokaal"
+      resultValue="5/5 Google"
+      resultMeta="MKB-klanten regio Utrecht"
+    />
+
+    <LogosTicker />
+
+    {/* ============================================================
+         Cases — direct na social proof. Recent werk uit de regio.
+         ============================================================ */}
+    <CasesStrip
+      eyebrow="Recent werk"
+      titleLine1="Bewezen resultaten"
+      titleLead="in"
+      titleAccent="regio Maarssen."
+      lead="Een aantal recente projecten. Mix van renovatie, horeca, dakwerk en dienstverlening, allemaal bedrijven uit de regio. Cijfers staan erbij, vaag groeipraatje achterwege."
+      pickSlugs={['renovatie-totaal', 'club12', 'top-dakdekker', 'theo-mackaay']}
+      moreLabel="Bekijk alle projecten ↗"
+    />
+
+    {/* ============================================================
+         €99/m abonnement-balk in de standaard 2-koloms layout. CTA
+         linkt naar de toekomstige /website-abonnement landingspagina.
+         ============================================================ */}
+    <PricingTeaser
+      eyebrow={`Website abonnement · vanaf ${pricing.abboFromShort}`}
+      title="Een complete website voor een vast maandbedrag."
+      body={`Liever niet ineens een paar duizend euro neerleggen voor een nieuwe site? Begrijpelijk. Vanaf ${pricing.abboFromShort} krijg je een complete website inclusief hosting, onderhoud en de updates die anders apart op de factuur belanden. Per maand opzegbaar, geen opstartkosten. Verschillende pakketten beschikbaar, custom maatwerk op aanvraag.`}
+      ctaLabel="Plan een gratis kennismaking ↗"
+      ctaHref="/website-abonnement"
+    />
+
+    {/* ============================================================
+         ServicesTicker — diensten-marquee zoals de homepage. Brengt
+         visuele beweging en laat het aanbod-breedte zien.
+         ============================================================ */}
+    <ServicesTicker />
+
+    {/* ============================================================
+         Testimonial direct na de twee donkere blokken (pricing +
+         services-ticker). De bgImage geeft dezelfde atmosferische
+         dark-toon, dus drie donkere blokken op rij zonder lelijke
+         dark→light wissels. Brengt ook de quote vroeger in beeld.
+         ============================================================ */}
+    <Testimonial id="bas-renovatie-totaal" bgImage={testiBg} bgAlt="Renovatie Totaal aan het werk" avatar={basAvatar} />
+
+    {/* ============================================================
+         Lokale SEO sectie: head centered bovenaan, eronder 2-koloms
+         grid met body links en image rechts.
+         ============================================================ */}
+    <section class="maarssen-localseo">
+      <div class="maarssen-localseo-inner">
+        <div class="maarssen-localseo-head">
+          <EyebrowPill variant="rare">Lokale SEO</EyebrowPill>
+          <h2 class="maarssen-localseo-title">
+            Wie zoekt op <em>"[dienst] Maarssen"</em> moet jou vinden.
+          </h2>
+        </div>
+        <div class="maarssen-localseo-grid">
+          <div class="maarssen-localseo-text">
+            <p>
+              Iemand met een lekkage tikt om half elf 's avonds "loodgieter Maarssen"
+              in zijn telefoon. Wat hij ziet: drie bedrijven op de kaart. Een van die
+              drie krijgt hem aan de lijn. Wie in die top-3 staat, krijgt verreweg de
+              meeste klikken.
+            </p>
+            <p>
+              Daar binnen komen draait om je Google Business Profile, je reviews en
+              kloppende bedrijfsgegevens. Wij maken je profiel compleet, regelen een
+              nette manier om reviews binnen te krijgen en houden de rankings in de
+              gaten. Komt er een nieuwe speler in dezelfde categorie bij, dan zien we
+              dat ook.
+            </p>
+            <ul class="maarssen-localseo-list">
+              <li>Google Business Profile dat compleet is en blijft</li>
+              <li>Reviews die binnenkomen zonder dat klanten zich opgejaagd voelen</li>
+              <li>Bedrijfsgegevens die overal kloppen (NAP, citations)</li>
+              <li>Een maandelijkse update over waar je staat</li>
+            </ul>
+            <a class="btn-ghost maarssen-localseo-cta" href="/seo">
+              Bekijk SEO en lokale SEO ↗
+            </a>
+          </div>
+          <div class="maarssen-localseo-media">
+            <Image
+              src={localseoImage}
+              alt="Voorbeeld van een lokale SEO-case in de regio Utrecht"
+              class="maarssen-localseo-img"
+              widths={[600, 900, 1200]}
+              sizes="(max-width: 1024px) 100vw, 540px"
+              loading="lazy"
+            />
+            <div class="maarssen-localseo-badge" aria-hidden="true">
+              <div class="maarssen-localseo-badge-stat">+180%</div>
+              <div class="maarssen-localseo-badge-label">verkeer · Renovatie Totaal</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================
+         Waarom + branches gecombineerd in één rijke sectie. Eerst de
+         "team kent de buurt"-positionering, dan de branche-pills als
+         visueel-inline bewijs van wie we voor werken, daarna 3 USP-
+         cards. Voorkomt dat branches als losse "tussen geprakte" sectie
+         leest.
+         ============================================================ */}
+    <section class="maarssen-waarom">
+      <div class="maarssen-waarom-inner">
+        <div class="maarssen-waarom-head">
+          <EyebrowPill variant="rare">Waarom een lokaal bureau</EyebrowPill>
+          <h2 class="maarssen-waarom-title">
+            Een team dat Maarssen kent <em>als zijn broekzak.</em>
+          </h2>
+        </div>
+        <div class="maarssen-waarom-body">
+          <p>
+            Een deel van ons team is opgegroeid in Maarssen. We weten welke aannemers,
+            kappers en horeca-ondernemers hier actief zijn, hoe de Utrechtse markt
+            eromheen werkt en wat een nette MKB-website hier doet en niet doet.
+          </p>
+          <p>
+            Daarnaast houden we het praktisch. Korte lijnen, snelle reacties en heldere
+            offertes met prijzen die ook in maand drie nog hetzelfde zijn. Mail of bel,
+            dan kijken we wat er bij jouw bedrijf past.
+          </p>
+        </div>
+
+        <div class="maarssen-waarom-branches">
+          <h3 class="maarssen-waarom-branches-title">Van dakdekker tot <em>personal trainer.</em></h3>
+          <div class="maarssen-branches-grid">
+            {branches.map((b) => (
+              <span class="maarssen-branch-pill">{b}</span>
+            ))}
+          </div>
+        </div>
+
+        <div class="maarssen-waarom-grid">
+          <article class="maarssen-waarom-card">
+            <div class="maarssen-waarom-card-num">01</div>
+            <h3 class="maarssen-waarom-card-title">Geen opstartkosten</h3>
+            <p class="maarssen-waarom-card-body">
+              Je betaalt voor wat we leveren, niet voor het traject ernaartoe. Bij een
+              abonnement zitten hosting, onderhoud en premium plug-ins in het
+              maandbedrag. Eén factuur, één bedrag.
+            </p>
+          </article>
+          <article class="maarssen-waarom-card">
+            <div class="maarssen-waarom-card-num">02</div>
+            <h3 class="maarssen-waarom-card-title">Per maand opzegbaar</h3>
+            <p class="maarssen-waarom-card-body">
+              Je stapt in en je stapt eruit als het niet bevalt. Geen meerjarig contract,
+              geen vastgekoppelde dienst die je nooit gebruikt. Dat houdt iedereen
+              scherp, ook ons.
+            </p>
+          </article>
+          <article class="maarssen-waarom-card">
+            <div class="maarssen-waarom-card-num">03</div>
+            <h3 class="maarssen-waarom-card-title">Korte lijn, één aanspreekpunt</h3>
+            <p class="maarssen-waarom-card-body">
+              Eén nummer, één mailbox, en iemand die de voorgeschiedenis kent. Voor
+              dingen die dezelfde dag moeten gebeuren scheelt dat een hoop tijd en
+              telefonisch heen-en-weer.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================
+         CalvinNote — relationele close-up na het waarom-blok.
+         ============================================================ */}
+    <CalvinNote
+      message="Stuur een mailtje of bel een keer, dan kijken we kort wat je nodig hebt. Past het niet bij wat wij doen, dan zeg ik dat ook gewoon."
+      ctaLabel="Plan een kennismaking ↗"
+      ctaHref="/contact?onderwerp=maarssen-kennismaking"
+    />
+
+    {/* ============================================================
+         Cijfers-blok, Maarssen-frame.
+         ============================================================ */}
+    <Stats
+      eyebrow="De cijfers"
+      titleLine1="Webdesign en marketing"
+      titleLine2="uit Maarssen,"
+      titleAccent="voor heel Nederland."
+    />
+
+    {/* ============================================================
+         Werkwijze met watermark. Maarssen-eigen desc-tekst.
+         ============================================================ */}
+    <Approach
+      eyebrow="Zo werken we"
+      titleLine1="Een aanpak"
+      titleAccent="zonder"
+      titleLine3="gedoe."
+      desc1="Geen weken vooraf vergaderen over de scope. We kijken samen wat er nodig is voor jouw bedrijf, maken een offerte met heldere prijzen en gaan dan bouwen. Geen tussenlagen, geen vage planningen."
+      desc2="Onderweg zit je niet in een blackbox. Je weet wat er gebeurt, je ziet voorbeelden, je geeft feedback. Daarna live, en daarna kijken we wat er beter kan."
+      watermark={true}
+    />
+
+    <BetterCallCalvin
+      eyebrow="Aan de slag?"
+      titleLine1="Better call"
+      titleAccent="Calvin."
+      body={[
+        'Een half uur sparren over je site, vindbaarheid of advertenties. Plan een afspraak via de knop hieronder.',
+        'Online kan, of een keer afspreken in Maarssen. We kijken samen wat zinnig is en wat het ongeveer zou kosten. Geen verplichtingen.',
+      ]}
+      primaryLabel="Plan een afspraak ↗"
+      primaryHref="/contact?onderwerp=maarssen"
+    />
+
+    <FAQ
+      eyebrow="Veelgestelde vragen"
+      titleLine1="Vragen over Froseo in"
+      titleAccent="Maarssen."
+      items={faqs}
+    />
+  </main>
+  <Footer />
+</BaseLayout>

@@ -23,12 +23,12 @@ bullets:
 
 showcaseEyebrow: 'Recent werk'
 showcaseTitle: 'Websites die we'
-showcaseTitleAccent: 'live brachten.'
+showcaseTitleAccent: 'lanceerden.'
 
 propositionPaths:
   - title: Maatwerk website
     tag: WordPress of Astro
-    body: 'De volledige route. We bouwen vanaf de basis een website die past bij wat jouw bedrijf onderscheidt. Jij bepaalt mee over structuur, design en functionaliteit. We kiezen samen het platform dat past bij je beheerwensen.'
+    body: 'We bouwen vanaf de basis een website die past bij wat jouw bedrijf onderscheidt. Jij bepaalt mee over structuur, design en functionaliteit. We kiezen samen het platform dat past bij je beheerwensen.'
     checks:
       - Volledig op maat ontworpen en gebouwd
       - WordPress of Astro, naar wens

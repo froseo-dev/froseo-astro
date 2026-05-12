@@ -1,0 +1,622 @@
+---
+/**
+ * SEO-landingspagina /website-laten-maken-utrecht.
+ *
+ * Doel: keyword-gerichte landing voor "website laten maken Utrecht" en
+ * gerelateerde longtails ("webdesign Utrecht", "WordPress bureau Utrecht",
+ * "website laten maken kosten Utrecht"). Niet in het hoofdmenu.
+ *
+ * CRO-volgorde (Calvin's feedback v2):
+ *   1. Hero
+ *   2. LogosTicker
+ *   3. Service-paths (Maatwerk / Abonnement) HOOG — zoals /webdesign
+ *   4. WebsitesShowcase (cases)
+ *   5. Testimonial card OMHOOG — sterkste proof na cases
+ *   6. LocalAgency (Utrecht-trots 2-koloms met USP-cards rechts) —
+ *      vervangt de oude utrecht-intro text-lap, breekt visueel
+ *   7. 4 USP-cards (wat je krijgt)
+ *   8. BeforeAfter (Studio Contenido proof)
+ *   9. PainPoints (donker)
+ *  10. Comparison
+ *  11. CalvinNote mid-CTA
+ *  12. Branche-accordion (10 segments, dicht-by-default — SEO body)
+ *  13. Lokale SEO 2-koloms (.maarssen-localseo classes hergebruikt:
+ *      tekst links + Renovatie Totaal image rechts met +180% badge)
+ *  14. BetterCallCalvin
+ *  15. FAQ
+ *  16. Werkgebied-strook (NAP, onder FAQ per Calvin's wens)
+ *
+ * Schema: GEEN extra LocalBusiness JSON-LD — BaseLayout zet die al
+ * op elke pagina met Leidseveer-adres.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import SectionIcon from '@components/ui/SectionIcon.astro';
+import LogosTicker from '@components/sections/LogosTicker.astro';
+import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
+import BeforeAfter from '@components/sections/BeforeAfter.astro';
+import PainPoints from '@components/sections/PainPoints.astro';
+import Comparison from '@components/sections/Comparison.astro';
+import CalvinNote from '@components/sections/CalvinNote.astro';
+import Testimonial from '@components/sections/Testimonial.astro';
+import LocalAgency from '@components/sections/LocalAgency.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { review, pricing } from '@data/site-config';
+import heroMockup from '@assets/hero/froseo-mockup.webp';
+import studioContenidoBefore from '@assets/before-after/studio-contenido-before.webp';
+import studioContenidoAfter from '@assets/before-after/studio-contenido-after.webp';
+import localseoImage from '@assets/cases/renovatie-totaal/hero.webp';
+import testiBg from '@assets/testimonials/renovatie-totaal-bg.webp';
+import basAvatar from '@assets/testimonials/bas-bertrams.webp';
+import froseoLogoWit from '@assets/brand/froseo-logo-wit.webp';
+
+const pageTitle = 'Website laten maken in Utrecht | WordPress & Astro | Froseo';
+const pageDesc =
+  `Website laten maken in Utrecht: maatwerk WordPress of Astro, of een all-inclusive abonnement vanaf ${pricing.abboFromInline}. Lokaal bureau, korte lijnen, Google Proof opgeleverd.`;
+
+/* Cases — mix die laat zien wat we recent hebben opgeleverd. Bewust een
+   variatie van branches (bouw, retail, agency, dienstverlening). */
+const allCases = await getCollection('cases', ({ data }) => data.published !== false);
+const showcaseSlugs = [
+  'renovatie-totaal',
+  'club12',
+  'rex-agency',
+  'theo-mackaay',
+  'top-dakdekker',
+  'steunder',
+];
+const showcaseCases = showcaseSlugs
+  .map((slug) => allCases.find((c) => c.data.slug === slug))
+  .filter((c): c is NonNullable<typeof c> => Boolean(c));
+
+/* 4 USP-cards — wat je concreet krijgt bij een website laten maken in
+   Utrecht. Bewust positief geformuleerd ("wij zijn wij") zonder
+   verwijzingen naar wat andere bureaus doen of niet doen. */
+const usps = [
+  {
+    icon: 'locationPin',
+    title: 'Eén vaste persoon van begin tot eind',
+    body: 'De mailtjes, de calls en de oplevering lopen via dezelfde persoon. Die ook in je site bouwt. Dat scheelt vertaalwerk en houdt het tempo erin.',
+  },
+  {
+    icon: 'searchGlass',
+    title: 'Vindbaarheid zit erin gebakken',
+    body: 'Structuur, schemas, snelheid en interne links zitten al in het werk vóór je site live gaat. Geen losse SEO-aanbieding achteraf.',
+  },
+  {
+    icon: 'paletteSwatch',
+    title: 'Ontwerp dat past bij je bedrijf',
+    body: 'Logo, kleurgebruik, typografie en tone of voice sluiten aan op wat jij doet. Een uitstraling die past bij jouw zaak in Utrecht, niet bij die van iedereen.',
+  },
+  {
+    icon: 'toolbox',
+    title: 'Alles bij dezelfde club',
+    body: 'Hosting, domeinen, SEO, onderhoud en kleine aanpassingen lopen via één partij. Eén nummer om te bellen wanneer er iets hapert, geen heen-en-weer.',
+  },
+];
+
+/* Branche-accordion. Utrechtse MKB-segmenten met concrete wijken,
+   straten en zoektermen. Bewust niet allemaal hetzelfde "voor X
+   bouwen we sites die..."-patroon — wisselende openingen, korte
+   en lange zinnen door elkaar. Houdt keyword density hoog zonder
+   dat alles tegelijk in beeld staat. */
+const segments = [
+  {
+    title: 'Horeca: café, lunchroom, restaurant',
+    body: 'Mensen kiezen op hun telefoon waar ze die avond gaan eten. Sfeer overbrengen, mobiel snel laden en zonder gedoe kunnen reserveren is dus belangrijker dan een mooie homepage. We bouwen voor zaken aan de Oudegracht, op het Ledig Erf, in Lombok en daarbuiten. Met fotografie die klopt, een duidelijke reserveer-knop en sterke vindbaarheid op zoektermen als "lunch Utrecht centrum" of "restaurant Wittevrouwen".',
+  },
+  {
+    title: 'Speciaalzaken en boutiques in de binnenstad',
+    body: 'Een winkel in de Twijnstraat, Voorstraat of op de Neude heeft online een ander doel dan in de Stationswijk. Vaak hoeft er geen webshop, wel een site die je merk laat ademen, openingstijden eerlijk in beeld zet en mensen die "[product] kopen Utrecht" zoeken bij jou laat uitkomen. Eventueel met een lichte webshop erbij wanneer dat past.',
+  },
+  {
+    title: 'Praktijken in zorg, fysio en welzijn',
+    body: 'Bij een fysio in Tuindorp, een tandarts in Lombok of een schoonheidssalon in Wittevrouwen draait een site om rust en vertrouwen. Geen overprikkelde startpagina, wel duidelijke behandelingen, online intake en koppeling met je afspraak-systeem. Lokale SEO erbij zodat je in het Google-pack staat wanneer iemand zoekt op "fysio Utrecht Oost" of "tandarts in de buurt".',
+  },
+  {
+    title: 'Makelaardij, notariaat en advocatuur',
+    body: 'Vertrouwen winnen zonder stoffig te worden is hier de uitdaging. We bouwen sites met heldere dienstpagina\'s, ruimte voor specialisaties en teamfoto\'s die geen LinkedIn-thumbnails zijn. Voor termen als "advocaat erfrecht Utrecht" of "makelaar Leidsche Rijn" maken we pagina\'s die specifiek genoeg zijn om bovenaan op te duiken.',
+  },
+  {
+    title: 'Bouw, renovatie en installatiebedrijven',
+    body: 'Voor aannemers en vakmensen valt of staat een site bij twee dingen: portfolio en bereikbaarheid. We bouwen heldere projectgalerijen, klikbare telefoonnummers en korte offerteformulieren. Eigen case-voorbeeld: Renovatie Totaal staat dankzij onze aanpak op #1 voor meerdere Utrechtse zoektermen, met +180% verkeer ten opzichte van waar ze begonnen.',
+  },
+  {
+    title: 'Designstudio\'s, fotografen en muziek',
+    body: 'Voor creatieve bureaus is de site zelf je portfolio. Visueel sterk, snel, met de toon die past bij wat je maakt. Wij hebben gebouwd voor onder andere REX The Agency en Independent Artists Agency. Bij elke creatieve klus stellen we vooraf een ding scherp: gaat het over werk laten zien, of over leads binnenhalen? Die keuze bepaalt de hele opbouw.',
+  },
+  {
+    title: 'Consultants en zakelijke dienstverleners',
+    body: 'Een consultant heeft online een dunne lijn te bewandelen: voldoende uitstralen om serieus genomen te worden, zonder dat het bedrijfsfilm-achtig wordt. We zetten je propositie helder op de pagina, ruimen ruimte in voor cases en team, en bouwen dienst-pagina\'s die specifiek genoeg zijn om voor concrete zoektermen te ranken.',
+  },
+  {
+    title: 'Sport, fitness en personal trainers',
+    body: 'Lesroosters die kloppen, intake-flows die niet drie pagina\'s lang zijn en een uitstraling die past bij CrossFit, yoga of een rustige praktijk: dat zijn de bouwblokken. Voor ZZP-trainers die alleen werken hebben we een aparte route met een eigen ZZP-traject op /website-laten-maken-zzp, voor sportscholen bouwen we meestal iets uitgebreiders.',
+  },
+  {
+    title: 'B&B\'s, kleinere hotels en hospitality',
+    body: 'Bezoekers oriënteren zich vaak in het Engels en op mobiel. Snelle laadtijd, sterke beeldtaal en een soepele kamer- of activiteitenflow zijn dus geen extra\'s, maar startvoorwaarden. We zetten waar nodig een tweede taal op, en zorgen dat je tussen de Booking-clutter door ook op je eigen naam vindbaar bent.',
+  },
+  {
+    title: 'Cultuur, onderwijs en non-profit',
+    body: 'Een muziekschool in Hoograven, een buurtinitiatief in Overvecht of een stichting in de binnenstad heeft andere prioriteiten dan een commerciële klant. Toegankelijkheid, duidelijke agenda\'s en lichte techniek staan voorop. We werken vaak met een kleiner budget en bouwen op een manier die het bestuur ook nog snapt na de oplevering.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Wat kost het om in Utrecht een website te laten maken?',
+    a: `Maatwerk loopt meestal tussen de €1.500 en €5.000. Wat het bij jou wordt hangt af van het aantal pagina's, of we ook teksten en fotografie verzorgen en of er extra functionaliteit in moet zoals een planning, betalingen of een ledenomgeving. Wie liever niet in één keer betaalt kan kiezen voor het abonnement vanaf ${pricing.abboFromInline}, inclusief hosting en onderhoud. Voor allebei de routes krijg je vooraf een heldere offerte.`,
+  },
+  {
+    q: 'WordPress of Astro: welk platform kiezen jullie?',
+    a: 'Dat hangt af van wie er na de oplevering aan je site werkt. Wil jij zelf blogs publiceren, pagina\'s bijwerken of vaak content wisselen? Dan ligt WordPress voor de hand. Hoeft de site na livegang vooral te draaien zonder dat je er veel aan zit, en wil je topscores op snelheid? Dan kiezen we Astro. We zijn niet aan een platform gehecht. Tijdens het eerste gesprek vragen we vooral hoe jij zelf met je site wil omgaan.',
+  },
+  {
+    q: 'Hoe snel kan een site uit Utrecht live staan?',
+    a: 'Bij maatwerk reken je op vier à zes weken. Veel hangt af van hoe snel jij teksten, foto\'s en feedback aanlevert, want daar zit meestal de vertraging. Het abonnement kan binnen twee weken live omdat we vertrekken vanuit een doordachte basis. Heb je een krappe deadline? Zeg dat tijdens de kennismaking, dan kijken we of het haalbaar is voordat we ja zeggen.',
+  },
+  {
+    q: 'Moet ik in Utrecht zitten om met jullie te werken?',
+    a: 'Nee. We werken voor klanten door heel Nederland, dus locatie is geen voorwaarde. Maar ondernemers uit de stad merken het verschil wel: even langs op kantoor naast Utrecht Centraal, een werksessie aan de Oudegracht, snel kunnen schakelen. Voor Maarssen e.o. hebben we een eigen pagina, voor ZZP\'ers staat alles over ons ZZP-traject op /website-laten-maken-zzp.',
+  },
+  {
+    q: 'Schrijven en fotograferen jullie ook?',
+    a: 'Allebei kan. We schrijven copy in onze eigen stijl wanneer je dat wil, en werken samen met fotografen die we al jaren kennen. Heb je liever je eigen tekst-vrijwilliger of een huisfotograaf? Geen probleem, dan denken we mee over wat goed werkt en sturen we bij waar dat zin heeft.',
+  },
+  {
+    q: 'Wat is het verschil tussen jullie en een groot bureau uit Amsterdam?',
+    a: 'Bij een groot bureau zit er meestal een laag tussen jou en het werk: account, strateeg, projectmanager, daarna pas de bouwer. Dat heeft voor- en nadelen. Wij zitten in dat laagje niet. Jij praat met dezelfde persoon die je site bouwt. Past je vraag beter bij een groot bureau, dan zeggen we dat ook eerlijk en sturen we je daar met liefde naartoe.',
+  },
+  {
+    q: 'Hoe zit het met gevonden worden in Google?',
+    a: 'SEO is bijna ons grootste vakgebied. Een site die we opleveren heeft technische SEO al ingebouwd: structuur, snelheid, schemas, interne links en meta-data. Voor wie verder wil hebben we doorlopende SEO-pakketten en specifieke lokale SEO voor het Utrecht-pack op Google Maps. Bekijk daarvoor /seo.',
+  },
+  {
+    q: 'Wie is na livegang eigenaar van mijn site?',
+    a: 'Bij maatwerk: jij, helemaal. Site, hosting en domeinnaam staan op jouw naam. Bij het abonnement maakt de hosting onderdeel uit van het pakket; je kunt op elk moment overstappen. Wat ook gebeurt, je krijgt nooit een vendor-lock-in waardoor je vastzit aan ons.',
+  },
+  {
+    q: 'Heeft het zin om een bestaande site op te frissen in plaats van te vervangen?',
+    a: 'Vaak wel. Als de basis nog goed staat is een gerichte opknapbeurt sneller en goedkoper dan een nieuwe site. We hebben daar een aparte pagina voor met modulaire pakketten vanaf €399, zie /website-opfrissen. Twijfel je? Stuur je site of geef toegang, dan kijken we mee en zeggen we eerlijk of een rebuild verstandiger is.',
+  },
+  {
+    q: 'Blijven jullie ook na oplevering aan de site werken?',
+    a: 'Dat kan via een van onze onderhoudspakketten. Drie smaken: Basic, Standard en Pro Care, met updates, beveiligings-scans, dagelijkse back-ups en premium plug-in-licenties. Niet verplicht: wie liever alleen het bouwwerk wil afnemen kan dat ook, dan zetten we de site over en is hij van jou.',
+  },
+  {
+    q: 'Kunnen we elkaar in Utrecht ontmoeten?',
+    a: 'Ja, ons kantoor zit op Leidseveer 10, vlak naast het station. Op afspraak ben je welkom voor een kennismaking of werksessie. Een online call kan ook, dat scheelt vaak reistijd.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="utrecht-page">
+      {/* ============================================================
+           Hero — h1 draagt "Website laten maken in Utrecht" volledig.
+           Eyebrow communiceert het dubbele aanbod (maatwerk + abbo).
+           ============================================================ */}
+      <section class="service-hero has-image">
+        <div class="service-hero-inner">
+          <div class="service-hero-text">
+            <EyebrowPill>Voor MKB en ZZP · vanaf {pricing.abboFromShort} of in maatwerk</EyebrowPill>
+            <h1 class="service-hero-title">
+              Website laten maken in <em>Utrecht.</em>
+            </h1>
+            <ul class="service-hero-checks">
+              <li>Maatwerk WordPress of Astro, of een abonnement vanaf {pricing.abboFromInline}</li>
+              <li>Kantoor naast Utrecht Centraal, je werkt direct met de bouwer</li>
+              <li>Design, vindbaarheid, hosting en onderhoud bij dezelfde club</li>
+            </ul>
+            <div class="service-hero-actions">
+              <a class="btn-primary" href="/contact?onderwerp=website-laten-maken-utrecht">
+                Plan een kennismaking ↗
+              </a>
+            </div>
+            <div class="service-hero-reviews reviews-inline">
+              <div class="review-avatars">
+                <div class="review-avatar"></div>
+                <div class="review-avatar"></div>
+                <div class="review-avatar"></div>
+              </div>
+              <div class="stars">★★★★★</div>
+              <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
+            </div>
+          </div>
+
+          <div class="service-hero-media">
+            <Image
+              src={heroMockup}
+              alt="Voorbeeld website laten maken in Utrecht door Froseo"
+              class="service-hero-img"
+              widths={[640, 960, 1280, 1600]}
+              sizes="(max-width: 1024px) 100vw, 640px"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+      </section>
+
+      <LogosTicker />
+
+      {/* ============================================================
+           Twee routes HOOG op de pagina (zoals /webdesign): maatwerk of
+           abonnement. Mirror van het propositionPaths-blok maar inline
+           omdat deze pagina geen markdown-driven service is.
+           ============================================================ */}
+      <section class="service-paths">
+        <div class="service-paths-head">
+          <EyebrowPill>Kies je route</EyebrowPill>
+          <h2 class="service-paths-title">
+            Eenmalig of een vast bedrag <em>per maand.</em>
+          </h2>
+        </div>
+        <div class="service-paths-grid count-2">
+          <article class="service-path-card is-featured">
+            <span class="service-path-tag">WordPress of Astro</span>
+            <h3 class="service-path-title">Maatwerk</h3>
+            <p class="service-path-body">
+              Het volledige traject. Een ontwerp dat begint bij wat jouw bedrijf
+              onderscheidt, gebouwd op een uitgebreid CMS waarin je zelf alles kunt
+              aanpassen na de oplevering.
+            </p>
+            <ul class="service-path-checks">
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Volledig op maat ontworpen en gebouwd</span></li>
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>WordPress of Astro, samen besloten</span></li>
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Uitgebreid CMS, zelf alles aanpassen</span></li>
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Site, hosting en domein staan op jouw naam</span></li>
+            </ul>
+            <a class="btn-primary service-path-cta" href="/contact?onderwerp=website-laten-maken-utrecht-maatwerk">
+              Plan een kennismaking ↗
+            </a>
+          </article>
+          <article class="service-path-card">
+            <span class="service-path-tag">Vanaf {pricing.abboFromInline}</span>
+            <h3 class="service-path-title">Abonnement</h3>
+            <p class="service-path-body">
+              Een complete site op onze doordachte basis, voor een vast bedrag per
+              maand. Hosting, updates en kleine aanpassingen zitten erin. Eén factuur,
+              één bedrag.
+            </p>
+            <ul class="service-path-checks">
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Vaak binnen twee weken live</span></li>
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Razendsnel, mikkend op 100/100 PageSpeed</span></li>
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Updates, back-ups en kleine wijzigingen erbij</span></li>
+              <li><span class="check-icon" aria-hidden="true">✓</span><span>Maandelijks opzegbaar, geen lock-in</span></li>
+            </ul>
+            <a class="btn-primary service-path-cta" href="/website-abonnement">
+              Bekijk abonnementen ↗
+            </a>
+          </article>
+        </div>
+      </section>
+
+      {/* ============================================================
+           Cases — visueel sterk proof, direct na de routes.
+           ============================================================ */}
+      <WebsitesShowcase
+        cases={showcaseCases}
+        eyebrow="Een greep uit ons werk"
+        title="Sites die we"
+        titleAccent="onlangs opleverden."
+      />
+
+      {/* ============================================================
+           Testimonial met bgImage — sterkste social proof vroeg in de
+           funnel, atmosferische dark-foto achter de yellow card.
+           ============================================================ */}
+      <Testimonial id="bas-renovatie-totaal" bgImage={testiBg} bgAlt="Renovatie Totaal aan het werk" avatar={basAvatar} />
+
+      {/* ============================================================
+           LocalAgency — Utrecht-trots 2-koloms blok. Vervangt de
+           oude utrecht-intro 3-alinea text-lap door tekst links +
+           3 USP-cards rechts. Eindigt op de Amsterdam-doorverwijzing
+           als karakter-claim.
+           ============================================================ */}
+      <LocalAgency
+        eyebrow="Een bureau uit Utrecht"
+        titleLine1="Een team dat Utrecht kent"
+        titleAccent="als zijn broekzak."
+        lead={[
+          'Een deel van ons team is in Utrecht opgegroeid of werkt hier al jaren. Lombok, Oudegracht, Wittevrouwen, Leidsche Rijn: we weten welke ondernemers er zitten en wat een nette site voor ze moet doen.',
+          'Ons kantoor zit op Leidseveer, twee minuten lopen vanaf Utrecht Centraal. Voor klanten in de stad scheelt dat tijd, en het zorgt dat we de markt kennen waarin jouw site moet werken.',
+        ]}
+        usps={[
+          {
+            title: 'Eén aanspreekpunt',
+            body: 'Mail, ontwerp en bouw lopen via dezelfde persoon. Niets hoeft doorgegeven, niemand vraagt nog of "ik even kon afstemmen met collega X".',
+          },
+          {
+            title: 'Werksessies op kantoor',
+            body: 'Soms gaat één sessie sneller dan vier calls. Even langskomen op Leidseveer kan, anders komen we naar je toe.',
+          },
+          {
+            title: 'Alles onder één dak',
+            body: 'Techniek, design en SEO doen we zelf. Niemand verwijst je door naar een ander bureau zodra er iets in de structuur moet veranderen.',
+          },
+        ]}
+        ctaLabel="Plan een kennismaking ↗"
+        ctaHref="/contact?onderwerp=website-laten-maken-utrecht"
+      />
+
+      {/* ============================================================
+           4 USP-cards met head en logo-watermark voor visuele textuur.
+           Breekt de monotone reeks light-secties met een subtiele
+           Froseo-watermark op de achtergrond.
+           ============================================================ */}
+      <section class="utrecht-usps">
+        <Image
+          src={froseoLogoWit}
+          alt=""
+          class="utrecht-usps-watermark"
+          aria-hidden="true"
+          widths={[800, 1200, 1600]}
+          sizes="(max-width: 1024px) 90vw, 1200px"
+          loading="lazy"
+        />
+        <div class="utrecht-usps-inner">
+          <div class="utrecht-usps-head">
+            <EyebrowPill>Wat je krijgt</EyebrowPill>
+            <h2 class="utrecht-usps-title">
+              Wat een website laten maken bij ons <em>concreet inhoudt.</em>
+            </h2>
+            <p class="utrecht-usps-lead">
+              De vier dingen die we voor elke klant in Utrecht standaard meeleveren,
+              of het nu maatwerk is of een traject via het abonnement.
+            </p>
+          </div>
+          <div class="utrecht-usps-grid">
+            {usps.map((u) => (
+              <article class="utrecht-usp-card">
+                <SectionIcon name={u.icon} class="utrecht-usp-icon" size={44} />
+                <h3 class="utrecht-usp-title">{u.title}</h3>
+                <p class="utrecht-usp-body">{u.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+           BeforeAfter — Studio Contenido. Sterk visueel proof-moment,
+           midden in de pagina.
+           ============================================================ */}
+      <section class="utrecht-ba">
+        <div class="utrecht-ba-inner">
+          <div class="utrecht-ba-head">
+            <EyebrowPill variant="rare">Niet altijd compleet opnieuw</EyebrowPill>
+            <h2 class="utrecht-ba-title">
+              Soms is opfrissen <em>genoeg.</em>
+            </h2>
+            <p class="utrecht-ba-lead">
+              Hieronder Studio Contenido. Een Utrechtse klant met een site die op
+              zichzelf nog draaide, maar die qua look en techniek niet meer paste bij
+              waar het merk inmiddels stond. Geen complete rebuild gedaan, wel een
+              gerichte opknapbeurt op ontwerp en structuur. Verschuif de slider om
+              te zien wat dat opleverde.
+            </p>
+          </div>
+          <BeforeAfter
+            before={studioContenidoBefore}
+            after={studioContenidoAfter}
+            beforeAlt="Studio Contenido — website voor de opfrisbeurt"
+            afterAlt="Studio Contenido — website na de opfrisbeurt"
+          />
+          <div class="utrecht-ba-cta">
+            <a class="btn-ghost" href="/website-opfrissen">Bekijk opfris-trajecten ↗</a>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+           PainPoints — wat fout gaat als je het verkeerde bureau kiest.
+           Donker blok voor visuele variatie.
+           ============================================================ */}
+      <PainPoints
+        eyebrow="Wat we vaak tegenkomen"
+        title="Zes scheve dingen die we"
+        titleAccent="te vaak terugzien."
+        lead="Wanneer een nieuwe klant in Utrecht ons benadert is er meestal een specifieke aanleiding. Iets dat al een tijdje stoort, of een knop die niet meer omgezet kan worden. Dit zijn de zes ergernissen die we het vaakst horen. Komt er eentje bekend voor, dan is een gesprek waarschijnlijk de moeite waard."
+        items={[
+          {
+            icon: 'blackbox',
+            title: 'Een template uit een fabriek',
+            body: 'Dezelfde blokken, fonts en stockfoto\'s als bij vijf andere zaken in je wijk. Bezoekers herkennen dat onbewust en haken sneller af. Google maakt ook geen verschil tussen jou en de rest.',
+          },
+          {
+            icon: 'autopilot',
+            title: 'Drie schakels tussen jou en de bouwer',
+            body: 'Je mailt de account, die mailt de PM, die mailt de developer. Twee weken later is er een halve oplossing die niet meer raakt wat je oorspronkelijk vroeg.',
+          },
+          {
+            icon: 'chartDown',
+            title: 'Een site die mobiel niet meebeweegt',
+            body: 'Zeven van de tien bezoekers komt via een telefoon. Toch zien we sites waar de cookiebar de helft van het scherm vult, knoppen onhandig dichtbij elkaar staan en alles trager laadt dan op een desktop.',
+          },
+          {
+            icon: 'eyeScatter',
+            title: 'Onzichtbaar in het Utrecht-pack',
+            body: 'Iemand zoekt "tandarts Wittevrouwen" en jij staat er niet bij. Vaak ligt het aan een leeg Google Business Profile, kloppende gegevens op het web of het ontbreken van recente reviews.',
+          },
+          {
+            icon: 'archiveStack',
+            title: 'Niemand kijkt meer onder de motorkap',
+            body: 'Plug-ins lopen acht updates achter, het thema is met de hand uit elkaar gepleisterd en de laatste back-up is van een half jaar geleden. Het werkt totdat het niet meer werkt.',
+          },
+          {
+            icon: 'alertBurst',
+            title: 'Een offerte van drie regels',
+            body: '"Design", "Development", "Strategie", samen vijfduizend euro. Wat zit waar in en wat is daarna nog meerwerk? Geen idee. Wij schrijven offertes die per regel laten zien waarvoor je betaalt.',
+          },
+        ]}
+      />
+
+      {/* ============================================================
+           Comparison — zonder Froseo versus met Froseo.
+           ============================================================ */}
+      <Comparison
+        eyebrow="Even naast elkaar"
+        title="Hoe gaat een traject er bij ons"
+        titleAccent="anders aan toe?"
+        withoutLabel="Een typisch bureau-traject"
+        withLabel="Bij Froseo"
+        items={[
+          {
+            without: 'Een accountmanager geeft je vragen door aan de bouwer',
+            with: 'Je hebt direct contact met dezelfde persoon die je site bouwt',
+          },
+          {
+            without: 'Je krijgt een template dat ook voor andere klanten klaarstond',
+            with: 'Je krijgt een ontwerp dat past bij wat jouw bedrijf doet',
+          },
+          {
+            without: 'SEO is een losse aanbieding voor na de oplevering',
+            with: 'Vindbaarheid zit al verwerkt in de techniek en structuur',
+          },
+          {
+            without: 'Hosting bij de ene partij, mail bij de andere, onderhoud bij weer een derde',
+            with: 'Alles loopt via één team, één nummer, één aanspreekpunt',
+          },
+          {
+            without: 'Een offerte van drie regels en een eindbedrag',
+            with: 'Een offerte met regels die per blok laten zien waarvoor je betaalt',
+          },
+          {
+            without: 'Na livegang hoor je niets meer van het bureau',
+            with: 'Ook na de launch zijn de lijnen kort en blijven we meedenken',
+          },
+        ]}
+      />
+
+      {/* ============================================================
+           Mid-page advies-CTA.
+           ============================================================ */}
+      <CalvinNote
+        message="Niet zeker welke route bij je past, of je überhaupt een nieuwe site nodig hebt? Stuur me je huidige URL, dan kijk ik er een half uur naar en mail ik terug wat ik zou doen. Eerlijk en zonder dat je iets hoeft af te nemen."
+        ctaLabel="Stuur mij je URL ↗"
+        ctaHref="/contact?onderwerp=website-utrecht-advies"
+      />
+
+      {/* ============================================================
+           Branche-accordion — 10 Utrechtse MKB-segmenten. Klassen van
+           /website-laten-maken-zzp hergebruikt; alle items dicht-by-
+           default. SEO body verborgen achter clicks.
+           ============================================================ */}
+      <section class="zzp-segments">
+        <div class="zzp-segments-inner">
+          <div class="zzp-segments-head">
+            <EyebrowPill variant="rare">Voor wie we werken in Utrecht</EyebrowPill>
+            <h2 class="zzp-segments-title">
+              Welke ondernemers in Utrecht een <em>website laten maken?</em>
+            </h2>
+            <p class="zzp-segments-lead">
+              Een greep uit de branches waarvoor we de afgelopen jaren websites bouwden,
+              in en rond Utrecht. Klik op een branche voor de details.
+            </p>
+          </div>
+          <div class="zzp-segments-list">
+            {segments.map((s, i) => (
+              <details class="zzp-segment-item">
+                <summary>
+                  <span class="zzp-segment-num">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 class="zzp-segment-title">{s.title}</h3>
+                  <span class="zzp-segment-ico" aria-hidden="true">+</span>
+                </summary>
+                <div class="zzp-segment-body">
+                  <p>{s.body}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+           Lokale SEO — centered head bovenaan, eronder 2-koloms grid
+           met body links en case-image rechts. Hergebruikt het patroon
+           dat ook /maarssen draait.
+           ============================================================ */}
+      <section class="maarssen-localseo">
+        <div class="maarssen-localseo-inner">
+          <div class="maarssen-localseo-head">
+            <EyebrowPill variant="rare">In het Utrecht-pack staan</EyebrowPill>
+            <h2 class="maarssen-localseo-title">
+              Mensen zoeken op hun telefoon, <em>dichtbij.</em>
+            </h2>
+          </div>
+          <div class="maarssen-localseo-grid">
+            <div class="maarssen-localseo-text">
+              <p>
+                Mensen die "pilates Utrecht Oost" of "notaris in de buurt" intikken
+                zien bovenaan een blok met drie zaken op de kaart: het local pack. Daar
+                gaat het grootste deel van de klikken naartoe. De rest scrolt voorbij.
+              </p>
+              <p>
+                Daar binnen komen draait om je Google Business Profile, kloppende
+                bedrijfsgegevens en recente reviews. Wij bouwen die signalen voor je op
+                en houden ze in de gaten. Renovatie Totaal hebben we vanaf nul
+                opgebouwd tot meerdere top-3 posities op Utrechtse zoektermen, met 180
+                procent meer verkeer in de eerste maanden.
+              </p>
+              <ul class="maarssen-localseo-list">
+                <li>Volledig beheer van je Google Business Profile</li>
+                <li>NAP-consistentie en lokale citations op relevante directories</li>
+                <li>Review-flow met QR-kaartjes en automatische uitnodigingen</li>
+                <li>Maandrapportage met rankings en concurrent-bewegingen</li>
+              </ul>
+              <a class="btn-ghost maarssen-localseo-cta" href="/seo">
+                Lees meer over onze SEO-aanpak ↗
+              </a>
+            </div>
+            <div class="maarssen-localseo-media">
+              <Image
+                src={localseoImage}
+                alt="Renovatie Totaal, een Utrechtse case waarin lokale SEO 180 procent meer verkeer opleverde"
+                class="maarssen-localseo-img"
+                widths={[600, 900, 1200]}
+                sizes="(max-width: 1024px) 100vw, 540px"
+                loading="lazy"
+              />
+              <div class="maarssen-localseo-badge" aria-hidden="true">
+                <div class="maarssen-localseo-badge-stat">+180%</div>
+                <div class="maarssen-localseo-badge-label">verkeer · Renovatie Totaal</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <BetterCallCalvin
+        eyebrow="Tijd voor een eerste gesprek?"
+        titleLine1="Een website laten maken in"
+        titleAccent="Utrecht. Hoe nu verder?"
+        body={[
+          'Plan een korte kennismaking in. We lopen samen door wat je nu hebt en wat het moet gaan doen.',
+          'Je krijgt een eerste richting mee, een ruwe planning en een eerlijke inschatting van wat het ongeveer gaat kosten. Past het, dan maken we een offerte. Past het niet, dan hoor je dat ook gewoon.',
+        ]}
+        primaryLabel="Plan een kennismaking ↗"
+        primaryHref="/contact?onderwerp=website-laten-maken-utrecht"
+      />
+    </article>
+
+    <FAQ
+      eyebrow="Wat ondernemers ons vooraf vragen"
+      titleLine1="Een paar vragen die"
+      titleAccent="vaak terugkomen."
+      items={faqs}
+    />
+  </main>
+  <Footer />
+</BaseLayout>
