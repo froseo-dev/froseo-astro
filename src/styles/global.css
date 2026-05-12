@@ -7441,6 +7441,22 @@ main { display: contents; }
   align-items: flex-start;
   gap: 16px;
 }
+/* Rechter kolom: stacks card + button verticaal zodat de CTA direct
+   onder het preview-blokje zit (niet onder de body-tekst links). */
+.opfris-cross-right {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 18px;
+  justify-self: end;
+  max-width: 360px;
+  width: 100%;
+}
+.opfris-cross-right .btn-cross {
+  align-self: stretch;
+  justify-content: center;
+  margin-top: 0;
+}
 .opfris-cross-title {
   font-family: var(--font-display);
   font-size: clamp(30px, 4vw, 52px);
@@ -7494,51 +7510,43 @@ main { display: contents; }
   background: var(--color-white);
   border: var(--border);
   border-radius: var(--radius-xl);
-  padding: 28px 28px 32px;
+  padding: 26px 28px 28px;
   box-shadow: 8px 8px 0 var(--color-purple-deep);
   color: var(--text-primary);
-  position: relative;
-  max-width: 360px;
-  justify-self: end;
 }
-.opfris-cross-card-badge {
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--color-purple);
-  color: var(--color-white);
+.opfris-cross-card-eyebrow {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  padding: 5px 14px;
-  border-radius: var(--radius-full);
-  border: var(--border);
-  white-space: nowrap;
-}
-.opfris-cross-card-name {
-  font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  margin-top: 6px;
-  margin-bottom: 8px;
-  color: var(--text-primary);
+  color: var(--color-purple);
+  margin-bottom: 10px;
 }
 .opfris-cross-card-price {
   display: flex;
-  align-items: flex-start;
-  gap: 2px;
+  align-items: baseline;
+  gap: 6px;
   font-family: var(--font-display);
   margin-bottom: 18px;
   color: var(--color-teal);
+  line-height: 1;
+}
+.opfris-cross-card-prefix {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.6;
+  align-self: center;
+  margin-right: 2px;
 }
 .opfris-cross-card-currency {
   font-size: 22px;
   font-weight: 900;
-  margin-top: 12px;
+  align-self: flex-start;
+  margin-top: 10px;
 }
 .opfris-cross-card-amount {
   font-size: 56px;
@@ -7549,9 +7557,10 @@ main { display: contents; }
 .opfris-cross-card-period {
   font-size: 16px;
   font-weight: 600;
-  margin-top: 30px;
   color: var(--text-primary);
   opacity: 0.7;
+  align-self: flex-end;
+  margin-bottom: 4px;
 }
 .opfris-cross-card-list {
   list-style: none;
@@ -7578,7 +7587,7 @@ main { display: contents; }
 }
 @media (max-width: 900px) {
   .opfris-cross-inner { grid-template-columns: 1fr; gap: 40px; }
-  .opfris-cross-card { justify-self: start; max-width: 360px; width: 100%; }
+  .opfris-cross-right { justify-self: start; }
 }
 @media (max-width: 640px) {
   .opfris-cross { padding: 64px var(--gutter-mobile); }
