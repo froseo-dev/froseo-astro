@@ -2960,7 +2960,12 @@ main { display: contents; }
   .hero-wrap { padding: 28px var(--gutter-mobile) 72px; }
   .hero-title { font-size: clamp(44px, 9.5vw, 72px); }
   .hero-bullets li { font-size: 16px; }
-  /* Eyebrow op mobile: kleinere font + tracking zodat 1 regel past op iPhone (375px+). */
+  /* Eyebrow op mobile: kleinere font + tracking zodat 1 regel past op iPhone (375px+).
+     Kleinere shadow (2px ipv 4px) zodat een pill die `max-width: 100%` wordt niet
+     via z'n shadow over de viewport-padding uitsteekt en links/rechts asymmetrisch
+     gaat ogen. */
+  .hero-left .eyebrow-pill,
+  .service-hero-text .eyebrow-pill { box-shadow: 2px 2px 0 var(--line-color); }
   .hero-left .eyebrow-pill { font-size: 10px; letter-spacing: 0.06em; padding: 6px 12px; }
   /* Mockup mobile: nog iets kleiner met buffer onder. */
   .hero-mockup { width: 96%; max-width: 96%; margin-bottom: 16px; }
