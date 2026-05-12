@@ -7230,12 +7230,12 @@ main { display: contents; }
   .opfris-ba-head { margin-bottom: 28px; }
 }
 
-/* --- USP-grid (4 cards) — zelfde aanpak als ZZP-pagina USPs --- */
+/* --- USP-grid (4 cards) — zelfde aanpak als ZZP-pagina USPs.
+   Bewust geen aparte achtergrond + harde borders: de teal-shadow op
+   de cards is al genoeg visueel onderscheid. Naadloos in de page-bg
+   met cream + grid-decoratie voorkomt een rommelige "break". --- */
 .opfris-usps {
   padding: 56px var(--gutter) 72px;
-  background: var(--surface-page-soft);
-  border-top: var(--border);
-  border-bottom: var(--border);
 }
 .opfris-usps-inner {
   max-width: var(--container-max);
