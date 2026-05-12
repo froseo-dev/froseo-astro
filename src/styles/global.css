@@ -7410,57 +7410,179 @@ main { display: contents; }
   .opfris-modules-watermark { width: 90vw; }
 }
 
-/* --- Persoonlijke-aanpak sectie op teal bg (groen ritme) --- */
-.opfris-aanpak {
-  padding: 80px var(--gutter);
+/* --- BeforeAfter CTA-rij onderaan de slider --- */
+.opfris-ba-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+/* --- Cross-sell naar onderhoudspakketten — teal bg, 2-koloms met
+   sneak-pakketten-card rechts. Purple pill + button voor contrast,
+   sterk visueel ritme tegen de teal bg. --- */
+.opfris-cross {
+  padding: 96px var(--gutter);
   background-color: var(--color-teal);
   color: var(--color-white);
   border-top: var(--border);
   border-bottom: var(--border);
 }
-.opfris-aanpak-inner {
-  max-width: 760px;
+.opfris-cross-inner {
+  max-width: var(--container-max);
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+.opfris-cross-text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
 }
-.opfris-aanpak-title {
+.opfris-cross-title {
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.8vw, 48px);
+  font-size: clamp(30px, 4vw, 52px);
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: -0.02em;
   color: var(--color-white);
   margin: 4px 0 6px;
 }
-.opfris-aanpak-title em {
+.opfris-cross-title em {
   font-style: normal;
-  /* Geel als contrast op teal — past in het palet, leesbaar en niet
-     pink (anders past het minder bij brand-teal). */
+  /* Geel als contrast-accent op teal. Past in palet, hoog leesbaar. */
   color: var(--accent-highlight);
 }
-.opfris-aanpak-body {
+.opfris-cross-body {
   font-size: 17px;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.92);
   margin: 0;
-  max-width: 60ch;
+  max-width: 56ch;
 }
-.opfris-aanpak-cta {
-  /* Wit met donkere tekst — sterkste contrast op teal en past bij
-     onze "primary action"-look. */
+/* Cross-sell CTA: purple bg + white text. Onafhankelijk van --action-bg
+   omdat we hier bewust de zware tegen-kleur willen op teal. */
+.btn-cross {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background: var(--color-purple);
+  color: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-action);
+  box-shadow: 6px 6px 0 var(--color-purple-deep);
+  transition: all var(--transition-fast);
   margin-top: 16px;
+}
+.btn-cross:hover {
+  background: var(--color-purple-strong);
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 var(--color-purple-deep);
+}
+
+/* Sneak-pakketten-card — een mini-versie van de Standard Care
+   pricing-card uit /website-onderhoud. Decoratief (aria-hidden) maar
+   geeft direct visueel houvast aan het cross-sell-aanbod. */
+.opfris-cross-card {
   background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px 28px 32px;
+  box-shadow: 8px 8px 0 var(--color-purple-deep);
+  color: var(--text-primary);
+  position: relative;
+  max-width: 360px;
+  justify-self: end;
+}
+.opfris-cross-card-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-purple);
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  border: var(--border);
+  white-space: nowrap;
+}
+.opfris-cross-card-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-top: 6px;
+  margin-bottom: 8px;
   color: var(--text-primary);
 }
-.opfris-aanpak-cta:hover {
-  background: var(--color-white);
+.opfris-cross-card-price {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  font-family: var(--font-display);
+  margin-bottom: 18px;
+  color: var(--color-teal);
+}
+.opfris-cross-card-currency {
+  font-size: 22px;
+  font-weight: 900;
+  margin-top: 12px;
+}
+.opfris-cross-card-amount {
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.opfris-cross-card-period {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 30px;
   color: var(--text-primary);
+  opacity: 0.7;
+}
+.opfris-cross-card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.opfris-cross-card-list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+.opfris-cross-card-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-teal);
+  font-weight: 900;
+}
+@media (max-width: 900px) {
+  .opfris-cross-inner { grid-template-columns: 1fr; gap: 40px; }
+  .opfris-cross-card { justify-self: start; max-width: 360px; width: 100%; }
 }
 @media (max-width: 640px) {
-  .opfris-aanpak { padding: 56px var(--gutter-mobile); }
+  .opfris-cross { padding: 64px var(--gutter-mobile); }
+  .opfris-cross-card { padding: 24px 22px 26px; }
 }
 
 /* --- Waarom-blok (cream bg, klassiek text-blok) --- */

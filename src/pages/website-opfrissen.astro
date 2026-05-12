@@ -63,7 +63,7 @@ const showcaseCases = showcaseSlugs
 
 const pageTitle = 'Website opfrissen — sneller, veiliger en weer fris | Froseo';
 const pageDesc =
-  'Niet meteen alles opnieuw bouwen, maar wel een veiligere, snellere en frissere website. Een opfris-traject vanaf €299, modulair op te bouwen.';
+  'Niet meteen alles opnieuw bouwen, maar wel een veiligere, snellere en frissere website. Een opfris-traject vanaf €399, modulair op te bouwen.';
 
 /* 4 USP-cards met SectionIcon-namen. Volgorde komt overeen met de
    modulaire route eronder ("Klein beginnen of alles aanpakken?"). */
@@ -118,7 +118,7 @@ const faqs = [
   },
   {
     q: 'Wat kost een opfris-traject precies?',
-    a: 'Een basis-opfris start vanaf €299 voor een gerichte ronde op één onderdeel (bijvoorbeeld snelheid of veiligheid). Daarboven bouwen we modulair: jij beslist of we alleen het meest urgente aanpakken of alles in één keer. Tijdens een gratis adviesgesprek geven we een heldere offerte vooraf, op basis van wat we onder de motorkap aantreffen.',
+    a: 'Een basis-opfris start vanaf €399 voor een gerichte ronde op één onderdeel (bijvoorbeeld snelheid of veiligheid). Daarboven bouwen we modulair: jij beslist of we alleen het meest urgente aanpakken of alles in één keer. Tijdens een gratis adviesgesprek geven we een heldere offerte vooraf, op basis van wat we onder de motorkap aantreffen.',
   },
   {
     q: 'Werken jullie alleen met WordPress-sites?',
@@ -156,7 +156,7 @@ const faqs = [
       <section class="service-hero has-image">
         <div class="service-hero-inner">
           <div class="service-hero-text">
-            <EyebrowPill>Vanaf €299</EyebrowPill>
+            <EyebrowPill>Vanaf €399</EyebrowPill>
             <h1 class="service-hero-title">
               Website <em>opfrissen.</em>
             </h1>
@@ -222,6 +222,9 @@ const faqs = [
             beforeAlt="Studio Contenido — website voor de opfrisbeurt"
             afterAlt="Studio Contenido — website na de opfrisbeurt"
           />
+          <div class="opfris-ba-cta">
+            <a class="btn-ghost" href="/projecten">Bekijk meer projecten ↗</a>
+          </div>
         </div>
       </section>
 
@@ -303,27 +306,45 @@ const faqs = [
       </section>
 
       <!-- ============================================================
-           Persoonlijke-aanpak sectie — teal achtergrond voor visueel
-           ritme (Calvin wilde ook eens een groene sectie zien). Korte
-           propositie over modulair werken, betalen voor wat je nodig
-           hebt, geen verplichtingen.
+           Cross-sell naar onderhoudspakketten — vervangt het eerdere
+           "persoonlijke aanpak" blok dat te veel dubbel met de modules
+           erboven. Teal-bg met purple pill+knop, 2-koloms met sneak-
+           preview van de Basic Care card rechts. Brengt natuurlijke
+           internal link naar /website-onderhoud.
            ============================================================ -->
-      <section class="opfris-aanpak">
-        <div class="opfris-aanpak-inner">
-          <EyebrowPill variant="light">Persoonlijke aanpak</EyebrowPill>
-          <h2 class="opfris-aanpak-title">
-            Betaal alleen voor wat je <em>echt nodig hebt.</em>
-          </h2>
-          <p class="opfris-aanpak-body">
-            We geloven niet in standaard-pakketten waar je dingen in betaalt die je
-            site niet eens nodig heeft. Tijdens de intake kijken we wat het meest
-            urgent is, wat kan wachten en wat je überhaupt niet hoeft te doen.
-            Daarna pakken we alleen die modules op die het verschil maken voor jouw
-            site, jouw bezoekers en jouw doelen.
-          </p>
-          <a class="btn-primary opfris-aanpak-cta" href="/contact?onderwerp=website-opfrissen">
-            Vraag een opfris-analyse aan ↗
-          </a>
+      <section class="opfris-cross">
+        <div class="opfris-cross-inner">
+          <div class="opfris-cross-text">
+            <EyebrowPill variant="primary">Na de opfris</EyebrowPill>
+            <h2 class="opfris-cross-title">
+              Wil je dat je site <em>netjes blijft staan?</em>
+            </h2>
+            <p class="opfris-cross-body">
+              Een opfris-ronde brengt je site terug in topvorm. Maar WordPress, plug-ins
+              en thema's blijven daarna ook bewegen. Wil je je site doorlopend in goede
+              handen houden? Dan kan je 'm bij ons in onderhoud nemen voor een vast
+              maandbedrag. Drie pakketten waaruit je kiest: van basis-updates tot
+              volledig ontzorgd inclusief premium plug-in-licenties.
+            </p>
+            <a class="btn-cross opfris-cross-cta" href="/website-onderhoud">
+              Bekijk onderhoudspakketten ↗
+            </a>
+          </div>
+          <div class="opfris-cross-card" aria-hidden="true">
+            <div class="opfris-cross-card-badge">Meest gekozen</div>
+            <div class="opfris-cross-card-name">Standard Care</div>
+            <div class="opfris-cross-card-price">
+              <span class="opfris-cross-card-currency">€</span>
+              <span class="opfris-cross-card-amount">36</span>
+              <span class="opfris-cross-card-period">/m</span>
+            </div>
+            <ul class="opfris-cross-card-list">
+              <li>Wekelijkse updates met restore-point</li>
+              <li>Dagelijkse backups en security-scans</li>
+              <li>Premium plug-in-licenties t.w.v. €350+/jaar</li>
+              <li>30 min reparaties per maand inbegrepen</li>
+            </ul>
+          </div>
         </div>
       </section>
 
