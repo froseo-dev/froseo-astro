@@ -7051,3 +7051,397 @@ main { display: contents; }
   .zzp-vakman-cta-inner { padding: 28px 22px; }
 }
 
+/* ============================================================
+   === BEFORE / AFTER SLIDER ===================================
+   Twee afbeeldingen gestapeld; bovenste wordt geclipt op basis
+   van --ba-pos (gestuurd door het range-input via JS).
+   Herbruikbaar component, scoped op data-before-after.
+   ============================================================ */
+
+.before-after {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--ba-aspect, 16 / 9);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 8px 8px 0 var(--color-teal);
+  background: var(--surface-page-deep);
+  /* Standaard cursor — wijzigt nooit naar text-cursor op de input. */
+  cursor: ew-resize;
+  user-select: none;
+}
+.before-after-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.before-after-clip {
+  position: absolute;
+  inset: 0;
+  /* Toon "voor"-afbeelding van 0 tot ba-pos%; rest is "na" eronder. */
+  clip-path: inset(0 calc(100% - var(--ba-pos, 50%)) 0 0);
+  -webkit-clip-path: inset(0 calc(100% - var(--ba-pos, 50%)) 0 0);
+}
+.before-after-label {
+  position: absolute;
+  top: 14px;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  pointer-events: none;
+  z-index: 3;
+}
+.before-after-label.is-before { left: 14px; }
+.before-after-label.is-after  { right: 14px; }
+
+/* Verticale lijn + ronde grip die de scheiding markeert. Niet
+   focuseerbaar/klikbaar zelf: de echte interactie zit op het
+   range-input dat onzichtbaar overheen ligt. */
+.before-after-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--ba-pos, 50%);
+  width: 3px;
+  background: #fff;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+.before-after-handle-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2.5px solid var(--text-primary);
+  box-shadow: 4px 4px 0 var(--color-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* Range-input ligt onzichtbaar over de hele container. Bedient
+   --ba-pos via het JS-script in BeforeAfter.astro. Toetsenbord-
+   toegankelijk: focus-ring blijft zichtbaar op de handle-grip. */
+.before-after-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: ew-resize;
+  z-index: 4;
+  opacity: 0;
+}
+.before-after-input:focus-visible + .before-after-handle .before-after-handle-grip {
+  outline: 3px solid var(--accent-rare);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .before-after { box-shadow: 5px 5px 0 var(--color-teal); }
+  .before-after-handle-grip {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+    box-shadow: 3px 3px 0 var(--color-teal);
+  }
+  .before-after-label { font-size: 10px; padding: 5px 10px; top: 10px; }
+  .before-after-label.is-before { left: 10px; }
+  .before-after-label.is-after  { right: 10px; }
+}
+
+/* ============================================================
+   === OPFRIS-PAGINA (src/pages/website-opfrissen.astro) =======
+   Section-styling voor BeforeAfter-wrap, USP-grid, modules op
+   donker en de waarom-body.
+   ============================================================ */
+
+.opfris-page {
+  background: var(--surface-page);
+  background-image: var(--bg-decoration-light);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+}
+
+/* --- BeforeAfter sectie-wrap --- */
+.opfris-ba {
+  padding: 64px var(--gutter) 80px;
+}
+.opfris-ba-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.opfris-ba-head {
+  max-width: 720px;
+  margin: 0 auto 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.opfris-ba-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.opfris-ba-title em { font-style: normal; color: var(--color-teal); }
+.opfris-ba-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.85;
+  max-width: 56ch;
+  margin: 0;
+}
+@media (max-width: 640px) {
+  .opfris-ba { padding: 48px var(--gutter-mobile) 56px; }
+  .opfris-ba-head { margin-bottom: 28px; }
+}
+
+/* --- USP-grid (4 cards) — zelfde aanpak als ZZP-pagina USPs --- */
+.opfris-usps {
+  padding: 56px var(--gutter) 72px;
+  background: var(--surface-page-soft);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.opfris-usps-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.opfris-usps-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+.opfris-usps-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.opfris-usps-title em { font-style: normal; color: var(--color-teal); }
+.opfris-usps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.opfris-usp-card {
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 22px;
+  box-shadow: 5px 5px 0 var(--color-teal);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.opfris-usp-icon {
+  color: var(--color-teal);
+  margin-bottom: 4px;
+}
+.opfris-usp-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.opfris-usp-body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.78;
+  margin: 0;
+}
+@media (max-width: 1024px) {
+  .opfris-usps-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .opfris-usps { padding: 40px var(--gutter-mobile) 56px; }
+  .opfris-usps-grid { grid-template-columns: 1fr; }
+}
+
+/* --- Modules-sectie op donkere bg met FROSEO-watermark --- */
+.opfris-modules {
+  position: relative;
+  overflow: hidden;
+  padding: 96px var(--gutter);
+  background-color: var(--surface-dark);
+  background-image: var(--bg-decoration-dark);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+  color: var(--text-on-dark);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.opfris-modules-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(180px, 32vw, 480px);
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+  color: var(--color-white);
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  white-space: nowrap;
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+.opfris-modules-watermark-dot { color: var(--accent-rare); opacity: 1; }
+.opfris-modules-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.opfris-modules-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 48px;
+}
+.opfris-modules-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.8vw, 52px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-on-dark);
+}
+.opfris-modules-title em {
+  font-style: normal;
+  color: var(--accent-highlight);
+}
+.opfris-modules-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 60ch;
+  margin: 0;
+}
+.opfris-modules-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.opfris-module-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-lg);
+  padding: 28px 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.opfris-module-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  color: var(--accent-highlight);
+  margin-bottom: 4px;
+}
+.opfris-module-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-on-dark);
+}
+.opfris-module-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+@media (max-width: 720px) {
+  .opfris-modules { padding: 64px var(--gutter-mobile); }
+  .opfris-modules-grid { grid-template-columns: 1fr; }
+  .opfris-modules-watermark { font-size: clamp(140px, 38vw, 240px); }
+}
+
+/* --- Waarom-blok (cream bg, klassiek text-blok) --- */
+.opfris-waarom {
+  padding: 80px var(--gutter);
+}
+.opfris-waarom-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.opfris-waarom-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 6px 0 8px;
+  color: var(--text-primary);
+}
+.opfris-waarom-title em { font-style: normal; color: var(--color-teal); }
+.opfris-waarom p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  margin: 0;
+}
+.opfris-waarom-cta { align-self: flex-start; margin-top: 12px; }
+@media (max-width: 640px) {
+  .opfris-waarom { padding: 56px var(--gutter-mobile); }
+}
+

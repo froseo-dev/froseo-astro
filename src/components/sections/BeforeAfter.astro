@@ -1,0 +1,126 @@
+---
+/**
+ * Interactieve before/after-slider. Sleep de handle (of klik/tik) om
+ * de verhouding tussen de twee afbeeldingen te verschuiven.
+ *
+ * Gebruik:
+ *   <BeforeAfter
+ *     before={beforeImg}
+ *     after={afterImg}
+ *     beforeAlt="Studio Contenido — oude website"
+ *     afterAlt="Studio Contenido — nieuwe website"
+ *   />
+ *
+ * Component is bewust herbruikbaar: één definitie, meerdere instanties
+ * per pagina kan ook (data-attribute scoped JS). Aspect-ratio is 16:9
+ * default; override via `aspect`-prop wanneer een specifieke verhouding
+ * nodig is.
+ */
+
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  before: ImageMetadata;
+  after: ImageMetadata;
+  beforeAlt: string;
+  afterAlt: string;
+  /** Tekstlabel linksboven op de "voor"-helft. */
+  beforeLabel?: string;
+  /** Tekstlabel rechtsboven op de "na"-helft. */
+  afterLabel?: string;
+  /** CSS aspect-ratio (bv. "16 / 9", "4 / 3"). Default 16:9. */
+  aspect?: string;
+  /** Initiële handle-positie als percentage (0-100). Default 50. */
+  initialPosition?: number;
+}
+
+const {
+  before,
+  after,
+  beforeAlt,
+  afterAlt,
+  beforeLabel = 'Voor',
+  afterLabel = 'Na',
+  aspect = '16 / 9',
+  initialPosition = 50,
+} = Astro.props;
+---
+
+<div
+  class="before-after"
+  data-before-after
+  style={`--ba-aspect: ${aspect}; --ba-pos: ${initialPosition}%`}
+>
+  {/* "After" is de onderlaag (helemaal zichtbaar); "before" wordt
+       als bovenlaag geclipt via de handle-positie. */}
+  <Image
+    src={after}
+    alt={afterAlt}
+    class="before-after-img"
+    widths={[640, 960, 1280, 1600]}
+    sizes="(max-width: 1024px) 100vw, 960px"
+    loading="lazy"
+  />
+  <div class="before-after-clip">
+    <Image
+      src={before}
+      alt={beforeAlt}
+      class="before-after-img"
+      widths={[640, 960, 1280, 1600]}
+      sizes="(max-width: 1024px) 100vw, 960px"
+      loading="lazy"
+    />
+  </div>
+  <span class="before-after-label is-before">{beforeLabel}</span>
+  <span class="before-after-label is-after">{afterLabel}</span>
+
+  {/* Slider-input is visueel verborgen maar bedient de positie; de
+       handle-grip rendert puur als CSS-laag. Toetsenbord-toegankelijk
+       via de input. */}
+  <input
+    class="before-after-input"
+    type="range"
+    min="0"
+    max="100"
+    value={initialPosition}
+    step="0.1"
+    aria-label="Sleep om de voor- en na-afbeeldingen te vergelijken"
+    data-before-after-input
+  />
+  <div class="before-after-handle" aria-hidden="true">
+    <div class="before-after-handle-grip">
+      <span>‹</span>
+      <span>›</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* Eén handler werkt voor alle .before-after instanties op de pagina.
+     Sync de --ba-pos CSS custom property met de slider-value. Werkt voor
+     drag (range-input), touch en muis-klik. */
+  const containers = document.querySelectorAll<HTMLElement>('[data-before-after]');
+  containers.forEach((container) => {
+    const input = container.querySelector<HTMLInputElement>('[data-before-after-input]');
+    if (!input) return;
+
+    function update(value: string) {
+      container.style.setProperty('--ba-pos', `${value}%`);
+    }
+
+    input.addEventListener('input', () => update(input.value));
+
+    /* Klikken/tikken ergens in de container verplaatst de handle
+       naar die positie — voelt natuurlijker dan alleen de dunne lijn
+       kunnen pakken. */
+    container.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target === input || target.closest('.before-after-input')) return;
+      const rect = container.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      input.value = String(pct);
+      update(String(pct));
+    });
+  });
+</script>

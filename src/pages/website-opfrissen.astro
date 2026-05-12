@@ -1,0 +1,332 @@
+---
+/**
+ * SEO-landingspagina /website-opfrissen.
+ *
+ * Doel: keyword-pagina voor "website opfrissen" — bezoekers die geen
+ * volledige rebuild willen, maar wel snelheid/security/design upgrade.
+ * Niet gelinkt vanuit hoofdmenu; bestaat puur voor SEO + leads.
+ *
+ * Structuur:
+ *   - Hero (h1 = "Website opfrissen.")
+ *   - LogosTicker
+ *   - Intro + interactieve BeforeAfter-slider (Studio Contenido) → hoog
+ *     op de pagina zoals Calvin wilde
+ *   - 4 USP-cards (Veiligheid / Snelheid / Design / Google Proof)
+ *   - LogoBreak naar dark
+ *   - "Klein beginnen of alles aanpakken?" 4-modules section (purple-deep)
+ *   - LogoBreak terug naar light
+ *   - Waarom-blok body-tekst
+ *   - Mid CalvinNote (advies-CTA)
+ *   - FAQ (herschreven naar Froseo-stijl)
+ *   - BetterCallCalvin
+ *
+ * Achtergrond-ritme: cream → cream → cream → cream → divider → dark →
+ * divider → cream → cream → cream → close-cta. De ene dark-sectie geeft
+ * visuele afwisseling zonder dat de pagina te druk wordt.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import SectionIcon from '@components/ui/SectionIcon.astro';
+import LogosTicker from '@components/sections/LogosTicker.astro';
+import LogoBreak from '@components/sections/LogoBreak.astro';
+import BeforeAfter from '@components/sections/BeforeAfter.astro';
+import CalvinNote from '@components/sections/CalvinNote.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import { Image } from 'astro:assets';
+import { review } from '@data/site-config';
+import heroMockup from '@assets/hero/froseo-mockup.webp';
+import studioContenidoBefore from '@assets/before-after/studio-contenido-before.webp';
+import studioContenidoAfter from '@assets/before-after/studio-contenido-after.webp';
+
+const pageTitle = 'Website opfrissen — sneller, veiliger en weer fris | Froseo';
+const pageDesc =
+  'Niet meteen alles opnieuw bouwen, maar wel een veiligere, snellere en frissere website. Een opfris-traject vanaf €299, modulair op te bouwen.';
+
+/* 4 USP-cards met SectionIcon-namen. Volgorde komt overeen met de
+   modulaire route eronder ("Klein beginnen of alles aanpakken?"). */
+const usps = [
+  {
+    icon: 'shieldCheck',
+    title: 'Veiligheid op orde',
+    body: 'WordPress core, plug-ins en thema\'s up-to-date, hardening doorlopen en een backup-routine waar je op kunt rekenen.',
+  },
+  {
+    icon: 'chartDown',
+    title: 'Snelheid omhoog',
+    body: 'Een opfris-ronde op caching, images en database brengt je laadtijd én Core Web Vitals weer waar Google ze wil hebben.',
+  },
+  {
+    icon: 'paletteSwatch',
+    title: 'Design opgefrist',
+    body: 'Typografie, kleurgebruik en mobiele uitlijning bijgewerkt zodat je site er niet vijf jaar oud uitziet, zonder volledige rebuild.',
+  },
+  {
+    icon: 'autopilot',
+    title: 'Google Proof',
+    body: 'Technische SEO-basis bijgewerkt: schema, interne links, sitemap, meta-data en mobiele scores. Een vindbare site is een onderhouden site.',
+  },
+];
+
+/* Vier modules van de "Klein beginnen of alles aanpakken?"-sectie.
+   Elk een kort stuk dat het modulaire karakter ondersteunt. */
+const modules = [
+  {
+    title: 'Supersnel maken',
+    body: 'Caching aanzetten of finetunen, afbeeldingen comprimeren naar WebP, lazy-loading, database opschonen en plug-ins doorlichten op wat zwaarder is dan het oplevert.',
+  },
+  {
+    title: 'Veiligheid op orde',
+    body: 'WordPress core, plug-ins en thema\'s naar de laatste stabiele versie, login-protection aanzetten, file-permissies juist en backups die we ook getest hebben.',
+  },
+  {
+    title: 'Design verbeteren',
+    body: 'Geen volledige rebrand, wel verfrissing waar het telt: typografie, knoppen, mobiele uitlijning, witruimte en de visuele consistentie tussen pagina\'s.',
+  },
+  {
+    title: 'Content optimaliseren',
+    body: 'Teksten scanbaarder maken, koppen scherper, CTA\'s op de juiste plek en SEO-basis op orde (titels, meta-data, structured data, interne links).',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Wanneer is een opfris-ronde slimmer dan een nieuwe website?',
+    a: 'Als de basis van je site nog goed staat (techniek, structuur, merk) maar het op delen pijnlijk verouderd voelt. Te traag, niet meer mobielvriendelijk, slechte SEO-scores of een design dat duidelijk uit een ander tijdperk komt. Dan is opfrissen vaak een fractie van de kosten en de tijd van helemaal opnieuw beginnen. Twijfel je? Stuur ons je site, we kijken eerlijk mee of opfrissen genoeg is of dat een rebuild logischer is.',
+  },
+  {
+    q: 'Wat kost een opfris-traject precies?',
+    a: 'Een basis-opfris start vanaf €299 voor een gerichte ronde op één onderdeel (bijvoorbeeld snelheid of veiligheid). Daarboven bouwen we modulair: jij beslist of we alleen het meest urgente aanpakken of alles in één keer. Tijdens een gratis adviesgesprek geven we een heldere offerte vooraf, op basis van wat we onder de motorkap aantreffen.',
+  },
+  {
+    q: 'Werken jullie alleen met WordPress-sites?',
+    a: 'Voor opfris-trajecten ja, WordPress is ons specialisme en daar halen we de meeste winst. Andere platforms (Drupal, Webflow, Wix) doen we incidenteel op uurbasis voor losse opdrachten, maar de modulaire opfris-route is specifiek voor WordPress ingericht.',
+  },
+  {
+    q: 'Hoe lang duurt een gemiddelde opfris-ronde?',
+    a: 'Een gerichte module (snelheid, veiligheid, of design-refresh) is meestal binnen één of twee weken klaar. Een volledige ronde over alle vier de onderdelen is gemiddeld drie tot vier weken werk. We doen dit zonder dat je site langer dan strikt nodig uit de lucht hoeft.',
+  },
+  {
+    q: 'Verlies ik mijn Google-rankings als jullie aan mijn site werken?',
+    a: 'Nee, dat is juist een van de redenen waarom we modulair werken: we vervangen je structuur niet, we verbeteren wat er staat. Bij wijzigingen die SEO raken (URL-structuur, content, redirects) stellen we vooraf een migratieplan op zodat rankings behouden blijven. Bij Renovatie Totaal en andere klanten hebben we hier ervaring mee.',
+  },
+  {
+    q: 'Doen jullie ook onderhoud nadat de opfrisbeurt klaar is?',
+    a: 'Ja, en dat raden we vaak ook aan. Een opfris-ronde is eenmalig; doorlopend onderhoud houdt je site daarna up-to-date en veilig. Daar hebben we vaste maandelijkse pakketten voor (Basic Care, Standard Care, Pro Care) inclusief premium plug-in-licenties.',
+  },
+  {
+    q: 'Kunnen jullie ook helpen als ik geen idee heb waar te beginnen?',
+    a: 'Ja. Stuur ons gewoon je site of geef toegang, dan kijken we onder de motorkap en geven we een eerlijke take: waar zit de meeste winst, welke modules zijn urgent en welke kunnen wachten. Geen verkooppraat, gewoon een advieslijst die je ook zonder ons zou kunnen gebruiken.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="opfris-page">
+      <!-- ============================================================
+           Hero — keyword-h1 staat hier direct in de h1-tag omdat de
+           URL-slug en pagina-titel het primaire SEO-target dragen.
+           Geen deferred-h1-trick nodig zoals op /website-laten-maken-zzp.
+           ============================================================ -->
+      <section class="service-hero has-image">
+        <div class="service-hero-inner">
+          <div class="service-hero-text">
+            <EyebrowPill>Vanaf €299 · geen volledige rebuild</EyebrowPill>
+            <h1 class="service-hero-title">
+              Website <em>opfrissen.</em>
+            </h1>
+            <ul class="service-hero-checks">
+              <li>Snelheid en techniek weer waar Google ze wil hebben</li>
+              <li>Beveiliging en updates op orde, backups die werken</li>
+              <li>Design en content opgefrist zonder volledige rebuild</li>
+            </ul>
+            <div class="service-hero-actions">
+              <a class="btn-primary" href="/contact?onderwerp=website-opfrissen">
+                Vraag een opfris-analyse aan ↗
+              </a>
+            </div>
+            <div class="service-hero-reviews reviews-inline">
+              <div class="review-avatars">
+                <div class="review-avatar"></div>
+                <div class="review-avatar"></div>
+                <div class="review-avatar"></div>
+              </div>
+              <div class="stars">★★★★★</div>
+              <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
+            </div>
+          </div>
+
+          <div class="service-hero-media">
+            <Image
+              src={heroMockup}
+              alt="Voorbeeld website opfrissen door Froseo"
+              class="service-hero-img"
+              widths={[640, 960, 1280, 1600]}
+              sizes="(max-width: 1024px) 100vw, 640px"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+      </section>
+
+      <LogosTicker />
+
+      <!-- ============================================================
+           Interactieve before/after — Studio Contenido. Hoog op de
+           pagina want het is direct het sterkste visuele bewijs van
+           wat een opfris-ronde oplevert.
+           ============================================================ -->
+      <section class="opfris-ba">
+        <div class="opfris-ba-inner">
+          <div class="opfris-ba-head">
+            <EyebrowPill variant="rare">Voorbeeld uit de praktijk</EyebrowPill>
+            <h2 class="opfris-ba-title">
+              Van verouderd naar <em>fris.</em>
+            </h2>
+            <p class="opfris-ba-lead">
+              Studio Contenido had een site die werkte, maar visueel en technisch achterliep
+              op waar het merk inmiddels stond. Geen volledige rebuild, wel een gerichte
+              opfris-ronde op design, structuur en techniek. Sleep de handle om het
+              verschil te zien.
+            </p>
+          </div>
+          <BeforeAfter
+            before={studioContenidoBefore}
+            after={studioContenidoAfter}
+            beforeAlt="Studio Contenido — website voor de opfrisbeurt"
+            afterAlt="Studio Contenido — website na de opfrisbeurt"
+          />
+        </div>
+      </section>
+
+      <!-- ============================================================
+           4 USP-cards: Veiligheid / Snelheid / Design / Google Proof.
+           Met SVG-icons in teal (currentColor erft via .opfris-usp-icon).
+           ============================================================ -->
+      <section class="opfris-usps">
+        <div class="opfris-usps-inner">
+          <div class="opfris-usps-head">
+            <EyebrowPill>Wat krijg je er voor terug</EyebrowPill>
+            <h2 class="opfris-usps-title">
+              Vier dingen die we <em>direct</em> aanpakken.
+            </h2>
+          </div>
+          <div class="opfris-usps-grid">
+            {usps.map((u) => (
+              <article class="opfris-usp-card">
+                <SectionIcon name={u.icon} class="opfris-usp-icon" size={44} />
+                <h3 class="opfris-usp-title">{u.title}</h3>
+                <p class="opfris-usp-body">{u.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Visuele overgang naar de donkere sectie via de subtiele
+           FROSEO-watermark. Hoogteslokker maar zorgt voor rust + ritme. -->
+      <LogoBreak surface="light" />
+
+      <!-- ============================================================
+           "Klein beginnen of alles aanpakken?" — 4-modules section op
+           donkere achtergrond met FROSEO-watermark als sfeer-element.
+           ============================================================ -->
+      <section class="opfris-modules">
+        <div class="opfris-modules-watermark" aria-hidden="true">
+          FROSEO<span class="opfris-modules-watermark-dot">.</span>
+        </div>
+        <div class="opfris-modules-inner">
+          <div class="opfris-modules-head">
+            <EyebrowPill onDark>Modulair</EyebrowPill>
+            <h2 class="opfris-modules-title">
+              Klein beginnen of <em>alles aanpakken?</em>
+            </h2>
+            <p class="opfris-modules-lead">
+              Geen pakket dat we per se willen verkopen. Jij beslist welke onderdelen
+              we oppakken: alles tegelijk, of stap voor stap in je eigen tempo. We
+              starten altijd met een eerlijke audit zodat je vooraf weet waar de
+              meeste winst zit.
+            </p>
+          </div>
+          <div class="opfris-modules-grid">
+            {modules.map((m, i) => (
+              <article class="opfris-module-card">
+                <div class="opfris-module-num">{String(i + 1).padStart(2, '0')}</div>
+                <h3 class="opfris-module-title">{m.title}</h3>
+                <p class="opfris-module-body">{m.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <LogoBreak surface="light" />
+
+      <!-- ============================================================
+           Waarom-blok — body-tekst over veroudering, technische schuld
+           en bezoekersverwachtingen. Direct uit de huidige pagina,
+           lichtjes herschreven.
+           ============================================================ -->
+      <section class="opfris-waarom">
+        <div class="opfris-waarom-inner">
+          <EyebrowPill variant="rare">Waarom überhaupt opfrissen?</EyebrowPill>
+          <h2 class="opfris-waarom-title">
+            Een verouderde site <em>kost je geld.</em>
+          </h2>
+          <p>
+            De meeste websites zijn ooit goed opgeleverd, maar verouderen sneller dan
+            je denkt. WordPress, plug-ins en design-trends bewegen door. Bezoekers
+            verwachten elk jaar iets meer snelheid, mobiel gemak en betrouwbare
+            uitstraling. Google straft trage, onveilige of slecht mobiel werkende
+            sites zichtbaar af. En een vergeten plug-in is in deze tijd genoeg om
+            ineens onderdeel te zijn van een hack-statistiek.
+          </p>
+          <p>
+            Een opfris-ronde brengt je site terug naar het niveau van vandaag, zonder
+            dat je alles overhoop hoeft te halen. Voor veel ondernemers is dat de
+            meest logische volgende stap: behouden wat goed staat, vervangen wat
+            achterloopt. Wij doen het modulair, transparant en in je eigen tempo.
+          </p>
+          <a class="btn-ghost opfris-waarom-cta" href="/contact?onderwerp=website-opfrissen">
+            Plan een eerlijke check ↗
+          </a>
+        </div>
+      </section>
+
+      <!-- Mid-page Calvin-balk met advies-CTA. -->
+      <CalvinNote
+        message="Twijfel je of een opfrisbeurt voor jouw site genoeg is, of dat een complete rebuild verstandiger is? Stuur ons even toegang, dan kijken we onder de motorkap en geven we eerlijk advies."
+        ctaLabel="Vraag advies aan ↗"
+        ctaHref="/contact?onderwerp=website-opfrissen-advies"
+      />
+
+      <BetterCallCalvin
+        eyebrow="Aan de slag?"
+        titleLine1="Tijd voor een"
+        titleAccent="opfrisbeurt."
+        body={[
+          'Een mailtje, een WhatsApp of een gesprek van 30 minuten: jij bepaalt hoe laagdrempelig we beginnen.',
+          'We kijken vrijblijvend mee en geven eerlijk advies over wat zinnig is voor jouw site.',
+        ]}
+        primaryLabel="Plan een afspraak ↗"
+        primaryHref="/contact?onderwerp=website-opfrissen"
+      />
+    </article>
+
+    <FAQ
+      eyebrow="Veelgestelde vragen"
+      titleLine1="Vragen over"
+      titleAccent="opfrissen."
+      items={faqs}
+    />
+  </main>
+  <Footer />
+</BaseLayout>
