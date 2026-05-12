@@ -32,16 +32,34 @@ import Footer from '@components/layout/Footer.astro';
 import EyebrowPill from '@components/ui/EyebrowPill.astro';
 import SectionIcon from '@components/ui/SectionIcon.astro';
 import LogosTicker from '@components/sections/LogosTicker.astro';
-import LogoBreak from '@components/sections/LogoBreak.astro';
 import BeforeAfter from '@components/sections/BeforeAfter.astro';
 import CalvinNote from '@components/sections/CalvinNote.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
 import FAQ from '@components/sections/FAQ.astro';
+import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
 import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import { review } from '@data/site-config';
 import heroMockup from '@assets/hero/froseo-mockup.webp';
+import froseoLogoWit from '@assets/brand/froseo-logo-wit.webp';
 import studioContenidoBefore from '@assets/before-after/studio-contenido-before.webp';
 import studioContenidoAfter from '@assets/before-after/studio-contenido-after.webp';
+
+/* Cases — een aantal projecten die laten zien wat we al hebben
+   opgeleverd. Mix van opfris- en rebuild-projecten zodat het
+   visueel werkt. */
+const allCases = await getCollection('cases', ({ data }) => data.published !== false);
+const showcaseSlugs = [
+  'renovatie-totaal',
+  'rex-agency',
+  'club12',
+  'theo-mackaay',
+  'steunder',
+  'top-dakdekker',
+];
+const showcaseCases = showcaseSlugs
+  .map((slug) => allCases.find((c) => c.data.slug === slug))
+  .filter((c): c is NonNullable<typeof c> => Boolean(c));
 
 const pageTitle = 'Website opfrissen — sneller, veiliger en weer fris | Froseo';
 const pageDesc =
@@ -53,12 +71,12 @@ const usps = [
   {
     icon: 'shieldCheck',
     title: 'Veiligheid op orde',
-    body: 'WordPress core, plug-ins en thema\'s up-to-date, hardening doorlopen en een backup-routine waar je op kunt rekenen.',
+    body: 'WordPress core, plug-ins en thema\'s naar de laatste stabiele versie, hardening doorlopen en kwetsbaarheden dichtgezet.',
   },
   {
-    icon: 'chartDown',
+    icon: 'chartUp',
     title: 'Snelheid omhoog',
-    body: 'Een opfris-ronde op caching, images en database brengt je laadtijd én Core Web Vitals weer waar Google ze wil hebben.',
+    body: 'Een opfris-ronde op caching, afbeeldingen en database brengt je laadtijd én Core Web Vitals weer on point.',
   },
   {
     icon: 'paletteSwatch',
@@ -66,9 +84,9 @@ const usps = [
     body: 'Typografie, kleurgebruik en mobiele uitlijning bijgewerkt zodat je site er niet vijf jaar oud uitziet, zonder volledige rebuild.',
   },
   {
-    icon: 'autopilot',
+    icon: 'searchGlass',
     title: 'Google Proof',
-    body: 'Technische SEO-basis bijgewerkt: schema, interne links, sitemap, meta-data en mobiele scores. Een vindbare site is een onderhouden site.',
+    body: 'Technische SEO-basis bijgewerkt: schema, interne links, sitemap, meta-data en mobiele scores. Een vindbare site is een goed onderhouden site.',
   },
 ];
 
@@ -81,7 +99,7 @@ const modules = [
   },
   {
     title: 'Veiligheid op orde',
-    body: 'WordPress core, plug-ins en thema\'s naar de laatste stabiele versie, login-protection aanzetten, file-permissies juist en backups die we ook getest hebben.',
+    body: 'WordPress core, plug-ins en thema\'s naar de laatste stabiele versie, login-protection aanzetten, file-permissies juist en bekende kwetsbaarheden dichtgezet.',
   },
   {
     title: 'Design verbeteren',
@@ -138,13 +156,13 @@ const faqs = [
       <section class="service-hero has-image">
         <div class="service-hero-inner">
           <div class="service-hero-text">
-            <EyebrowPill>Vanaf €299 · geen volledige rebuild</EyebrowPill>
+            <EyebrowPill>Vanaf €299</EyebrowPill>
             <h1 class="service-hero-title">
               Website <em>opfrissen.</em>
             </h1>
             <ul class="service-hero-checks">
-              <li>Snelheid en techniek weer waar Google ze wil hebben</li>
-              <li>Beveiliging en updates op orde, backups die werken</li>
+              <li>Snelheid en techniek weer on point</li>
+              <li>Beveiliging en updates op orde, kwetsbaarheden dicht</li>
               <li>Design en content opgefrist zonder volledige rebuild</li>
             </ul>
             <div class="service-hero-actions">
@@ -187,7 +205,7 @@ const faqs = [
       <section class="opfris-ba">
         <div class="opfris-ba-inner">
           <div class="opfris-ba-head">
-            <EyebrowPill variant="rare">Voorbeeld uit de praktijk</EyebrowPill>
+            <EyebrowPill variant="rare">Voor en na</EyebrowPill>
             <h2 class="opfris-ba-title">
               Van verouderd naar <em>fris.</em>
             </h2>
@@ -231,18 +249,34 @@ const faqs = [
         </div>
       </section>
 
-      <!-- Visuele overgang naar de donkere sectie via de subtiele
-           FROSEO-watermark. Hoogteslokker maar zorgt voor rust + ritme. -->
-      <LogoBreak surface="light" />
+      <!-- ============================================================
+           Mid-page Calvin-balk met advies-CTA. Bewust hoger op de
+           pagina (direct na de 4 USP-cards) zodat de bezoeker na het
+           "wat" meteen een laagdrempelige actie kan ondernemen, in
+           plaats van pas onderaan naast de close-CTA.
+           ============================================================ -->
+      <CalvinNote
+        message="Twijfel je of een opfrisbeurt voor jouw site genoeg is, of dat een complete rebuild verstandiger is? Stuur ons even toegang, dan kijken we onder de motorkap en geven we eerlijk advies."
+        ctaLabel="Vraag advies aan ↗"
+        ctaHref="/contact?onderwerp=website-opfrissen-advies"
+      />
 
       <!-- ============================================================
            "Klein beginnen of alles aanpakken?" — 4-modules section op
-           donkere achtergrond met FROSEO-watermark als sfeer-element.
+           donkere achtergrond met de échte Froseo-image-logo als
+           sfeer-watermark (i.p.v. tekst). Geen LogoBreak-dividers
+           eromheen — de section-borders dragen de visuele scheiding.
            ============================================================ -->
       <section class="opfris-modules">
-        <div class="opfris-modules-watermark" aria-hidden="true">
-          FROSEO<span class="opfris-modules-watermark-dot">.</span>
-        </div>
+        <Image
+          src={froseoLogoWit}
+          alt=""
+          class="opfris-modules-watermark"
+          aria-hidden="true"
+          widths={[800, 1200]}
+          sizes="80vw"
+          loading="lazy"
+        />
         <div class="opfris-modules-inner">
           <div class="opfris-modules-head">
             <EyebrowPill onDark>Modulair</EyebrowPill>
@@ -268,7 +302,42 @@ const faqs = [
         </div>
       </section>
 
-      <LogoBreak surface="light" />
+      <!-- ============================================================
+           Persoonlijke-aanpak sectie — teal achtergrond voor visueel
+           ritme (Calvin wilde ook eens een groene sectie zien). Korte
+           propositie over modulair werken, betalen voor wat je nodig
+           hebt, geen verplichtingen.
+           ============================================================ -->
+      <section class="opfris-aanpak">
+        <div class="opfris-aanpak-inner">
+          <EyebrowPill variant="light">Persoonlijke aanpak</EyebrowPill>
+          <h2 class="opfris-aanpak-title">
+            Betaal alleen voor wat je <em>echt nodig hebt.</em>
+          </h2>
+          <p class="opfris-aanpak-body">
+            We geloven niet in standaard-pakketten waar je dingen in betaalt die je
+            site niet eens nodig heeft. Tijdens de intake kijken we wat het meest
+            urgent is, wat kan wachten en wat je überhaupt niet hoeft te doen.
+            Daarna pakken we alleen die modules op die het verschil maken voor jouw
+            site, jouw bezoekers en jouw doelen.
+          </p>
+          <a class="btn-primary opfris-aanpak-cta" href="/contact?onderwerp=website-opfrissen">
+            Vraag een opfris-analyse aan ↗
+          </a>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Projecten — wat we eerder hebben opgeleverd. Mix van opfris-
+           en rebuild-cases zodat bezoekers zien dat we beide kanten op
+           kunnen.
+           ============================================================ -->
+      <WebsitesShowcase
+        cases={showcaseCases}
+        eyebrow="Recent werk"
+        title="Een greep uit"
+        titleAccent="ons werk."
+      />
 
       <!-- ============================================================
            Waarom-blok — body-tekst over veroudering, technische schuld
@@ -300,13 +369,6 @@ const faqs = [
           </a>
         </div>
       </section>
-
-      <!-- Mid-page Calvin-balk met advies-CTA. -->
-      <CalvinNote
-        message="Twijfel je of een opfrisbeurt voor jouw site genoeg is, of dat een complete rebuild verstandiger is? Stuur ons even toegang, dan kijken we onder de motorkap en geven we eerlijk advies."
-        ctaLabel="Vraag advies aan ↗"
-        ctaHref="/contact?onderwerp=website-opfrissen-advies"
-      />
 
       <BetterCallCalvin
         eyebrow="Aan de slag?"

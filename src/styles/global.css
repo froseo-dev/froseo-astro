@@ -7316,26 +7316,23 @@ main { display: contents; }
   border-top: var(--border);
   border-bottom: var(--border);
 }
+/* Image-watermark: het echte Froseo-logo (wit) over de hele section
+   gespreid, zacht aan de randen weggevaagd. Zelfde aanpak als
+   .approach-watermark op de homepage. */
 .opfris-modules-watermark {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(180px, 32vw, 480px);
-  letter-spacing: -0.05em;
-  line-height: 0.85;
-  color: var(--color-white);
-  opacity: 0.05;
+  width: clamp(380px, 70vw, 1200px);
+  height: auto;
+  opacity: 0.08;
   pointer-events: none;
   user-select: none;
   z-index: 0;
-  white-space: nowrap;
-  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 35%, transparent 80%);
+  mask-image: radial-gradient(ellipse at center, black 35%, transparent 80%);
 }
-.opfris-modules-watermark-dot { color: var(--accent-rare); opacity: 1; }
 .opfris-modules-inner {
   position: relative;
   z-index: 1;
@@ -7410,7 +7407,60 @@ main { display: contents; }
 @media (max-width: 720px) {
   .opfris-modules { padding: 64px var(--gutter-mobile); }
   .opfris-modules-grid { grid-template-columns: 1fr; }
-  .opfris-modules-watermark { font-size: clamp(140px, 38vw, 240px); }
+  .opfris-modules-watermark { width: 90vw; }
+}
+
+/* --- Persoonlijke-aanpak sectie op teal bg (groen ritme) --- */
+.opfris-aanpak {
+  padding: 80px var(--gutter);
+  background-color: var(--color-teal);
+  color: var(--color-white);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.opfris-aanpak-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.opfris-aanpak-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.8vw, 48px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-white);
+  margin: 4px 0 6px;
+}
+.opfris-aanpak-title em {
+  font-style: normal;
+  /* Geel als contrast op teal — past in het palet, leesbaar en niet
+     pink (anders past het minder bij brand-teal). */
+  color: var(--accent-highlight);
+}
+.opfris-aanpak-body {
+  font-size: 17px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+  max-width: 60ch;
+}
+.opfris-aanpak-cta {
+  /* Wit met donkere tekst — sterkste contrast op teal en past bij
+     onze "primary action"-look. */
+  margin-top: 16px;
+  background: var(--color-white);
+  color: var(--text-primary);
+}
+.opfris-aanpak-cta:hover {
+  background: var(--color-white);
+  color: var(--text-primary);
+}
+@media (max-width: 640px) {
+  .opfris-aanpak { padding: 56px var(--gutter-mobile); }
 }
 
 /* --- Waarom-blok (cream bg, klassiek text-blok) --- */

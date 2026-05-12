@@ -117,6 +117,20 @@ const icons: Record<string, string> = {
     <circle cx="14" cy="28" r="1.5" fill="currentColor"/>
     <circle cx="26" cy="28" r="1.5" fill="currentColor"/>
   `,
+  /* Lijngrafiek omhoog met pijl — "Snelheid omhoog", "Groei". */
+  chartUp: `
+    <path d="M6 8v24h28"/>
+    <path d="M11 26l6-6 5 4 10-11"/>
+    <path d="M26 13h6v6"/>
+  `,
+  /* Vergrootglas — voor "Google Proof" / vindbaarheid. Bewust géén
+     letterlijke G/Google-logo: trademark-risico en visueel niet
+     consistent met de overige outline-icons. */
+  searchGlass: `
+    <circle cx="17" cy="17" r="9"/>
+    <path d="M24 24l8 8"/>
+    <path d="M13 17l3 3 6-7"/>
+  `,
 };
 
 const path = icons[name];
