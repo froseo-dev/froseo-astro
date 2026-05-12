@@ -58,7 +58,11 @@ const {
     {
       columns.map((col) => (
         <div class="footer-col">
-          <h3>{col.title}</h3>
+          {/* Bewust geen heading-tag: dit zijn navigatie-kolomtitels in de
+              footer, geen content-headings. Een <h3> zou de document-outline
+              vervuilen en op service-pagina's onder een echte <h3> uit het
+              FAQ-blok komen te staan. */}
+          <div class="footer-col-title">{col.title}</div>
           {col.html && <Fragment set:html={col.html} />}
           {col.links && (
             <ul>

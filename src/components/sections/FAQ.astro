@@ -70,7 +70,9 @@ const faqSchema = {
               {col.map((item, i) => (
                 <details class="faq-item" open={ci === 0 && i === 0}>
                   <summary>
-                    {interpolate(item.q)}
+                    {/* Vraag als <h3> zodat zoekmachines de FAQ-structuur
+                        herkennen (matcht JSON-LD FAQPage schema hierboven). */}
+                    <h3 class="faq-item-question">{interpolate(item.q)}</h3>
                     <span class="ico">+</span>
                   </summary>
                   <div class="answer">{interpolate(item.a)}</div>
