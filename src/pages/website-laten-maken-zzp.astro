@@ -54,21 +54,26 @@ const showcaseCases = showcaseSlugs
   .map((slug) => allCases.find((c) => c.data.slug === slug))
   .filter((c): c is NonNullable<typeof c> => Boolean(c));
 
-/* Vier USP-mini-cards die op de oude pagina onder de hero stonden. */
+/* Vier USP-mini-cards die op de oude pagina onder de hero stonden.
+   Icons matchen de SectionIcon-set (outline-SVG, currentColor). */
 const usps = [
   {
+    icon: 'shieldCheck',
     title: 'Google Proof',
     body: 'Elke website wordt Google Proof opgeleverd, ook klaar om lokaal gevonden te worden. Goede techniek, snelle pagina\'s en de juiste structuur zitten er vanaf de basis in.',
   },
   {
+    icon: 'locationPin',
     title: 'Lokaal vindbaar',
     body: 'Als ZZP\'er richt je je vaak op de eigen regio. Wij zorgen dat je in jouw plaats en branche bovenaan in Google opduikt.',
   },
   {
+    icon: 'paletteSwatch',
     title: 'Huisstijl & design',
     body: 'Jouw logo en huisstijl zijn een belangrijk onderdeel van je online identiteit. Hulp nodig met het ontwerp? Wij staan klaar.',
   },
   {
+    icon: 'toolbox',
     title: 'Full-service',
     body: 'Van webdesign tot onderhoud: wij nemen alles uit handen. Alleen een nieuwe website nodig? Ook prima.',
   },
@@ -274,6 +279,7 @@ const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent
           <div class="zzp-usps-grid">
             {usps.map((u) => (
               <article class="zzp-usp-card">
+                <SectionIcon name={u.icon} class="zzp-usp-icon" size={44} />
                 <h3 class="zzp-usp-title">{u.title}</h3>
                 <p class="zzp-usp-body">{u.body}</p>
               </article>
@@ -281,6 +287,18 @@ const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent
           </div>
         </div>
       </section>
+
+      <!-- ============================================================
+           Visuele showcase — cases als proof, direct na de USP-blokjes.
+           Bewust hoger op de pagina dan de WordPress-specialist body
+           zodat de bezoeker snel concreet werk ziet voor de uitleg-tekst.
+           ============================================================ -->
+      <WebsitesShowcase
+        cases={showcaseCases}
+        eyebrow="Cases"
+        title="Een aantal blije"
+        titleAccent="ZZP'ers en MKB'ers."
+      />
 
       <!-- ============================================================
            Body-blok "Dé WordPress website specialist voor ZZP en MKB."
@@ -314,16 +332,6 @@ const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent
           </a>
         </div>
       </section>
-
-      <!-- ============================================================
-           Visuele showcase — een aantal ZZP/MKB-projecten als proof.
-           ============================================================ -->
-      <WebsitesShowcase
-        cases={showcaseCases}
-        eyebrow="Cases"
-        title="Een aantal blije"
-        titleAccent="ZZP'ers en MKB'ers."
-      />
 
       <!-- ============================================================
            Mid-page Calvin-balk met advies-CTA. Sluit aan op de toon

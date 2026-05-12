@@ -6809,6 +6809,10 @@ main { display: contents; }
   flex-direction: column;
   gap: 10px;
 }
+.zzp-usp-icon {
+  color: var(--color-teal);
+  margin-bottom: 4px;
+}
 .zzp-usp-title {
   font-family: var(--font-display);
   font-size: 19px;
