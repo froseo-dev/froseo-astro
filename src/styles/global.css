@@ -5498,6 +5498,50 @@ main { display: contents; }
   background: var(--accent-highlight);
   color: var(--text-primary);
 }
+
+/* Service-path-card moet overflow-hidden zijn zodat de diagonale ribbon
+   netjes in de hoek wordt afgesneden. box-shadow op de card zelf valt
+   buiten de overflow-clip dus die blijft zichtbaar. */
+.service-path-card { overflow: hidden; }
+
+/* Diagonale "Populair"-ribbon in de top-right corner. Klassieke 45deg
+   transform met negative right + positive top zodat de uiteinden onder
+   de rounded corner verdwijnen voor een schone ribbon-look. */
+.service-path-badge {
+  position: absolute;
+  top: 22px;
+  right: -52px;
+  width: 180px;
+  transform: rotate(45deg);
+  background: var(--accent-rare);
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 6px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  z-index: 5;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Voet-tekst onder de checks-lijst, bv. "Excl. btw" of "Bij maandelijkse
+   betaling €99". Bewust klein en gedempt zodat het niet concurreert met
+   de hoofd-inhoud. */
+.service-path-note {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-primary);
+  opacity: 0.65;
+  margin: 4px 0 0;
+}
+.service-path-card.is-featured .service-path-note {
+  color: var(--text-on-dark);
+  opacity: 0.7;
+}
 .service-path-title {
   font-family: var(--font-display);
   font-size: clamp(24px, 2.4vw, 32px);

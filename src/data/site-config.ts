@@ -9,14 +9,21 @@
  */
 
 export const pricing = {
-  /** Instapprijs van het website-abonnement, los formattedstring. */
-  abboFromAmount: '€99',
+  /** Instapprijs bij jaarlijkse betaling — communiceren we als de "vanaf"-prijs. */
+  abboFromAmount: '€89',
   /** Periode-suffix, gebruik los van het bedrag voor flexibele typografie. */
   abboFromUnit: 'maand',
-  /** Combinatie voor inline-tekst, bv. "Vanaf €99 per maand". */
-  abboFromInline: '€99 per maand',
-  /** Korte variant voor pills / labels, bv. "vanaf €99/m". */
-  abboFromShort: '€99/m',
+  /** Combinatie voor inline-tekst, bv. "Vanaf €89 per maand". */
+  abboFromInline: '€89 per maand',
+  /** Korte variant voor pills / labels, bv. "vanaf €89/m". */
+  abboFromShort: '€89/m',
+  /** Maandelijkse prijs voor wie liever per maand betaalt. Voor de
+      vergelijking maandelijks vs jaarlijks op de pricing-pagina. */
+  abboMonthlyAmount: '€99',
+  abboMonthlyShort: '€99/m',
+  /** B2B-context: prijzen excl. btw. Eenmalig melden op pricing-cards
+      is voldoende; niet bij elke hero-mention noemen. */
+  vatNote: 'excl. btw',
 } as const;
 
 export const contact = {

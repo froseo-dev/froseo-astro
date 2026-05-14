@@ -196,12 +196,24 @@ const services = defineCollection({
         z.object({
           title: z.string(),
           body: z.string(),
-          /** Korte sub-label, bv. 'Vanaf €99/m' of 'Op maat'. */
+          /** Korte sub-label, bv. 'Vanaf €89/m' of 'Op maat'. */
           tag: z.string().optional(),
           /** 3-5 checklist-items om de routes vergelijkbaar te maken. */
           checks: z.array(z.string()).optional(),
           /** Highlight als primaire/aanbevolen route. */
           isFeatured: z.boolean().default(false),
+          /** Optioneel floating badge boven de card-titel ("Populair bij MKB"). */
+          badge: z.string().optional(),
+          /** Optionele per-card CTA. Wanneer ingevuld rendert de card een
+              eigen knop onderaan; anders blijft alleen de body + checks. */
+          cta: z
+            .object({
+              label: z.string(),
+              href: z.string(),
+            })
+            .optional(),
+          /** Kleine voet-tekst onder de checks, bv. prijs-disclaimer. */
+          note: z.string().optional(),
         }),
       )
       .optional(),
