@@ -35,7 +35,7 @@ spotlights:
     image: ../../assets/cases/top-dakdekker/hero.webp
     link:
       label: Bekijk Lokale SEO
-      href: /lokale-seo
+      href: /lokale-seo/
 
 propositionPaths:
   - title: SEO-traject
@@ -71,7 +71,7 @@ pillars:
     body: 'Werk je voor klanten in een specifieke regio of stad? Dan zijn lokale rankings vaak waardevoller dan landelijke. Tot wel 80% van de gebruikers bij lokale zoekopdrachten komt niet voorbij de bedrijven die in Google Maps bovenaan staan. Denk aan Google Business Profile-optimalisatie, lokale reviews, NAP-consistentie (naam, adres, telefoon overal hetzelfde), citations en zoekwoorden met regio-namen. Voor dakdekkers, aannemers, tandartsen, personal trainers en andere lokaal-gerichte bedrijven is dit vaak de snelste route naar zichtbaarheid.'
     link:
       label: Lees meer over Lokale SEO
-      href: /lokale-seo
+      href: /lokale-seo/
 
 approachSteps:
   - title: Audit en nul-meting

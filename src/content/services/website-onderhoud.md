@@ -29,7 +29,7 @@ statsRibbon:
 calvinNote:
   message: 'Niet zeker welk pakket bij jouw site past? Stuur even wat je hebt staan, dan kijken we vrijblijvend mee en geven we eerlijk advies.'
   ctaLabel: 'Vraag advies aan ↗'
-  ctaHref: '/contact?onderwerp=advies-onderhoud'
+  ctaHref: '/contact/?onderwerp=advies-onderhoud'
 eyebrow: 'Website onderhoud'
 description: 'WordPress onderhoud met vaste maandprijs. Updates, backups, beveiliging en monitoring. Inclusief premium plug-in-licenties t.w.v. €350+/jaar.'
 icon: '⚙'
@@ -114,7 +114,7 @@ pillars:
     body: 'Je SEO-positie verandert constant. Wij monitoren je ranking op zoekwoorden die voor jouw bedrijf belangrijk zijn (tot 10 op Standard Care, tot 100 op Pro Care). Veranderingen zien we vroeg en kunnen we koppelen aan recente updates of wijzigingen op de site. Je krijgt dit terug in je maandrapport. Voor diepere SEO-trajecten verwijzen we door naar onze SEO-dienst.'
     link:
       label: Lees meer over SEO en GEO
-      href: /seo
+      href: /seo/
 
 faqs:
   - q: Wat is website onderhoud precies?

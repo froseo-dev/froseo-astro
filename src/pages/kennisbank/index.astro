@@ -1,0 +1,174 @@
+---
+/**
+ * Kennisbank overzichts-pagina. Toont alle gepubliceerde artikelen
+ * op publicatiedatum (nieuwste eerst), met featured artikel(en)
+ * bovenaan. Categorieën worden on-the-fly opgehaald uit de bestaande
+ * artikelen zodat we niet vroeg vastzitten aan een vaste taxonomie.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+const pageTitle = 'Kennisbank | Artikelen over webdesign, SEO en AI | Froseo';
+const pageDesc =
+  'Praktische artikelen over webdesign, SEO, AI en online ondernemen. Geschreven voor MKB en ZZP, zonder marketingjargon.';
+
+const all = await getCollection('kennisbank', ({ data }) => data.draft !== true);
+const sorted = all.sort(
+  (a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime(),
+);
+
+const featured = sorted.find((e) => e.data.featured);
+const rest = featured ? sorted.filter((e) => e.id !== featured.id) : sorted;
+
+/* Categorieën samenstellen uit alle artikelen, alfabetisch. */
+const allCategories = Array.from(
+  new Set(sorted.flatMap((e) => e.data.categories)),
+).sort();
+
+/* Datumformat voor cards: bv. "12 mei 2026". */
+function formatDate(d: Date): string {
+  return d.toLocaleDateString('nl-NL', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+
+/* Reading-time-helper: ~200 woorden per minuut, minimaal 1 minuut. */
+function readingTime(body: string): number {
+  const words = body.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="kb-page">
+      <section class="kb-hero">
+        <div class="kb-hero-inner">
+          <EyebrowPill>Kennisbank</EyebrowPill>
+          <h1 class="kb-hero-title">
+            Praktische artikelen over <em>webdesign, SEO en AI.</em>
+          </h1>
+          <p class="kb-hero-lead">
+            Wat we leren tijdens projecten en wat ondernemers er aan hebben.
+            Zonder marketingjargon, met concrete voorbeelden. Geschreven voor MKB en ZZP.
+          </p>
+          {allCategories.length > 0 && (
+            <div class="kb-categories" role="list" aria-label="Categorieën">
+              <span class="kb-category-pill kb-category-pill--all is-active" role="listitem">
+                Alle artikelen
+              </span>
+              {allCategories.map((c) => (
+                <span class="kb-category-pill" role="listitem">{c}</span>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {sorted.length === 0 ? (
+        <section class="kb-empty">
+          <div class="kb-empty-inner">
+            <h2>Eerste artikel komt eraan.</h2>
+            <p>De kennisbank wordt binnenkort gevuld. Hou deze pagina in de gaten of plan een kennismaking.</p>
+          </div>
+        </section>
+      ) : (
+        <>
+          {featured && (
+            <section class="kb-featured">
+              <a class="kb-featured-card" href={`/kennisbank/${featured.data.slug}/`}>
+                <div class="kb-featured-media">
+                  <Image
+                    src={featured.data.heroImage}
+                    alt={featured.data.heroAlt}
+                    class="kb-featured-img"
+                    widths={[600, 900, 1200, 1600]}
+                    sizes="(max-width: 1024px) 100vw, 720px"
+                    loading="eager"
+                  />
+                  <span class="kb-featured-badge">Uitgelicht</span>
+                </div>
+                <div class="kb-featured-body">
+                  <div class="kb-card-meta">
+                    {featured.data.categories.map((c) => (
+                      <span class="kb-card-category">{c}</span>
+                    ))}
+                    <span class="kb-card-dot" aria-hidden="true">·</span>
+                    <span class="kb-card-time">{readingTime(featured.body ?? '')} min lezen</span>
+                  </div>
+                  <h2 class="kb-featured-title">{featured.data.title}</h2>
+                  <p class="kb-featured-desc">{featured.data.excerpt ?? featured.data.description}</p>
+                  <div class="kb-card-date">{formatDate(featured.data.publishedDate)}</div>
+                  <span class="kb-featured-cta">Lees artikel ↗</span>
+                </div>
+              </a>
+            </section>
+          )}
+
+          {rest.length > 0 && (
+            <section class="kb-grid-section">
+              <div class="kb-grid-inner">
+                {featured && <h2 class="kb-grid-title">Andere artikelen</h2>}
+                <div class="kb-grid">
+                  {rest.map((entry) => (
+                    <a class="kb-card" href={`/kennisbank/${entry.data.slug}/`}>
+                      <div class="kb-card-media">
+                        <Image
+                          src={entry.data.heroImage}
+                          alt={entry.data.heroAlt}
+                          class="kb-card-img"
+                          widths={[400, 600, 800]}
+                          sizes="(max-width: 768px) 100vw, 380px"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="kb-card-body">
+                        <div class="kb-card-meta">
+                          {entry.data.categories.slice(0, 2).map((c) => (
+                            <span class="kb-card-category">{c}</span>
+                          ))}
+                          <span class="kb-card-dot" aria-hidden="true">·</span>
+                          <span class="kb-card-time">{readingTime(entry.body ?? '')} min</span>
+                        </div>
+                        <h3 class="kb-card-title">{entry.data.title}</h3>
+                        <p class="kb-card-desc">{entry.data.excerpt ?? entry.data.description}</p>
+                        <div class="kb-card-foot">
+                          <span class="kb-card-date">{formatDate(entry.data.publishedDate)}</span>
+                          <span class="kb-card-cta">Lees ↗</span>
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+        </>
+      )}
+
+      <BetterCallCalvin
+        eyebrow="Vraag of opmerking?"
+        titleLine1="Liever even"
+        titleAccent="sparren?"
+        body={[
+          'Wil je over een onderwerp uit een artikel even doorpraten, of zit je met een vraag die nog niet is behandeld? Plan een korte kennismaking in.',
+          'Geen verplichtingen. Tijdens het gesprek lopen we kort door waar je staat en wat een logische volgende stap is.',
+        ]}
+        primaryLabel="Plan een kennismaking ↗"
+        primaryHref="/contact/?onderwerp=kennisbank"
+      />
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

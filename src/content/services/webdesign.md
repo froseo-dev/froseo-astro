@@ -14,7 +14,7 @@ heroChecks:
   - Direct schakelen met de specialist zelf
 heroPrimaryCta:
   label: 'Plan een kennismaking ↗'
-  href: '/contact?onderwerp=webdesign'
+  href: '/contact/?onderwerp=webdesign'
 description: 'Snelle, professionele websites voor lokale ondernemers. Voor velen is het website-abonnement vanaf {{abboFromInline}} de slimste route. Maatwerk blijft mogelijk voor grotere trajecten.'
 icon: '◆'
 shadow: dark
@@ -40,12 +40,12 @@ propositionPaths:
     body: 'Voor lokale ondernemers die snel en zonder gedoe professioneel online willen staan. Een sterke website met een vaste maandprijs, duidelijke afspraken en ruimte voor kleine aanpassingen.'
     checks:
       - Snel live met een professionele website
-      - 'Razendsnel! We streven naar PageSpeed 95/100.'
+      - 'Razendsnel: we streven naar 90+ Google PageSpeed.'
       - Sterke basis voor snelheid, vindbaarheid en conversie
       - Inclusief hosting, beheer en kleine wijzigingen
     cta:
       label: 'Bekijk website-abonnementen ↗'
-      href: '/website-abonnement'
+      href: '/website-abonnement/'
     isFeatured: true
   - title: Maatwerk website
     tag: WordPress of Astro
@@ -57,7 +57,7 @@ propositionPaths:
       - Eén specialist voor strategie, ontwerp en bouw
     cta:
       label: 'Plan een kennismaking ↗'
-      href: '/contact?onderwerp=webdesign-maatwerk'
+      href: '/contact/?onderwerp=webdesign-maatwerk'
     isFeatured: false
 
 approachSteps:
@@ -86,7 +86,7 @@ faqs:
   - q: Hoe lang duurt het voordat mijn website live staat?
     a: 'Voor maatwerk streven we naar live binnen een maand, afhankelijk van de omvang en hoe snel content wordt aangeleverd. Het abonnement gaat sneller: vaak binnen twee weken, omdat we vertrekken vanaf een doordachte basis. Tijdens de kennismaking geven we een realistische inschatting voor jouw situatie.'
   - q: Wat zit er in het website-abonnement van {{abboFromInline}}?
-    a: 'Een professionele website op onze doordachte basis, hosting, technisch beheer en kleine wijzigingen. Streven naar 95/100 op Google PageSpeed en standaard de technische SEO-basis op orde. Actieve SEO, content-uitbreiding of conversie-optimalisatie kan als losse uitbreiding bovenop.'
+    a: 'Een professionele website op onze doordachte basis, hosting, technisch beheer en kleine wijzigingen. We streven naar 90+ op Google PageSpeed en zetten de technische SEO-basis standaard op orde. Actieve SEO, content-uitbreiding of conversie-optimalisatie kan als losse uitbreiding bovenop.'
   - q: Hoe zit het met hosting, domein en beheer?
     a: 'Bij maatwerk spreken we vooraf af hoe hosting, domein en beheer worden ingericht. Vaak zet je dat op eigen naam, soms regelen we het via een partner. Bij het website-abonnement blijft hosting onderdeel van de service. We zorgen altijd voor duidelijke afspraken zodat je weet wie wat in beheer heeft.'
   - q: Werken jullie ook voor ZZP''ers en kleine bedrijven?

@@ -48,8 +48,14 @@ export const contact = {
   hours: 'Ma–vr 09:00–17:00',
   /** Hoe snel we reageren. Realistisch houden om verwachtingen te managen. */
   responseTime: 'Meestal binnen één werkdag',
-  /** Google Maps embed-src (uit "Maps → Delen → Insluiten" → kopieer iframe-src). */
-  mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2452.0!2d5.1099!3d52.0907!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTLCsDA1JzI2LjUiTiA1wrAwNicyMy42IkU!5e0!3m2!1snl!2snl!4v0!5m2!1snl!2snl',
+  /** Google Maps embed-URL. Legacy q-based iframe-route die zoekt naar
+      het Froseo-place op Google Maps en de Business Profile-pin toont
+      (i.p.v. alleen coordinates). Werkt zonder API key, blijft stabiel.
+      Vervang door een specifieke pb-embed via "Maps → Delen → Insluiten"
+      als je een exacte zoom of weergave wil pinnen. */
+  mapEmbed: 'https://maps.google.com/maps?q=Froseo+Utrecht&t=&z=16&ie=UTF8&iwloc=B&output=embed',
+  /** Externe link naar Google Maps voor "open in Maps"-knoppen. */
+  mapsLink: 'https://www.google.com/maps/search/?api=1&query=Froseo+Utrecht',
 } as const;
 
 export const social = {

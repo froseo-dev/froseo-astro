@@ -29,7 +29,7 @@ statsRibbon:
 calvinNote:
   message: 'Twijfel je of jouw WordPress-site goed wordt onderhouden? Stuur ons toegang of een paar screenshots, dan kijken we mee en zeggen we eerlijk wat we zouden doen.'
   ctaLabel: 'Vraag advies aan ↗'
-  ctaHref: '/contact?onderwerp=advies-wp-onderhoud'
+  ctaHref: '/contact/?onderwerp=advies-wp-onderhoud'
 
 eyebrow: 'WordPress-onderhoud'
 description: 'Vast bedrag per maand voor WordPress-onderhoud door specialisten. Wij houden core, plug-ins, backups en beveiliging bij. Inclusief premium plug-in-licenties t.w.v. €350+/jaar.'
@@ -121,7 +121,7 @@ pillars:
     body: 'Je posities in Google bewegen continu. Wij houden de zoekwoorden bij die voor jouw bedrijf belangrijk zijn: tot 10 op Standard Care, tot 100 op Pro Care. Daalt iets opvallend hard, dan kunnen we het meestal koppelen aan een recente WordPress-update, content-wijziging of technische verandering. In je maandrapport zie je de trend. Voor echt diepe SEO-trajecten hebben we een aparte dienst.'
     link:
       label: Lees meer over SEO en GEO
-      href: /seo
+      href: /seo/
 
 faqs:
   - q: Wat is WordPress-onderhoud precies?

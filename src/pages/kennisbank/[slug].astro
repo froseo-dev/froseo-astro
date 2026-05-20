@@ -1,0 +1,313 @@
+---
+/**
+ * Kennisbank article template. Rendert één markdown-artikel uit
+ * src/content/kennisbank. Layout: 2-koloms vanaf de top, met sticky
+ * TOC links en alle content (breadcrumb, titel, hero-image, body)
+ * rechts. Op mobiel klapt de TOC samen tot een accordion boven de
+ * prose.
+ *
+ * Schema: BlogPosting JSON-LD voor Google.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import calvinPhoto from '@assets/team/calvin.webp';
+
+export async function getStaticPaths() {
+  const all = await getCollection('kennisbank', ({ data }) => data.draft !== true);
+  return all.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const data = entry.data;
+
+const pageTitle = `${data.title} | Kennisbank | Froseo`;
+const pageDesc = data.description;
+
+/* Reading-time-helper. */
+const wordCount = (entry.body ?? '').trim().split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.round(wordCount / 200));
+
+/* TOC: alleen H2's. Voorkomt dat de inhoudsopgave overvol wordt
+   wanneer een artikel veel H3-subkoppen heeft. */
+const tocItems = headings.filter((h) => h.depth === 2);
+
+/* Datumformat. */
+function formatDate(d: Date): string {
+  return d.toLocaleDateString('nl-NL', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
+/* Gerelateerde artikelen: eerste-categorie-match, exclusief huidig.
+   Wanneer er geen artikelen in dezelfde categorie staan, val terug op
+   alle andere artikelen. Voorkomt een lege related-sectie wanneer er
+   nog weinig content per categorie is. */
+const allArticles = await getCollection('kennisbank', ({ data: d }) => d.draft !== true);
+const primaryCategory = data.categories[0];
+const allOthers = allArticles.filter((e) => e.id !== entry.id);
+const categoryMatches = allOthers.filter((e) => e.data.categories.includes(primaryCategory));
+const hasCategoryMatch = categoryMatches.length > 0;
+const related = (hasCategoryMatch ? categoryMatches : allOthers)
+  .sort((a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime())
+  .slice(0, 3);
+
+/* Auteur-initialen voor het kleine avatar-blok bovenaan het artikel. */
+const authorInitials = data.author
+  .split(' ')
+  .map((s) => s[0])
+  .slice(0, 2)
+  .join('')
+  .toUpperCase();
+
+/* JSON-LD BlogPosting voor Google. */
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: data.title,
+  description: data.description,
+  datePublished: data.publishedDate.toISOString(),
+  dateModified: (data.updatedDate ?? data.publishedDate).toISOString(),
+  author: {
+    '@type': 'Person',
+    name: data.author,
+    url: 'https://froseo.nl/over-ons',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Froseo',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://froseo.nl/favicon.svg',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `https://froseo.nl/kennisbank/${data.slug}`,
+  },
+  articleSection: data.categories.join(', '),
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+  <main>
+    <article class="kb-article">
+      <div class="kb-article-layout">
+        {/* ============================================================
+             Linker kolom: sticky inhoudsopgave. Op mobiel verborgen,
+             daar staat de TOC als accordion boven de prose.
+             ============================================================ */}
+        {tocItems.length > 1 && (
+          <aside class="kb-toc" aria-label="Inhoudsopgave">
+            <div class="kb-toc-sticky">
+              <h2 class="kb-toc-title">Inhoud</h2>
+              <ol class="kb-toc-list">
+                {tocItems.map((h) => (
+                  <li><a href={`#${h.slug}`}>{h.text}</a></li>
+                ))}
+              </ol>
+            </div>
+          </aside>
+        )}
+
+        {/* ============================================================
+             Rechter kolom: alle artikel-content. Breadcrumb,
+             categorieën, titel, lead, author-row, hero-image, prose.
+             ============================================================ */}
+        <div class="kb-article-main">
+          <nav class="kb-breadcrumb" aria-label="Broodkruimels">
+            <a href="/">Home</a>
+            <span class="kb-breadcrumb-sep" aria-hidden="true">›</span>
+            <a href="/kennisbank/">Kennisbank</a>
+            <span class="kb-breadcrumb-sep" aria-hidden="true">›</span>
+            <span class="kb-breadcrumb-current">{data.title}</span>
+          </nav>
+
+          <div class="kb-article-tags">
+            <div class="kb-article-tags-left">
+              {data.categories.map((c) => (
+                <span class="kb-article-tag">{c}</span>
+              ))}
+            </div>
+          </div>
+
+          <h1 class="kb-article-title">{data.title}</h1>
+          <p class="kb-article-lead">{data.description}</p>
+
+          <div class="kb-author-row">
+            <div class="kb-author-avatar" aria-hidden="true">{authorInitials}</div>
+            <div class="kb-author-row-meta">
+              <div class="kb-author-row-name">{data.author}</div>
+              <div class="kb-author-row-sub">
+                <time datetime={data.publishedDate.toISOString()}>
+                  {formatDate(data.publishedDate)}
+                </time>
+                <span class="kb-card-dot" aria-hidden="true">·</span>
+                <span>{readingTime} min lezen</span>
+                {data.updatedDate && (
+                  <>
+                    <span class="kb-card-dot" aria-hidden="true">·</span>
+                    <span>geüpdatet {formatDate(data.updatedDate)}</span>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <figure class="kb-article-hero-media">
+            <Image
+              src={data.heroImage}
+              alt={data.heroAlt}
+              class="kb-article-hero-img"
+              widths={[640, 960, 1280, 1920]}
+              sizes="(max-width: 1024px) 100vw, 760px"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </figure>
+
+          {/* Mobile-only collapsed inhoudsopgave. Op desktop verborgen
+              omdat daar de sticky TOC in de linker kolom staat. */}
+          {tocItems.length > 1 && (
+            <details class="kb-toc-mobile" aria-label="Inhoudsopgave (mobiel)">
+              <summary>
+                <span>Inhoud</span>
+                <span class="kb-toc-mobile-ico" aria-hidden="true">+</span>
+              </summary>
+              <ol class="kb-toc-list">
+                {tocItems.map((h) => (
+                  <li><a href={`#${h.slug}`}>{h.text}</a></li>
+                ))}
+              </ol>
+            </details>
+          )}
+
+          <div class="kb-prose">
+            <Content />
+          </div>
+        </div>
+      </div>
+
+      {/* ============================================================
+           Uitgebreidere auteur-bio onderaan het artikel. De compacte
+           "by Calvin · 12 min lezen"-row staat al bovenaan; dit blok
+           voegt foto + bio + LinkedIn toe als persoonlijke afsluiting.
+           ============================================================ */}
+      <section class="kb-author">
+        <div class="kb-author-inner">
+          <div class="kb-author-photo">
+            <Image
+              src={calvinPhoto}
+              alt={data.author}
+              class="kb-author-img"
+              widths={[120, 200, 280]}
+              sizes="120px"
+              loading="lazy"
+            />
+          </div>
+          <div class="kb-author-body">
+            <span class="kb-author-label">Geschreven door</span>
+            <h2 class="kb-author-name">{data.author}</h2>
+            <p class="kb-author-bio">
+              Digital specialist bij Froseo. Bouwt al meer dan 15 jaar websites en werkt aan
+              SEO, GEO en online marketing voor MKB en ZZP. Schrijft hier over wat hij in
+              projecten tegenkomt en wat er praktisch werkt.
+            </p>
+            <a class="kb-author-link" href="https://www.linkedin.com/in/calvintelkamp" rel="noopener" target="_blank">
+              LinkedIn ↗
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ-blok onderaan het artikel, gerenderd via dezelfde FAQ-
+           component als de service-pagina's. Wanneer geen faqs in
+           frontmatter staan wordt het blok overgeslagen. */}
+      {data.faqs && data.faqs.length > 0 && (
+        <FAQ
+          eyebrow="Veelgestelde vragen"
+          titleLine1="Veelgestelde"
+          titleAccent="vragen."
+          items={data.faqs}
+        />
+      )}
+
+      {/* ============================================================
+           Gerelateerde artikelen (alleen wanneer er meer dan 0 zijn).
+           Titel past zich aan: bij category-match toont de categorie,
+           bij fallback toont "Lees ook".
+           ============================================================ */}
+      {related.length > 0 && (
+        <section class="kb-related">
+          <div class="kb-related-inner">
+            <div class="kb-related-head">
+              <EyebrowPill variant="rare">Lees ook</EyebrowPill>
+              <h2 class="kb-related-title">
+                {hasCategoryMatch
+                  ? <>Meer over <em>{primaryCategory.toLowerCase()}.</em></>
+                  : <>Ook leuk om te <em>lezen.</em></>}
+              </h2>
+            </div>
+            <div class="kb-grid">
+              {related.map((e) => (
+                <a class="kb-card" href={`/kennisbank/${e.data.slug}/`}>
+                  <div class="kb-card-media">
+                    <Image
+                      src={e.data.heroImage}
+                      alt={e.data.heroAlt}
+                      class="kb-card-img"
+                      widths={[400, 600, 800]}
+                      sizes="(max-width: 768px) 100vw, 380px"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="kb-card-body">
+                    <div class="kb-card-meta">
+                      {e.data.categories.slice(0, 2).map((c) => (
+                        <span class="kb-card-category">{c}</span>
+                      ))}
+                    </div>
+                    <h3 class="kb-card-title">{e.data.title}</h3>
+                    <p class="kb-card-desc">{e.data.excerpt ?? e.data.description}</p>
+                    <span class="kb-card-cta">Lees ↗</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <BetterCallCalvin
+        eyebrow="Vraag of opmerking?"
+        titleLine1="Liever even"
+        titleAccent="sparren?"
+        body={[
+          'Wil je over dit onderwerp doorpraten of toepassen op je eigen situatie? Plan een korte kennismaking in.',
+          'Geen verplichtingen. We lopen kort door waar je staat en wat een logische volgende stap is.',
+        ]}
+        primaryLabel="Plan een kennismaking ↗"
+        primaryHref="/contact/?onderwerp=kennisbank"
+      />
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -107,7 +107,7 @@ const serviceFilters = services
               class="project-card"
               data-services={(c.data.services ?? []).join(',')}
             >
-              <a class="project-card-media-link" href={`/projecten/${c.data.slug}`} aria-label={`Bekijk ${c.data.client} project`}>
+              <a class="project-card-media-link" href={`/projecten/${c.data.slug}/`} aria-label={`Bekijk ${c.data.client} project`}>
                 <div class="project-card-media">
                   <Image
                     src={c.data.hero}
@@ -146,7 +146,7 @@ const serviceFilters = services
                 )}
 
                 <div class="project-card-actions">
-                  <a class="project-card-primary" href={`/projecten/${c.data.slug}`}>
+                  <a class="project-card-primary" href={`/projecten/${c.data.slug}/`}>
                     Lees case ↗
                   </a>
                   {c.data.liveUrl && (
@@ -192,8 +192,8 @@ const serviceFilters = services
               ervaring hebben in jouw markt? Vraag het ons even.
             </p>
             <div class="projects-bridge-actions">
-              <a class="btn-primary" href="/contact">Bespreek je project ↗</a>
-              <a class="projects-bridge-secondary" href="/aanpak">
+              <a class="btn-primary" href="/contact/">Bespreek je project ↗</a>
+              <a class="projects-bridge-secondary" href="/aanpak/">
                 Of lees hoe we werken ↗
               </a>
             </div>

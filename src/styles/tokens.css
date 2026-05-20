@@ -61,6 +61,8 @@
   --accent-rare:           var(--color-magenta);
   --accent-rare-strong:    var(--color-magenta-strong);
   --accent-highlight:      var(--color-yellow);
+  --accent-teal:           var(--color-teal);
+  --accent-teal-strong:    var(--color-teal-strong);
 
   --surface-page:      var(--color-cream);
   --surface-page-soft: var(--color-cream-soft);

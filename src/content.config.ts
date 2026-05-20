@@ -146,9 +146,39 @@ const services = defineCollection({
         /wordpress-website-onderhoud. */
     showMaintenancePackages: z.boolean().default(false),
 
+    /** Wanneer true: rendert de ContentPackages-sectie (3 content-pakketten
+        zonder toggle, derde tier "Op aanvraag") met data uit
+        src/data/content-packages.ts. Voor /content-abonnement. */
+    showContentPackages: z.boolean().default(false),
+
+    /** Wanneer true: rendert de AboPackages-sectie (2 website-abonnement
+        cards: Online Start + Online Plus) met data uit
+        src/data/abo-packages.ts. Voor /website-abonnement. */
+    showAboPackages: z.boolean().default(false),
+
     /** Wanneer true: verberg de WebsitesShowcase-sectie. Voor pagina's waar
         portfolio-cases minder relevant zijn (zoals onderhoud). */
     hideShowcase: z.boolean().default(false),
+
+    /** Positief "infrastructuur-blok" — donker centered tekstblok als
+        alternatief voor pain-points. Voor pagina's waar je positief wil
+        framen (bv. /website-abonnement) i.p.v. negatief. Optionele kleine
+        CTA onderaan ("Klinkt als wat je zoekt? Bekijk pakketten ↑"). */
+    infraBlock: z
+      .object({
+        eyebrow: z.string().optional(),
+        title: z.string(),
+        titleAccent: z.string().optional(),
+        body: z.array(z.string()),
+        cta: z
+          .object({
+            prefix: z.string().optional(),
+            label: z.string(),
+            href: z.string(),
+          })
+          .optional(),
+      })
+      .optional(),
 
     /** Pain-points grid: visuele "wat gaat er fout zonder dit"-sectie. */
     painPointsTitle: z.string().optional(),
@@ -301,4 +331,53 @@ const faq = defineCollection({
   }),
 });
 
-export const collections = { cases, services, testimonials, faq };
+/**
+ * Kennisbank — blog/artikel-collection. Markdown body wordt in
+ * /pages/kennisbank/[slug].astro gerenderd via render(entry).
+ * Categories zijn vrij invoerbaar (string-array) zodat we niet vroeg
+ * vastzitten aan een vaste taxonomie; pas een enum aan zodra het
+ * stabiele set is.
+ */
+const kennisbank = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/kennisbank' }),
+  schema: ({ image }) =>
+    z.object({
+      /** URL-slug. Bv. 'website-optimaliseren'. */
+      slug: z.string(),
+      /** H1 + page-title. */
+      title: z.string(),
+      /** Korte beschrijving voor meta-description, OG-tag en list-card excerpt. */
+      description: z.string(),
+      /** Optionele eyebrow-tekst boven de h1 in de hero. */
+      eyebrow: z.string().optional(),
+      /** Publicatiedatum (ISO of date-object). Toont in hero + meta. */
+      publishedDate: z.date(),
+      /** Optioneel: laatste update. Wanneer ingevuld toont template
+          "Geüpdatet op ..." naast de publicatiedatum. */
+      updatedDate: z.date().optional(),
+      /** Categorieën (vrij invoerbaar). Eerste categorie is hoofdcategorie
+          voor filtering en related-articles. */
+      categories: z.array(z.string()).min(1),
+      /** Hero-afbeelding bovenaan het artikel. */
+      heroImage: image(),
+      heroAlt: z.string(),
+      /** Auteur. Default Calvin Telkamp. */
+      author: z.string().default('Calvin Telkamp'),
+      /** Optionele excerpt voor de index-card. Wanneer leeg gebruikt
+          de list-page de description. */
+      excerpt: z.string().optional(),
+      /** Featured-artikel verschijnt prominent bovenaan de index. */
+      featured: z.boolean().default(false),
+      /** Draft-status: als true wordt het artikel niet gerenderd. */
+      draft: z.boolean().default(false),
+      /** Optionele oude URL voor 301-redirect mapping (bv. '/website-optimaliseren'). */
+      oldUrl: z.string().optional(),
+      /** FAQ-block onderaan het artikel. Rendert als accordion, plus
+          FAQPage JSON-LD voor Google rich-results. */
+      faqs: z
+        .array(z.object({ q: z.string(), a: z.string() }))
+        .optional(),
+    }),
+});
+
+export const collections = { cases, services, testimonials, faq, kennisbank };

@@ -39,7 +39,7 @@ const services = (await getCollection('services', ({ data }) => data.featured))
   <div class="services-grid">
     {
       services.map((service) => (
-        <a href={`/${service.data.slug}`} class={`service-card ${service.data.shadow}-shadow`}>
+        <a href={`/${service.data.slug}/`} class={`service-card ${service.data.shadow}-shadow`}>
           <div class="service-icon">{service.data.icon}</div>
           <div class="service-num">{service.data.eyebrow}</div>
           <h3 class="service-title">{service.data.title}</h3>

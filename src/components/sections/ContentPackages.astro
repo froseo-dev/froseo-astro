@@ -1,0 +1,81 @@
+---
+/**
+ * Content-pakket-sectie met 3 cards naast elkaar voor /content-abonnement.
+ * Visueel identiek aan PricingPackages.astro (zelfde CSS-classes), maar:
+ *   - Geen maand/jaar-toggle (alleen maandprijs)
+ *   - Derde tier kan "Op aanvraag" zijn (monthlyPrice = null)
+ *   - Per-card CTA-label override mogelijk
+ *
+ * Data komt uit src/data/content-packages.ts.
+ */
+
+import EyebrowPill from '../ui/EyebrowPill.astro';
+import { contentPackages } from '@data/content-packages';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  titleAccent?: string;
+  lead?: string;
+}
+
+const {
+  eyebrow = 'Pakketten',
+  title = 'Drie pakketten,',
+  titleAccent = 'één doel.',
+  lead = 'Maandelijks SEO-content die ranken in Google en aanvragen oplevert. Geen jaarcontracten, maandelijks opzegbaar.',
+} = Astro.props;
+---
+
+<section class="pricing-packages" id="pakketten">
+  <div class="pricing-head">
+    <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
+    <h2 class="pricing-title">
+      {title} <em>{titleAccent}</em>
+    </h2>
+    <p class="pricing-lead">{lead}</p>
+  </div>
+
+  <div class="pricing-grid">
+    {contentPackages.map((pkg) => (
+      <article class={`pricing-card ${pkg.isFeatured ? 'is-featured' : ''}`}>
+        {pkg.isFeatured && <span class="pricing-card-badge">Meest gekozen</span>}
+        <header class="pricing-card-head">
+          <h3 class="pricing-card-name">{pkg.name}</h3>
+          <p class="pricing-card-tagline">{pkg.tagline}</p>
+          <div class="pricing-card-price">
+            {pkg.monthlyPrice !== null ? (
+              <>
+                <span class="pricing-amount-prefix">€</span>
+                <span class="pricing-amount">{pkg.monthlyPrice}</span>
+                <span class="pricing-period">/maand</span>
+              </>
+            ) : (
+              <span class="pricing-amount-custom">{pkg.customPriceLabel ?? 'Op aanvraag'}</span>
+            )}
+          </div>
+          <p class="pricing-billing">
+            {pkg.monthlyPrice !== null
+              ? 'Maandelijks gefactureerd'
+              : 'Offerte op maat'}
+          </p>
+          <p class="pricing-card-for">{pkg.forWhom}</p>
+        </header>
+        <ul class="pricing-card-features">
+          {pkg.features.map((f) => (
+            <li class={f.highlight ? 'is-highlight' : ''}>
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <span>{f.label}</span>
+            </li>
+          ))}
+        </ul>
+        <a
+          class={pkg.isFeatured ? 'btn-primary pricing-card-cta' : 'btn-ghost pricing-card-cta'}
+          href={pkg.ctaHref}
+        >
+          {pkg.ctaLabel ?? `Kies ${pkg.shortName ?? pkg.name}`} ↗
+        </a>
+      </article>
+    ))}
+  </div>
+</section>

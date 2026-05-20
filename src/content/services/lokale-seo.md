@@ -105,7 +105,7 @@ spotlights:
     image: ../../assets/cases/renovatie-totaal/hero.webp
     link:
       label: Bekijk SEO/GEO
-      href: /seo
+      href: /seo/
 
 faqs:
   - q: Wat is lokale SEO precies?

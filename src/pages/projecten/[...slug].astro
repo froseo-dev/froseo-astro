@@ -212,7 +212,7 @@ const galleryCount = galleryImages.length;
           </div>
           <div class="service-pills">
             {servicesUsed.map((s) => (
-              <a class={`service-pill ${s.data.shadow}-pill`} href={`/${s.data.slug}`}>
+              <a class={`service-pill ${s.data.shadow}-pill`} href={`/${s.data.slug}/`}>
                 <span class="service-pill-icon" aria-hidden="true">{s.data.icon}</span>
                 <span class="service-pill-body">
                   <span class="service-pill-eyebrow">{s.data.eyebrow}</span>
@@ -236,7 +236,7 @@ const galleryCount = galleryImages.length;
           </div>
           <div class="cases-grid case-page-related-grid">
             {related.map((r) => (
-              <a class="case-card" href={`/projecten/${r.data.slug}`}>
+              <a class="case-card" href={`/projecten/${r.data.slug}/`}>
                 <div class="case-card-media">
                   <Image
                     src={r.data.hero}
@@ -263,7 +263,7 @@ const galleryCount = galleryImages.length;
             ))}
           </div>
           <div class="case-page-related-foot">
-            <a class="btn-ghost" href="/projecten">Alle projecten ↗</a>
+            <a class="btn-ghost" href="/projecten/">Alle projecten ↗</a>
           </div>
         </section>
       )}

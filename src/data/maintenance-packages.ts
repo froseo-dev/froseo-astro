@@ -112,7 +112,7 @@ export const maintenanceCustom = {
   title: 'Andere wensen?',
   body: 'Multi-site, WooCommerce, een eigen VPS of white-label voor reseller-pakketten? Dat doen we op maat. Vraag een offerte aan en we kijken naar wat past bij jouw situatie.',
   ctaLabel: 'Vraag een offerte aan ↗',
-  ctaHref: '/contact',
+  ctaHref: '/contact/',
 };
 
 /* Voor de "wat zijn kleine reparaties" FAQ-uitleg — herbruikt over pagina's. */

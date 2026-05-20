@@ -1,0 +1,130 @@
+---
+/**
+ * Website-abonnement-pakketten-sectie voor /website-abonnement.
+ * Twee cards naast elkaar (Online Start + Online Plus) met
+ * maand/jaar-toggle. Hergebruikt .pricing-card classes uit global.css
+ * voor visuele consistentie met /website-onderhoud, met eigen
+ * .abo-grid (2-koloms) en .abo-terms-strip onder de cards.
+ *
+ * Data komt uit src/data/abo-packages.ts (single source of truth).
+ */
+
+import EyebrowPill from '../ui/EyebrowPill.astro';
+import { aboPackages, aboTerms } from '@data/abo-packages';
+import { pricing as sitePricing } from '@data/site-config';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  titleAccent?: string;
+  lead?: string;
+}
+
+const {
+  eyebrow = 'Pakketten',
+  title = 'Twee abonnementen,',
+  titleAccent = 'één framework.',
+  lead = 'Kies de tier die past bij waar je nu staat. Je groeit op elk moment door naar Online Plus zonder nieuwe build.',
+} = Astro.props;
+---
+
+<section class="pricing-packages abo-packages" id="pakketten">
+  <div class="pricing-head">
+    <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
+    <h2 class="pricing-title">
+      {title} <em>{titleAccent}</em>
+    </h2>
+    <p class="pricing-lead">{lead}</p>
+
+    <div class="pricing-toggle" role="tablist" aria-label="Betalingsfrequentie">
+      <button type="button" class="pricing-toggle-btn" data-frequency="monthly" role="tab" aria-selected="false">
+        Per maand
+      </button>
+      <button type="button" class="pricing-toggle-btn is-active" data-frequency="yearly" role="tab" aria-selected="true">
+        Per jaar <span class="pricing-toggle-badge">10% korting</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="pricing-grid abo-grid">
+    {aboPackages.map((pkg) => (
+      <article class={`pricing-card ${pkg.isFeatured ? 'is-featured' : ''}`}>
+        {pkg.isFeatured && <span class="pricing-card-badge">Meest gekozen</span>}
+        <header class="pricing-card-head">
+          <h3 class="pricing-card-name">{pkg.name}</h3>
+          <p class="pricing-card-tagline">{pkg.tagline}</p>
+          <div class="pricing-card-price">
+            <span class="pricing-amount-prefix">€</span>
+            <span
+              class="pricing-amount"
+              data-monthly={pkg.monthlyPrice}
+              data-yearly-effective={pkg.yearlyMonthlyPrice}
+            >
+              {pkg.yearlyMonthlyPrice}
+            </span>
+            <span class="pricing-period">/maand</span>
+          </div>
+          <p class="pricing-billing">
+            <span data-frequency-label="monthly" hidden>Maandelijks · {sitePricing.vatNote}</span>
+            <span data-frequency-label="yearly">Jaarlijks · €{pkg.yearlyTotal}/jaar · {sitePricing.vatNote}</span>
+          </p>
+          <p class="pricing-card-for">{pkg.forWhom}</p>
+        </header>
+        <ul class="pricing-card-features">
+          {pkg.features.map((f) => (
+            <li class={`${f.highlight ? 'is-highlight' : ''} ${f.upcoming ? 'is-upcoming' : ''}`.trim()}>
+              <span class="check-icon" aria-hidden="true">{f.upcoming ? '◷' : '✓'}</span>
+              <span>
+                {f.label}
+                {f.upcoming && <span class="abo-feature-tag">Binnenkort</span>}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <a
+          class={pkg.isFeatured ? 'btn-primary pricing-card-cta' : 'btn-ghost pricing-card-cta'}
+          href={`/contact/?onderwerp=${pkg.slug}`}
+        >
+          Kies {pkg.shortName ?? pkg.name} ↗
+        </a>
+      </article>
+    ))}
+  </div>
+
+  <ul class="abo-terms-strip" aria-label="Voorwaarden">
+    {aboTerms.map((t) => (
+      <li>
+        <span class="abo-terms-icon" aria-hidden="true">✓</span>
+        <span>{t}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('.abo-packages');
+  if (root) {
+    const toggleBtns = root.querySelectorAll<HTMLButtonElement>('.pricing-toggle-btn');
+    const amounts = root.querySelectorAll<HTMLElement>('.pricing-amount');
+    const periodLabels = root.querySelectorAll<HTMLElement>('[data-frequency-label]');
+
+    function setFrequency(freq: 'monthly' | 'yearly') {
+      toggleBtns.forEach((b) => {
+        const active = b.dataset.frequency === freq;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      amounts.forEach((el) => {
+        const value = freq === 'monthly' ? el.dataset.monthly : el.dataset.yearlyEffective;
+        el.textContent = value ?? '';
+      });
+      periodLabels.forEach((el) => {
+        el.hidden = el.dataset.frequencyLabel !== freq;
+      });
+    }
+
+    toggleBtns.forEach((b) => {
+      b.addEventListener('click', () => setFrequency(b.dataset.frequency as 'monthly' | 'yearly'));
+    });
+  }
+</script>

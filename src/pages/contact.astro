@@ -6,6 +6,7 @@ import Footer from '@components/layout/Footer.astro';
 import EyebrowPill from '@components/ui/EyebrowPill.astro';
 import CalvinNote from '@components/sections/CalvinNote.astro';
 import LogosTicker from '@components/sections/LogosTicker.astro';
+import VisitAddress from '@components/sections/VisitAddress.astro';
 import { contact, review, calendly } from '@data/site-config';
 
 /* WhatsApp deep-link volgens wa.me-pattern. Tekst wordt URL-encoded. */
@@ -119,7 +120,7 @@ const onderwerpLabel = onderwerpLabels[onderwerpKey];
                 <span class="form-status" data-form-status role="status" aria-live="polite"></span>
               </div>
               <p class="form-note">
-                Door dit formulier te versturen ga je akkoord met onze <a href="/privacy">privacy­verklaring</a>.
+                Door dit formulier te versturen ga je akkoord met onze <a href="/privacy/">privacy­verklaring</a>.
               </p>
             </form>
           </div>
@@ -197,41 +198,8 @@ const onderwerpLabel = onderwerpLabels[onderwerpKey];
       <!-- Logo carousel — tussen contact-blok en bezoekadres voor visuele break -->
       <LogosTicker />
 
-      <!-- ============================================================
-           Bezoekadres — info-only (Calendly accordion zit in sidebar)
-           ============================================================ -->
-      <section class="contact-map">
-        <div class="contact-map-inner">
-          <div class="contact-map-text">
-            <EyebrowPill>Bezoekadres</EyebrowPill>
-            <h2 class="contact-map-title">
-              Onze basis in <em>Utrecht.</em>
-            </h2>
-            <p class="contact-map-body">
-              Even kennismaken? Dan spreken we graag met je af, dit kan in Utrecht of bij jou op kantoor.
-            </p>
-            <p class="contact-map-note">
-              * Wegens verbouwing zitten wij tijdelijk op een andere locatie.
-            </p>
-            <dl class="contact-map-meta">
-              <div><dt>Adres</dt><dd>{contact.address.street}<br />{contact.address.postalCode} {contact.address.city}</dd></div>
-              <div><dt>KvK</dt><dd>{contact.kvk}</dd></div>
-            </dl>
-          </div>
-          <div class="contact-map-embed">
-            <iframe
-              src={contact.mapEmbed}
-              width="100%"
-              height="100%"
-              style="border:0;"
-              allowfullscreen
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              title={`Kaart van ${contact.address.city}`}
-            />
-          </div>
-        </div>
-      </section>
+      <!-- Bezoekadres + Google Maps (gedeelde component, compact variant) -->
+      <VisitAddress variant="compact" />
 
       <CalvinNote />
     </article>

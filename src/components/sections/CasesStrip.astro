@@ -23,7 +23,7 @@ const {
   lead = 'Geen loze beloftes, maar meetbare resultaten. Ontdek hoe wij MKB-bedrijven helpen groeien met slimme strategieën en doordachte uitvoering.',
   pickSlugs,
   moreLabel = 'Meer projecten ↗',
-  moreHref = '/projecten',
+  moreHref = '/projecten/',
 } = Astro.props;
 
 const all = await getCollection('cases', ({ data }) => data.published !== false);

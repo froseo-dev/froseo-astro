@@ -1,0 +1,98 @@
+---
+/**
+ * VisitAddress — gedeelde "bezoekadres + Google Maps embed"-sectie.
+ * Gebruikt op /contact en /over-ons. Eén bron, één look.
+ *
+ * Variant prop bepaalt de detail-diepte:
+ *   - 'compact'  → adres + KvK + map (voor /contact, sidebar heeft al
+ *                  mail/telefoon)
+ *   - 'detailed' → adres + KvK + mail + telefoon + bereikbaarheid +
+ *                  open-in-maps CTA (voor /over-ons, geen aparte sidebar)
+ *
+ * Tekstuele framing zegt expliciet "kennismaken kan in Utrecht of bij
+ * jou op kantoor" en vermeldt de verbouwing zonder verder uit te leggen
+ * dat we een nieuwe locatie zoeken.
+ */
+
+import EyebrowPill from '../ui/EyebrowPill.astro';
+import { contact } from '@data/site-config';
+
+interface Props {
+  variant?: 'compact' | 'detailed';
+  /** Override de standaard eyebrow ("Bezoekadres"). */
+  eyebrow?: string;
+  /** Override de standaard titel. */
+  title?: string;
+  titleAccent?: string;
+}
+
+const {
+  variant = 'compact',
+  eyebrow = 'Bezoekadres',
+  title = 'Onze basis in',
+  titleAccent = 'Utrecht.',
+} = Astro.props;
+---
+
+<section class="visit-address">
+  <div class="visit-address-inner">
+    <div class="visit-address-text">
+      <EyebrowPill variant="teal">{eyebrow}</EyebrowPill>
+      <h2 class="visit-address-title">
+        {title} <em>{titleAccent}</em>
+      </h2>
+      <p class="visit-address-body">
+        Even kennismaken? Dan spreken we graag met je af, dit kan in Utrecht of bij jou op kantoor.
+      </p>
+      <p class="visit-address-note">
+        * Wegens verbouwing zitten wij tijdelijk op een andere locatie.
+      </p>
+
+      {variant === 'compact' ? (
+        <dl class="visit-address-meta">
+          <div>
+            <dt>Adres</dt>
+            <dd>{contact.address.street}<br />{contact.address.postalCode} {contact.address.city}</dd>
+          </div>
+          <div>
+            <dt>KvK</dt>
+            <dd>{contact.kvk}</dd>
+          </div>
+        </dl>
+      ) : (
+        <>
+          <ul class="visit-address-list">
+            <li>
+              <span class="visit-address-label">Adres</span>
+              <span class="visit-address-value">{contact.address.street}<br />{contact.address.postalCode} {contact.address.city}</span>
+            </li>
+            <li>
+              <span class="visit-address-label">Telefoon</span>
+              <a class="visit-address-value" href={`tel:${contact.phoneTel}`}>{contact.phoneDisplay}</a>
+            </li>
+            <li>
+              <span class="visit-address-label">Mail</span>
+              <a class="visit-address-value" href={`mailto:${contact.email}`}>{contact.email}</a>
+            </li>
+            <li>
+              <span class="visit-address-label">Bereikbaarheid</span>
+              <span class="visit-address-value">24/7 via mail<br />Telefonisch ma t/m vr, 09:00–17:00</span>
+            </li>
+          </ul>
+          <a class="btn-ghost visit-address-cta" href={contact.mapsLink} target="_blank" rel="noopener noreferrer">
+            Open in Google Maps ↗
+          </a>
+        </>
+      )}
+    </div>
+    <div class="visit-address-embed">
+      <iframe
+        src={contact.mapEmbed}
+        title={`Froseo op Google Maps in ${contact.address.city}`}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</section>

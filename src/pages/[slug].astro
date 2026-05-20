@@ -10,6 +10,8 @@ import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
 import CalvinNote from '@components/sections/CalvinNote.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import PricingPackages from '@components/sections/PricingPackages.astro';
+import ContentPackages from '@components/sections/ContentPackages.astro';
+import AboPackages from '@components/sections/AboPackages.astro';
 import PainPoints from '@components/sections/PainPoints.astro';
 import Comparison from '@components/sections/Comparison.astro';
 import StatsRibbon from '@components/sections/StatsRibbon.astro';
@@ -86,7 +88,7 @@ const pageDesc = s.description;
               <p class="service-hero-lead">{interpolate(heroLead)}</p>
             )}
             <div class="service-hero-actions">
-              <a class="btn-primary" href={s.heroPrimaryCta?.href ?? '/contact'}>
+              <a class="btn-primary" href={s.heroPrimaryCta?.href ?? '/contact/'}>
                 {s.heroPrimaryCta?.label ?? 'Plan een kennismaking ↗'}
               </a>
             </div>
@@ -133,6 +135,24 @@ const pageDesc = s.description;
         />
       )}
 
+      {s.showContentPackages && (
+        <ContentPackages
+          eyebrow={s.pricingEyebrow}
+          title={s.pricingTitle}
+          titleAccent={s.pricingTitleAccent}
+          lead={s.pricingLead}
+        />
+      )}
+
+      {s.showAboPackages && (
+        <AboPackages
+          eyebrow={s.pricingEyebrow}
+          title={s.pricingTitle}
+          titleAccent={s.pricingTitleAccent}
+          lead={s.pricingLead}
+        />
+      )}
+
       <!-- ============================================================
            Stats-ribbon — 4 credibility-cijfers. Rustig proof-strookje
            tussen pakketten en pain-points.
@@ -154,7 +174,7 @@ const pageDesc = s.description;
            Voor onderhoud-pagina's gebruiken we PricingPackages hierboven
            in plaats van propositionPaths.
            ============================================================ -->
-      {!s.showMaintenancePackages && s.propositionPaths && s.propositionPaths.length > 0 && (
+      {!s.showMaintenancePackages && !s.showContentPackages && !s.showAboPackages && s.propositionPaths && s.propositionPaths.length > 0 && (
         <section class="service-paths">
           <div class="service-paths-head">
             <EyebrowPill>{s.proposalsEyebrow ?? 'Kies je route'}</EyebrowPill>
@@ -209,6 +229,35 @@ const pageDesc = s.description;
           titleAccent={s.showcaseTitleAccent}
           featured={showcaseFeatured}
         />
+      )}
+
+      <!-- Positief infrastructuur-blok — donker centered tekstblok als
+           alternatief voor painPoints. Voor pagina's waar we positief framen. -->
+      {s.infraBlock && (
+        <section class="service-infra">
+          <div class="service-infra-inner">
+            {s.infraBlock.eyebrow && (
+              <EyebrowPill variant="highlight">{s.infraBlock.eyebrow}</EyebrowPill>
+            )}
+            <h2 class="service-infra-title">
+              {s.infraBlock.title}
+              {s.infraBlock.titleAccent && <em>{s.infraBlock.titleAccent}</em>}
+            </h2>
+            {s.infraBlock.body.map((p) => (
+              <p class="service-infra-body">{interpolate(p)}</p>
+            ))}
+            {s.infraBlock.cta && (
+              <p class="service-infra-cta-row">
+                {s.infraBlock.cta.prefix && (
+                  <span class="service-infra-cta-prefix">{s.infraBlock.cta.prefix}</span>
+                )}
+                <a class="service-infra-cta" href={s.infraBlock.cta.href}>
+                  {s.infraBlock.cta.label}
+                </a>
+              </p>
+            )}
+          </div>
+        </section>
       )}
 
       <!-- Pain-points grid (negatieve framing, visuele urgency) -->
@@ -419,7 +468,7 @@ const pageDesc = s.description;
             'Geen verplichtingen. Als jouw situatie niet bij onze pakketten past, zeggen we dat.'
           ]}
           primaryLabel="Vraag advies aan ↗"
-          primaryHref="/contact?onderwerp=advies-onderhoud"
+          primaryHref="/contact/?onderwerp=advies-onderhoud"
         />
       ) : (
         <BetterCallCalvin

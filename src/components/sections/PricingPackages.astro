@@ -79,7 +79,7 @@ const {
             </li>
           ))}
         </ul>
-        <a class={pkg.isFeatured ? 'btn-primary pricing-card-cta' : 'btn-ghost pricing-card-cta'} href={`/contact?onderwerp=${pkg.slug}`}>
+        <a class={pkg.isFeatured ? 'btn-primary pricing-card-cta' : 'btn-ghost pricing-card-cta'} href={`/contact/?onderwerp=${pkg.slug}`}>
           Kies {pkg.shortName ?? pkg.name} ↗
         </a>
       </article>

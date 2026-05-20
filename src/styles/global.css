@@ -192,6 +192,7 @@ main { display: contents; }
 .eyebrow-pill.rare      { background: var(--accent-rare);      color: var(--text-on-accent); }
 .eyebrow-pill.primary   { background: var(--accent-primary);   color: var(--text-on-accent); }
 .eyebrow-pill.light     { background: var(--surface-card);     color: var(--text-primary); }
+.eyebrow-pill.teal      { background: var(--accent-teal);      color: var(--text-on-accent); }
 .eyebrow-pill .star     { color: var(--accent-highlight); }
 .eyebrow-pill.on-dark   { box-shadow: 4px 4px 0 var(--accent-rare); }
 
@@ -4358,6 +4359,19 @@ main { display: contents; }
   color: var(--accent-rare);
 }
 .pricing-card.is-featured .pricing-amount { color: var(--accent-highlight); }
+
+/* "Op aanvraag"-label voor het custom-tier op /content-abonnement.
+   Vervangt de €-prijs in derde card; iets kleiner dan een gewone amount
+   maar nog steeds dominant. */
+.pricing-amount-custom {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--accent-rare);
+}
+.pricing-card.is-featured .pricing-amount-custom { color: var(--accent-highlight); }
 .pricing-period {
   font-family: var(--font-mono);
   font-size: 13px;
@@ -4472,6 +4486,170 @@ main { display: contents; }
 @media (max-width: 640px) {
   .pricing-packages { padding: 48px var(--gutter-mobile) 64px; }
   .pricing-card { padding: 28px 24px; }
+}
+
+/* ============================================================
+   === WEBSITE-ABONNEMENT — 2-koloms variant van pricing-grid ==
+   /website-abonnement gebruikt .abo-grid i.p.v. .pricing-grid
+   omdat we 2 cards naast elkaar willen (Online Start + Plus).
+   Cards zelf reusen .pricing-card classes.
+   ============================================================ */
+.abo-grid {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 1080px;
+  gap: 32px;
+}
+/* Bij 2 cards werkt de translateY-shift uit pricing-card niet (zou
+   visueel scheef staan). Beide cards op zelfde hoogte. */
+.abo-grid .pricing-card.is-featured { transform: none; }
+
+/* ============================================================
+   === SERVICE INFRA-BLOK ======================================
+   Donker centered tekstblok als positief alternatief voor
+   painPoints. Voor /website-abonnement (mid-page kleur-shift).
+   ============================================================ */
+.service-infra {
+  padding: 96px var(--gutter) 104px;
+  background: var(--surface-dark);
+  background-image: var(--bg-decoration-dark);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  color: var(--text-on-dark);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.service-infra-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  align-items: center;
+}
+.service-infra-title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4.4vw, 60px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-on-dark);
+}
+.service-infra-title em {
+  font-style: normal;
+  color: var(--accent-highlight);
+  display: inline;
+}
+.service-infra-body {
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.6;
+  margin: 0;
+  color: var(--text-on-dark);
+  opacity: 0.92;
+  max-width: 720px;
+}
+.service-infra-cta-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 14px;
+  margin: 14px 0 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.service-infra-cta-prefix {
+  color: var(--text-on-dark);
+  opacity: 0.85;
+}
+.service-infra-cta {
+  color: var(--accent-highlight);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1.5px;
+  transition: color 0.15s ease;
+}
+.service-infra-cta:hover {
+  color: #fff;
+}
+@media (max-width: 640px) {
+  .service-infra { padding: 64px var(--gutter-mobile) 72px; }
+}
+
+@media (max-width: 1024px) {
+  .abo-grid { grid-template-columns: 1fr; gap: 36px; max-width: 540px; }
+}
+
+/* "Binnenkort"-feature: grijzer en kleine pill ernaast. */
+.pricing-card-features li.is-upcoming {
+  opacity: 0.6;
+}
+.pricing-card-features li.is-upcoming .check-icon {
+  background: transparent;
+  border: 1.5px dashed currentColor;
+  color: inherit;
+  font-size: 11px;
+}
+.abo-feature-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-highlight);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  border: 1px solid var(--text-primary);
+}
+
+/* Voorwaarden-strookje onder de twee cards. */
+.abo-terms-strip {
+  list-style: none;
+  padding: 18px 28px;
+  margin: 40px auto 0;
+  max-width: 1080px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 36px;
+  background: var(--surface-card);
+  border: 1.5px dashed var(--line-color);
+  border-radius: var(--radius-lg);
+}
+.abo-terms-strip li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.abo-terms-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-rare);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .abo-terms-strip { padding: 16px 20px; gap: 10px 20px; }
+  .abo-terms-strip li { font-size: 13px; }
 }
 
 /* ============================================================
@@ -6706,27 +6884,27 @@ main { display: contents; }
 }
 
 /* --- Map sectie --- */
-.contact-map {
+.visit-address {
   padding: 80px var(--gutter);
   background: var(--surface-card);
   border-top: var(--border);
   border-bottom: var(--border);
 }
-.contact-map-inner {
+.visit-address-inner {
   max-width: var(--container-max);
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   gap: 56px;
-  align-items: center;
+  align-items: stretch;
 }
-.contact-map-text {
+.visit-address-text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
 }
-.contact-map-title {
+.visit-address-title {
   font-family: var(--font-display);
   font-size: clamp(28px, 3.4vw, 44px);
   line-height: 1.05;
@@ -6735,15 +6913,15 @@ main { display: contents; }
   color: var(--text-primary);
   margin: 0;
 }
-.contact-map-title em { font-style: normal; color: var(--accent-rare); display: inline; }
-.contact-map-body {
+.visit-address-title em { font-style: normal; color: var(--accent-rare); display: inline; }
+.visit-address-body {
   font-size: 15px;
   line-height: 1.65;
   color: var(--text-primary);
   opacity: 0.85;
   margin: 0;
 }
-.contact-map-note {
+.visit-address-note {
   font-size: 13px;
   line-height: 1.5;
   color: var(--text-primary);
@@ -6751,7 +6929,7 @@ main { display: contents; }
   font-style: italic;
   margin: 0;
 }
-.contact-map-meta {
+.visit-address-meta {
   display: grid;
   grid-template-columns: max-content 1fr;
   gap: 8px 24px;
@@ -6761,8 +6939,8 @@ main { display: contents; }
   border-bottom: 1px dashed var(--line-color);
   font-size: 14px;
 }
-.contact-map-meta div { display: contents; }
-.contact-map-meta dt {
+.visit-address-meta div { display: contents; }
+.visit-address-meta dt {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
@@ -6772,29 +6950,75 @@ main { display: contents; }
   opacity: 0.6;
   align-self: center;
 }
-.contact-map-meta dd {
+.visit-address-meta dd {
   margin: 0;
   font-weight: 600;
   color: var(--text-primary);
   align-self: center;
 }
 
-.contact-map-embed {
-  aspect-ratio: 4 / 3;
+.visit-address-embed {
+  position: relative;
+  min-height: 380px;
   border: var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 8px 8px 0 var(--accent-rare);
+  box-shadow: 8px 8px 0 var(--accent-teal);
   background: var(--surface-page-deep);
 }
-.contact-map-embed iframe { width: 100%; height: 100%; display: block; }
+.visit-address-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* Detailed-variant: lijst met label/value + Maps-CTA onderaan */
+.visit-address-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.visit-address-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--text-primary) 25%, transparent);
+}
+.visit-address-list li:last-child { border-bottom: none; }
+.visit-address-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.6;
+}
+.visit-address-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+a.visit-address-value:hover { color: var(--accent-teal); }
+.visit-address-cta {
+  align-self: flex-start;
+  margin-top: 16px;
+}
 
 /* --- Responsive --- */
 @media (max-width: 1024px) {
   .contact-hero { padding: 56px var(--gutter) 40px; }
   .contact-main-inner { grid-template-columns: 1fr; gap: 32px; }
-  .contact-map { padding: 56px var(--gutter); }
-  .contact-map-inner { grid-template-columns: 1fr; gap: 36px; }
+  .visit-address { padding: 56px var(--gutter); }
+  .visit-address-inner { grid-template-columns: 1fr; gap: 36px; }
 }
 @media (max-width: 640px) {
   .contact-hero { padding: 40px var(--gutter-mobile) 28px; }
@@ -6802,7 +7026,7 @@ main { display: contents; }
   .contact-form-wrap { padding: 28px 24px 24px; }
   .form-row { grid-template-columns: 1fr; gap: 14px; }
   .contact-info { padding: 24px 22px 20px; }
-  .contact-map { padding: 48px var(--gutter-mobile); }
+  .visit-address { padding: 48px var(--gutter-mobile); }
 }
 
 /* ============================================================
@@ -8974,5 +9198,1655 @@ main { display: contents; }
 .opt-usps-lead,
 .maarssen-branches-lead {
   max-width: 64ch;
+}
+
+/* =============================================================
+   KENNISBANK — index + article template styling.
+   .kb-page = wrapper class voor alle kennisbank-pagina's.
+   .kb-article = article-template-specifieke layout.
+   .kb-prose = markdown body styling (h1/h2/p/ul/blockquote/code).
+   ============================================================= */
+
+.kb-page,
+.kb-article {
+  background: var(--surface-page);
+  background-image: var(--bg-decoration-light);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+}
+
+/* --- Index hero --- */
+.kb-hero {
+  padding: 80px var(--gutter) 48px;
+}
+.kb-hero-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.kb-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 76px);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin: 0;
+}
+.kb-hero-title em { font-style: normal; color: var(--color-teal); }
+.kb-hero-lead {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.85;
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* --- Category pills op de index --- */
+.kb-categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.kb-category-pill {
+  display: inline-block;
+  padding: 8px 16px;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  cursor: default;
+}
+.kb-category-pill.is-active {
+  background: var(--text-primary);
+  color: var(--text-on-dark);
+  border-color: var(--text-primary);
+}
+
+/* --- Empty state --- */
+.kb-empty {
+  padding: 64px var(--gutter) 96px;
+  text-align: center;
+}
+.kb-empty-inner h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+.kb-empty-inner p {
+  font-size: 16px;
+  color: var(--text-primary);
+  opacity: 0.78;
+  max-width: 50ch;
+  margin: 0 auto;
+}
+
+/* --- Featured article-card op de index --- */
+.kb-featured {
+  padding: 16px var(--gutter) 64px;
+}
+.kb-featured-card {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 48px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text-primary);
+  box-shadow: 8px 8px 0 var(--color-teal);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.kb-featured-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 11px 11px 0 var(--color-teal);
+}
+.kb-featured-media {
+  position: relative;
+  min-height: 320px;
+  background: var(--surface-page-deep);
+}
+.kb-featured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.kb-featured-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--accent-rare);
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1.5px solid var(--text-primary);
+}
+.kb-featured-body {
+  padding: 40px 36px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-content: center;
+}
+.kb-featured-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 4px 0 0;
+  color: var(--text-primary);
+}
+.kb-featured-desc {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.85;
+  margin: 0;
+}
+.kb-featured-cta {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent-rare);
+  margin-top: 6px;
+}
+@media (max-width: 1024px) {
+  .kb-featured-card { grid-template-columns: 1fr; gap: 0; }
+  .kb-featured-body { padding: 28px 24px 32px; }
+  .kb-featured-media { min-height: 220px; aspect-ratio: 16 / 9; }
+}
+
+/* --- Article-cards grid op de index + related sectie --- */
+.kb-grid-section {
+  padding: 24px var(--gutter) 80px;
+}
+.kb-grid-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.kb-grid-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0 0 24px;
+  color: var(--text-primary);
+}
+.kb-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.kb-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text-primary);
+  box-shadow: 5px 5px 0 var(--color-teal);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.kb-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--color-teal);
+}
+.kb-card-media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--surface-page-deep);
+}
+.kb-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.kb-card:hover .kb-card-img { transform: scale(1.04); }
+.kb-card-body {
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.kb-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.7;
+}
+.kb-card-category {
+  background: var(--accent-rare);
+  color: var(--color-white);
+  padding: 3px 10px;
+  border-radius: 999px;
+  opacity: 1;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+.kb-card-dot { opacity: 0.5; }
+.kb-card-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.kb-card-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.78;
+  margin: 0;
+  flex: 1;
+}
+.kb-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.12);
+}
+.kb-card-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.6;
+}
+.kb-card-cta {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accent-rare);
+}
+.kb-card-time {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+@media (max-width: 1024px) {
+  .kb-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .kb-hero { padding: 56px var(--gutter-mobile) 32px; }
+  .kb-featured { padding: 8px var(--gutter-mobile) 48px; }
+  .kb-grid-section { padding: 16px var(--gutter-mobile) 64px; }
+  .kb-grid { grid-template-columns: 1fr; gap: 18px; }
+}
+
+/* =============================================================
+   ARTICLE TEMPLATE (kb-article) — 2-koloms vanaf de top:
+   sticky TOC links, alle content rechts (breadcrumb, tags, h1,
+   lead, author-row, hero-image, prose). Op mobiel klapt de TOC
+   samen tot een accordion boven de prose.
+   ============================================================= */
+
+.kb-article-layout {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 40px var(--gutter) 64px;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 64px;
+  align-items: start;
+}
+
+/* --- Sticky TOC linker kolom ---
+   top-offset houdt rekening met de gefixeerde nav (~84px hoog
+   inclusief topbar) plus wat ademruimte. */
+.kb-toc {
+  position: sticky;
+  top: 104px;
+  align-self: start;
+  max-height: calc(100vh - 124px);
+  overflow-y: auto;
+}
+.kb-toc-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.55;
+  margin: 0 0 14px;
+}
+.kb-toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  border-left: 1.5px solid rgba(0, 0, 0, 0.08);
+}
+.kb-toc-list li {
+  font-size: 14px;
+  line-height: 1.45;
+}
+.kb-toc-list li a {
+  display: block;
+  padding: 8px 0 8px 16px;
+  margin-left: -1.5px;
+  border-left: 1.5px solid transparent;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.kb-toc-list li a:hover {
+  color: var(--accent-rare);
+  border-left-color: var(--accent-rare);
+}
+
+/* --- Rechter kolom: alle artikel-content --- */
+.kb-article-main {
+  min-width: 0; /* nodig zodat lange code-blokken niet de grid uitbreken */
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* --- Breadcrumb --- */
+.kb-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-primary);
+  opacity: 0.7;
+  margin: 0;
+}
+.kb-breadcrumb a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.kb-breadcrumb a:hover { color: var(--accent-rare); }
+.kb-breadcrumb-sep { opacity: 0.5; }
+.kb-breadcrumb-current {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 50ch;
+}
+
+/* --- Tags-row onder de breadcrumb met categorie-pills.
+   Compact (kleine padding), magenta achtergrond, één enkele dunne
+   borderline eronder ipv twee lijntjes met luchtige tussen. */
+.kb-article-tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 4px 0 10px;
+}
+.kb-article-tags-left {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.kb-article-tag {
+  background: var(--accent-rare);
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+/* --- Titel + lead --- */
+.kb-article-title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4.4vw, 56px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin: 8px 0 0;
+  color: var(--text-primary);
+}
+.kb-article-lead {
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.82;
+  margin: 0;
+}
+
+/* --- Author-row: kleine avatar + naam + datum + leestijd --- */
+.kb-author-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.kb-author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: var(--color-teal);
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.kb-author-row-meta { display: flex; flex-direction: column; gap: 2px; }
+.kb-author-row-name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+.kb-author-row-sub {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-primary);
+  opacity: 0.7;
+}
+
+/* --- Hero-image (binnen de rechter kolom) --- */
+.kb-article-hero-media {
+  margin: 8px 0 16px;
+}
+.kb-article-hero-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: var(--border);
+  display: block;
+}
+
+/* --- Mobile-only collapsed TOC accordion ---
+   Op desktop verborgen omdat daar de sticky TOC in de linker kolom
+   staat. Verschijnt boven de prose op tablet/mobiel. */
+.kb-toc-mobile {
+  display: none;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-md);
+  padding: 0;
+  margin: 8px 0 16px;
+}
+.kb-toc-mobile summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+.kb-toc-mobile summary::-webkit-details-marker { display: none; }
+.kb-toc-mobile-ico {
+  font-size: 18px;
+  transition: transform 0.2s ease;
+}
+.kb-toc-mobile[open] .kb-toc-mobile-ico { transform: rotate(45deg); }
+.kb-toc-mobile .kb-toc-list {
+  padding: 4px 18px 14px;
+  border-left: 0;
+}
+.kb-toc-mobile .kb-toc-list li a {
+  border-left: 0;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* --- Prose: markdown body styling --- */
+.kb-prose {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  margin-top: 24px;
+}
+.kb-prose > * { margin: 0; }
+.kb-prose > * + * { margin-top: 20px; }
+.kb-prose h2 {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.6vw, 32px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-top: 48px;
+  color: var(--text-primary);
+  scroll-margin-top: 104px; /* houdt rekening met fixed nav bij anchor-jumps */
+}
+.kb-prose h2:first-child { margin-top: 0; }
+.kb-prose h3 {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2vw, 22px);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin-top: 32px;
+  color: var(--text-primary);
+  scroll-margin-top: 104px;
+}
+.kb-prose a {
+  color: var(--accent-rare);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+.kb-prose a:hover { color: var(--accent-rare-strong); }
+.kb-prose strong { font-weight: 700; color: var(--text-primary); }
+.kb-prose em { font-style: italic; }
+
+/* Lijsten: gewone HTML-list-markers, beperkte spacing tussen items
+   zodat de bullets compact onder elkaar staan in plaats van als
+   losse alinea's. */
+.kb-prose ul,
+.kb-prose ol {
+  padding-left: 24px;
+}
+.kb-prose ul { list-style: disc; }
+.kb-prose ol { list-style: decimal; }
+.kb-prose li { margin-top: 6px; }
+.kb-prose li:first-child { margin-top: 0; }
+.kb-prose ul li::marker { color: var(--color-teal); }
+.kb-prose ol li::marker { color: var(--accent-rare); font-weight: 700; }
+.kb-prose li > p { margin: 0; } /* loose-lists niet dubbel spaciëren */
+.kb-prose li > ul,
+.kb-prose li > ol { margin-top: 6px; }
+
+.kb-prose blockquote {
+  padding: 16px 22px;
+  border-left: 4px solid var(--color-teal);
+  background: var(--surface-card);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: 18px;
+  font-style: italic;
+  color: var(--text-primary);
+}
+.kb-prose blockquote p { margin: 0; }
+.kb-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--surface-card);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+.kb-prose pre {
+  background: var(--surface-dark);
+  color: var(--text-on-dark);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.kb-prose pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+.kb-prose figure { margin: 0; }
+.kb-prose img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  border: var(--border);
+  display: block;
+}
+.kb-prose hr {
+  border: 0;
+  border-top: 1px dashed rgba(0, 0, 0, 0.2);
+  margin: 32px 0;
+}
+
+@media (max-width: 1024px) {
+  .kb-article-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 32px var(--gutter) 56px;
+  }
+  .kb-toc { display: none; }
+  .kb-toc-mobile { display: block; }
+}
+@media (max-width: 640px) {
+  .kb-article-layout { padding: 24px var(--gutter-mobile) 48px; }
+  .kb-article-title { font-size: clamp(28px, 7vw, 36px); }
+  .kb-article-lead { font-size: 17px; }
+  .kb-prose { font-size: 16px; line-height: 1.65; }
+}
+
+/* --- Uitgebreide auteur-bio onderaan het artikel (foto + bio +
+       LinkedIn). De compacte by-line met initialen staat al bovenaan
+       (.kb-author-row), dit is de inhoudelijke afsluiting. --- */
+.kb-author {
+  padding: 56px var(--gutter);
+  background: var(--color-cream-deep);
+  background-image: var(--bg-decoration-light);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.kb-author-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 28px;
+  align-items: center;
+}
+.kb-author-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: var(--border);
+  box-shadow: 4px 4px 0 var(--color-teal);
+  flex-shrink: 0;
+}
+.kb-author-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.kb-author-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.6;
+}
+.kb-author-name {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 800;
+  margin: 4px 0 8px;
+  color: var(--text-primary);
+}
+.kb-author-bio {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.85;
+  margin: 0 0 10px;
+}
+.kb-author-link {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent-rare);
+  text-decoration: none;
+}
+.kb-author-link:hover { color: var(--accent-rare-strong); }
+@media (max-width: 640px) {
+  .kb-author { padding: 40px var(--gutter-mobile); }
+  .kb-author-inner { grid-template-columns: 80px 1fr; gap: 18px; }
+  .kb-author-photo { width: 80px; height: 80px; }
+}
+
+/* --- Related artikelen onder het artikel --- */
+.kb-related {
+  padding: 72px var(--gutter) 64px;
+}
+.kb-related-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.kb-related-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  margin-bottom: 36px;
+}
+.kb-related-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.kb-related-title em { font-style: normal; color: var(--color-teal); }
+@media (max-width: 640px) {
+  .kb-related { padding: 56px var(--gutter-mobile) 48px; }
+}
+
+/* =============================================================
+   OVER-ONS PAGINA — /over-ons
+   Alle secties met expliciete h2-sizing (geen reliance op de
+   late-in-file h2-override). Kleur-afwisseling per sectie:
+   hero (cream/paars), story (cream-soft), values (donker),
+   team (cream), services (cream-deep), local (cream-soft/teal),
+   map (cream/teal). Accent-roles: highlight/teal/primary/rare.
+   ============================================================= */
+
+.over-page {
+  background: var(--surface-page);
+  background-image: var(--bg-decoration-light);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+}
+
+/* ----- 1. Hero --------------------------------------------- */
+.over-hero {
+  padding: 80px var(--gutter) 56px;
+}
+.over-hero-inner {
+  max-width: var(--container-text);
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+.over-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 76px);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin: 0;
+  max-width: 18ch;
+}
+.over-hero-title em {
+  font-style: normal;
+  color: var(--accent-primary);
+}
+.over-hero-lead {
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.85;
+  max-width: 62ch;
+  margin: 0;
+}
+.over-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  width: 100%;
+  max-width: 720px;
+  margin-top: 18px;
+  padding: 22px 12px;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 5px 5px 0 var(--accent-primary);
+}
+.over-hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.over-hero-stat strong {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.5vw, 32px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--accent-primary);
+  line-height: 1;
+}
+.over-hero-stat span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+  opacity: 0.7;
+}
+@media (max-width: 640px) {
+  .over-hero { padding: 64px var(--gutter-mobile) 40px; }
+  .over-hero-stats { grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 18px 14px; }
+}
+
+/* ----- 3. Story -------------------------------------------- */
+.over-story {
+  padding: 72px var(--gutter);
+  background: var(--surface-page-soft);
+  border-top: var(--border);
+}
+.over-story-inner {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.over-story-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.over-story-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3.6vw, 52px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0;
+}
+.over-story-title em {
+  font-style: normal;
+  color: var(--accent-rare);
+}
+.over-story-text p {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  margin: 0;
+}
+.over-story-quote {
+  position: relative;
+  padding: 36px 28px 28px;
+  background: var(--surface-dark);
+  color: var(--text-on-dark);
+  border-radius: var(--radius-lg);
+  border: var(--border);
+  box-shadow: 6px 6px 0 var(--accent-highlight);
+}
+.over-story-quote-mark {
+  position: absolute;
+  top: -22px;
+  left: 18px;
+  font-family: var(--font-display);
+  font-size: 96px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--accent-highlight);
+  opacity: 0.9;
+}
+.over-story-quote blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-on-dark);
+}
+.over-story-quote-attr {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.18);
+}
+.over-story-quote-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 2px solid var(--accent-highlight);
+  flex-shrink: 0;
+  filter: sepia(0.15);
+}
+.over-story-quote cite {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-highlight);
+  line-height: 1.45;
+}
+.over-story-quote cite span {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--text-on-dark);
+  opacity: 0.7;
+}
+@media (max-width: 900px) {
+  .over-story-inner { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 640px) {
+  .over-story { padding: 56px var(--gutter-mobile); }
+}
+
+/* ----- 4. Waarden — DONKER --------------------------------- */
+.over-values {
+  padding: 96px var(--gutter) 104px;
+  background: var(--surface-dark);
+  background-image: var(--bg-decoration-dark);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  color: var(--text-on-dark);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.over-values-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.over-values-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  margin-bottom: 48px;
+}
+.over-values-title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4vw, 60px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--text-on-dark);
+  margin: 0;
+  max-width: 22ch;
+}
+.over-values-title em {
+  font-style: normal;
+  color: var(--accent-rare-strong, var(--accent-rare));
+  background: var(--accent-highlight);
+  padding: 0 8px;
+  border-radius: 4px;
+  color: var(--text-primary);
+}
+.over-values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+.over-value-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.over-value-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(255, 255, 255, 0.03));
+  pointer-events: none;
+}
+.over-value-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent-highlight);
+}
+.over-value-card.value-0 .over-value-num { color: var(--accent-highlight); }
+.over-value-card.value-1 .over-value-num { color: var(--accent-rare); }
+.over-value-card.value-2 .over-value-num { color: var(--accent-teal); }
+.over-value-card.value-3 .over-value-num { color: var(--accent-highlight); }
+.over-value-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text-on-dark);
+  margin: 0;
+}
+.over-value-body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-on-dark);
+  opacity: 0.85;
+  margin: 0;
+}
+@media (max-width: 1024px) {
+  .over-values-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .over-values { padding: 72px var(--gutter-mobile) 80px; }
+  .over-values-grid { grid-template-columns: 1fr; }
+}
+
+/* ----- 5. Team — TEAL blok met witte cards -------------------- */
+.over-team {
+  padding: 96px var(--gutter) 100px;
+  background: var(--accent-teal);
+  background-image:
+    radial-gradient(ellipse at center, transparent 30%, var(--accent-teal-strong) 90%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 60px);
+  background-size: cover, 60px 60px, 60px 60px;
+  background-repeat: no-repeat, repeat, repeat;
+  color: var(--text-on-accent);
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.over-team-head {
+  max-width: var(--container-text);
+  margin: 0 auto 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.over-team-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.2vw, 64px);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--text-on-accent);
+  margin: 0;
+}
+.over-team-title em {
+  font-style: normal;
+  color: var(--accent-highlight);
+}
+.over-team-lead {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-on-accent);
+  opacity: 0.92;
+  margin: 0;
+  max-width: 58ch;
+}
+.over-team-grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.over-team-card {
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+}
+.over-team-card.accent-highlight { box-shadow: 6px 6px 0 var(--accent-highlight); }
+.over-team-card.accent-teal { box-shadow: 6px 6px 0 var(--accent-teal); }
+.over-team-card.accent-primary { box-shadow: 6px 6px 0 var(--accent-primary); }
+.over-team-card.accent-rare { box-shadow: 6px 6px 0 var(--accent-rare); }
+/* Op het teal team-blok zou de teal-shadow van Rowan onzichtbaar zijn.
+   Vervang door highlight (geel) — pops mooi tegen het groene blok. */
+.over-team .over-team-card.accent-teal { box-shadow: 6px 6px 0 var(--accent-highlight); }
+.over-team-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--line-color);
+}
+.over-team-card.accent-highlight .over-team-avatar:not(:has(.over-team-photo)) { background: var(--accent-highlight); color: var(--text-primary); }
+.over-team-card.accent-teal .over-team-avatar:not(:has(.over-team-photo)) { background: var(--accent-teal); color: var(--text-on-accent); }
+.over-team-card.accent-primary .over-team-avatar:not(:has(.over-team-photo)) { background: var(--accent-primary); color: var(--text-on-accent); }
+.over-team-card.accent-rare .over-team-avatar:not(:has(.over-team-photo)) { background: var(--accent-rare); color: var(--text-on-accent); }
+.over-team-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.over-team-initial {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 900;
+  line-height: 1;
+}
+.over-team-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin: 6px 0 0;
+}
+.over-team-role {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+  opacity: 0.7;
+  margin: 0;
+}
+.over-team-body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.9;
+  margin: 6px 0 0;
+}
+@media (max-width: 1024px) {
+  .over-team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .over-team { padding: 72px var(--gutter-mobile) 64px; }
+  .over-team-grid { grid-template-columns: 1fr; gap: 28px; }
+  .over-team-card { padding: 24px 22px; }
+}
+
+/* ----- 6. Diensten ----------------------------------------- */
+.over-services {
+  padding: 96px var(--gutter) 88px;
+  background: var(--surface-page-deep);
+  border-top: var(--border);
+}
+.over-services-head {
+  max-width: var(--container-text);
+  margin: 0 auto 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.over-services-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.2vw, 64px);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0;
+}
+.over-services-title em { font-style: normal; color: var(--accent-rare); }
+.over-services-lead {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.8;
+  margin: 0;
+  max-width: 58ch;
+}
+.over-services-grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.over-service-card {
+  position: relative;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 26px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: transform 0.18s var(--ease-pop), box-shadow 0.18s ease;
+}
+.over-service-card.accent-rare { box-shadow: 5px 5px 0 var(--accent-rare); }
+.over-service-card.accent-primary { box-shadow: 5px 5px 0 var(--accent-primary); }
+.over-service-card.accent-teal { box-shadow: 5px 5px 0 var(--accent-teal); }
+.over-service-card.accent-highlight { box-shadow: 5px 5px 0 var(--accent-highlight); }
+.over-service-card:hover {
+  transform: translate(-2px, -2px);
+}
+.over-service-card.accent-rare:hover { box-shadow: 7px 7px 0 var(--accent-rare); }
+.over-service-card.accent-primary:hover { box-shadow: 7px 7px 0 var(--accent-primary); }
+.over-service-card.accent-teal:hover { box-shadow: 7px 7px 0 var(--accent-teal); }
+.over-service-card.accent-highlight:hover { box-shadow: 7px 7px 0 var(--accent-highlight); }
+.over-service-card.is-featured {
+  background: var(--surface-dark);
+  color: var(--text-on-dark);
+}
+.over-service-badge {
+  position: absolute;
+  top: -12px;
+  left: 24px;
+  background: var(--accent-highlight);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1.5px solid var(--text-primary);
+}
+.over-service-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.over-service-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: inherit;
+}
+.over-service-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+  color: inherit;
+  opacity: 0.9;
+  flex-grow: 1;
+}
+.over-service-arrow {
+  align-self: flex-end;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 900;
+  margin-top: 6px;
+  transition: transform 0.18s var(--ease-pop);
+}
+.over-service-card:hover .over-service-arrow { transform: translateX(4px); }
+@media (max-width: 1024px) {
+  .over-services-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .over-services { padding: 72px var(--gutter-mobile) 64px; }
+  .over-services-grid { grid-template-columns: 1fr; }
+}
+
+/* ----- 7. Context-links onder VisitAddress op /over-ons ------- */
+.over-context-links {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 64px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  opacity: 0.7;
+  text-align: center;
+}
+.over-context-links a {
+  color: var(--accent-teal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.over-context-links a:hover { color: var(--accent-teal-strong); }
+@media (max-width: 640px) {
+  .over-context-links { padding: 0 var(--gutter-mobile) 48px; }
+}
+
+/* =============================================================
+   DIENSTEN PAGINA — /diensten
+   Drie gegroepeerde secties met afwisselende achtergronden:
+   - Bouwen & ontwerpen (cream-soft)
+   - Onderhouden & verbeteren (DONKER)
+   - Online groei (TEAL)
+   Alle cards delen dezelfde structuur, gestyled via .diensten-card.
+   ============================================================= */
+
+.diensten-page {
+  background: var(--surface-page);
+  background-image: var(--bg-decoration-light);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+}
+
+/* ----- Hero ----- */
+.diensten-hero {
+  padding: 80px var(--gutter) 56px;
+}
+.diensten-hero-inner {
+  max-width: var(--container-text);
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+.diensten-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 76px);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin: 0;
+  max-width: 20ch;
+}
+.diensten-hero-title em {
+  font-style: normal;
+  color: var(--accent-primary);
+}
+.diensten-hero-lead {
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.85;
+  max-width: 62ch;
+  margin: 0;
+}
+.diensten-hero-cta { margin-top: 6px; }
+@media (max-width: 640px) {
+  .diensten-hero { padding: 64px var(--gutter-mobile) 40px; }
+}
+
+/* ----- Groep-secties (algemeen) ----- */
+.diensten-group {
+  padding: 96px var(--gutter) 104px;
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.diensten-group-head {
+  max-width: var(--container-text);
+  margin: 0 auto 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.diensten-group-title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4vw, 60px);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin: 0;
+  max-width: 22ch;
+}
+.diensten-group-lead {
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 58ch;
+}
+
+/* Groep 1: bouwen — cream-soft */
+.diensten-group-build {
+  background: var(--surface-page-soft);
+}
+.diensten-group-build .diensten-group-title { color: var(--text-primary); }
+.diensten-group-build .diensten-group-title em { font-style: normal; color: var(--accent-rare); }
+.diensten-group-build .diensten-group-lead { color: var(--text-primary); opacity: 0.8; }
+
+/* Groep 2: onderhouden — DONKER met grid backdrop */
+.diensten-group-maintain {
+  background: var(--surface-dark);
+  background-image: var(--bg-decoration-dark);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  color: var(--text-on-dark);
+}
+.diensten-group-maintain .diensten-group-title { color: var(--text-on-dark); }
+.diensten-group-maintain .diensten-group-title em {
+  font-style: normal;
+  background: var(--accent-highlight);
+  color: var(--text-primary);
+  padding: 0 8px;
+  border-radius: 4px;
+}
+.diensten-group-maintain .diensten-group-lead { color: var(--text-on-dark); opacity: 0.9; }
+
+/* Groep 3: groei — TEAL met dark grid-overlay */
+.diensten-group-grow {
+  background: var(--accent-teal);
+  background-image:
+    radial-gradient(ellipse at center, transparent 30%, var(--accent-teal-strong) 90%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 60px);
+  background-size: cover, 60px 60px, 60px 60px;
+  background-repeat: no-repeat, repeat, repeat;
+  color: var(--text-on-accent);
+}
+.diensten-group-grow .diensten-group-title { color: var(--text-on-accent); }
+.diensten-group-grow .diensten-group-title em {
+  font-style: normal;
+  color: var(--accent-highlight);
+}
+.diensten-group-grow .diensten-group-lead { color: var(--text-on-accent); opacity: 0.92; }
+
+/* ----- Cards-grid ----- */
+.diensten-cards {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+  align-items: stretch;
+}
+.diensten-cards.count-2 { grid-template-columns: repeat(2, 1fr); max-width: 980px; }
+.diensten-cards.count-3 { grid-template-columns: repeat(3, 1fr); }
+.diensten-cards.count-4 { grid-template-columns: repeat(2, 1fr); max-width: 1080px; }
+@media (max-width: 1024px) {
+  .diensten-cards.count-3 { grid-template-columns: repeat(2, 1fr); max-width: 720px; }
+}
+@media (max-width: 720px) {
+  .diensten-cards.count-2,
+  .diensten-cards.count-3,
+  .diensten-cards.count-4 { grid-template-columns: 1fr; max-width: 480px; }
+}
+
+/* ----- Individuele card ----- */
+.diensten-card {
+  position: relative;
+  background: var(--surface-card);
+  color: var(--text-primary);
+  text-decoration: none;
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: 30px 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.18s var(--ease-pop), box-shadow 0.18s ease;
+}
+.diensten-card.accent-highlight { box-shadow: 6px 6px 0 var(--accent-highlight); }
+.diensten-card.accent-teal { box-shadow: 6px 6px 0 var(--accent-teal); }
+.diensten-card.accent-primary { box-shadow: 6px 6px 0 var(--accent-primary); }
+.diensten-card.accent-rare { box-shadow: 6px 6px 0 var(--accent-rare); }
+.diensten-card:hover { transform: translate(-2px, -2px); }
+.diensten-card.accent-highlight:hover { box-shadow: 8px 8px 0 var(--accent-highlight); }
+.diensten-card.accent-teal:hover { box-shadow: 8px 8px 0 var(--accent-teal); }
+.diensten-card.accent-primary:hover { box-shadow: 8px 8px 0 var(--accent-primary); }
+.diensten-card.accent-rare:hover { box-shadow: 8px 8px 0 var(--accent-rare); }
+
+/* Op de teal/donker bg cards: vervang teal-shadow door highlight voor zichtbaarheid */
+.diensten-group-grow .diensten-card.accent-teal { box-shadow: 6px 6px 0 var(--accent-highlight); }
+.diensten-group-grow .diensten-card.accent-teal:hover { box-shadow: 8px 8px 0 var(--accent-highlight); }
+
+.diensten-card-tag {
+  position: absolute;
+  top: -12px;
+  left: 22px;
+  background: var(--accent-highlight);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1.5px solid var(--text-primary);
+}
+.diensten-card-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--line-color);
+  margin-bottom: 4px;
+}
+.diensten-card.accent-highlight .diensten-card-icon { background: var(--accent-highlight); color: var(--text-primary); }
+.diensten-card.accent-teal .diensten-card-icon { background: var(--accent-teal); color: var(--text-on-accent); }
+.diensten-card.accent-primary .diensten-card-icon { background: var(--accent-primary); color: var(--text-on-accent); }
+.diensten-card.accent-rare .diensten-card-icon { background: var(--accent-rare); color: var(--text-on-accent); }
+
+.diensten-card-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-primary);
+}
+.diensten-card-tagline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.65;
+  margin: 0;
+}
+.diensten-card-desc {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  margin: 4px 0 0;
+}
+.diensten-card-checks {
+  list-style: none;
+  padding: 14px 0 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px dashed color-mix(in srgb, var(--text-primary) 25%, transparent);
+  flex-grow: 1;
+}
+.diensten-card-checks li {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.diensten-card-checks .check-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-rare);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.diensten-card.accent-highlight .check-icon { background: var(--accent-highlight); color: var(--text-primary); }
+.diensten-card.accent-teal .check-icon { background: var(--accent-teal); color: var(--text-on-accent); }
+.diensten-card.accent-primary .check-icon { background: var(--accent-primary); color: var(--text-on-accent); }
+.diensten-card.accent-rare .check-icon { background: var(--accent-rare); color: var(--text-on-accent); }
+
+.diensten-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+.diensten-card-cta .arrow {
+  transition: transform 0.18s var(--ease-pop);
+}
+.diensten-card:hover .diensten-card-cta .arrow {
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 640px) {
+  .diensten-group { padding: 64px var(--gutter-mobile) 72px; }
+  .diensten-card { padding: 26px 22px 22px; }
 }
 

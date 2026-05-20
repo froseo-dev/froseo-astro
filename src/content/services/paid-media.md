@@ -12,12 +12,12 @@ heroChecks:
   - Vaste maandfee, geen percentage van je advertentiebudget
 heroPrimaryCta:
   label: 'Bespreek je campagnes ↗'
-  href: '/contact?onderwerp=advies-paid-media'
+  href: '/contact/?onderwerp=advies-paid-media'
 
 calvinNote:
   message: 'Draait er ergens al een Google- of Meta-account waarvan je het gevoel hebt dat het beter kan? Stuur ons toegang, dan kijken we ernaar en zeggen we eerlijk wat er aan rendement te halen valt.'
   ctaLabel: 'Vraag een account-check aan ↗'
-  ctaHref: '/contact?onderwerp=audit-paid-media'
+  ctaHref: '/contact/?onderwerp=audit-paid-media'
 
 eyebrow: 'Paid Advertising'
 description: 'Google Ads, Meta Ads en LinkedIn Ads die rendement uit je budget halen. Wij sturen niet op kliks maar op echte conversies en winst, met heldere maandrapportage en een vaste maandfee.'

@@ -1,0 +1,330 @@
+---
+/**
+ * /diensten — overzicht van alle Froseo-diensten.
+ * Drie thematische groepen met afwisselende achtergronden:
+ *   1. Bouwen & ontwerpen (cream-soft)  — webdesign, abonnement, opfrissen
+ *   2. Onderhouden & verbeteren (DONKER) — onderhoud, optimalisatie
+ *   3. Online groei (TEAL)               — SEO, lokale SEO, content abo, ads
+ *
+ * Elke card is een clickable link naar de diepere dienstpagina.
+ * Cards bevatten icon, titel, tagline, korte beschrijving en 3 checks.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import SectionIcon from '@components/ui/SectionIcon.astro';
+import LogosTicker from '@components/sections/LogosTicker.astro';
+import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import { getCollection } from 'astro:content';
+import { pricing } from '@data/site-config';
+
+const pageTitle = 'Diensten | Froseo Digital Agency Utrecht';
+const pageDesc =
+  'Alle diensten van Froseo op één pagina: maatwerk webdesign, website abonnement, onderhoud en optimalisatie, SEO, lokale SEO, content en advertenties. Voor ambitieus MKB.';
+
+const allCases = await getCollection('cases', ({ data }) => data.published !== false);
+const showcaseCases = allCases.sort((a, b) => a.data.order - b.data.order).slice(0, 6);
+
+type ServiceCard = {
+  icon: string;
+  title: string;
+  tagline: string;
+  desc: string;
+  checks: string[];
+  tag?: string;
+  href: string;
+  accent: 'highlight' | 'teal' | 'primary' | 'rare';
+};
+
+const buildGroup: ServiceCard[] = [
+  {
+    icon: 'paletteSwatch',
+    title: 'Maatwerk webdesign',
+    tagline: 'WordPress of Astro, op maat',
+    desc: 'Een uniek ontwerp dat past bij jouw merk, gebouwd op de techniek die bij je doelen past. Voor bedrijven die meer vrijheid willen dan een template biedt.',
+    checks: [
+      'Volledig maatwerk in design en functionaliteit',
+      'Strategie, ontwerp en bouw door één specialist',
+      'Sterke basis voor SEO, snelheid en conversie',
+    ],
+    href: '/webdesign/',
+    accent: 'primary',
+  },
+  {
+    icon: 'toolbox',
+    title: 'Website abonnement',
+    tagline: `Een sterke website vanaf ${pricing.abboFromInline}`,
+    desc: 'Een professionele website voor een vaste maandprijs. Hosting, beheer en kleine wijzigingen inbegrepen. Geen setup fee, maandelijks opzegbaar.',
+    checks: [
+      'Online Start en Online Plus',
+      'Hosting, e-mail en SSL inbegrepen',
+      '30 minuten tot 2 uur wijzigingen per maand',
+    ],
+    tag: 'Populair',
+    href: '/website-abonnement/',
+    accent: 'rare',
+  },
+  {
+    icon: 'alertBurst',
+    title: 'Website opfrissen',
+    tagline: 'Refresh op je bestaande site',
+    desc: 'Geen volledige nieuwbouw, wel een nieuwe look. Design opfrissen, snelheid verbeteren en content scherper neerzetten op je huidige fundering.',
+    checks: [
+      'Visuele refresh zonder rebuild',
+      'Snelheid en techniek meegenomen',
+      'Behoud je content, structuur en rankings',
+    ],
+    href: '/website-opfrissen/',
+    accent: 'highlight',
+  },
+];
+
+const maintainGroup: ServiceCard[] = [
+  {
+    icon: 'shieldCheck',
+    title: 'Website onderhoud',
+    tagline: '60+ sites onder onze hoede',
+    desc: 'WordPress-onderhoud met vaste maandprijs. Updates, backups, beveiliging en monitoring. Inclusief premium plug-in-licenties t.w.v. €350+ per jaar.',
+    checks: [
+      'Drie pakketten (Basic, Standard, Pro Care)',
+      'Dagelijkse backups en security scans',
+      'Premium plug-in-licenties inbegrepen',
+    ],
+    href: '/website-onderhoud/',
+    accent: 'teal',
+  },
+  {
+    icon: 'chartUp',
+    title: 'Website optimalisatie',
+    tagline: 'Meer halen uit je huidige site',
+    desc: 'Geen nieuwe site, wel meer resultaat uit wat er staat. Snelheid, conversie, structuur en interne SEO scherp neerzetten met meetbare verbetering.',
+    checks: [
+      'Audit van techniek, snelheid en conversie',
+      'Concrete verbeteracties met prioriteit',
+      'A/B testing op de pagina\'s die ertoe doen',
+    ],
+    href: '/website-optimalisatie/',
+    accent: 'highlight',
+  },
+];
+
+const growGroup: ServiceCard[] = [
+  {
+    icon: 'searchGlass',
+    title: 'SEO/GEO',
+    tagline: 'Vindbaarheid in Google en AI-zoekmachines',
+    desc: 'Technische SEO, content en autoriteit als één traject. Voor merken die structureel willen groeien in organisch verkeer, niet alleen tijdelijk willen pieken.',
+    checks: [
+      'Zoekwoordonderzoek met commerciële waarde',
+      'Technische SEO en interne linking',
+      'AIO-content voor ChatGPT, Perplexity en Google AI',
+    ],
+    href: '/seo/',
+    accent: 'primary',
+  },
+  {
+    icon: 'locationPin',
+    title: 'Lokale SEO',
+    tagline: 'Zichtbaar in jouw regio',
+    desc: 'Google Business Profile-optimalisatie, lokale rankings en review-strategie. Voor MKB dat klanten uit eigen stad of regio wil aantrekken.',
+    checks: [
+      'Google Business Profile als specialisme',
+      'Lokale rankings op buurt en dienst',
+      'Review-strategie en NAP-consistentie',
+    ],
+    href: '/lokale-seo/',
+    accent: 'rare',
+  },
+  {
+    icon: 'archiveStack',
+    title: 'Content abonnement',
+    tagline: 'Vanaf €599 per maand',
+    desc: 'Doorlopend SEO-content dat rankt in Google en aanvragen oplevert. Drie pakketten met zoekwoordstrategie, schrijven, on-page SEO en rapportage.',
+    checks: [
+      'Content Start, Boost en Custom',
+      'Zoekwoordonderzoek per traject',
+      'Maandelijkse positierapportage',
+    ],
+    href: '/content-abonnement/',
+    accent: 'teal',
+  },
+  {
+    icon: 'target',
+    title: 'Paid media (Ads)',
+    tagline: 'Google Ads en Meta Ads',
+    desc: 'Adverteren met budget dat ergens heen gaat dat je kan meten. Google Ads, Meta Ads en remarketing voor gerichte conversies, niet alleen vertoningen.',
+    checks: [
+      'Google Ads en Meta Ads (Facebook, Instagram)',
+      'Google Tag Manager en conversie-tracking',
+      'Transparant maandrapport, geen black box',
+    ],
+    href: '/paid-media/',
+    accent: 'highlight',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="diensten-page">
+
+      {/* ============================================================
+           Hero
+           ============================================================ */}
+      <section class="diensten-hero">
+        <div class="diensten-hero-inner">
+          <EyebrowPill variant="primary">Diensten</EyebrowPill>
+          <h1 class="diensten-hero-title">
+            Alles wat je nodig hebt om <em>online te groeien.</em>
+          </h1>
+          <p class="diensten-hero-lead">
+            Een website, vindbaarheid in Google en advertenties die werken. Bij Froseo lopen die drie sporen onder één dak, met directe lijnen en eerlijk werk.
+          </p>
+          <a class="btn-primary diensten-hero-cta" href="/contact/?onderwerp=diensten">
+            Plan een kennismaking ↗
+          </a>
+        </div>
+      </section>
+
+      <LogosTicker label="Een greep uit onze klanten:" />
+
+      {/* ============================================================
+           Group 1: Bouwen & ontwerpen — cream-soft, 3 cards
+           ============================================================ */}
+      <section class="diensten-group diensten-group-build">
+        <div class="diensten-group-head">
+          <EyebrowPill variant="rare">Bouwen & ontwerpen</EyebrowPill>
+          <h2 class="diensten-group-title">
+            Een nieuwe site, een refresh of <em>iets ertussen.</em>
+          </h2>
+          <p class="diensten-group-lead">
+            Drie routes om online te beginnen of weer vooruit te komen.
+          </p>
+        </div>
+        <div class="diensten-cards count-3">
+          {buildGroup.map((s) => (
+            <a class={`diensten-card accent-${s.accent}`} href={s.href}>
+              {s.tag && <span class="diensten-card-tag">{s.tag}</span>}
+              <div class="diensten-card-icon">
+                <SectionIcon name={s.icon} size={32} />
+              </div>
+              <h3 class="diensten-card-title">{s.title}</h3>
+              <p class="diensten-card-tagline">{s.tagline}</p>
+              <p class="diensten-card-desc">{s.desc}</p>
+              <ul class="diensten-card-checks">
+                {s.checks.map((c) => (
+                  <li>
+                    <span class="check-icon" aria-hidden="true">✓</span>
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ul>
+              <span class="diensten-card-cta">Lees meer <span class="arrow" aria-hidden="true">↗</span></span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* ============================================================
+           Group 2: Onderhouden & verbeteren — DONKER, 2 cards
+           ============================================================ */}
+      <section class="diensten-group diensten-group-maintain">
+        <div class="diensten-group-head">
+          <EyebrowPill variant="highlight">Onderhouden & verbeteren</EyebrowPill>
+          <h2 class="diensten-group-title">
+            Je site scherp houden, <em>elke maand.</em>
+          </h2>
+          <p class="diensten-group-lead">
+            De techniek up-to-date houden en meer halen uit wat er al staat.
+          </p>
+        </div>
+        <div class="diensten-cards count-2">
+          {maintainGroup.map((s) => (
+            <a class={`diensten-card accent-${s.accent}`} href={s.href}>
+              {s.tag && <span class="diensten-card-tag">{s.tag}</span>}
+              <div class="diensten-card-icon">
+                <SectionIcon name={s.icon} size={32} />
+              </div>
+              <h3 class="diensten-card-title">{s.title}</h3>
+              <p class="diensten-card-tagline">{s.tagline}</p>
+              <p class="diensten-card-desc">{s.desc}</p>
+              <ul class="diensten-card-checks">
+                {s.checks.map((c) => (
+                  <li>
+                    <span class="check-icon" aria-hidden="true">✓</span>
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ul>
+              <span class="diensten-card-cta">Lees meer <span class="arrow" aria-hidden="true">↗</span></span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* ============================================================
+           Group 3: Online groei — TEAL, 4 cards in 2x2
+           ============================================================ */}
+      <section class="diensten-group diensten-group-grow">
+        <div class="diensten-group-head">
+          <EyebrowPill variant="highlight">Online groei</EyebrowPill>
+          <h2 class="diensten-group-title">
+            Meer bezoekers, meer aanvragen, <em>meer omzet.</em>
+          </h2>
+          <p class="diensten-group-lead">
+            SEO, content en advertenties als één samenhangend verhaal.
+          </p>
+        </div>
+        <div class="diensten-cards count-4">
+          {growGroup.map((s) => (
+            <a class={`diensten-card accent-${s.accent}`} href={s.href}>
+              {s.tag && <span class="diensten-card-tag">{s.tag}</span>}
+              <div class="diensten-card-icon">
+                <SectionIcon name={s.icon} size={32} />
+              </div>
+              <h3 class="diensten-card-title">{s.title}</h3>
+              <p class="diensten-card-tagline">{s.tagline}</p>
+              <p class="diensten-card-desc">{s.desc}</p>
+              <ul class="diensten-card-checks">
+                {s.checks.map((c) => (
+                  <li>
+                    <span class="check-icon" aria-hidden="true">✓</span>
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ul>
+              <span class="diensten-card-cta">Lees meer <span class="arrow" aria-hidden="true">↗</span></span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <WebsitesShowcase
+        cases={showcaseCases}
+        eyebrow="Ons werk"
+        title="Wat we recent"
+        titleAccent="opleverden."
+      />
+
+      <BetterCallCalvin
+        eyebrow="Welke route past?"
+        titleLine1="Even sparren"
+        titleAccent="over wat past?"
+        body={[
+          'Niet zeker welke combinatie van diensten past bij je situatie? Plan een vrijblijvend gesprek van 30 minuten. We kijken samen welke routes echt iets opleveren en welke voor jou nog niet relevant zijn.',
+          'Past het niet bij ons, dan zeggen we dat eerlijk en wijzen we je verder.',
+        ]}
+        primaryLabel="Plan een kennismaking ↗"
+        primaryHref="/contact/?onderwerp=diensten"
+      />
+
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

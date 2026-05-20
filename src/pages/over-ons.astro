@@ -1,0 +1,355 @@
+---
+/**
+ * /over-ons — story, team, waarden en doorverwijzingen naar de
+ * diensten en lokale landings. Visueel afwisselend (paars, teal,
+ * geel, magenta, donker) om het ritme te breken.
+ *
+ * Sectie-volgorde:
+ *   1. Hero (licht, paars accent)
+ *   2. LogosTicker
+ *   3. Story-blok (cream, met quote Sen no Rikyū)
+ *   4. Waarden (donker, paars-magenta accent)
+ *   5. Team-grid (licht, per card eigen accent-kleur)
+ *   6. Diensten-grid met interne links
+ *   7. Lokale landings (Utrecht-strookje, teal accent)
+ *   8. WebsitesShowcase (ons werk)
+ *   9. Map embed (Froseo place op Google Maps)
+ *  10. BetterCallCalvin (donker close-CTA)
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import LogosTicker from '@components/sections/LogosTicker.astro';
+import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import VisitAddress from '@components/sections/VisitAddress.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { pricing } from '@data/site-config';
+import calvinPhoto from '@assets/team/calvin.webp';
+import senNoRikyu from '@assets/team/sen-no-rikyu.jpg';
+
+const pageTitle = 'Over ons | Froseo Digital Agency Utrecht';
+const pageDesc =
+  'Een klein team van eigenwijze specialisten uit Utrecht. Webdesign, SEO en online marketing voor ambitieus MKB. Sinds 2010 actief, sinds 2021 als collectief.';
+
+/* Cases voor de "ons werk"-strip onderaan. Mix van branches en stijlen. */
+const allCases = await getCollection('cases', ({ data }) => data.published !== false);
+const showcaseCases = allCases
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 6);
+
+/* Team-data. Calvin heeft een foto, de rest een gekleurde avatar
+   met initialen (totdat er foto's zijn). Accent-kleur per persoon
+   geeft visueel verschil per card. */
+type TeamMember = {
+  name: string;
+  role: string;
+  body: string;
+  photo?: ImageMetadata;
+  accent: 'highlight' | 'teal' | 'primary' | 'rare';
+};
+
+type ImageMetadata = import('astro').ImageMetadata;
+
+const team: TeamMember[] = [
+  {
+    name: 'Calvin',
+    role: 'SEO en WordPress',
+    body: 'Het brein achter Froseo. Zelf SEO-specialist en WordPress webdesigner met 10+ jaar ervaring achter de gordel. Grote liefde voor ijshockey en zijn dochtertje!',
+    photo: calvinPhoto,
+    accent: 'highlight',
+  },
+  {
+    name: 'Rowan',
+    role: 'Grafisch designer',
+    body: 'Martial arts specialist en grafisch designer. Onze man voor DTP werk en te gekke logo\'s (f*ck ai!). Zou het liefst 365 dagen vanuit Japan werken.',
+    accent: 'teal',
+  },
+  {
+    name: 'Thom',
+    role: 'Paid media en tag manager',
+    body: 'Onze paid media (ads) en tag manager guru. Heeft advertentie campagnes op poten gezet voor grote bedrijven als NS en ABN AMRO maar helpt liever "kleinere" ondernemers. Tevens Azië fanaat.',
+    accent: 'primary',
+  },
+  {
+    name: 'Charlotte',
+    role: 'SEO- en contentspecialist',
+    body: 'SEO- en contentspecialist. Heeft een obsessieve sport gemaakt van het behalen van #1 posities. Probeert de jongens regelmatig over te halen om eens een lesje yoga of tai chi te proberen. Tot op heden tevergeefs...',
+    accent: 'rare',
+  },
+];
+
+/* Onze waarden — zoals op de oude over-ons-pagina, in goed Nederlands
+   en zonder marketing-jargon. */
+const values = [
+  {
+    title: 'Klein team, groot effect',
+    body: 'Geen lagen tussen jou en de mensen die het werk doen. Mailtjes komen aan bij wie ze nodig heeft, beslissingen worden snel genomen en er is altijd iemand bereikbaar.',
+  },
+  {
+    title: 'Eerlijk over wat werkt',
+    body: 'Geen vage rapportages, geen verborgen voorwaarden. We zeggen wat we doen, wat het kost en wat je ervan kan verwachten. Past het niet bij ons, dan zeggen we dat ook.',
+  },
+  {
+    title: 'Creatief met lef',
+    body: 'Geen kant-en-klare templates. We ontwerpen wat past bij jouw bedrijf, ook als dat afwijkt van wat anderen doen. Eigenwijs, maar onderbouwd.',
+  },
+  {
+    title: 'Sinds 2010 in het vak',
+    body: '15+ jaar ervaring in webdesign en online marketing, 80+ projecten live, in uiteenlopende branches. Die ervaring zit in elk werk dat we afleveren.',
+  },
+];
+
+/* Diensten-grid: 6 cards met interne links. Volgorde gericht op
+   conversie (abonnement bovenaan featured, daarna maatwerk en SEO). */
+type ServiceCard = {
+  title: string;
+  href: string;
+  desc: string;
+  tag?: string;
+  accent: 'rare' | 'primary' | 'teal' | 'highlight';
+  featured?: boolean;
+};
+
+const services: ServiceCard[] = [
+  {
+    title: 'Website abonnement',
+    href: '/website-abonnement/',
+    tag: `Vanaf ${pricing.abboFromInline}`,
+    desc: 'Een professionele website voor een vaste maandprijs. Hosting, beheer en kleine wijzigingen inbegrepen.',
+    accent: 'rare',
+    featured: true,
+  },
+  {
+    title: 'Maatwerk webdesign',
+    href: '/webdesign/',
+    tag: 'WordPress of Astro',
+    desc: 'Volledig maatwerk voor bedrijven die meer vrijheid willen in design, structuur of functionaliteit.',
+    accent: 'primary',
+  },
+  {
+    title: 'SEO',
+    href: '/seo/',
+    desc: 'Technische en inhoudelijke SEO voor groei in Google en de nieuwe AI-zoekmachines.',
+    accent: 'teal',
+  },
+  {
+    title: 'Lokale SEO',
+    href: '/lokale-seo/',
+    desc: 'Sterker zichtbaar in je eigen regio. Google Business Profile en lokale rankings als specialisme.',
+    accent: 'highlight',
+  },
+  {
+    title: 'Content abonnement',
+    href: '/content-abonnement/',
+    tag: 'Vanaf €599/m',
+    desc: 'Doorlopend SEO-content dat rankt in Google. Drie pakketten met heldere maandprijs.',
+    accent: 'primary',
+  },
+  {
+    title: 'Website onderhoud',
+    href: '/website-onderhoud/',
+    tag: '60+ sites in beheer',
+    desc: 'WordPress-onderhoud met vaste maandprijs. Updates, backups, beveiliging en monitoring.',
+    accent: 'teal',
+  },
+];
+
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="over-page">
+
+      {/* ============================================================
+           1. Hero — licht, paars accent
+           ============================================================ */}
+      <section class="over-hero">
+        <div class="over-hero-inner">
+          <EyebrowPill variant="primary">Over Froseo</EyebrowPill>
+          <h1 class="over-hero-title">
+            Een klein team van <em>eigenwijze specialisten</em> uit Utrecht.
+          </h1>
+          <p class="over-hero-lead">
+            We werken voor ambitieus MKB met directe lijnen, eerlijk werk en techniek die staat. Onze eerste website zag in 2010 het levenslicht. In webdesign, SEO en online marketing zijn we sindsdien blijven bouwen, leren en aanscherpen.
+          </p>
+          <div class="over-hero-stats">
+            <div class="over-hero-stat"><strong>15+</strong><span>jaar ervaring</span></div>
+            <div class="over-hero-stat"><strong>80+</strong><span>projecten live</span></div>
+            <div class="over-hero-stat"><strong>5/5</strong><span>Google reviews</span></div>
+            <div class="over-hero-stat"><strong>4</strong><span>specialisten</span></div>
+          </div>
+        </div>
+      </section>
+
+      <LogosTicker label="Een greep uit onze klanten:" />
+
+      {/* ============================================================
+           3. Geschiedenis-blok — cream met quote
+           ============================================================ */}
+      <section class="over-story">
+        <div class="over-story-inner">
+          <div class="over-story-text">
+            <EyebrowPill variant="rare">Hoe het begon</EyebrowPill>
+            <h2 class="over-story-title">
+              Van eenpitter naar <em>collectief.</em>
+            </h2>
+            <p>
+              Froseo is het digitale kindje van onze eigen Calvin. Hij startte zijn carrière als freelance SEO-specialist en webdesigner ruim 15 jaar geleden.
+            </p>
+            <p>
+              Na vele jaren als soloartiest werd het freelancebestaan hem te eenzaam (en saai!) en trommelde hij in 2021 een groep eigenwijze specialisten bij elkaar om een full-service collectief te vormen. Froseo was geboren en de rest is geschiedenis.
+            </p>
+            <p>
+              Ons team heeft weliswaar een ongezonde hoeveelheid schermtijd, maar heeft ook betere dingen te doen. Zo is onze grafisch designer, Japan-liefhebber en blackbelt Rowan minstens net zo vaak in de dojo te vinden als achter zijn computer. Houdt Charlotte haar hoofd altijd koel dankzij yoga en tai chi. En gooit Calvin de frustratie van 404-errors er graag uit op de ijsbaan tijdens een potje ijshockey.
+            </p>
+          </div>
+          <aside class="over-story-quote">
+            <span class="over-story-quote-mark" aria-hidden="true">"</span>
+            <blockquote>In het kleine schuilt het grote.</blockquote>
+            <footer class="over-story-quote-attr">
+              <Image
+                src={senNoRikyu}
+                alt="Portret van Sen no Rikyū"
+                class="over-story-quote-img"
+                widths={[80, 120, 160]}
+                sizes="60px"
+                loading="lazy"
+              />
+              <cite>Sen no Rikyū<br /><span>theemeester, 1522–1591</span></cite>
+            </footer>
+          </aside>
+        </div>
+      </section>
+
+      {/* ============================================================
+           4. Waarden — DONKER met paars-magenta accent
+           ============================================================ */}
+      <section class="over-values">
+        <div class="over-values-inner">
+          <div class="over-values-head">
+            <EyebrowPill variant="highlight">Waar we voor staan</EyebrowPill>
+            <h2 class="over-values-title">
+              Vier dingen die in <em>elk project</em> doorklinken.
+            </h2>
+          </div>
+          <div class="over-values-grid">
+            {values.map((v, i) => (
+              <article class={`over-value-card value-${i}`}>
+                <span class="over-value-num">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="over-value-title">{v.title}</h3>
+                <p class="over-value-body">{v.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+           5. Team-grid — TEAL/groen blok met witte cards
+           ============================================================ */}
+      <section class="over-team">
+        <div class="over-team-head">
+          <EyebrowPill variant="highlight">Het team</EyebrowPill>
+          <h2 class="over-team-title">
+            De mensen achter <em>Froseo.</em>
+          </h2>
+          <p class="over-team-lead">
+            Klein team, korte lijntjes en persoonlijk contact. Je werkt direct met degene die je werk doet.
+          </p>
+        </div>
+        <div class="over-team-grid">
+          {team.map((m) => (
+            <article class={`over-team-card accent-${m.accent}`}>
+              <div class="over-team-avatar">
+                {m.photo ? (
+                  <Image
+                    src={m.photo}
+                    alt={m.name}
+                    class="over-team-photo"
+                    widths={[180, 280, 400]}
+                    sizes="(max-width: 640px) 160px, 220px"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span class="over-team-initial" aria-hidden="true">{m.name[0]}</span>
+                )}
+              </div>
+              <h3 class="over-team-name">{m.name}</h3>
+              <p class="over-team-role">{m.role}</p>
+              <p class="over-team-body">{m.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* ============================================================
+           6. Diensten-grid met interne links
+           ============================================================ */}
+      <section class="over-services">
+        <div class="over-services-head">
+          <EyebrowPill variant="rare">Wat we doen</EyebrowPill>
+          <h2 class="over-services-title">
+            Alles online, <em>één aanspreekpunt.</em>
+          </h2>
+          <p class="over-services-lead">
+            Van een eerste website tot doorlopende SEO en advertenties. Bij ons hoef je niet bij verschillende partijen aan te kloppen.
+          </p>
+        </div>
+        <div class="over-services-grid">
+          {services.map((s) => (
+            <a class={`over-service-card accent-${s.accent} ${s.featured ? 'is-featured' : ''}`} href={s.href}>
+              {s.featured && <span class="over-service-badge">Populair</span>}
+              {s.tag && <span class="over-service-tag">{s.tag}</span>}
+              <h3 class="over-service-title">{s.title}</h3>
+              <p class="over-service-desc">{s.desc}</p>
+              <span class="over-service-arrow" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* ============================================================
+           7. Ons werk — WebsitesShowcase met "ons werk"-framing
+           ============================================================ */}
+      <WebsitesShowcase
+        cases={showcaseCases}
+        eyebrow="Ons werk"
+        title="Wat we recent"
+        titleAccent="opleverden."
+      />
+
+      {/* Bezoekadres + Google Maps (gedeelde component, detailed variant
+          met mail, telefoon en bereikbaarheid) */}
+      <VisitAddress variant="detailed" />
+
+      {/* Subtiele context-links onder het bezoekadres voor lokale SEO. */}
+      <p class="over-context-links">
+        Zoek je iets specifieks voor onze stad? Lees over <a href="/website-laten-maken-utrecht/">een website laten maken in Utrecht</a> of ons <a href="/seo-bureau-utrecht/">SEO bureau Utrecht</a>.
+      </p>
+
+      {/* ============================================================
+           10. Close-CTA
+           ============================================================ */}
+      <BetterCallCalvin
+        eyebrow="Een gesprek inplannen?"
+        titleLine1="Liever even"
+        titleAccent="kennismaken?"
+        body={[
+          'Plan een vrijblijvend gesprek van 30 minuten. We kijken samen waar je staat, wat je wil bereiken en of we de juiste partij voor je zijn.',
+          'Past het niet, dan zeggen we dat eerlijk en wijzen we je verder.',
+        ]}
+        primaryLabel="Plan een kennismaking ↗"
+        primaryHref="/contact/?onderwerp=kennismaking"
+      />
+
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>
