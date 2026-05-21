@@ -6,7 +6,7 @@ publishedDate: 2026-04-17
 categories:
   - Webdesign
 heroImage: ../../assets/kennisbank/website-optimaliseren/hero.jpg
-heroAlt: 'Optimaliseren van Alignment Club website'
+heroAlt: 'Optimaliseren van een klant-website'
 author: Calvin Telkamp
 excerpt: 'Website optimalisatie is breder dan SEO. Een complete gids met tips voor snelheid, UX, conversie, content en SEO.'
 oldUrl: '/website-optimaliseren/'

@@ -32,7 +32,7 @@ spotlights:
   - eyebrow: 'Lokale focus'
     title: 'Werk je vooral voor klanten in jouw regio?'
     body: 'Dan haal je vaak meer rendement uit lokale SEO dan uit landelijke campagnes. Tot wel 80% van de gebruikers bij lokale zoekopdrachten komt niet voorbij de bedrijven die in Google Maps bovenaan staan. Dakdekker, personal trainer, tandarts, makelaar, aannemer: lokaal vindbaar zijn betekent dat je gevonden wordt waar je klanten letterlijk staan te zoeken. Wij hebben hier een aparte service voor met een eigen aanpak rond Google Business Profile, lokale citations en regio-specifieke content.'
-    image: ../../assets/cases/top-dakdekker/hero.webp
+    image: ../../assets/cases/top-dakdekker-zeist/gallery-1.webp
     link:
       label: Bekijk Lokale SEO
       href: /lokale-seo/

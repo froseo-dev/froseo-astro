@@ -1,22 +1,47 @@
 ---
 slug: rex-agency
-client: Rex Agency
-tagline: '+240% via Webdesign'
-description: 'Een professionele WordPress-site met focus op design, snelheid en conversie. Compleet redesign binnen 4 weken.'
+client: Rex The Agency
+tagline: 'No-nonsense site voor techno/house bookings'
+description: 'Strak ontwerp voor een nieuw techno/house label met artiesten als Olivier Weiter en LEYO. Underground vibe vertaald naar een website die net zo direct is als hun muziek.'
 type: Webdesign
 tags:
-  - { label: Webdesign, color: rare }
-result: '+240%'
-metrics:
-  - { value: '+240%', label: 'Site verkeer' }
-  - { value: '+95%', label: 'Lead aanvragen' }
-hero: ../../assets/cases/rex-agency/hero.webp
+  - { label: Webdesign, color: primary }
+result: 'Live'
+highlights:
+  - 'Volledig maatwerk'
+  - 'Custom WordPress'
+  - 'In 4 weken live'
+hero: ../../assets/cases/rex-agency/mockup.webp
+heroStyle: mockup
 gallery:
   - ../../assets/cases/rex-agency/gallery-1.webp
   - ../../assets/cases/rex-agency/gallery-2.webp
   - ../../assets/cases/rex-agency/gallery-3.webp
-order: 3
+  - ../../assets/cases/rex-agency/gallery-4.webp
+industry: Booking agency techno/house
+location: Nederland
+liveUrl: https://rextheagency.com
+services:
+  - webdesign
+order: 4
 featured: true
+published: true
 ---
 
-Rex The Agency — een complete WordPress redesign met focus op conversie en branding.
+## De uitdaging
+
+Rex The Agency is een nieuw booking-label voor techno en house, met artiesten als Olivier Weiter en LEYO (het house-alter-ego van Bizzey). Ze wilden een website die de rauwe underground-energie van het genre vangt, maar tegelijk professioneel genoeg is om boekers en festivals direct te overtuigen. Geen ruis, geen marketingstandaard.
+
+## Onze aanpak
+
+Strak design dat de underground-vibe perfect vangt. Slim gebruik van ruimte en contrast zodat de artiesten echt uitspringen op de pagina. Kleuren en typografie passen bij de rider van het label.
+
+- Volledig maatwerk WordPress-build, geen template
+- Minimalistische esthetiek met grafische contrasten
+- Eenvoudige navigatie: alles in 2-3 kliks bereikbaar
+- Eigen artist-pages met audio, foto en booking-info
+- Snelle techniek, performance-first
+
+## Resultaat
+
+Een website die precies laat zien waar Rex The Agency voor staat: rauw, professioneel en recht voor z'n raap. De boeker krijgt direct de juiste info, de artiest voelt zich vertegenwoordigd, en het hele platform staat in 4 weken live.

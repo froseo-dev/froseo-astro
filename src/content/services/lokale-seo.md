@@ -25,7 +25,7 @@ showcaseEyebrow: 'Lokale resultaten'
 showcaseTitle: 'Lokaal scoren in de'
 showcaseTitleAccent: 'praktijk.'
 showcaseFeatured:
-  caseSlug: top-dakdekker
+  caseSlug: top-dakdekker-zeist
   headline: 'Hoe Top Dakdekker al 4 jaar lang #1 staat in Zeist.'
 
 proposalsEyebrow: 'Pakketten'

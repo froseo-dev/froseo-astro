@@ -30,6 +30,9 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { pricing } from '@data/site-config';
 import calvinPhoto from '@assets/team/calvin.webp';
+import rowanPhoto from '@assets/team/rowan.webp';
+import charlottePhoto from '@assets/team/charlotte.webp';
+import thomPhoto from '@assets/team/thom.webp';
 import senNoRikyu from '@assets/team/sen-no-rikyu.jpg';
 
 const pageTitle = 'Over ons | Froseo Digital Agency Utrecht';
@@ -59,27 +62,30 @@ const team: TeamMember[] = [
   {
     name: 'Calvin',
     role: 'SEO en WordPress',
-    body: 'Het brein achter Froseo. Zelf SEO-specialist en WordPress webdesigner met 10+ jaar ervaring achter de gordel. Grote liefde voor ijshockey en zijn dochtertje!',
+    body: 'Het brein achter Froseo. Zelf SEO-specialist en WordPress webdesigner met 15+ jaar ervaring achter de gordel. Grote liefde voor ijshockey en zijn dochtertje!',
     photo: calvinPhoto,
-    accent: 'highlight',
+    accent: 'teal',
   },
   {
     name: 'Rowan',
     role: 'Grafisch designer',
     body: 'Martial arts specialist en grafisch designer. Onze man voor DTP werk en te gekke logo\'s (f*ck ai!). Zou het liefst 365 dagen vanuit Japan werken.',
-    accent: 'teal',
+    photo: rowanPhoto,
+    accent: 'rare',
   },
   {
     name: 'Thom',
     role: 'Paid media en tag manager',
     body: 'Onze paid media (ads) en tag manager guru. Heeft advertentie campagnes op poten gezet voor grote bedrijven als NS en ABN AMRO maar helpt liever "kleinere" ondernemers. Tevens Azië fanaat.',
-    accent: 'primary',
+    photo: thomPhoto,
+    accent: 'highlight',
   },
   {
     name: 'Charlotte',
     role: 'SEO- en contentspecialist',
     body: 'SEO- en contentspecialist. Heeft een obsessieve sport gemaakt van het behalen van #1 posities. Probeert de jongens regelmatig over te halen om eens een lesje yoga of tai chi te proberen. Tot op heden tevergeefs...',
-    accent: 'rare',
+    photo: charlottePhoto,
+    accent: 'primary',
   },
 ];
 
@@ -172,18 +178,37 @@ const services: ServiceCard[] = [
            ============================================================ */}
       <section class="over-hero">
         <div class="over-hero-inner">
-          <EyebrowPill variant="primary">Over Froseo</EyebrowPill>
-          <h1 class="over-hero-title">
-            Een klein team van <em>eigenwijze specialisten</em> uit Utrecht.
-          </h1>
-          <p class="over-hero-lead">
-            We werken voor ambitieus MKB met directe lijnen, eerlijk werk en techniek die staat. Onze eerste website zag in 2010 het levenslicht. In webdesign, SEO en online marketing zijn we sindsdien blijven bouwen, leren en aanscherpen.
-          </p>
-          <div class="over-hero-stats">
-            <div class="over-hero-stat"><strong>15+</strong><span>jaar ervaring</span></div>
-            <div class="over-hero-stat"><strong>80+</strong><span>projecten live</span></div>
-            <div class="over-hero-stat"><strong>5/5</strong><span>Google reviews</span></div>
-            <div class="over-hero-stat"><strong>4</strong><span>specialisten</span></div>
+          <div class="over-hero-text">
+            <EyebrowPill variant="primary">Over Froseo</EyebrowPill>
+            <h1 class="over-hero-title">
+              Een klein team van <em>eigenwijze specialisten</em> uit Utrecht.
+            </h1>
+            <p class="over-hero-lead">
+              We werken voor ambitieus MKB met directe lijnen, eerlijk werk en techniek die staat. Onze eerste website zag in 2010 het levenslicht. In webdesign, SEO en online marketing zijn we sindsdien blijven bouwen, leren en aanscherpen.
+            </p>
+            <div class="over-hero-stats">
+              <div class="over-hero-stat"><strong>15+</strong><span>jaar ervaring</span></div>
+              <div class="over-hero-stat"><strong>80+</strong><span>projecten live</span></div>
+              <div class="over-hero-stat"><strong>5/5</strong><span>Google reviews</span></div>
+              <div class="over-hero-stat"><strong>4</strong><span>specialisten</span></div>
+            </div>
+          </div>
+          {/* 2x2 collage van team-foto's, vierkant gecropt met lichte rotatie
+              per tegel voor de comic-feel. Op mobiel verborgen om de hero
+              compact te houden; team-grid lager op de pagina toont ze sowieso. */}
+          <div class="over-hero-collage" aria-hidden="true">
+            <div class="over-hero-tile tile-1">
+              <Image src={calvinPhoto} alt="" widths={[200, 300, 420]} sizes="220px" loading="eager" />
+            </div>
+            <div class="over-hero-tile tile-2">
+              <Image src={rowanPhoto} alt="" widths={[200, 300, 420]} sizes="220px" loading="eager" />
+            </div>
+            <div class="over-hero-tile tile-3">
+              <Image src={thomPhoto} alt="" widths={[200, 300, 420]} sizes="220px" loading="eager" />
+            </div>
+            <div class="over-hero-tile tile-4">
+              <Image src={charlottePhoto} alt="" widths={[200, 300, 420]} sizes="220px" loading="eager" />
+            </div>
           </div>
         </div>
       </section>
@@ -267,23 +292,25 @@ const services: ServiceCard[] = [
         <div class="over-team-grid">
           {team.map((m) => (
             <article class={`over-team-card accent-${m.accent}`}>
-              <div class="over-team-avatar">
+              <div class="over-team-portrait">
                 {m.photo ? (
                   <Image
                     src={m.photo}
                     alt={m.name}
                     class="over-team-photo"
-                    widths={[180, 280, 400]}
-                    sizes="(max-width: 640px) 160px, 220px"
+                    widths={[320, 480, 640, 800]}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     loading="lazy"
                   />
                 ) : (
                   <span class="over-team-initial" aria-hidden="true">{m.name[0]}</span>
                 )}
               </div>
-              <h3 class="over-team-name">{m.name}</h3>
-              <p class="over-team-role">{m.role}</p>
-              <p class="over-team-body">{m.body}</p>
+              <div class="over-team-meta">
+                <h3 class="over-team-name">{m.name}</h3>
+                <p class="over-team-role">{m.role}</p>
+                <p class="over-team-body">{m.body}</p>
+              </div>
             </article>
           ))}
         </div>
@@ -329,10 +356,6 @@ const services: ServiceCard[] = [
           met mail, telefoon en bereikbaarheid) */}
       <VisitAddress variant="detailed" />
 
-      {/* Subtiele context-links onder het bezoekadres voor lokale SEO. */}
-      <p class="over-context-links">
-        Zoek je iets specifieks voor onze stad? Lees over <a href="/website-laten-maken-utrecht/">een website laten maken in Utrecht</a> of ons <a href="/seo-bureau-utrecht/">SEO bureau Utrecht</a>.
-      </p>
 
       {/* ============================================================
            10. Close-CTA

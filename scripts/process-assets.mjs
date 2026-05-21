@@ -31,7 +31,6 @@ const MAX_WIDTH = 1800; // never bigger than this; smaller passes through
    website-1 → homepage → first non-mockup → first file. The mockup is
    never picked as hero (Calvin's request). */
 const CASE_CONFIG = {
-  'Alignment Club':   { slug: 'alignment-club',              heroHint: /^alignment club 1\b/i },
   Club12:             { slug: 'club12' },
   HDG:                { slug: 'top-dakdekker',               heroHint: /dakdekker zeist 1\b/i },
   IAA:                { slug: 'independent-artists-agency', heroHint: /independent artists agency\.jpe?g/i },

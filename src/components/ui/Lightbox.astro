@@ -30,7 +30,7 @@
     const nextBtn = dialog.querySelector<HTMLButtonElement>('[data-lightbox-next]')!;
     const closeBtn = dialog.querySelector<HTMLButtonElement>('[data-lightbox-close]')!;
 
-    type Item = { el: HTMLElement; src: string; thumb: string; alt: string };
+    type Item = { el: HTMLElement; src: string; thumb: string; alt: string; isMockup?: boolean };
     const triggers = Array.from(
       document.querySelectorAll<HTMLElement>('[data-lightbox-trigger]'),
     );
@@ -82,6 +82,7 @@
       if (!item) return;
       img.src = item.src;
       img.alt = item.alt;
+      img.classList.toggle('is-mockup', !!item.isMockup);
       counter.textContent = `${currentIndex + 1} / ${currentSet.length}`;
       const multi = currentSet.length > 1;
       prevBtn.style.display = multi ? '' : 'none';
@@ -112,13 +113,14 @@
 
     /* Public API: open the lightbox programmatically with an ad-hoc set
        (no DOM triggers required). Used by the in-page case gallery. */
-    type ExternalItem = { src: string; thumb?: string; alt?: string };
+    type ExternalItem = { src: string; thumb?: string; alt?: string; isMockup?: boolean };
     (window as any).openLightbox = (items: ExternalItem[], startIndex = 0) => {
       const adHoc: Item[] = items.map((it) => ({
         el: document.createElement('span'),
         src: it.src,
         thumb: it.thumb ?? it.src,
         alt: it.alt ?? '',
+        isMockup: it.isMockup,
       }));
       currentSet = adHoc;
       buildThumbs();

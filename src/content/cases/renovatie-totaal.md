@@ -1,30 +1,31 @@
 ---
 slug: renovatie-totaal
 client: Renovatie Totaal
-tagline: '+180% via SEO + Content'
-description: 'SEO en contentstrategie die vertrouwen wekt en converteert. Meer zichtbaarheid, meer kwalitatieve aanvragen.'
-type: SEO + Content
+tagline: '+1100% verkeer via nieuwe website + doorlopend SEO'
+description: 'Volledige rebuild plus doorlopend SEO-traject voor de grootste isolatiespecialist van regio Utrecht. Van nauwelijks vindbaar naar pagina 1 op vrijwel elke commerciële isolatieterm.'
+type: Webdesign + SEO
 tags:
-  - { label: SEO/GEO, color: primary }
-  - { label: Lokale SEO, color: rare }
-  - { label: Webdesign, color: light }
-result: '+180%'
+  - { label: Webdesign, color: primary }
+  - { label: SEO/GEO, color: rare }
+  - { label: Lokale SEO, color: light }
+result: '+1100%'
 metrics:
-  - { value: '+180%', label: 'Organisch verkeer' }
-  - { value: '+70%', label: 'Aanvragen' }
-hero: ../../assets/cases/renovatie-totaal/hero.webp
+  - { value: '+1100%', label: 'Organisch verkeer' }
+  - { value: '+700%', label: 'Aanvragen via site' }
+hero: ../../assets/cases/renovatie-totaal/mockup.webp
+heroStyle: mockup
 gallery:
   - ../../assets/cases/renovatie-totaal/gallery-1.webp
   - ../../assets/cases/renovatie-totaal/gallery-2.webp
   - ../../assets/cases/renovatie-totaal/gallery-3.webp
-industry: Renovatiebedrijf
-location: Utrecht & omstreken
-liveUrl: https://www.renovatietotaal.nl
+industry: Isolatiebedrijf
+location: Utrecht · landelijk actief
+liveUrl: https://renovatie-totaal.nl
 services:
   - seo
   - lokale-seo
   - webdesign
-quote: 'Sinds we met Froseo werken zien we een continue stijging in kwalitatieve aanvragen. Het team denkt strategisch mee — niet alleen over de website, maar over onze hele online aanwezigheid.'
+quote: 'Sinds we met Froseo werken zien we een continue stijging in kwalitatieve aanvragen. Het team denkt strategisch mee. Niet alleen over de website, maar over onze hele online aanwezigheid.'
 quoteName: Bas Bertrams
 quoteRole: Eigenaar Renovatie Totaal
 quoteAvatar: ../../assets/testimonials/bas-bertrams.webp
@@ -34,18 +35,25 @@ featured: true
 
 ## De uitdaging
 
-Renovatie Totaal is een snelgroeiende renovatiespecialist in de regio Utrecht. De website was technisch verouderd, ranking voor concurrerende zoektermen ontbrak en de meeste aanvragen kwamen via mond-tot-mond — niet schaalbaar voor het tempo waarmee het bedrijf groeide.
+Renovatie Totaal is de grootste isolatiespecialist in regio Utrecht en werkt landelijk voor gemeenten, woningcorporaties, VvE's, aannemers en particulieren.
+
+Eigenaar Bas Bertrams kwam bij Froseo terecht na minder fijne ervaringen met eerdere bureaus: te veel schakels tussen klant en uitvoerder, trage doorlooptijden voor wijzigingen en weinig persoonlijk contact. Hij zocht een kleinschalige partner met korte lijntjes en directe afstemming.
+
+Daarnaast was er een operationeel probleem: de oude website was technisch verouderd, nauwelijks vindbaar op concurrerende isolatiezoektermen en nieuwe aanvragen kwamen vooral via mond-tot-mond binnen. Niet schaalbaar voor het tempo waarop het bedrijf groeide.
 
 ## Onze aanpak
 
-We hebben de site volledig herbouwd met een focus op vindbaarheid én vertrouwen. Een nieuwe contentstructuur per dienst en regio, technisch geoptimaliseerd voor Core Web Vitals en met visuele bewijslast (foto's van projecten, reviews, certificeringen) op elke landingspagina.
+Een volledige rebuild met focus op vindbaarheid en vertrouwen, gekoppeld aan een doorlopend SEO-traject. We hebben de site opnieuw opgebouwd rond hoe mensen écht zoeken (per isolatietype, per doelgroep) en alle technische randvoorwaarden ingericht zodat Google er ook daadwerkelijk bij kan.
 
-- Nieuwe website met heldere structuur per dienst (badkamer, dakkapel, keuken)
-- Lokale SEO voor Utrecht en omliggende plaatsen
-- Contentstrategie met evergreen blogs op high-intent zoekwoorden
-- Technische SEO — schoon datamodel, snelle pagina's, schema.org markup
-- Doorlopende optimalisatie op basis van Search Console + GA4
+- Nieuwe website met aparte landingspagina's per isolatietype (dak, vloer, spouwmuur, gevel, kruipruimte, bodem)
+- Lokale SEO voor Utrecht plus landelijke pagina's voor het werkgebied daarbuiten
+- Aparte ingangen per doelgroep (particulier, VvE, woningcorporatie, aannemer)
+- Contentstrategie met evergreen artikelen op high-intent zoekwoorden (kosten, subsidies, materialen)
+- Technische SEO: schoon datamodel, snelle pagina's, schema.org markup
+- Doorlopende optimalisatie op basis van Search Console en GA4
 
 ## Resultaat
 
-Binnen 12 maanden staat Renovatie Totaal op pagina 1 voor de belangrijkste zoektermen in de regio. Het organisch verkeer is met 180% gestegen, het aantal kwalitatieve aanvragen via de site met 70%. Belangrijker: de groei is duurzaam — geen advertentiebudget dat we elke maand opnieuw moeten betalen.
+Sinds de start van de samenwerking is het organisch verkeer met +1100% gestegen en het aantal aanvragen via de website met +700%. Renovatie Totaal scoort hoog op de belangrijkste isolatiezoektermen in en rond Utrecht en wint stap voor stap terrein op landelijk niveau.
+
+De groei is duurzaam: geen advertentiebudget dat elke maand opnieuw opgehoest moet worden, maar een fundament dat blijft staan. Naarmate de site en autoriteit verder rijpen, wordt het vliegwieleffect groter.

@@ -2219,12 +2219,6 @@ main { display: contents; }
   object-fit: cover;
   object-position: center;
 }
-/* Bas-specifieke fix: bas-bertrams.webp heeft witruimte onderin. Top-align
-   + 1.08x scale duwt de witmarges altijd buiten de cirkel. */
-.testi-avatar--bas-renovatie-totaal .testi-avatar-img {
-  object-position: center 0%;
-  transform: scale(1.08);
-}
 
 .testi-right { position: relative; z-index: 2; }
 
@@ -3143,6 +3137,15 @@ main { display: contents; }
   /* Smoothly cross-fade when src wordt geswapt door thumb-click. */
   transition: opacity 0.18s ease;
 }
+/* Mockup-mode: beeld heeft eigen frame en shadow ingebakken (zoals onze
+   gegenereerde screenshot-mockups). Verwijder de standaard border, shadow
+   en background zodat het beeld niet in een dubbele lijst staat. */
+.case-page-hero-img--mockup {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0;
+}
 .case-page-hero-zoom {
   position: absolute;
   bottom: 14px;
@@ -3213,16 +3216,7 @@ main { display: contents; }
   border-color: var(--accent-rare);
   box-shadow: 3px 3px 0 var(--accent-rare);
 }
-.case-page-hero-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border: var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: 10px 10px 0 var(--accent-rare);
-  background: var(--surface-card);
-}
-/* Comic result-badge — magenta circle with rotation, hangs over hero image. */
+/* Comic result-badge: magenta circle with rotation, hangs over hero image. */
 .case-page-hero-badge {
   position: absolute;
   top: -22px;
@@ -3312,6 +3306,38 @@ main { display: contents; }
   opacity: 0.7;
 }
 
+/* --- Highlights — fallback voor cases zonder analytics-cijfers.
+   Tag-row van max 3 pills met dezelfde accent-shadow rotatie als de
+   metric-cards, maar compacter (geen value/label-structuur, alleen
+   label). Voor pure-webdesign cases waar het werk visueel/scope-gedreven
+   is i.p.v. cijfer-gedreven. --- */
+.case-page-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 96px;
+}
+.case-page .highlight-pill {
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.case-page .highlight-pill-0 { box-shadow: var(--shadow-rare); transform: rotate(-1deg); }
+.case-page .highlight-pill-1 { box-shadow: var(--shadow-primary); transform: rotate(1deg); }
+.case-page .highlight-pill-2 { box-shadow: var(--shadow-highlight); transform: rotate(-0.5deg); }
+@media (max-width: 640px) {
+  .case-page-highlights { gap: 12px; margin-bottom: 64px; }
+  .case-page .highlight-pill { font-size: 14px; padding: 10px 18px; }
+}
+
 /* --- Story (markdown body) --- */
 .case-page-story { margin-bottom: 96px; }
 .case-page-story-inner {
@@ -3362,6 +3388,8 @@ main { display: contents; }
   padding-left: 24px;
   margin: 0 0 24px;
 }
+.case-page-story-inner ul { list-style: disc; }
+.case-page-story-inner ol { list-style: decimal; }
 .case-page-story-inner li { margin-bottom: 8px; }
 .case-page-story-inner ul li::marker { color: var(--accent-rare); font-size: 1.1em; }
 .case-page-story-inner a {
@@ -3736,6 +3764,14 @@ main { display: contents; }
   border-radius: var(--radius-lg);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   background: #1a1a2e;
+}
+/* Mockup-mode: beeld heeft eigen frame en shadow ingebakken (zoals onze
+   gegenereerde screenshot-mockups). Geen extra achtergrond, shadow of
+   rounded corners eromheen. */
+.lightbox-img.is-mockup {
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
 }
 .lightbox-counter {
   font-family: var(--font-mono);
@@ -7860,6 +7896,7 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 18px;
 }
 .opfris-waarom-title {
@@ -9994,25 +10031,31 @@ a.visit-address-value:hover { color: var(--accent-teal); }
 
 /* ----- 1. Hero --------------------------------------------- */
 .over-hero {
-  padding: 80px var(--gutter) 56px;
+  padding: 80px var(--gutter) 72px;
 }
 .over-hero-inner {
-  max-width: var(--container-text);
+  max-width: var(--container-max);
   margin: 0 auto;
-  text-align: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
+}
+.over-hero-text {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 22px;
 }
 .over-hero-title {
   font-family: var(--font-display);
-  font-size: clamp(40px, 5vw, 76px);
+  font-size: clamp(40px, 4.6vw, 72px);
   font-weight: 900;
   line-height: 1.02;
   letter-spacing: -0.025em;
   color: var(--text-primary);
   margin: 0;
+  text-align: left;
   max-width: 18ch;
 }
 .over-hero-title em {
@@ -10032,8 +10075,8 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   grid-template-columns: repeat(4, 1fr);
   gap: 18px;
   width: 100%;
-  max-width: 720px;
-  margin-top: 18px;
+  max-width: 640px;
+  margin-top: 10px;
   padding: 22px 12px;
   background: var(--surface-card);
   border: var(--border);
@@ -10063,9 +10106,48 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   color: var(--text-primary);
   opacity: 0.7;
 }
+
+/* 2x2 collage van team-foto's in de hero. Per tegel licht verschoven en
+   geroteerd voor de comic-feel die ook in cases/USPs terugkomt. */
+.over-hero-collage {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 14px;
+  max-width: 480px;
+  margin-left: auto;
+  aspect-ratio: 1 / 1;
+}
+.over-hero-tile {
+  position: relative;
+  overflow: hidden;
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-page-deep);
+  aspect-ratio: 1 / 1;
+}
+.over-hero-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+}
+.over-hero-tile.tile-1 { box-shadow: 5px 5px 0 var(--accent-highlight); transform: rotate(-1.5deg); }
+.over-hero-tile.tile-2 { box-shadow: 5px 5px 0 var(--accent-teal);      transform: rotate(1.2deg);  }
+.over-hero-tile.tile-3 { box-shadow: 5px 5px 0 var(--accent-primary);   transform: rotate(0.8deg);  }
+.over-hero-tile.tile-4 { box-shadow: 5px 5px 0 var(--accent-rare);      transform: rotate(-1deg);   }
+
+@media (max-width: 1024px) {
+  .over-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .over-hero-text { align-items: center; text-align: center; }
+  .over-hero-title { text-align: center; }
+  .over-hero-collage { max-width: 400px; margin: 0 auto; }
+}
 @media (max-width: 640px) {
-  .over-hero { padding: 64px var(--gutter-mobile) 40px; }
+  .over-hero { padding: 64px var(--gutter-mobile) 48px; }
   .over-hero-stats { grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 18px 14px; }
+  .over-hero-collage { max-width: 320px; gap: 10px; }
 }
 
 /* ----- 3. Story -------------------------------------------- */
@@ -10185,11 +10267,14 @@ a.visit-address-value:hover { color: var(--accent-teal); }
 /* ----- 4. Waarden — DONKER --------------------------------- */
 .over-values {
   padding: 96px var(--gutter) 104px;
-  background: var(--surface-dark);
-  background-image: var(--bg-decoration-dark);
-  background-size: var(--backdrop-size);
-  background-repeat: var(--backdrop-repeat);
-  color: var(--text-on-dark);
+  background: var(--accent-teal);
+  background-image:
+    radial-gradient(ellipse at center, transparent 30%, var(--accent-teal-strong) 90%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 60px);
+  background-size: cover, 60px 60px, 60px 60px;
+  background-repeat: no-repeat, repeat, repeat;
+  color: var(--text-on-accent);
   border-top: var(--border);
   border-bottom: var(--border);
 }
@@ -10217,11 +10302,10 @@ a.visit-address-value:hover { color: var(--accent-teal); }
 }
 .over-values-title em {
   font-style: normal;
-  color: var(--accent-rare-strong, var(--accent-rare));
-  background: var(--accent-highlight);
+  background: var(--accent-rare);
   padding: 0 8px;
   border-radius: 4px;
-  color: var(--text-primary);
+  color: var(--text-on-accent);
 }
 .over-values-grid {
   display: grid;
@@ -10255,8 +10339,8 @@ a.visit-address-value:hover { color: var(--accent-teal); }
 }
 .over-value-card.value-0 .over-value-num { color: var(--accent-highlight); }
 .over-value-card.value-1 .over-value-num { color: var(--accent-rare); }
-.over-value-card.value-2 .over-value-num { color: var(--accent-teal); }
-.over-value-card.value-3 .over-value-num { color: var(--accent-highlight); }
+.over-value-card.value-2 .over-value-num { color: var(--accent-highlight); }
+.over-value-card.value-3 .over-value-num { color: var(--accent-rare); }
 .over-value-title {
   font-family: var(--font-display);
   font-size: 20px;
@@ -10283,14 +10367,14 @@ a.visit-address-value:hover { color: var(--accent-teal); }
 /* ----- 5. Team — TEAL blok met witte cards -------------------- */
 .over-team {
   padding: 96px var(--gutter) 100px;
-  background: var(--accent-teal);
+  background: var(--surface-dark);
   background-image:
-    radial-gradient(ellipse at center, transparent 30%, var(--accent-teal-strong) 90%),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 60px),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 60px);
+    radial-gradient(ellipse at center, transparent 30%, var(--surface-dark-deep) 90%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 60px);
   background-size: cover, 60px 60px, 60px 60px;
   background-repeat: no-repeat, repeat, repeat;
-  color: var(--text-on-accent);
+  color: var(--text-on-dark);
   border-top: var(--border);
   border-bottom: var(--border);
 }
@@ -10316,11 +10400,14 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   font-style: normal;
   color: var(--accent-highlight);
 }
+.over-team-title {
+  color: var(--text-on-dark);
+}
 .over-team-lead {
   font-size: 17px;
   line-height: 1.6;
-  color: var(--text-on-accent);
-  opacity: 0.92;
+  color: var(--text-on-dark);
+  opacity: 0.9;
   margin: 0;
   max-width: 58ch;
 }
@@ -10335,45 +10422,57 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   background: var(--surface-card);
   border: var(--border);
   border-radius: var(--radius-lg);
-  padding: 28px 24px 26px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: stretch;
   position: relative;
+  overflow: hidden;
 }
 .over-team-card.accent-highlight { box-shadow: 6px 6px 0 var(--accent-highlight); }
 .over-team-card.accent-teal { box-shadow: 6px 6px 0 var(--accent-teal); }
 .over-team-card.accent-primary { box-shadow: 6px 6px 0 var(--accent-primary); }
 .over-team-card.accent-rare { box-shadow: 6px 6px 0 var(--accent-rare); }
-/* Op het teal team-blok zou de teal-shadow van Rowan onzichtbaar zijn.
-   Vervang door highlight (geel) — pops mooi tegen het groene blok. */
-.over-team .over-team-card.accent-teal { box-shadow: 6px 6px 0 var(--accent-highlight); }
-.over-team-avatar {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  overflow: hidden;
+
+/* Portret-blok bovenin de card. Aspect 4:5 (portret) zodat de
+   studiofoto's met teal-achtergrond goed tot hun recht komen zonder
+   te veel hoofd-crop. Onder dit blok komt de tekst-meta. */
+.over-team-portrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: var(--surface-page-deep);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--line-color);
+  border-bottom: var(--border);
+  overflow: hidden;
 }
-.over-team-card.accent-highlight .over-team-avatar:not(:has(.over-team-photo)) { background: var(--accent-highlight); color: var(--text-primary); }
-.over-team-card.accent-teal .over-team-avatar:not(:has(.over-team-photo)) { background: var(--accent-teal); color: var(--text-on-accent); }
-.over-team-card.accent-primary .over-team-avatar:not(:has(.over-team-photo)) { background: var(--accent-primary); color: var(--text-on-accent); }
-.over-team-card.accent-rare .over-team-avatar:not(:has(.over-team-photo)) { background: var(--accent-rare); color: var(--text-on-accent); }
 .over-team-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Iets boven center cropt minder gezicht weg. */
+  object-position: center 20%;
   display: block;
 }
+/* Placeholder voor team-leden zonder foto: vlak met initiaal in
+   accent-kleur. Portret-formaat zodat het ritme van de grid blijft. */
+.over-team-card.accent-highlight:not(:has(.over-team-photo)) .over-team-portrait { background: var(--accent-highlight); color: var(--text-primary); }
+.over-team-card.accent-teal:not(:has(.over-team-photo)) .over-team-portrait { background: var(--accent-teal); color: var(--text-on-accent); }
+.over-team-card.accent-primary:not(:has(.over-team-photo)) .over-team-portrait { background: var(--accent-primary); color: var(--text-on-accent); }
+.over-team-card.accent-rare:not(:has(.over-team-photo)) .over-team-portrait { background: var(--accent-rare); color: var(--text-on-accent); }
 .over-team-initial {
   font-family: var(--font-display);
-  font-size: 44px;
+  font-size: clamp(72px, 9vw, 120px);
   font-weight: 900;
   line-height: 1;
+}
+
+.over-team-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 22px 26px;
 }
 .over-team-name {
   font-family: var(--font-display);
@@ -10381,7 +10480,7 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   font-weight: 900;
   letter-spacing: -0.01em;
   color: var(--text-primary);
-  margin: 6px 0 0;
+  margin: 0;
 }
 .over-team-role {
   font-family: var(--font-mono);
@@ -10398,7 +10497,7 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   line-height: 1.55;
   color: var(--text-primary);
   opacity: 0.9;
-  margin: 6px 0 0;
+  margin: 4px 0 0;
 }
 @media (max-width: 1024px) {
   .over-team-grid { grid-template-columns: repeat(2, 1fr); }
@@ -10406,14 +10505,23 @@ a.visit-address-value:hover { color: var(--accent-teal); }
 @media (max-width: 640px) {
   .over-team { padding: 72px var(--gutter-mobile) 64px; }
   .over-team-grid { grid-template-columns: 1fr; gap: 28px; }
-  .over-team-card { padding: 24px 22px; }
+  /* Op mobile is portret 4:5 te hoog (vult bijna hele scherm).
+     Maak 'm 5:4 (landscape-ish) zodat de card scrollbaar blijft. */
+  .over-team-portrait { aspect-ratio: 5 / 4; }
+  .over-team-photo { object-position: center 15%; }
+  .over-team-meta { padding: 20px 22px 24px; }
 }
 
 /* ----- 6. Diensten ----------------------------------------- */
 .over-services {
   padding: 96px var(--gutter) 88px;
-  background: var(--surface-page-deep);
+  background: var(--surface-dark);
   border-top: var(--border);
+  /* Subtiele grid-decoratie net als andere donkere blokken op de site. */
+  background-image:
+    radial-gradient(ellipse at center, transparent 30%, var(--surface-dark-deep) 90%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 60px);
 }
 .over-services-head {
   max-width: var(--container-text);
@@ -10430,15 +10538,15 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   font-weight: 900;
   line-height: 1.04;
   letter-spacing: -0.02em;
-  color: var(--text-primary);
+  color: var(--text-on-dark);
   margin: 0;
 }
-.over-services-title em { font-style: normal; color: var(--accent-rare); }
+.over-services-title em { font-style: normal; color: var(--accent-highlight); }
 .over-services-lead {
   font-size: 17px;
   line-height: 1.6;
-  color: var(--text-primary);
-  opacity: 0.8;
+  color: var(--text-on-dark);
+  opacity: 0.85;
   margin: 0;
   max-width: 58ch;
 }
@@ -10473,10 +10581,25 @@ a.visit-address-value:hover { color: var(--accent-teal); }
 .over-service-card.accent-primary:hover { box-shadow: 7px 7px 0 var(--accent-primary); }
 .over-service-card.accent-teal:hover { box-shadow: 7px 7px 0 var(--accent-teal); }
 .over-service-card.accent-highlight:hover { box-shadow: 7px 7px 0 var(--accent-highlight); }
+/* Featured op de donkere services-bg: teal achtergrond + magenta shadow
+   die pops naast de andere cream-cards. */
 .over-service-card.is-featured {
-  background: var(--surface-dark);
-  color: var(--text-on-dark);
+  background: var(--accent-teal);
+  color: var(--text-on-accent);
 }
+.over-service-card.accent-highlight.is-featured,
+.over-service-card.accent-primary.is-featured,
+.over-service-card.accent-rare.is-featured,
+.over-service-card.accent-teal.is-featured {
+  box-shadow: 5px 5px 0 var(--accent-rare);
+}
+.over-service-card.accent-highlight.is-featured:hover,
+.over-service-card.accent-primary.is-featured:hover,
+.over-service-card.accent-rare.is-featured:hover,
+.over-service-card.accent-teal.is-featured:hover {
+  box-shadow: 7px 7px 0 var(--accent-rare);
+}
+.over-service-card.is-featured .over-service-tag { opacity: 0.85; }
 .over-service-badge {
   position: absolute;
   top: -12px;
@@ -10533,26 +10656,6 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   .over-services-grid { grid-template-columns: 1fr; }
 }
 
-/* ----- 7. Context-links onder VisitAddress op /over-ons ------- */
-.over-context-links {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: 0 var(--gutter) 64px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-primary);
-  opacity: 0.7;
-  text-align: center;
-}
-.over-context-links a {
-  color: var(--accent-teal);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.over-context-links a:hover { color: var(--accent-teal-strong); }
-@media (max-width: 640px) {
-  .over-context-links { padding: 0 var(--gutter-mobile) 48px; }
-}
 
 /* =============================================================
    DIENSTEN PAGINA — /diensten

@@ -53,12 +53,13 @@ async function buildSrcs(src: typeof c.hero) {
 }
 
 const galleryImages = [
-  { ...(await buildSrcs(c.hero)), alt: `${c.client} — ${c.tagline}` },
+  { ...(await buildSrcs(c.hero)), alt: `${c.client}: ${c.tagline}`, isMockup: c.heroStyle === 'mockup' },
   ...(c.gallery
     ? await Promise.all(
         c.gallery.map(async (img, i) => ({
           ...(await buildSrcs(img)),
-          alt: `${c.client} — beeld ${i + 2}`,
+          alt: `${c.client}: beeld ${i + 2}`,
+          isMockup: false,
         })),
       )
     : []),
@@ -81,12 +82,12 @@ const galleryCount = galleryImages.length;
         </header>
 
         <div class="case-page-hero-grid">
-          <div class="case-page-hero-media">
+          <div class={`case-page-hero-media${c.heroStyle === 'mockup' ? ' is-mockup' : ''}`}>
             <button type="button" class="case-page-hero-main" data-gallery-main aria-label={`Bekijk ${galleryImages[0].alt} fullscreen`}>
               <img
                 src={galleryImages[0].main}
                 alt={galleryImages[0].alt}
-                class="case-page-hero-img"
+                class={`case-page-hero-img${c.heroStyle === 'mockup' ? ' case-page-hero-img--mockup' : ''}`}
                 data-gallery-main-img
                 loading="eager"
               />
@@ -152,8 +153,10 @@ const galleryCount = galleryImages.length;
       <!-- Gallery data ↗ JSON voor de inline gallery + lightbox open() -->
       <script type="application/json" data-gallery-data set:html={JSON.stringify(galleryImages)} />
 
-      <!-- Metrics — losse comic cards met accent shadows -->
-      {c.metrics && c.metrics.length > 0 && (
+      <!-- Metrics — losse comic cards met accent shadows.
+           Fallback voor pure-webdesign cases zonder analytics-cijfers:
+           highlights als tag-row, ook met accent-shadow per pill. -->
+      {c.metrics && c.metrics.length > 0 ? (
         <section class="case-page-metrics">
           {c.metrics.map((m, i) => (
             <div class={`metric-card metric-card-${i}`}>
@@ -162,7 +165,13 @@ const galleryCount = galleryImages.length;
             </div>
           ))}
         </section>
-      )}
+      ) : c.highlights && c.highlights.length > 0 ? (
+        <section class="case-page-highlights">
+          {c.highlights.map((h, i) => (
+            <span class={`highlight-pill highlight-pill-${i}`}>{h}</span>
+          ))}
+        </section>
+      ) : null}
 
       <!-- Story (markdown body) -->
       <section class="case-page-story">
@@ -286,7 +295,7 @@ const galleryCount = galleryImages.length;
   <script>
     /* In-page gallery: thumbs swappen het hoofdbeeld; klik op hoofdbeeld
        opent de lightbox bij de actieve index via window.openLightbox(). */
-    type GalleryItem = { thumb: string; main: string; full: string; alt: string };
+    type GalleryItem = { thumb: string; main: string; full: string; alt: string; isMockup?: boolean };
 
     const dataEl = document.querySelector<HTMLScriptElement>('[data-gallery-data]');
     const mainBtn = document.querySelector<HTMLButtonElement>('[data-gallery-main]');
@@ -324,6 +333,7 @@ const galleryCount = galleryImages.length;
           src: it.full,
           thumb: it.thumb,
           alt: it.alt,
+          isMockup: it.isMockup,
         }));
         (window as any).openLightbox?.(lightboxItems, activeIndex);
       });

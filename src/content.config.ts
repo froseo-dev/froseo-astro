@@ -29,7 +29,18 @@ const cases = defineCollection({
         )
         .max(2)
         .optional(),
+      /** Alternatief voor `metrics` op pure-webdesign cases zonder analytics-cijfers.
+          Korte tag-strings (max 3 woorden per stuk), gerenderd als tag-row i.p.v.
+          stat-cards. Bv. ['Volledige rebrand', 'WooCommerce', '4 weken oplevering'].
+          Wanneer zowel metrics als highlights gezet zijn, wint metrics. */
+      highlights: z.array(z.string()).max(3).optional(),
       hero: image(),
+      /** 'mockup' = beeld heeft eigen frame/shadow ingebakken (zoals onze
+          screenshot-mockups). Template verwijdert dan de standaard border,
+          background en box-shadow zodat het beeld niet "in een lijst staat
+          in een lijst". 'framed' (default) = klassieke case-foto met border
+          en accent-shadow. */
+      heroStyle: z.enum(['framed', 'mockup']).default('framed'),
       gallery: z.array(image()).optional(),
       logo: image().optional(),
       /** Branche van de klant — bv. "Renovatiebedrijf", "Personal training". Toont in meta-rij. */
@@ -380,4 +391,48 @@ const kennisbank = defineCollection({
     }),
 });
 
-export const collections = { cases, services, testimonials, faq, kennisbank };
+/**
+ * Portfolio — visuele showcase van projecten op /portfolio. Lichter dan
+ * cases: geen verhaal, geen cijfers. Eén mock-up per item op de
+ * overzichtspagina, lightbox opent met extra screenshots + optionele
+ * notitie + optionele link naar een bijbehorende case (zelfde klant).
+ *
+ * Minimum-vereisten per item: client, mockup. Rest is optioneel zodat
+ * we ook items kunnen plaatsen waar we (nog) weinig materiaal van hebben.
+ */
+const portfolio = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/portfolio' }),
+  schema: ({ image }) =>
+    z.object({
+      slug: z.string(),
+      client: z.string(),
+      /** Branche van de klant — bv. "Personal trainer", "Smartshop". */
+      industry: z.string().optional(),
+      /** Jaar van oplevering (bv. 2024). Toont in lightbox-meta. */
+      year: z.number().optional(),
+      /** Korte rol-omschrijving, bv. "ontwerp + bouw", "alleen SEO", "rebrand". */
+      role: z.string().optional(),
+      /** Visuele tags voor in de meta-rij. Bv. ['Webdesign', 'WordPress', 'WooCommerce']. */
+      tags: z.array(z.string()).optional(),
+      /** Hero-mockup — vereist. Wordt als card op de portfolio-index getoond
+          en als eerste shot in de lightbox. */
+      mockup: image(),
+      /** Extra shots voor in de lightbox (long-scroll screenshots, sfeerbeelden,
+          detail-crops). Wanneer leeg toont de lightbox alleen de mockup groter. */
+      gallery: z.array(image()).optional(),
+      /** 1-2 zinnen notitie in de lightbox. Geen volledige case-tekst —
+          alleen wat dit project interessant maakt. */
+      note: z.string().optional(),
+      /** Slug van een bijbehorende case (zelfde klant). Wanneer gezet
+          toont de lightbox een "Bekijk de case ↗" knop naar /cases/[slug]. */
+      caseSlug: z.string().optional(),
+      /** Live website-URL. Niet zichtbaar op portfolio-card (we sturen niet
+          naar buiten vanuit portfolio), wel intern bruikbaar / fallback. */
+      liveUrl: z.string().url().optional(),
+      order: z.number().default(0),
+      featured: z.boolean().default(false),
+      published: z.boolean().default(true),
+    }),
+});
+
+export const collections = { cases, services, testimonials, faq, kennisbank, portfolio };
