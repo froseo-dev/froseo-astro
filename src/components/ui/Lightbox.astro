@@ -15,6 +15,10 @@
   <button class="lightbox-nav lightbox-next" type="button" data-lightbox-next aria-label="Volgende">›</button>
   <figure class="lightbox-figure">
     <img class="lightbox-img" alt="" />
+    <div class="lightbox-actions" data-lightbox-actions hidden>
+      <a class="btn-primary lightbox-action lightbox-action-case" data-lightbox-action-case hidden>Bekijk de case ↗</a>
+      <a class="btn-ghost lightbox-action lightbox-action-live" data-lightbox-action-live target="_blank" rel="noopener noreferrer" hidden>Bezoek site ↗</a>
+    </div>
     <figcaption class="lightbox-counter" data-lightbox-counter></figcaption>
     <div class="lightbox-thumbs" data-lightbox-thumbs></div>
   </figure>
@@ -30,7 +34,15 @@
     const nextBtn = dialog.querySelector<HTMLButtonElement>('[data-lightbox-next]')!;
     const closeBtn = dialog.querySelector<HTMLButtonElement>('[data-lightbox-close]')!;
 
-    type Item = { el: HTMLElement; src: string; thumb: string; alt: string; isMockup?: boolean };
+    type Item = {
+      el: HTMLElement;
+      src: string;
+      thumb: string;
+      alt: string;
+      isMockup?: boolean;
+      caseUrl?: string;
+      liveUrl?: string;
+    };
     const triggers = Array.from(
       document.querySelectorAll<HTMLElement>('[data-lightbox-trigger]'),
     );
@@ -77,12 +89,24 @@
       });
     }
 
+    const actionsRow = dialog.querySelector<HTMLElement>('[data-lightbox-actions]')!;
+    const caseLink = dialog.querySelector<HTMLAnchorElement>('[data-lightbox-action-case]')!;
+    const liveLink = dialog.querySelector<HTMLAnchorElement>('[data-lightbox-action-live]')!;
+
     function show() {
       const item = currentSet[currentIndex];
       if (!item) return;
       img.src = item.src;
       img.alt = item.alt;
       img.classList.toggle('is-mockup', !!item.isMockup);
+
+      const hasCase = !!item.caseUrl;
+      const hasLive = !!item.liveUrl;
+      caseLink.hidden = !hasCase;
+      liveLink.hidden = !hasLive;
+      actionsRow.hidden = !(hasCase || hasLive);
+      if (hasCase) caseLink.href = item.caseUrl!;
+      if (hasLive) liveLink.href = item.liveUrl!;
       counter.textContent = `${currentIndex + 1} / ${currentSet.length}`;
       const multi = currentSet.length > 1;
       prevBtn.style.display = multi ? '' : 'none';
@@ -113,7 +137,14 @@
 
     /* Public API: open the lightbox programmatically with an ad-hoc set
        (no DOM triggers required). Used by the in-page case gallery. */
-    type ExternalItem = { src: string; thumb?: string; alt?: string; isMockup?: boolean };
+    type ExternalItem = {
+      src: string;
+      thumb?: string;
+      alt?: string;
+      isMockup?: boolean;
+      caseUrl?: string;
+      liveUrl?: string;
+    };
     (window as any).openLightbox = (items: ExternalItem[], startIndex = 0) => {
       const adHoc: Item[] = items.map((it) => ({
         el: document.createElement('span'),
@@ -121,6 +152,8 @@
         thumb: it.thumb ?? it.src,
         alt: it.alt ?? '',
         isMockup: it.isMockup,
+        caseUrl: it.caseUrl,
+        liveUrl: it.liveUrl,
       }));
       currentSet = adHoc;
       buildThumbs();

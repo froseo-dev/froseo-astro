@@ -45,8 +45,8 @@ const {
   title,
   titleAccent,
   featured,
-  ctaLabel = 'Bekijk alle projecten ↗',
-  ctaHref = '/projecten/',
+  ctaLabel = 'Bekijk alle cases ↗',
+  ctaHref = '/cases/',
 } = Astro.props;
 
 /* In featured mode: filter de featured case uit de overige + slice op smallerCount. */
@@ -73,7 +73,7 @@ const smallerCases = featured
   {featured ? (
     <>
       <!-- FEATURED grote card: image links, content rechts -->
-      <a class="websites-showcase-featured" href={`/projecten/${featured.caseEntry.data.slug}/`}>
+      <a class="websites-showcase-featured" href={`/cases/${featured.caseEntry.data.slug}/`}>
         <div class="websites-showcase-featured-media">
           <Image
             src={featured.caseEntry.data.hero}
@@ -114,7 +114,7 @@ const smallerCases = featured
       {smallerCases.length > 0 && (
         <div class="websites-showcase-small-row">
           {smallerCases.map((c) => (
-            <a class="websites-showcase-card" href={`/projecten/${c.data.slug}/`}>
+            <a class="websites-showcase-card" href={`/cases/${c.data.slug}/`}>
               <div class="websites-showcase-img-wrap">
                 <Image
                   src={c.data.hero}
@@ -134,7 +134,7 @@ const smallerCases = featured
   ) : (
     <div class="websites-showcase-grid">
       {cases.map((c) => (
-        <a class="websites-showcase-card" href={`/projecten/${c.data.slug}/`}>
+        <a class="websites-showcase-card" href={`/cases/${c.data.slug}/`}>
           <div class="websites-showcase-img-wrap">
             <Image
               src={c.data.hero}

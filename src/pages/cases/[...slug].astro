@@ -238,14 +238,14 @@ const galleryCount = galleryImages.length;
       {related.length > 0 && (
         <section class="case-page-related">
           <div class="case-page-section-head">
-            <EyebrowPill variant="rare">Meer projecten</EyebrowPill>
+            <EyebrowPill variant="rare">Meer cases</EyebrowPill>
             <h2 class="case-page-h2">
               Andere <em>succesverhalen.</em>
             </h2>
           </div>
           <div class="cases-grid case-page-related-grid">
             {related.map((r) => (
-              <a class="case-card" href={`/projecten/${r.data.slug}/`}>
+              <a class="case-card" href={`/cases/${r.data.slug}/`}>
                 <div class="case-card-media">
                   <Image
                     src={r.data.hero}
@@ -272,7 +272,7 @@ const galleryCount = galleryImages.length;
             ))}
           </div>
           <div class="case-page-related-foot">
-            <a class="btn-ghost" href="/projecten/">Alle projecten ↗</a>
+            <a class="btn-ghost" href="/cases/">Alle cases ↗</a>
           </div>
         </section>
       )}

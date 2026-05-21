@@ -1,0 +1,57 @@
+---
+/**
+ * Inline team-note voor de homepage. Toont alle 4 teamfoto's in een
+ * gearrangeerde rij (lichte rotatie per tegel, comic-style accent-shadows)
+ * met een korte tekst + CTA. Bedoeld als persoonlijker mid-page
+ * vertrouwens-anker dan CalvinNote (die alleen Calvin laat zien).
+ */
+import { Image } from 'astro:assets';
+import calvinPhoto from '@assets/team/calvin.webp';
+import rowanPhoto from '@assets/team/rowan.webp';
+import thomPhoto from '@assets/team/thom.webp';
+import charlottePhoto from '@assets/team/charlotte.webp';
+
+interface Props {
+  /** Eyebrow boven de titel, korte categorie. */
+  eyebrow?: string;
+  /** Hoofdtekst van de note. Niet te lang, max 2 zinnen. */
+  message?: string;
+  /** Naam-rij onder de tekst. */
+  byline?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  eyebrow = 'Het team',
+  message = 'Is het tijd voor actie? Stuur je wensen door of plan een kennismaking. Dan kijken we met z\'n vieren wat er nodig is en of we een match zijn.',
+  byline = 'Calvin, Rowan, Thom en Charlotte',
+  ctaLabel = 'Plan een kennismaking ↗',
+  ctaHref = '/contact/',
+} = Astro.props;
+---
+
+<aside class="team-note">
+  <div class="team-note-card">
+    <div class="team-note-photos" aria-hidden="true">
+      <div class="team-note-tile tile-1">
+        <Image src={calvinPhoto} alt="" widths={[160, 240, 320]} sizes="120px" loading="lazy" />
+      </div>
+      <div class="team-note-tile tile-2">
+        <Image src={rowanPhoto} alt="" widths={[160, 240, 320]} sizes="120px" loading="lazy" />
+      </div>
+      <div class="team-note-tile tile-3">
+        <Image src={thomPhoto} alt="" widths={[160, 240, 320]} sizes="120px" loading="lazy" />
+      </div>
+      <div class="team-note-tile tile-4">
+        <Image src={charlottePhoto} alt="" widths={[160, 240, 320]} sizes="120px" loading="lazy" />
+      </div>
+    </div>
+    <div class="team-note-body">
+      <span class="team-note-eyebrow">{eyebrow}</span>
+      <p class="team-note-message">"{message}"</p>
+      <span class="team-note-byline">— {byline}</span>
+    </div>
+    <a class="btn-primary team-note-cta" href={ctaHref}>{ctaLabel}</a>
+  </div>
+</aside>

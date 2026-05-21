@@ -30,7 +30,7 @@ const serviceFilters = services
 ---
 
 <BaseLayout
-  title="Projecten: webdesign en SEO cases | Froseo"
+  title="Cases: webdesign en SEO succesverhalen | Froseo"
   description="80+ MKB-projecten live. Bekijk onze cases per dienst: webdesign, SEO/GEO en lokale SEO. Met cijfers, screenshots en uitleg over de aanpak."
 >
   <Topbar />
@@ -43,12 +43,12 @@ const serviceFilters = services
       <section class="projects-hero">
         <div class="projects-hero-inner">
           <div class="projects-hero-text">
-            <EyebrowPill variant="rare">Onze projecten</EyebrowPill>
+            <EyebrowPill variant="rare">Onze cases</EyebrowPill>
             <h1 class="projects-hero-title">
               Werk waar we <em>trots op zijn.</em>
             </h1>
             <p class="projects-hero-lead">
-              Hieronder een selectie van projecten die we recent opleverden. Per case
+              Hieronder een selectie van cases die we recent opleverden. Per project
               zie je wat we deden, de cijfers en de schermen. De volledige klantenlijst
               is langer dan dit, maar dit zijn de verhalen waar we het meeste van kunnen
               laten zien.
@@ -107,7 +107,7 @@ const serviceFilters = services
               class="project-card"
               data-services={(c.data.services ?? []).join(',')}
             >
-              <a class="project-card-media-link" href={`/projecten/${c.data.slug}/`} aria-label={`Bekijk ${c.data.client} project`}>
+              <a class="project-card-media-link" href={`/cases/${c.data.slug}/`} aria-label={`Bekijk ${c.data.client} project`}>
                 <div class="project-card-media">
                   <Image
                     src={c.data.hero}
@@ -146,7 +146,7 @@ const serviceFilters = services
                 )}
 
                 <div class="project-card-actions">
-                  <a class="project-card-primary" href={`/projecten/${c.data.slug}/`}>
+                  <a class="project-card-primary" href={`/cases/${c.data.slug}/`}>
                     Lees case ↗
                   </a>
                   {c.data.liveUrl && (
@@ -170,7 +170,7 @@ const serviceFilters = services
         <div class="projects-grid-empty" data-projects-empty hidden>
           <p>Nog geen project online voor deze dienst.</p>
           <button type="button" class="btn-ghost" data-clear-filter>
-            Toon alle projecten ↗
+            Toon alle cases ↗
           </button>
         </div>
       </section>
