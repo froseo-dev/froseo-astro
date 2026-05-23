@@ -41,6 +41,12 @@ const cases = defineCollection({
           in een lijst". 'framed' (default) = klassieke case-foto met border
           en accent-shadow. */
       heroStyle: z.enum(['framed', 'mockup']).default('framed'),
+      /** Sfeerafbeelding van de klant (gym, atelier, werk-on-locatie, etc).
+          Gebruikt op de homepage cases-row als alternatief voor de mockup,
+          en als secondary visual op de case-pagina. Optioneel — fallback
+          is gallery[0] of hero. */
+      atmosphereImage: image().optional(),
+      atmosphereAlt: z.string().optional(),
       gallery: z.array(image()).optional(),
       logo: image().optional(),
       /** Branche van de klant — bv. "Renovatiebedrijf", "Personal training". Toont in meta-rij. */
@@ -56,6 +62,20 @@ const cases = defineCollection({
       quoteName: z.string().optional(),
       quoteRole: z.string().optional(),
       quoteAvatar: image().optional(),
+      /** Optionele Before/After-slider sectie op de case-pagina. Toont een
+          interactieve slider tussen twee versies van de site (rebuild, opfris,
+          etc.). Wordt onder de story-sectie gerenderd. */
+      beforeAfter: z
+        .object({
+          before: image(),
+          after: image(),
+          beforeAlt: z.string(),
+          afterAlt: z.string(),
+          eyebrow: z.string().optional(),
+          title: z.string().optional(),
+          body: z.string().optional(),
+        })
+        .optional(),
       order: z.number().default(0),
       featured: z.boolean().default(false),
       published: z.boolean().default(true),

@@ -23,7 +23,7 @@ location: Utrecht
 liveUrl: https://www.independent-artistsagency.com
 services:
   - webdesign
-order: 8
+order: 9
 featured: false
 published: true
 ---

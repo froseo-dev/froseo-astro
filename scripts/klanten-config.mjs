@@ -135,13 +135,6 @@ export const klanten = [
     pages: [],
   },
   {
-    slug: 'headshop',
-    client: 'Headshop',
-    url: 'https://www.headshop.nl',
-    bucket: 'case+portfolio',
-    pages: [],
-  },
-  {
     slug: 'tatanka',
     client: 'Tatanka',
     url: 'https://www.tatanka.nl',

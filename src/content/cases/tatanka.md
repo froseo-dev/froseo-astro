@@ -1,17 +1,17 @@
 ---
 slug: tatanka
 client: Tatanka
-tagline: 'SEO en GEO voor Amsterdamse smartshop sinds 1995'
-description: 'Doorlopende SEO en GEO-optimalisatie voor Tatanka, sinds 1995 actief in Amsterdam. Zes shop-categorieën, 2000+ reviews en groeiende online zichtbaarheid.'
-type: SEO + GEO
+tagline: '15.000 SEO-bezoekers/maand in 7 talen voor bekendste smartshop ter wereld'
+description: 'Multilingual SEO-aanpak voor Amsterdamse smartshop Tatanka (sinds 1995). Vertaalstrategie naar 7 talen, 15.000 organische bezoekers per maand en 20.000 extra nieuwsbriefinschrijvingen in een zeer competitieve markt.'
+type: SEO + Linkbuilding (multilingual)
 tags:
   - { label: 'SEO/GEO', color: primary }
   - { label: E-commerce, color: rare }
-result: 'Doorlopend'
-highlights:
-  - 'Sinds 1995 actief'
-  - '6 shop-categorieën'
-  - '2000+ reviews 9,1/10'
+  - { label: Multilingual, color: light }
+result: '15K/mnd SEO'
+metrics:
+  - { value: '15K', label: 'SEO-bezoekers per maand' }
+  - { value: '20K', label: 'Extra nieuwsbrief-inschrijvingen' }
 hero: ../../assets/cases/tatanka/mockup.webp
 heroStyle: mockup
 gallery:
@@ -20,29 +20,30 @@ gallery:
   - ../../assets/cases/tatanka/gallery-3.webp
   - ../../assets/cases/tatanka/gallery-4.webp
 industry: E-commerce smartshop
-location: Amsterdam
+location: Amsterdam (Europa-breed)
 liveUrl: https://www.tatanka.nl
 services:
   - seo
 order: 13
-featured: false
+featured: true
 published: true
 ---
 
 ## De uitdaging
 
-Tatanka is een Amsterdamse smartshop met een geschiedenis sinds 1995. Net als sectorgenoten verdeeld over zes shop-afdelingen (Smartshop, Shroomshop, Headshop, CBDshop, Seedshop, Healthshop) met elk eigen klantgedrag en zoekintenties. De vraag was om de bestaande autoriteit te verzilveren met een SEO-strategie die per categorie scherp staat, en die ook werkt voor de nieuwe AI-zoekmachines.
+Tatanka is de bekendste smartshop ter wereld en bestaat sinds 1995. Ze leveren in bijna heel Europa, maar de site bestond enkel in het Nederlands. Voor een internationaal werkende webshop is dat een serieuze rem op groei: een Duitse of Franse klant koopt zelden vol vertrouwen via een Nederlandstalige checkout. Daarbij is de markt waarin Tatanka opereert ongelooflijk competitief, dus de SEO-aanpak moest goed doordacht zijn.
 
 ## Onze aanpak
 
-Doorlopend SEO- en GEO-werk dat per categorie prioriteit stelt en de jarenlange merkautoriteit gebruikt als hefboom.
+Een meerjarig SEO-traject met multilingual als kern. Niet een snelle vertaalslag, maar per taal een zorgvuldige strategie met eigen zoekwoordonderzoek, content en linkbuilding.
 
-- Per shop-categorie eigen content- en linkstrategie
-- Productpagina's geoptimaliseerd voor klassieke SEO én AI-overviews
-- Technische basis aangescherpt (schema.org, snelheid, schone navigatie)
-- Reviews (2000+ op WebwinkelKeur) actief verwerkt in trust-signalen
-- Continue monitoring en bijsturing op basis van Search Console en logs
+- De volledige site vertaald en geoptimaliseerd naar 7 talen
+- Per taal eigen zoekwoordonderzoek en contentstrategie, geen automatische vertalingen
+- Hreflang-implementatie en URL-architectuur zodat Google elke versie aan de juiste markt koppelt
+- Doelgerichte linkbuilding per land voor het opbouwen van lokale autoriteit
+- Doorlopende optimalisatie op zoekintenties die per markt verschillen
+- Nieuwsbrief-funnel als onderdeel van de SEO-flow zodat verkeer ook na een eerste bezoek terugkomt
 
 ## Resultaat
 
-Een stabiel groeiende organische positie op de termen die het meest converteren per shop. De ervaring sinds 1995 vertaalt zich nu ook in een online zichtbaarheid die overeenkomt met de fysieke reputatie van de smartshop. Klanten vinden hun product zonder omwegen.
+15.000 SEO-bezoekers per maand, puur organisch en in een zeer competitieve markt. Daarbovenop 20.000 extra nieuwsbrief-inschrijvingen. De groei was zo stevig dat Tatanka het webshop-team flink moest uitbreiden om de orders bij te houden. Een resultaat waar we trots op zijn: een traditionele Amsterdamse smartshop die online net zo goed presteert als in z'n fysieke vorm, in 7 markten tegelijk.

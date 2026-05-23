@@ -23,7 +23,7 @@ services:
   - lokale-seo
   - seo
 quote: 'Met de resultaten zijn zowel Maxime als wij erg blij!'
-order: 6
+order: 7
 featured: false
 published: true
 ---
@@ -34,7 +34,7 @@ Studio Max Dance breidde uit van één locatie in Oudewater naar twee extra vest
 
 ## Onze aanpak
 
-Een efficiënt zoekmachine-optimalisatieplan met focus op lokale vindbaarheid per stad. Geen one-size-fits-all, maar elk Google Business Profile en elke landingspagina afgestemd op de specifieke vestiging en het bijbehorende lesaanbod.
+Een efficiënt zoekmachine-optimalisatieplan met focus op lokale vindbaarheid per stad. Geen one-size-fits-all, maar elk Google Business Profile en elke landingspagina afgestemd op de specifieke vestiging en het bijbehorende lesaanbod. Vooral: de bestaande autoriteit van de Oudewater-locatie meeleveren aan de twee nieuwe steden zodat ze niet bij nul hoefden te beginnen.
 
 - Websitestructuur opnieuw opgezet zodat zoekmachines per locatie kunnen ranken
 - Locatie-specifieke landingspagina's (Oudewater, Woerden, Linschoten) met eigen content, foto's en lessen
@@ -44,4 +44,4 @@ Een efficiënt zoekmachine-optimalisatieplan met focus op lokale vindbaarheid pe
 
 ## Resultaat
 
-Studio Max Dance staat op de #1 positie voor "Dansschool Woerden" én "Dansschool Linschoten" in zowel de organische resultaten als Google Maps. De bestaande positie in Oudewater is behouden. Maxime kreeg precies wat ze nodig had: drie locaties die elk zelfstandig vindbaar zijn voor de juiste doelgroep.
+Het mooie aan dit traject: het hoefde niet lang te duren. In de eerste maand hebben we alles stevig aangepakt, daarna nog 3 maanden vinger aan de pols met lichte optimalisaties. Studio Max Dance staat op de #1 positie voor "Dansschool Woerden" én "Dansschool Linschoten" in zowel de organische resultaten als Google Maps. De bestaande positie in Oudewater is behouden. Maxime kreeg precies wat ze nodig had: drie locaties die elk zelfstandig vindbaar zijn voor de juiste doelgroep, zonder dat de nieuwe vestigingen vanaf nul moesten beginnen.

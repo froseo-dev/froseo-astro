@@ -744,6 +744,154 @@ main { display: contents; }
   background: var(--surface-card);
 }
 
+/* Dual-button footer voor de nieuwe homepage cases-strip: twee gelijke
+   knoppen naast elkaar (cases-overview + portfolio). */
+.cases-footer--dual {
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.cases-footer-btn {
+  min-width: 220px;
+  text-align: center;
+}
+@media (max-width: 640px) {
+  .cases-footer--dual {
+    flex-direction: column;
+    align-items: stretch;
+    padding-left: var(--gutter-mobile);
+    padding-right: var(--gutter-mobile);
+  }
+  .cases-footer-btn { min-width: 0; }
+}
+
+/* ---- Cases-row: scroll-snap horizontale rij voor homepage --------
+   Per card: sfeerafbeelding (zonder mockup-frame), client-naam, korte
+   tagline, en een cijfer (metric) of result-label. Desktop: 3 cards in
+   beeld, swipe/scroll om door alle te bewegen. Mobile: alleen de
+   eerste N cards stacked, rest verborgen. */
+.cases-row {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  padding: 4px 0 28px;
+  /* Native scrollbar uit zicht op desktop, behoud op mobile voor zichtbaarheid */
+  scrollbar-width: thin;
+}
+.cases-row::-webkit-scrollbar { height: 8px; }
+.cases-row::-webkit-scrollbar-track { background: transparent; }
+.cases-row::-webkit-scrollbar-thumb {
+  background: var(--accent-rare);
+  border-radius: 4px;
+}
+.cases-row-card {
+  flex: 0 0 calc((100% - 48px) / 3);
+  min-width: 320px;
+  scroll-snap-align: start;
+  background: var(--surface-card);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 5px 5px 0 var(--accent-rare);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+.cases-row-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--accent-rare);
+}
+.cases-row-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--surface-page-deep);
+}
+.cases-row-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cases-row-body {
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.cases-row-name {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0;
+}
+.cases-row-tagline {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text-primary);
+  opacity: 0.8;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.cases-row-metric {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+.cases-row-metric strong {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--accent-rare);
+}
+.cases-row-metric span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.cases-row-result {
+  margin-top: auto;
+  padding-top: 8px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--accent-rare);
+}
+
+@media (max-width: 1024px) {
+  .cases-row-card { flex: 0 0 calc((100% - 24px) / 2); min-width: 280px; }
+}
+@media (max-width: 640px) {
+  /* Mobile: geen scroll-snap, gewoon stacked. Alleen eerste N cards. */
+  .cases-row {
+    flex-direction: column;
+    overflow: visible;
+    gap: 20px;
+    padding: 0 var(--gutter-mobile) 8px;
+  }
+  .cases-row-card { flex: 1 1 auto; min-width: 0; }
+  .cases-row-card.is-desktop-only { display: none; }
+  .cases-row-name { font-size: 22px; }
+}
+
 
 /* Split-layout case card: image on top, content body below.
    Used inside .cases-grid (1 featured spans full width, 3 smaller below). */
@@ -3338,6 +3486,47 @@ main { display: contents; }
   .case-page .highlight-pill { font-size: 14px; padding: 10px 18px; }
 }
 
+/* --- Optionele Before/After slider sectie op case-pagina ---------
+   Gerenderd onder de story-section wanneer `beforeAfter` in frontmatter
+   gezet is. Hergebruikt de bestaande .before-after component-styling. */
+.case-page-ba {
+  margin-bottom: 96px;
+}
+.case-page-ba-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+.case-page-ba-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.case-page-ba-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0;
+}
+.case-page-ba-body {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.85;
+  margin: 0;
+}
+@media (max-width: 640px) {
+  .case-page-ba { margin-bottom: 64px; }
+}
+
 /* --- Story (markdown body) --- */
 .case-page-story { margin-bottom: 96px; }
 .case-page-story-inner {
@@ -5388,8 +5577,11 @@ main { display: contents; }
   max-width: var(--container-max);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px 28px;
+}
+@media (max-width: 1024px) {
+  .websites-showcase-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 22px; }
 }
 
 /* FEATURED-mode — grote case bovenaan (image links + content rechts) */
@@ -5515,44 +5707,60 @@ main { display: contents; }
 .websites-showcase-card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.18s ease;
+  transition: transform 0.18s var(--ease-pop);
 }
 .websites-showcase-card:hover { transform: translateY(-4px); }
-.websites-showcase-card:hover .websites-showcase-img-wrap {
-  box-shadow: 8px 8px 0 var(--accent-rare);
-}
+/* Mockup-beelden hebben hun eigen frame/shadow ingebakken, dus geen
+   extra omkadering of background hier. Alleen aspect-ratio container. */
 .websites-showcase-img-wrap {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  border: var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: 5px 5px 0 var(--accent-rare);
-  background: var(--surface-card);
-  overflow: hidden;
-  transition: box-shadow 0.18s ease;
+  aspect-ratio: 1 / 1;
+  background: transparent;
+  overflow: visible;
 }
 .websites-showcase-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
-.websites-showcase-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  opacity: 0.65;
+.websites-showcase-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   padding: 0 4px;
+}
+.websites-showcase-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin: 0;
+}
+.websites-showcase-subtitle {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-primary);
+  opacity: 0.7;
+  margin: 0;
 }
 .websites-showcase-foot {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 48px;
+  display: flex;
+  justify-content: center;
+}
+.websites-showcase-foot--dual {
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.websites-showcase-foot-btn {
+  min-width: 220px;
+  text-align: center;
 }
 @media (max-width: 1024px) {
   .websites-showcase-featured { grid-template-columns: 1fr; }
@@ -5562,7 +5770,17 @@ main { display: contents; }
 }
 @media (max-width: 640px) {
   .websites-showcase { padding: 48px var(--gutter-mobile) 56px; }
-  .websites-showcase-grid { grid-template-columns: 1fr; gap: 20px; }
+  .websites-showcase-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px 14px;
+  }
+  /* Beperk tot 4 tegels op mobile. */
+  .websites-showcase-card.is-desktop-only { display: none; }
+  .websites-showcase-foot--dual {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .websites-showcase-foot-btn { min-width: 0; }
   .websites-showcase-small-row { grid-template-columns: 1fr; gap: 16px; }
   .websites-showcase-featured-body { padding: 24px 22px 26px; }
   .websites-showcase-foot { margin-top: 28px; }

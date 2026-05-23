@@ -6,6 +6,7 @@ import Footer from '@components/layout/Footer.astro';
 import EyebrowPill from '@components/ui/EyebrowPill.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
 import Lightbox from '@components/ui/Lightbox.astro';
+import BeforeAfter from '@components/sections/BeforeAfter.astro';
 import { Image, getImage } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 
@@ -180,6 +181,33 @@ const galleryCount = galleryImages.length;
         </div>
       </section>
 
+      <!-- Optionele Before/After slider, gerenderd onder de story.
+           Activeer per case door `beforeAfter` in frontmatter te zetten. -->
+      {c.beforeAfter && (
+        <section class="case-page-ba">
+          <div class="case-page-ba-inner">
+            {(c.beforeAfter.eyebrow || c.beforeAfter.title) && (
+              <div class="case-page-ba-head">
+                {c.beforeAfter.eyebrow && (
+                  <EyebrowPill variant="rare">{c.beforeAfter.eyebrow}</EyebrowPill>
+                )}
+                {c.beforeAfter.title && (
+                  <h2 class="case-page-ba-title">{c.beforeAfter.title}</h2>
+                )}
+                {c.beforeAfter.body && (
+                  <p class="case-page-ba-body">{c.beforeAfter.body}</p>
+                )}
+              </div>
+            )}
+            <BeforeAfter
+              before={c.beforeAfter.before}
+              after={c.beforeAfter.after}
+              beforeAlt={c.beforeAfter.beforeAlt}
+              afterAlt={c.beforeAfter.afterAlt}
+            />
+          </div>
+        </section>
+      )}
 
       <!-- Quote — hergebruikt homepage .testi-card markup met avatar -->
       {c.quote && c.quoteName && (

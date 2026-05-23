@@ -23,14 +23,14 @@ location: Nederland
 liveUrl: https://www.millstreetband.nl
 services:
   - webdesign
-order: 9
+order: 10
 featured: false
 published: true
 ---
 
 ## De uitdaging
 
-Millstreet is een van de meest spectaculaire coverbands van Nederland. De grootste uitdaging zat in de online-vertaalslag: hoe vang je de live-energie van zes muzikanten op een podium, zonder dat de site een rommelig spektakel wordt voor boekers en bezoekers die kort komen kijken?
+Millstreet is een van de meest spectaculaire coverbands van Nederland. Bandleider Marc van Demen wilde een one-pager, maar wel eentje met een uitstraling die je niet snel vergeet. Geen standaard band-site, geen voorspelbare layout. De vraag: hoe vang je de live-energie van zes muzikanten op een podium, zonder dat de site een rommelig spektakel wordt voor boekers die kort komen kijken?
 
 ## Onze aanpak
 

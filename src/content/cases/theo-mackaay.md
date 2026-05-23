@@ -24,7 +24,7 @@ location: Nederland
 liveUrl: https://www.theomackaay.com
 services:
   - webdesign
-order: 10
+order: 11
 featured: false
 published: true
 ---

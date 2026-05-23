@@ -1,4 +1,14 @@
 ---
+/**
+ * Homepage cases-row. Horizontaal scroll-snap met sfeerafbeelding per
+ * case (fallback: gallery[0]). Clean cards: foto + naam + korte tagline
+ * + cijfer/result. Geen mockup-overload, geen tags-confetti.
+ *
+ * Desktop: 3 cards in beeld tegelijk, swipe/scroll om door alle te
+ * bewegen. Mobile: alleen de eerste 4 cards stacked.
+ *
+ * Twee gelijke buttons onderaan: cases-overview + portfolio.
+ */
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import EyebrowPill from '../ui/EyebrowPill.astro';
@@ -9,31 +19,49 @@ interface Props {
   titleLead?: string;
   titleAccent?: string;
   lead?: string;
-  /** Array of slugs to control order. First slug becomes the featured (large) case. */
+  /** Welke cases tonen (in deze volgorde). Default = featured cases op order. */
   pickSlugs?: string[];
-  moreLabel?: string;
-  moreHref?: string;
+  /** Max aantal cases op mobile (eerste N). Default 4. */
+  mobileLimit?: number;
+  casesLabel?: string;
+  casesHref?: string;
+  portfolioLabel?: string;
+  portfolioHref?: string;
 }
 
 const {
-  eyebrow = 'Projecten · Echte resultaten',
+  eyebrow = 'Onze cases',
   titleLine1 = 'Bewezen succesverhalen',
   titleLead = 'voor',
   titleAccent = 'ambitieus MKB.',
-  lead = 'Geen loze beloftes, maar meetbare resultaten. Ontdek hoe wij MKB-bedrijven helpen groeien met slimme strategieën en doordachte uitvoering.',
+  lead = 'Een selectie van klanten waar onze aanpak meetbaar verschil heeft gemaakt. Cijfers staan erbij, vaag groeipraatje achterwege.',
   pickSlugs,
-  moreLabel = 'Meer cases ↗',
-  moreHref = '/cases/',
+  mobileLimit = 4,
+  casesLabel = 'Bekijk alle cases ↗',
+  casesHref = '/cases/',
+  portfolioLabel = 'Bekijk portfolio ↗',
+  portfolioHref = '/portfolio/',
 } = Astro.props;
 
 const all = await getCollection('cases', ({ data }) => data.published !== false);
 const sorted = all.sort((a, b) => a.data.order - b.data.order);
 const cases = pickSlugs
-  ? pickSlugs.map((s) => sorted.find((c) => c.data.slug === s)).filter(Boolean)
+  ? (pickSlugs
+      .map((s) => sorted.find((c) => c.data.slug === s))
+      .filter(Boolean) as typeof sorted)
   : sorted.filter((c) => c.data.featured);
 
-const [featured, ...rest] = cases;
-const others = rest.slice(0, 3);
+/* Per case: atmosphereImage > gallery[0] > hero. Hero is meestal mockup,
+   dus laatste resort. */
+const items = cases.map((c) => ({
+  slug: c.data.slug,
+  client: c.data.client,
+  tagline: c.data.tagline,
+  result: c.data.result,
+  metric: c.data.metrics?.[0],
+  image: c.data.atmosphereImage ?? c.data.gallery?.[0] ?? c.data.hero,
+  imageAlt: c.data.atmosphereAlt ?? `${c.data.client}: ${c.data.tagline}`,
+}));
 ---
 
 <section class="cases-strip" id="cases">
@@ -45,89 +73,43 @@ const others = rest.slice(0, 3);
     <p class="cases-strip-lead">{lead}</p>
   </div>
 
-  {featured && (
-    <div class="cases-grid">
-      <article class="case-card case-card--featured">
-        <div class="case-card-media">
+  <div class="cases-row" data-mobile-limit={mobileLimit} role="list" aria-label="Recente cases">
+    {items.map((it, i) => (
+      <a
+        class={`cases-row-card ${i >= mobileLimit ? 'is-desktop-only' : ''}`}
+        href={`/cases/${it.slug}/`}
+        role="listitem"
+        aria-label={`Bekijk case ${it.client}`}
+      >
+        <div class="cases-row-media">
           <Image
-            src={featured.data.hero}
-            alt={`${featured.data.client} — ${featured.data.tagline}`}
-            class="case-card-img"
-            widths={[600, 900, 1200]}
-            sizes="(max-width: 1024px) 100vw, 600px"
+            src={it.image}
+            alt={it.imageAlt}
+            class="cases-row-img"
+            widths={[400, 600, 800, 1000]}
+            sizes="(max-width: 640px) 88vw, (max-width: 1024px) 44vw, 30vw"
             loading="lazy"
           />
-          <div class="case-tags">
-            {featured.data.tags.map((t) => (
-              <span class={`case-tag ${t.color}`}>{t.label}</span>
-            ))}
-          </div>
-          <div class="case-featured-badge" aria-hidden="true">
-            <span class="case-featured-star">★</span>
-          </div>
         </div>
-        <div class="case-card-body">
-          <h3 class="case-card-name">{featured.data.client}</h3>
-          <p class="case-card-tagline">{featured.data.description ?? featured.data.tagline}</p>
-          {featured.data.metrics && (
-            <div class="case-card-metrics">
-              {featured.data.metrics.map((m) => (
-                <div class="case-metric">
-                  <div class="case-metric-value">{m.value}</div>
-                  <div class="case-metric-label">{m.label}</div>
-                </div>
-              ))}
+        <div class="cases-row-body">
+          <h3 class="cases-row-name">{it.client}</h3>
+          <p class="cases-row-tagline">{it.tagline}</p>
+          {it.metric && (
+            <div class="cases-row-metric">
+              <strong>{it.metric.value}</strong>
+              <span>{it.metric.label}</span>
             </div>
           )}
-          <div class="case-card-cta">
-            <span>Bekijk project</span>
-            <span class="arrow">↗</span>
-          </div>
+          {!it.metric && it.result && (
+            <div class="cases-row-result">{it.result}</div>
+          )}
         </div>
-      </article>
+      </a>
+    ))}
+  </div>
 
-      {others.map((c) => (
-        <article class="case-card">
-          <div class="case-card-media">
-            <Image
-              src={c!.data.hero}
-              alt={`${c!.data.client} — ${c!.data.tagline}`}
-              class="case-card-img"
-              widths={[400, 600, 800]}
-              sizes="(max-width: 1024px) 100vw, 400px"
-              loading="lazy"
-            />
-            <div class="case-tags">
-              {c!.data.tags.map((t) => (
-                <span class={`case-tag ${t.color}`}>{t.label}</span>
-              ))}
-            </div>
-            {!c!.data.metrics && <div class="case-result">{c!.data.result}</div>}
-          </div>
-          <div class="case-card-body">
-            <h3 class="case-card-name">{c!.data.client}</h3>
-            <p class="case-card-tagline">{c!.data.description ?? c!.data.tagline}</p>
-            {c!.data.metrics && (
-              <div class="case-card-metrics">
-                {c!.data.metrics.map((m) => (
-                  <div class="case-metric">
-                    <div class="case-metric-value">{m.value}</div>
-                    <div class="case-metric-label">{m.label}</div>
-                  </div>
-                ))}
-              </div>
-            )}
-            <div class="case-card-cta">
-              <span>Bekijk project</span>
-              <span class="arrow">↗</span>
-            </div>
-          </div>
-        </article>
-      ))}
-    </div>
-  )}
-
-  <div class="cases-footer">
-    <a class="btn-ghost cases-more" href={moreHref}>{moreLabel}</a>
+  <div class="cases-footer cases-footer--dual">
+    <a class="btn-primary cases-footer-btn" href={casesHref}>{casesLabel}</a>
+    <a class="btn-ghost cases-footer-btn" href={portfolioHref}>{portfolioLabel}</a>
   </div>
 </section>

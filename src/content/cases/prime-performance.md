@@ -1,17 +1,17 @@
 ---
 slug: prime-performance
 client: Prime Performance
-tagline: 'Website abonnement Online Plus voor health-coach'
-description: 'Maatwerk-website voor health- en performance-coaching voor ondernemers. Geleverd binnen ons Online Plus abonnement: vaste maandprijs, geen gedoe.'
-type: Webdesign + Website abonnement
+tagline: 'Astro-site binnen Online Plus voor health-coach'
+description: 'Razendsnelle Astro-website voor performance-coaching, geleverd binnen ons Online Plus abonnement. Inclusief Calendly, Scorecard, CRM- en nieuwsbrief-integraties, gebouwd voor maximale ad-conversie.'
+type: Website abonnement (Online Plus)
 tags:
   - { label: Webdesign, color: primary }
   - { label: Website abonnement, color: rare }
-result: 'Abonnement'
+result: 'Online Plus'
 highlights:
-  - 'Online Plus abonnement'
-  - 'Volledig maatwerk'
-  - 'Doorlopend onderhoud'
+  - 'Astro (razendsnel)'
+  - 'Calendly + CRM-integraties'
+  - 'Conversie-geoptimaliseerd'
 hero: ../../assets/cases/prime-performance/mockup.webp
 heroStyle: mockup
 gallery:
@@ -23,27 +23,27 @@ industry: Health- en performance-coaching
 location: Nederland
 liveUrl: https://primeperformance.nl
 services:
-  - webdesign
   - website-abonnement
-order: 14
-featured: false
+order: 5
+featured: true
 published: true
 ---
 
 ## De uitdaging
 
-Prime Performance werkt exclusief met succesvolle ondernemers die hun gezondheid te lang hebben verwaarloosd. Geen massa, geen sportschool-vibes. Een vergelijkbare positionering wilden ze online: rust, autoriteit, geen schreeuwerige marketing. Plus een wens om zich te focussen op klanten, niet op website-beheer. Daarom: ons Online Plus abonnement, waarbij wij de site bouwen, hosten en doorontwikkelen tegen een vaste maandprijs.
+Eigenaar Semmy van Gelderen wilde voor Prime Performance een moderne, strakke site die naadloos aansluit op zijn nieuwe huisstijl. Geen klassiek WordPress-traject of doorlopend onderhoudspakket; hij koos voor ons Online Plus website-abonnement. Daarbij was de site geen losse brochure, maar een conversie-machine: Semmy adverteert actief, dus elke bezoeker moest soepel doorstromen naar een afspraak of leadmagnet zonder technische horten.
 
 ## Onze aanpak
 
-Een maatwerk-website opgeleverd binnen het abonnement. Geen project-traject met een eindfactuur, maar een doorlopende relatie waarbij Prime zich op coaching kan richten.
+Een Astro-website binnen het Online Plus pakket. Astro is licht en snel, dus paid traffic landt op een pagina die meteen reageert. Daarnaast een rij integraties zodat alle tooling die Semmy gebruikt netjes samenwerkt met de site.
 
-- Maatwerk WordPress-build die rust uitstraalt en de aanpak helder uitlegt
-- Eigen content-flow zodat Prime cases en blogs zelf kan toevoegen
-- Performance-first techniek, snelle laadtijden op alle devices
-- Inbegrepen: hosting, onderhoud, updates, kleine wijzigingen
-- Doorlopende advies-momenten zodat de site meegroeit met het bedrijf
+- Maatwerk Astro-build die binnen seconden laadt, ook bij zware paid-campagnes
+- Volledig op nieuwe huisstijl (kleur, typografie, beeldstijl) afgestemd
+- Calendly-integratie zodat een lead direct een afspraak kan boeken
+- Scorecard-functionaliteit als leadmagnet
+- Nieuwsbrief-koppeling en CRM-integratie zodat leads automatisch in zijn flow belanden
+- Conversie-geoptimaliseerde landings voor zijn advertentiecampagnes
 
 ## Resultaat
 
-Een platform dat past bij hoe Prime Performance werkt: zonder ruis, premium en gefocust op resultaat. De ondernemers die hun pagina bezoeken weten direct of het bij ze past, en Prime hoeft nooit meer na te denken over hosting of website-onderhoud. Een goed voorbeeld van waar het Online Plus abonnement voor bedoeld is.
+Een site die past bij Prime Performance en bij hoe Semmy werkt: snel, integrated, en gericht op rendement op zijn ad-spend. Geen losse koppelingen die hij zelf moet bewaken, geen WordPress-onderhoud op zijn bordje. Online Plus regelt het, en de site groeit mee zonder dat hij zich druk hoeft te maken om de techniek.

@@ -23,7 +23,7 @@ location: Nederland
 liveUrl: https://rextheagency.com
 services:
   - webdesign
-order: 4
+order: 3
 featured: true
 published: true
 ---

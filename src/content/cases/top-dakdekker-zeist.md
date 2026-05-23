@@ -22,8 +22,8 @@ liveUrl: https://www.dakdekkerszeist.nl
 services:
   - lokale-seo
   - seo
-order: 5
-featured: true
+order: 14
+featured: false
 published: true
 ---
 

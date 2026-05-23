@@ -2,7 +2,7 @@
 slug: club12
 client: Club 12
 tagline: '+450% verkeer via nieuwe website + SEO-migratie'
-description: 'Re-branding van Alignment Club naar Club 12, gekoppeld aan een nieuwe website en SEO-migratie zonder verlies van rankings. De vooraanstaande vitaliteitspraktijk in regio Amersfoort.'
+description: 'Re-branding van Alignment Club naar Club 12, gekoppeld aan een nieuwe website en SEO-migratie zonder verlies van rankings. In 2025 uitgeroepen tot beste personal trainer van Nederland en #1 in vitaliteit.'
 type: Webdesign + SEO
 tags:
   - { label: Webdesign, color: primary }
@@ -26,14 +26,14 @@ services:
   - webdesign
   - seo
   - lokale-seo
-order: 2
+order: 1
 featured: true
 published: true
 ---
 
 ## De uitdaging
 
-Club 12 (voorheen Alignment Club) is een vooraanstaande vitaliteitspraktijk in de regio Amersfoort. Drie uitdagingen tegelijk: een re-branding doorvoeren, een nieuwe website neerzetten en de online vindbaarheid behouden tijdens de migratie. Verlies van rankings was geen optie. Tegelijk moest de nieuwe site uitblinken in zowel kennis-uitstraling als lokale zichtbaarheid in Hooglanderveen, Amersfoort Vathorst en Hoogland.
+Club 12 (voorheen Alignment Club) is in 2025 uitgeroepen tot beste personal trainer van Nederland en als #1 in vitaliteit. Werkterrein: Hooglanderveen, Amersfoort Vathorst en Hoogland. Drie uitdagingen tegelijk: een re-branding doorvoeren, een nieuwe website neerzetten en de online vindbaarheid behouden tijdens de migratie. Verlies van rankings was geen optie. De nieuwe site moest uitblinken in zowel kennis-uitstraling als lokale zichtbaarheid.
 
 ## Onze aanpak
 

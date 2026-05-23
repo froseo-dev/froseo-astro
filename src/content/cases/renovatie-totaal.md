@@ -29,7 +29,7 @@ quote: 'Sinds we met Froseo werken zien we een continue stijging in kwalitatieve
 quoteName: Bas Bertrams
 quoteRole: Eigenaar Renovatie Totaal
 quoteAvatar: ../../assets/testimonials/bas-bertrams.webp
-order: 5
+order: 4
 featured: true
 ---
 
@@ -49,6 +49,8 @@ Een volledige rebuild met focus op vindbaarheid en vertrouwen, gekoppeld aan een
 - Lokale SEO voor Utrecht plus landelijke pagina's voor het werkgebied daarbuiten
 - Aparte ingangen per doelgroep (particulier, VvE, woningcorporatie, aannemer)
 - Contentstrategie met evergreen artikelen op high-intent zoekwoorden (kosten, subsidies, materialen)
+- Eigen bespaarcalculator op de site waarmee bezoekers in een paar klikken zien wat isolatie ze oplevert
+- AI-workflows in de backoffice voor offerte-prep en content-productie, scheelt het team uren per week
 - Technische SEO: schoon datamodel, snelle pagina's, schema.org markup
 - Doorlopende optimalisatie op basis van Search Console en GA4
 

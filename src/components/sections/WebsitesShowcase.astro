@@ -1,42 +1,34 @@
 ---
 /**
- * Visuele showcase van cases. Twee modes:
+ * Visuele showcase van cases — clean mockup-grid.
  *
- *   1. STANDARD GRID (default) — alle `cases` in een 16:9 grid.
- *      Voor pagina's waar geen specifieke case voorop hoeft.
+ * Per tegel: mockup (zonder extra omkadering, het mockup-beeld heeft
+ * z'n eigen frame), client-naam, optionele korte subtitel. Desktop 6
+ * tegels, mobile 4 (overige verborgen).
  *
- *   2. FEATURED MODE — wanneer `featured` is gezet, render één grote card
- *      bovenaan (image links, content rechts) + de overige cases als kleinere
- *      kaarten in een rij eronder. Voor pagina's waar één resultaat het meest
- *      aanspreekt (bv. /seo met Renovatie Totaal als hero-case).
- *
- * Beide modes tonen een optionele eyebrow + title bovenin en een
- * "Bekijk alle projecten ↗" CTA onderin.
+ * Twee gelijke buttons onderaan: portfolio + cases. Past bij de
+ * "browse veel werk" intent op service-pagina's.
  */
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import EyebrowPill from '../ui/EyebrowPill.astro';
 
-interface FeaturedConfig {
-  caseEntry: CollectionEntry<'cases'>;
-  /** Custom h3 voor de featured-card, bv. "Hoe wij X met 180% lieten groeien." */
-  headline?: string;
-  /** Aantal smallere cases die onder de featured worden getoond. Default 3. */
-  smallerCount?: number;
-}
-
 interface Props {
   cases: CollectionEntry<'cases'>[];
-  /** Optionele eyebrow boven het sectie-blok. */
   eyebrow?: string;
-  /** Optionele h2 boven het sectie-blok. Mag '<em>...</em>' html bevatten via slot, of plain string. */
   title?: string;
-  /** Optionele em-tagline (deel van h2). */
   titleAccent?: string;
-  /** Featured-mode config. Als gezet, render groot uitgelichte case + kleinere row. */
-  featured?: FeaturedConfig;
-  ctaLabel?: string;
-  ctaHref?: string;
+  /** Max aantal tegels op desktop. Default 6. */
+  desktopLimit?: number;
+  /** Max aantal tegels op mobile. Default 4. */
+  mobileLimit?: number;
+  /** Wanneer false: alleen client-naam onder de mockup, geen subtitel. */
+  showSubtitle?: boolean;
+  /** Twee CTA-buttons onderaan (gelijke groottes). */
+  portfolioLabel?: string;
+  portfolioHref?: string;
+  casesLabel?: string;
+  casesHref?: string;
 }
 
 const {
@@ -44,20 +36,19 @@ const {
   eyebrow,
   title,
   titleAccent,
-  featured,
-  ctaLabel = 'Bekijk alle cases ↗',
-  ctaHref = '/cases/',
+  desktopLimit = 6,
+  mobileLimit = 4,
+  showSubtitle = true,
+  portfolioLabel = 'Bekijk portfolio ↗',
+  portfolioHref = '/portfolio/',
+  casesLabel = 'Bekijk alle cases ↗',
+  casesHref = '/cases/',
 } = Astro.props;
 
-/* In featured mode: filter de featured case uit de overige + slice op smallerCount. */
-const smallerCases = featured
-  ? cases
-      .filter((c) => c.data.slug !== featured.caseEntry.data.slug)
-      .slice(0, featured.smallerCount ?? 3)
-  : [];
+const items = cases.slice(0, desktopLimit);
 ---
 
-<section class="websites-showcase" aria-label="Cases die we deden">
+<section class="websites-showcase" aria-label="Werk dat we deden">
   {(eyebrow || title) && (
     <header class="websites-showcase-head">
       {eyebrow && <EyebrowPill>{eyebrow}</EyebrowPill>}
@@ -70,88 +61,33 @@ const smallerCases = featured
     </header>
   )}
 
-  {featured ? (
-    <>
-      <!-- FEATURED grote card: image links, content rechts -->
-      <a class="websites-showcase-featured" href={`/cases/${featured.caseEntry.data.slug}/`}>
-        <div class="websites-showcase-featured-media">
+  <div class="websites-showcase-grid">
+    {items.map((c, i) => (
+      <a
+        class={`websites-showcase-card ${i >= mobileLimit ? 'is-desktop-only' : ''}`}
+        href={`/cases/${c.data.slug}/`}
+        aria-label={`Bekijk case ${c.data.client}`}
+      >
+        <div class="websites-showcase-img-wrap">
           <Image
-            src={featured.caseEntry.data.hero}
-            alt={`${featured.caseEntry.data.client} — ${featured.caseEntry.data.tagline}`}
-            class="websites-showcase-featured-img"
-            widths={[600, 900, 1200, 1600]}
-            sizes="(max-width: 1024px) 100vw, 720px"
+            src={c.data.hero}
+            alt={`${c.data.client}: ${c.data.tagline}`}
+            class="websites-showcase-img"
+            widths={[400, 600, 800, 1000]}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
             loading="lazy"
           />
         </div>
-        <div class="websites-showcase-featured-body">
-          <div class="websites-showcase-featured-tags">
-            {featured.caseEntry.data.tags.map((t) => (
-              <span class={`case-tag ${t.color}`}>{t.label}</span>
-            ))}
-          </div>
-          <h3 class="websites-showcase-featured-title">
-            {featured.headline ?? `Hoe wij ${featured.caseEntry.data.client} hielpen groeien.`}
-          </h3>
-          <p class="websites-showcase-featured-body-text">
-            {featured.caseEntry.data.description ?? featured.caseEntry.data.tagline}
-          </p>
-          {featured.caseEntry.data.metrics && featured.caseEntry.data.metrics.length > 0 && (
-            <ul class="websites-showcase-featured-metrics">
-              {featured.caseEntry.data.metrics.slice(0, 2).map((m) => (
-                <li>
-                  <strong>{m.value}</strong>
-                  <span>{m.label}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-          <span class="websites-showcase-featured-cta">Lees deze case ↗</span>
+        <div class="websites-showcase-meta">
+          <h3 class="websites-showcase-name">{c.data.client}</h3>
+          {showSubtitle && <p class="websites-showcase-subtitle">{c.data.tagline}</p>}
         </div>
       </a>
+    ))}
+  </div>
 
-      <!-- SMALLER cases row -->
-      {smallerCases.length > 0 && (
-        <div class="websites-showcase-small-row">
-          {smallerCases.map((c) => (
-            <a class="websites-showcase-card" href={`/cases/${c.data.slug}/`}>
-              <div class="websites-showcase-img-wrap">
-                <Image
-                  src={c.data.hero}
-                  alt={`${c.data.client} — ${c.data.tagline}`}
-                  class="websites-showcase-img"
-                  widths={[400, 600, 800]}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
-                  loading="lazy"
-                />
-              </div>
-              <span class="websites-showcase-label">{c.data.client}</span>
-            </a>
-          ))}
-        </div>
-      )}
-    </>
-  ) : (
-    <div class="websites-showcase-grid">
-      {cases.map((c) => (
-        <a class="websites-showcase-card" href={`/cases/${c.data.slug}/`}>
-          <div class="websites-showcase-img-wrap">
-            <Image
-              src={c.data.hero}
-              alt={`${c.data.client} — ${c.data.tagline}`}
-              class="websites-showcase-img"
-              widths={[400, 600, 800]}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
-              loading="lazy"
-            />
-          </div>
-          <span class="websites-showcase-label">{c.data.client}</span>
-        </a>
-      ))}
-    </div>
-  )}
-
-  <div class="websites-showcase-foot">
-    <a class="btn-ghost" href={ctaHref}>{ctaLabel}</a>
+  <div class="websites-showcase-foot websites-showcase-foot--dual">
+    <a class="btn-primary websites-showcase-foot-btn" href={casesHref}>{casesLabel}</a>
+    <a class="btn-ghost websites-showcase-foot-btn" href={portfolioHref}>{portfolioLabel}</a>
   </div>
 </section>

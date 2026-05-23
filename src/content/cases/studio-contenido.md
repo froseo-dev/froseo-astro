@@ -8,9 +8,9 @@ tags:
   - { label: Webdesign, color: primary }
 result: 'Live'
 highlights:
-  - 'Maatwerk WordPress'
-  - 'Eigen portfolio-flow'
-  - 'Performance-first'
+  - 'Nieuwe huisstijl'
+  - 'WordPress re-build'
+  - 'Verhuizing Utrecht'
 hero: ../../assets/cases/studio-contenido/mockup.webp
 heroStyle: mockup
 gallery:
@@ -23,25 +23,33 @@ location: Utrecht
 liveUrl: https://studiocontenido.nl
 services:
   - webdesign
-order: 3
+beforeAfter:
+  before: ../../assets/before-after/studio-contenido-before.webp
+  after: ../../assets/before-after/studio-contenido-after.webp
+  beforeAlt: 'Studio Contenido — site voor de re-build'
+  afterAlt: 'Studio Contenido — site na de re-build'
+  eyebrow: 'Voor en na'
+  title: 'Sleep en zie wat het oplevert.'
+  body: 'De oude site liet het werk niet ademen. De nieuwe site is opgebouwd rond hun beeldmateriaal.'
+order: 2
 featured: true
 published: true
 ---
 
 ## De uitdaging
 
-Studio Contenido is een Utrechts creatief bureau dat fotografie, video, copy en design maakt voor merken met een maatschappelijk doel. Hun motto: we turn missions into movements. Klantenlijst is sterk (Bertolli, Tradin Organic, Diabetesfonds, MSC) maar de oude site bracht die kracht onvoldoende over. Te weinig ruimte voor het werk, te veel ruis eromheen.
+Studio Contenido is een contentbureau dat zich richt op duurzame organisaties. Eigenaressen Rianne en Nadine maken fotografie, video, copy en design voor merken als Bertolli, Tradin Organic, Diabetesfonds en MSC Keurlabel. Voor die opdrachten reizen ze de hele wereld over. Een sterke niche, een schitterend portfolio en een verouderde website die dat alles niet meer eer aandeed. Bovendien verhuisden ze van Amersfoort naar Utrecht, dus ook een fris hoofdstuk om visueel te markeren.
 
 ## Onze aanpak
 
-Een site die de aandacht op het werk laat vallen en de positionering van het collectief niet uithijgt. Strak, eigenzinnig en met ruimte voor visueel materiaal van topkwaliteit.
+Eerst een nieuwe huisstijl ontwikkeld die past bij wie Rianne en Nadine zijn. Daarna een complete re-build van de site die hun beeldmateriaal de ruimte geeft die het verdient.
 
-- Maatwerk WordPress-build met portfolio-flow die fotografie en video laat ademen
-- Eigen case-template waarmee Studio Contenido zelfstandig nieuwe projecten kan publiceren
-- Typografie en kleurgebruik dat hun "vrolijk, doelgericht, activistisch" karakter doortrekt
-- Snelle technische basis met optimale beeld-delivery
-- BeforeAfter-elementen waar dat het werk versterkt
+- Volledig nieuwe huisstijl (kleur, typografie, beeldlogica) als basis voor de site én voor toekomstig drukwerk
+- WordPress-build die snel is, maar vooral makkelijk uitbreidbaar: nieuwe cases en foto's voegen ze zelf moeiteloos toe
+- Portfolio-flow die fotografie en video op groot formaat laat ademen, zonder verstoring
+- Heldere structuur per type opdracht en branche
+- Optimale beeld-delivery zodat de zware media snel laadt
 
 ## Resultaat
 
-Een platform dat eindelijk past bij het kaliber van het werk. Het collectief kan zelf nieuwe cases toevoegen zonder bij ons aan te kloppen, en bezoekers blijven aanzienlijk langer hangen dan op de oude site. De positionering die ze in opdrachten claimen, klopt nu ook online.
+Een site die past bij het kaliber van het werk en bij de nieuwe Utrechtse basis. Rianne en Nadine voegen zelf nieuwe cases toe zodra een opdracht is afgerond, zonder ons in te schakelen. Bezoekers blijven langer hangen en doorklikken op het werk, en het bureau heeft een platform dat meegroeit met hun ambitie.

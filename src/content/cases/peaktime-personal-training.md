@@ -1,17 +1,16 @@
 ---
 slug: peaktime-personal-training
 client: Peak Time Personal Training
-tagline: 'SEO-traject voor private personal training in Utrecht'
-description: 'Lokale SEO voor de personal training studio in het Wolvenplein-fort. Zichtbaarder voor ondernemers en professionals die rust zoeken naast hun werk.'
+tagline: '4x meer aanvragen via top-3 op Personal Trainer Utrecht'
+description: 'Lokaal SEO-traject voor de personal training studio in het Wolvenplein-fort. Binnen een jaar top 3 op het belangrijkste zoekwoord, een viervoudiging van aanvragen en een volle agenda.'
 type: Lokale SEO
 tags:
   - { label: 'SEO/GEO', color: primary }
   - { label: Lokale SEO, color: rare }
-result: 'Lokaal #1'
-highlights:
-  - 'Lokale SEO Utrecht'
-  - 'Lange-staart zoektermen'
-  - 'Reviews-strategie'
+result: '4x aanvragen'
+metrics:
+  - { value: 'Top 3', label: 'Personal Trainer Utrecht' }
+  - { value: '4x', label: 'Meer aanvragen' }
 hero: ../../assets/cases/peaktime-personal-training/gallery-1.webp
 gallery:
   - ../../assets/cases/peaktime-personal-training/gallery-2.webp
@@ -23,7 +22,7 @@ liveUrl: https://peaktimepersonaltraining.nl
 services:
   - lokale-seo
   - seo
-order: 11
+order: 12
 featured: false
 published: true
 ---
@@ -44,4 +43,4 @@ Een lokaal SEO-traject met focus op de zoekintenties die passen bij de doelgroep
 
 ## Resultaat
 
-Peak Time staat scherp gepositioneerd voor de zoekers die er écht bij passen: ondernemers en professionals die kwaliteit boven prijs zetten. Het aantal aanvragen via de site is meetbaar gegroeid, en de aanvragen die binnenkomen zijn beter gekwalificeerd. Minder ruis, meer warme leads.
+Binnen een jaar top 3-posities voor zowel het hoofdkeyword "personal trainer Utrecht" als de secundaire diensten (small group, boksfit, post-partum). Het aantal aanvragen is verviervoudigd, en de aanvragen die binnenkomen zijn beter gekwalificeerd dan voorheen. Bart's agenda zit weer vol met de juiste klanten: ondernemers en professionals die kwaliteit boven prijs zetten.
