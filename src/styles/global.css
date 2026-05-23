@@ -764,32 +764,32 @@ main { display: contents; }
   .cases-footer-btn { min-width: 0; }
 }
 
-/* ---- Cases-row: scroll-snap horizontale rij voor homepage --------
-   Per card: sfeerafbeelding (zonder mockup-frame), client-naam, korte
-   tagline, en een cijfer (metric) of result-label. Desktop: 3 cards in
-   beeld, swipe/scroll om door alle te bewegen. Mobile: alleen de
-   eerste N cards stacked, rest verborgen. */
+/* ---- Cases-row: scroll-snap horizontale rij ----------------------
+   Page-wide rij die rechts buiten beeld scrollt. Per card:
+   sfeerafbeelding 16:9, client-naam, tagline, cijfer/result. Geen
+   zichtbare scrollbar; navigatie via prev/next-knoppen. Mobile: alleen
+   eerste N cards stacked, rest verborgen.
+
+   .cases-row-wrap breekt uit de parent-padding via negative margin
+   zodat de rij visueel page-wide is. Padding-left aligned met de
+   container-max-width zodat eerste card op de juiste positie start. */
+.cases-row-wrap {
+  position: relative;
+  margin-left: calc(-1 * var(--gutter));
+  margin-right: calc(-1 * var(--gutter));
+}
 .cases-row {
-  max-width: var(--container-max);
-  margin: 0 auto;
   display: flex;
   gap: 24px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--gutter);
-  padding: 4px 0 28px;
-  /* Native scrollbar uit zicht op desktop, behoud op mobile voor zichtbaarheid */
-  scrollbar-width: thin;
+  scroll-padding-left: max(var(--gutter), calc((100vw - var(--container-max)) / 2 + var(--gutter)));
+  padding: 4px max(var(--gutter), calc((100vw - var(--container-max)) / 2 + var(--gutter))) 28px;
+  scrollbar-width: none;
 }
-.cases-row::-webkit-scrollbar { height: 8px; }
-.cases-row::-webkit-scrollbar-track { background: transparent; }
-.cases-row::-webkit-scrollbar-thumb {
-  background: var(--accent-rare);
-  border-radius: 4px;
-}
+.cases-row::-webkit-scrollbar { display: none; }
 .cases-row-card {
-  flex: 0 0 calc((100% - 48px) / 3);
-  min-width: 320px;
+  flex: 0 0 clamp(320px, 36vw, 520px);
   scroll-snap-align: start;
   background: var(--surface-card);
   border: var(--border);
@@ -808,7 +808,7 @@ main { display: contents; }
 }
 .cases-row-media {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--surface-page-deep);
 }
@@ -819,7 +819,7 @@ main { display: contents; }
   display: block;
 }
 .cases-row-body {
-  padding: 22px 24px 24px;
+  padding: 22px 26px 26px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -827,7 +827,7 @@ main { display: contents; }
 }
 .cases-row-name {
   font-family: var(--font-display);
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 900;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -854,7 +854,7 @@ main { display: contents; }
 }
 .cases-row-metric strong {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 900;
   letter-spacing: -0.02em;
   color: var(--accent-rare);
@@ -871,25 +871,60 @@ main { display: contents; }
   margin-top: auto;
   padding-top: 8px;
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
   color: var(--accent-rare);
 }
 
+/* Prev/next-knoppen. Cirkels onder de rij, gecentreerd, gelijke grootte.
+   Disabled-state heeft lagere opacity. */
+.cases-row-nav-wrap {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 0 var(--gutter);
+}
+.cases-row-nav {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface-card);
+  border: var(--border);
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--text-primary);
+  box-shadow: 3px 3px 0 var(--accent-rare);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium), opacity 0.18s ease;
+}
+.cases-row-nav:hover:not([disabled]) {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--accent-rare);
+}
+.cases-row-nav[disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 @media (max-width: 1024px) {
-  .cases-row-card { flex: 0 0 calc((100% - 24px) / 2); min-width: 280px; }
+  .cases-row-card { flex: 0 0 clamp(300px, 65vw, 480px); }
 }
 @media (max-width: 640px) {
-  /* Mobile: geen scroll-snap, gewoon stacked. Alleen eerste N cards. */
+  /* Mobile: geen scroll-snap, gewoon stacked. Alleen eerste N cards.
+     Geen prev/next-knoppen nodig. */
+  .cases-row-wrap { margin-left: 0; margin-right: 0; }
   .cases-row {
     flex-direction: column;
     overflow: visible;
     gap: 20px;
     padding: 0 var(--gutter-mobile) 8px;
   }
-  .cases-row-card { flex: 1 1 auto; min-width: 0; }
+  .cases-row-card { flex: 1 1 auto; }
   .cases-row-card.is-desktop-only { display: none; }
   .cases-row-name { font-size: 22px; }
+  .cases-row-nav-wrap { display: none; }
 }
 
 

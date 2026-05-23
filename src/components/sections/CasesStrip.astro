@@ -1,17 +1,12 @@
 ---
 /**
- * Homepage cases-row. Horizontaal scroll-snap met sfeerafbeelding per
- * case (fallback: gallery[0]). Clean cards: foto + naam + korte tagline
- * + cijfer/result. Geen mockup-overload, geen tags-confetti.
- *
- * Desktop: 3 cards in beeld tegelijk, swipe/scroll om door alle te
- * bewegen. Mobile: alleen de eerste 4 cards stacked.
- *
- * Twee gelijke buttons onderaan: cases-overview + portfolio.
+ * Homepage cases-strip. Eyebrow + h2 + lead bovenin, daaronder de
+ * scroll-snap cases-rij (CasesRow), met dual-button footer (cases +
+ * portfolio).
  */
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import EyebrowPill from '../ui/EyebrowPill.astro';
+import CasesRow from './CasesRow.astro';
 
 interface Props {
   eyebrow?: string;
@@ -21,7 +16,6 @@ interface Props {
   lead?: string;
   /** Welke cases tonen (in deze volgorde). Default = featured cases op order. */
   pickSlugs?: string[];
-  /** Max aantal cases op mobile (eerste N). Default 4. */
   mobileLimit?: number;
   casesLabel?: string;
   casesHref?: string;
@@ -50,18 +44,6 @@ const cases = pickSlugs
       .map((s) => sorted.find((c) => c.data.slug === s))
       .filter(Boolean) as typeof sorted)
   : sorted.filter((c) => c.data.featured);
-
-/* Per case: atmosphereImage > gallery[0] > hero. Hero is meestal mockup,
-   dus laatste resort. */
-const items = cases.map((c) => ({
-  slug: c.data.slug,
-  client: c.data.client,
-  tagline: c.data.tagline,
-  result: c.data.result,
-  metric: c.data.metrics?.[0],
-  image: c.data.atmosphereImage ?? c.data.gallery?.[0] ?? c.data.hero,
-  imageAlt: c.data.atmosphereAlt ?? `${c.data.client}: ${c.data.tagline}`,
-}));
 ---
 
 <section class="cases-strip" id="cases">
@@ -73,40 +55,7 @@ const items = cases.map((c) => ({
     <p class="cases-strip-lead">{lead}</p>
   </div>
 
-  <div class="cases-row" data-mobile-limit={mobileLimit} role="list" aria-label="Recente cases">
-    {items.map((it, i) => (
-      <a
-        class={`cases-row-card ${i >= mobileLimit ? 'is-desktop-only' : ''}`}
-        href={`/cases/${it.slug}/`}
-        role="listitem"
-        aria-label={`Bekijk case ${it.client}`}
-      >
-        <div class="cases-row-media">
-          <Image
-            src={it.image}
-            alt={it.imageAlt}
-            class="cases-row-img"
-            widths={[400, 600, 800, 1000]}
-            sizes="(max-width: 640px) 88vw, (max-width: 1024px) 44vw, 30vw"
-            loading="lazy"
-          />
-        </div>
-        <div class="cases-row-body">
-          <h3 class="cases-row-name">{it.client}</h3>
-          <p class="cases-row-tagline">{it.tagline}</p>
-          {it.metric && (
-            <div class="cases-row-metric">
-              <strong>{it.metric.value}</strong>
-              <span>{it.metric.label}</span>
-            </div>
-          )}
-          {!it.metric && it.result && (
-            <div class="cases-row-result">{it.result}</div>
-          )}
-        </div>
-      </a>
-    ))}
-  </div>
+  <CasesRow cases={cases} mobileLimit={mobileLimit} id="homepage-cases" />
 
   <div class="cases-footer cases-footer--dual">
     <a class="btn-primary cases-footer-btn" href={casesHref}>{casesLabel}</a>

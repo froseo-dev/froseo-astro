@@ -1,0 +1,115 @@
+---
+/**
+ * Horizontaal scroll-snap cases-rij met prev/next-knoppen. Breekt uit
+ * de container-padding zodat cards rechts buiten beeld doorlopen (page-
+ * wide gevoel). Geen zichtbare scrollbar. Op mobile: alleen eerste N
+ * cards stacked, rest verborgen.
+ *
+ * Bedoeld als losse rij die door zowel CasesStrip (homepage) als
+ * related-cases (single case page) wordt hergebruikt.
+ */
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  cases: CollectionEntry<'cases'>[];
+  /** Max aantal cards op mobile (eerste N), rest verborgen. Default 4. */
+  mobileLimit?: number;
+  /** ID voor de scroll-container; nodig om meerdere rows op één page te
+      laten coexisteren met eigen prev/next-knoppen. */
+  id?: string;
+}
+
+const { cases, mobileLimit = 4, id = 'cases-row' } = Astro.props;
+
+const items = cases.map((c) => ({
+  slug: c.data.slug,
+  client: c.data.client,
+  tagline: c.data.tagline,
+  result: c.data.result,
+  metric: c.data.metrics?.[0],
+  image: c.data.atmosphereImage ?? c.data.gallery?.[0] ?? c.data.hero,
+  imageAlt: c.data.atmosphereAlt ?? `${c.data.client}: ${c.data.tagline}`,
+}));
+---
+
+<div class="cases-row-wrap" data-cases-wrap={id}>
+  <div class="cases-row" data-cases-row={id} role="list" aria-label="Cases">
+    {items.map((it, i) => (
+      <a
+        class={`cases-row-card ${i >= mobileLimit ? 'is-desktop-only' : ''}`}
+        href={`/cases/${it.slug}/`}
+        role="listitem"
+        aria-label={`Bekijk case ${it.client}`}
+      >
+        <div class="cases-row-media">
+          <Image
+            src={it.image}
+            alt={it.imageAlt}
+            class="cases-row-img"
+            widths={[400, 600, 800, 1000, 1200]}
+            sizes="(max-width: 640px) 88vw, (max-width: 1024px) 48vw, 38vw"
+            loading="lazy"
+          />
+        </div>
+        <div class="cases-row-body">
+          <h3 class="cases-row-name">{it.client}</h3>
+          <p class="cases-row-tagline">{it.tagline}</p>
+          {it.metric && (
+            <div class="cases-row-metric">
+              <strong>{it.metric.value}</strong>
+              <span>{it.metric.label}</span>
+            </div>
+          )}
+          {!it.metric && it.result && (
+            <div class="cases-row-result">{it.result}</div>
+          )}
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <div class="cases-row-nav-wrap" aria-hidden="false">
+    <button class="cases-row-nav" type="button" data-cases-prev={id} aria-label="Vorige cases">‹</button>
+    <button class="cases-row-nav" type="button" data-cases-next={id} aria-label="Volgende cases">›</button>
+  </div>
+</div>
+
+<script>
+  /* Per .cases-row-wrap: koppel prev/next-knoppen aan de horizontale
+     scroll van de bijbehorende rij. Scroll-bedrag = breedte van 1 card
+     (inclusief gap) zodat één klik één tegel verschuift. */
+  type Direction = -1 | 1;
+
+  function scrollByCard(row: HTMLElement, direction: Direction) {
+    const firstCard = row.querySelector<HTMLElement>('.cases-row-card');
+    if (!firstCard) return;
+    const styles = window.getComputedStyle(row);
+    const gap = parseFloat(styles.columnGap || styles.gap || '0');
+    const step = firstCard.offsetWidth + gap;
+    row.scrollBy({ left: step * direction, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-cases-wrap]').forEach((wrap) => {
+    const id = wrap.dataset.casesWrap;
+    if (!id) return;
+    const row = wrap.querySelector<HTMLElement>(`[data-cases-row="${id}"]`);
+    const prev = wrap.querySelector<HTMLButtonElement>(`[data-cases-prev="${id}"]`);
+    const next = wrap.querySelector<HTMLButtonElement>(`[data-cases-next="${id}"]`);
+    if (!row || !prev || !next) return;
+
+    prev.addEventListener('click', () => scrollByCard(row, -1));
+    next.addEventListener('click', () => scrollByCard(row, 1));
+
+    /* Disable-state op knoppen op basis van scroll-positie. */
+    const updateButtons = () => {
+      const atStart = row.scrollLeft <= 4;
+      const atEnd = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
+      prev.toggleAttribute('disabled', atStart);
+      next.toggleAttribute('disabled', atEnd);
+    };
+    updateButtons();
+    row.addEventListener('scroll', updateButtons, { passive: true });
+    window.addEventListener('resize', updateButtons);
+  });
+</script>

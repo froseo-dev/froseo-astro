@@ -7,6 +7,7 @@ import EyebrowPill from '@components/ui/EyebrowPill.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
 import Lightbox from '@components/ui/Lightbox.astro';
 import BeforeAfter from '@components/sections/BeforeAfter.astro';
+import CasesRow from '@components/sections/CasesRow.astro';
 import { Image, getImage } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 
@@ -262,7 +263,7 @@ const galleryCount = galleryImages.length;
         </section>
       )}
 
-      <!-- Related cases — hergebruikt homepage .case-card stijl -->
+      <!-- Related cases — zelfde scrollable row als op de homepage -->
       {related.length > 0 && (
         <section class="case-page-related">
           <div class="case-page-section-head">
@@ -271,34 +272,7 @@ const galleryCount = galleryImages.length;
               Andere <em>succesverhalen.</em>
             </h2>
           </div>
-          <div class="cases-grid case-page-related-grid">
-            {related.map((r) => (
-              <a class="case-card" href={`/cases/${r.data.slug}/`}>
-                <div class="case-card-media">
-                  <Image
-                    src={r.data.hero}
-                    alt={`${r.data.client} — ${r.data.tagline}`}
-                    class="case-card-img"
-                    widths={[400, 600, 800]}
-                    sizes="(max-width: 1024px) 100vw, 380px"
-                    loading="lazy"
-                  />
-                  <div class="case-tags">
-                    {r.data.tags.map((t) => <span class={`case-tag ${t.color}`}>{t.label}</span>)}
-                  </div>
-                  {!r.data.metrics && <div class="case-result">{r.data.result}</div>}
-                </div>
-                <div class="case-card-body">
-                  <h3 class="case-card-name">{r.data.client}</h3>
-                  <p class="case-card-tagline">{r.data.description ?? r.data.tagline}</p>
-                  <div class="case-card-cta">
-                    <span>Bekijk project</span>
-                    <span class="arrow">↗</span>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
+          <CasesRow cases={related} mobileLimit={3} id={`related-${c.slug}`} />
           <div class="case-page-related-foot">
             <a class="btn-ghost" href="/cases/">Alle cases ↗</a>
           </div>
