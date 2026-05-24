@@ -1,5 +1,5 @@
 ---
-slug: studio-max
+slug: studio-max-dance
 client: Studio Max Dance
 tagline: '#1 posities in 2 nieuwe vestigingsplaatsen'
 description: 'Lokaal SEO-traject voor uitbreiding van 1 naar 3 locaties. Studio Max Dance is na een gerichte SEO-strategie #1 in zowel Woerden als Linschoten.'
@@ -11,11 +11,11 @@ result: '#1 op locatie'
 metrics:
   - { value: '#1', label: 'Dansschool Woerden' }
   - { value: '#1', label: 'Dansschool Linschoten' }
-hero: ../../assets/cases/studio-max/gallery-1.webp
+hero: ../../assets/cases/studio-max-dance/gallery-1.webp
 gallery:
-  - ../../assets/cases/studio-max/gallery-2.webp
-  - ../../assets/cases/studio-max/gallery-3.webp
-  - ../../assets/cases/studio-max/gallery-4.webp
+  - ../../assets/cases/studio-max-dance/gallery-2.webp
+  - ../../assets/cases/studio-max-dance/gallery-3.webp
+  - ../../assets/cases/studio-max-dance/gallery-4.webp
 industry: Dansschool
 location: Oudewater, Woerden, Linschoten
 liveUrl: https://studiomaxdance.nl

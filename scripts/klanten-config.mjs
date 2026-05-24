@@ -51,7 +51,7 @@ export const klanten = [
     pages: [],
   },
   {
-    slug: 'studio-max',
+    slug: 'studio-max-dance',
     client: 'Studio Max Dance',
     url: 'https://studiomaxdance.nl',
     bucket: 'case-only',
@@ -65,7 +65,7 @@ export const klanten = [
     pages: [],
   },
   {
-    slug: 'rex-agency',
+    slug: 'rex-the-agency',
     client: 'Rex The Agency',
     url: 'https://rextheagency.com',
     bucket: 'case+portfolio',

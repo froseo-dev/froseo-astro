@@ -36,9 +36,9 @@ const CASE_CONFIG = {
   IAA:                { slug: 'independent-artists-agency', heroHint: /independent artists agency\.jpe?g/i },
   Millstreet:         { slug: 'millstreet',                  heroHint: /public-shows-millstreet|^millstreet 1\b/i },
   'Renovatie Totaal': { slug: 'renovatie-totaal',            heroHint: /website 1/i },
-  'Rex The Agency':   { slug: 'rex-agency',                  heroHint: /sfeer/i },
+  'Rex The Agency':   { slug: 'rex-the-agency',              heroHint: /sfeer/i },
   Steunder:           { slug: 'steunder',                    heroHint: /emvi website/i },
-  'Studio Max Dance': { slug: 'studio-max',                  heroHint: /sfeer/i },
+  'Studio Max Dance': { slug: 'studio-max-dance',            heroHint: /sfeer/i },
   'Theo Mackaay':     { slug: 'theo-mackaay',                heroHint: /sfeer/i },
 };
 

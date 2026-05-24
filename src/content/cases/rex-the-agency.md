@@ -1,5 +1,5 @@
 ---
-slug: rex-agency
+slug: rex-the-agency
 client: Rex The Agency
 tagline: 'No-nonsense site voor techno/house bookings'
 description: 'Strak ontwerp voor een nieuw techno/house label met artiesten als Olivier Weiter en LEYO. Underground vibe vertaald naar een website die net zo direct is als hun muziek.'
@@ -11,13 +11,13 @@ highlights:
   - 'Volledig maatwerk'
   - 'Custom WordPress'
   - 'In 4 weken live'
-hero: ../../assets/cases/rex-agency/mockup.webp
+hero: ../../assets/cases/rex-the-agency/mockup.webp
 heroStyle: mockup
 gallery:
-  - ../../assets/cases/rex-agency/gallery-1.webp
-  - ../../assets/cases/rex-agency/gallery-2.webp
-  - ../../assets/cases/rex-agency/gallery-3.webp
-  - ../../assets/cases/rex-agency/gallery-4.webp
+  - ../../assets/cases/rex-the-agency/gallery-1.webp
+  - ../../assets/cases/rex-the-agency/gallery-2.webp
+  - ../../assets/cases/rex-the-agency/gallery-3.webp
+  - ../../assets/cases/rex-the-agency/gallery-4.webp
 industry: Booking agency techno/house
 location: Nederland
 liveUrl: https://rextheagency.com
