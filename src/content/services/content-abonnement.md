@@ -27,6 +27,7 @@ bullets:
 
 showContentPackages: true
 hideShowcase: true
+featured: false
 pricingEyebrow: 'Pakketten'
 pricingTitle: 'Drie pakketten,'
 pricingTitleAccent: 'één doel.'
@@ -103,7 +104,7 @@ usps:
   - title: Elke maand zichtbare actie
     body: 'Geen losse opdrachten waar je achteraan moet bellen. Vaste publicatiedata, vaste rapportagemomenten en een vast aanspreekpunt dat je strategie kent. Transparant wat we doen, wanneer en waarom.'
   - title: 15+ jaar in de Nederlandse markt
-    body: 'We werken voor ambitieus MKB en ZZP in uiteenlopende branches. Renovatie, dakwerk, juridisch, coaches, retail, horeca, B2B. Iedere branche heeft zijn eigen zoekgedrag, daar passen we de aanpak op aan.'
+    body: 'We werken voor ambitieuze ondernemers in uiteenlopende branches. Renovatie, dakwerk, juridisch, coaches, retail, horeca, B2B. Iedere branche heeft zijn eigen zoekgedrag, daar passen we de aanpak op aan.'
 
 calvinNote:
   message: 'Twijfel je welk pakket bij jouw situatie past, of of een content abonnement überhaupt logisch is voor jouw branche? Stuur me een mailtje met je site en doelen, dan kijk ik er een halfuur naar en mail terug wat ik zou doen.'

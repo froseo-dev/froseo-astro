@@ -3,7 +3,7 @@ slug: balderstone
 client: Balderstone
 industry: Dienstverlening
 year: 2023
-role: ontwerp + bouw
+role: Strakke dienstverlener-site
 tags: [Webdesign]
 mockup: ../../assets/portfolio/balderstone/mockup.webp
 gallery:

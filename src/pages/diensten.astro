@@ -24,7 +24,7 @@ import { pricing } from '@data/site-config';
 
 const pageTitle = 'Diensten | Froseo Digital Agency Utrecht';
 const pageDesc =
-  'Alle diensten van Froseo op één pagina: maatwerk webdesign, website abonnement, onderhoud en optimalisatie, SEO, lokale SEO, content en advertenties. Voor ambitieus MKB.';
+  'Alle diensten van Froseo op één pagina: maatwerk webdesign, website abonnement, onderhoud en optimalisatie, SEO, lokale SEO, content en advertenties. Voor ambitieuze ondernemers.';
 
 const allCases = await getCollection('cases', ({ data }) => data.published !== false);
 const showcaseCases = allCases.sort((a, b) => a.data.order - b.data.order).slice(0, 6);

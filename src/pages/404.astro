@@ -1,0 +1,122 @@
+---
+/**
+ * Custom 404. Cloudflare Pages serveert `404.html` automatisch als
+ * fallback voor ontbrekende routes.
+ *
+ * Doel: bezoekers niet kwijtraken. Korte droge 404-boodschap +
+ * diensten-grid eronder voor snelle doorklik. Geen filler-content.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import ServicesGrid from '@components/sections/ServicesGrid.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+
+const pageTitle = '404 — pagina niet gevonden | Froseo';
+const pageDesc =
+  'De pagina die je zocht bestaat niet (meer). Klik door naar onze diensten of neem contact op.';
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <section class="not-found-hero">
+      <div class="not-found-inner">
+        <span class="not-found-code">404</span>
+        <EyebrowPill variant="rare">Pagina niet gevonden</EyebrowPill>
+        <h1 class="not-found-title">
+          Hier hebben we <em>niets liggen.</em>
+        </h1>
+        <p class="not-found-lead">
+          De pagina die je zocht bestaat niet (meer). Geen drama: hieronder
+          vind je onze diensten en de rest van de site. Of stuur ons even
+          een berichtje als je iets specifieks zocht.
+        </p>
+        <div class="not-found-actions">
+          <a class="btn-primary" href="/">Naar de homepage ↗</a>
+          <a class="btn-ghost" href="/contact/">Of stuur een bericht ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <ServicesGrid
+      eyebrow="Klik door"
+      titleLine1="Misschien zocht je"
+      titleLine2="dit"
+      accent="wel?"
+      intro="Een korte rondleiding langs wat we doen. Klik op de dienst die past en je belandt op de uitleg-pagina."
+    />
+
+    <BetterCallCalvin
+      eyebrow="Of plan direct"
+      titleLine1="Even sparren"
+      titleAccent="met Calvin?"
+      body={[
+        'Weet je nog niet welke richting past, of zit je met een specifieke vraag? Plan een vrijblijvende kennismaking van 30 minuten.',
+        'Geen verplichtingen. Past het niet bij ons, dan zeggen we dat eerlijk.'
+      ]}
+    />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .not-found-hero {
+    background: var(--surface-page);
+    padding: 80px var(--gutter) 96px;
+  }
+  .not-found-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .not-found-code {
+    font-family: var(--font-display);
+    font-size: clamp(120px, 22vw, 240px);
+    font-weight: 900;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--accent-primary);
+    text-shadow: 6px 6px 0 var(--surface-dark);
+    margin-bottom: 8px;
+  }
+  .not-found-title {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 5.5vw, 60px);
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .not-found-title em {
+    font-style: normal;
+    color: var(--accent-rare);
+  }
+  .not-found-lead {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    opacity: 0.85;
+    max-width: 560px;
+    margin: 0;
+  }
+  .not-found-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  @media (max-width: 640px) {
+    .not-found-hero { padding: 48px var(--gutter-mobile) 64px; }
+  }
+</style>

@@ -58,9 +58,26 @@ export const contact = {
   mapsLink: 'https://www.google.com/maps/search/?api=1&query=Froseo+Utrecht',
 } as const;
 
+/**
+ * Sociale profielen + externe vermeldingen. `linkedin` is de primaire
+ * follow-knop in de footer; alle URLs (inclusief LinkedIn) gaan in de
+ * sameAs JSON-LD voor entity-disambiguation in Google's knowledge graph.
+ */
 export const social = {
-  instagram: 'https://www.instagram.com/froseo',
-  linkedin: 'https://www.linkedin.com/company/froseo',
+  /** Primaire follow-profiel in footer. */
+  linkedin: 'https://www.linkedin.com/company/froseonl/',
+  /** Alle externe profielen + vermeldingen voor sameAs schema. */
+  sameAs: [
+    'https://www.facebook.com/froseomarketing',
+    'https://www.instagram.com/froseo_nl/',
+    'https://www.linkedin.com/company/froseonl/',
+    'https://x.com/froseonl/',
+    'https://nl.pinterest.com/froseonl/',
+    'https://g.page/r/CceXrOcPQRjgEBM/',
+    'https://www.sortlist.nl/agency/froseo-digitale-partner-voor-mkb',
+    'https://www.cylex.nl/bedrijf/froseo---bureau-voor-webdesign---seo-uit-utrecht-13636339.html',
+    'https://www.nederlandinbedrijf.nl/Bedrijf/973692/Online-marketing-Froseo/Leidseveer-10-3511SB-Utrecht-0302378053',
+  ],
 } as const;
 
 /**
@@ -75,7 +92,7 @@ export const calendly = {
 export const review = {
   rating: '5',
   ratingDisplay: '5/5',
-  count: '13',
+  count: '14',
 } as const;
 
 /**

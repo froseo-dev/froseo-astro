@@ -3,7 +3,7 @@ slug: theo-mackaay
 client: Theo Mackaay
 industry: Kunstenaar
 year: 2023
-role: ontwerp + bouw + webshop
+role: Galerie-site met webshop
 tags: [Webdesign, WordPress, Webshop]
 mockup: ../../assets/cases/theo-mackaay/mockup.webp
 gallery:

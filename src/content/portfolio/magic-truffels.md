@@ -3,7 +3,7 @@ slug: magic-truffels
 client: Magic Truffels
 industry: E-commerce
 year: 2024
-role: ontwerp + bouw
+role: Webshop met soepele checkout
 tags: [Webdesign, E-commerce]
 mockup: ../../assets/portfolio/magic-truffels/mockup.webp
 gallery:

@@ -1,80 +1,141 @@
 ---
-interface FooterLink { label: string; href: string; }
-interface FooterColumn { title: string; links?: FooterLink[]; html?: string; }
+/**
+ * Footer — sitewide.
+ *
+ * Layout:
+ *   - Top-row: Google review-badge + LinkedIn follow-knop (uitlijning links/rechts)
+ *   - Main grid: 5 kolommen
+ *       1. Gegevens (volledig adres + KvK)
+ *       2. Websites (webdesign + onderhoud)
+ *       3. Marketing (SEO + ads + content)
+ *       4. Bedrijf (interne pages + privacy)
+ *       5. Lokaal & landings (SEO-bureau, website-maken, etc.)
+ *   - Bottom: copyright + signoff
+ *
+ * Alle links + data komen uit @data/site-config zodat één wijziging
+ * sitewide doortikt. LinkedIn-knop staat los, niet als sameAs item;
+ * sameAs is JSON-LD in BaseLayout en bevat alle profielen.
+ */
+
+import { Image } from 'astro:assets';
+import ReviewBadge from '@components/ui/ReviewBadge.astro';
+import logoWhite from '@assets/brand/froseo-logo-wit.webp';
+import { contact, social } from '@data/site-config';
 
 interface Props {
-  columns?: FooterColumn[];
   copyright?: string;
   signoff?: string;
 }
 
 const {
-  columns = [
-    {
-      title: 'Gegevens',
-      html: `
-        <p>Froseo Digital Agency<br>Gevestigd in Utrecht</p>
-        <p><a href="tel:0302378053">030 237 8053</a></p>
-        <p><a href="mailto:info@froseo.nl">info@froseo.nl</a></p>
-      `,
-    },
-    {
-      title: 'Diensten',
-      links: [
-        { label: 'Webdesign', href: '/webdesign/' },
-        { label: 'SEO', href: '/seo/' },
-        { label: 'Lokale SEO', href: '/lokale-seo/' },
-        { label: 'Paid Media', href: '/paid-media/' },
-        { label: 'Onderhoud', href: '/website-onderhoud/' },
-      ],
-    },
-    {
-      title: 'Bedrijf',
-      links: [
-        { label: 'Over ons', href: '/over-ons/' },
-        { label: 'Cases', href: '/cases/' },
-        { label: 'Kennisbank', href: '/kennisbank/' },
-        { label: 'Contact', href: '/contact/' },
-        { label: 'Privacy', href: '/privacy/' },
-      ],
-    },
-    {
-      title: 'Volg ons',
-      links: [
-        { label: 'Instagram', href: 'https://instagram.com' },
-        { label: 'LinkedIn', href: 'https://linkedin.com' },
-        { label: 'Google Reviews', href: '#' },
-      ],
-    },
-  ],
   copyright = `© ${new Date().getFullYear()} Froseo · Digital Agency`,
   signoff = 'Made with ♥ in Utrecht',
 } = Astro.props;
+
+interface FooterLink { label: string; href: string; }
+interface FooterColumn { title: string; links: FooterLink[]; }
+
+const linkColumns: FooterColumn[] = [
+  {
+    title: 'Websites',
+    links: [
+      { label: 'Maatwerk webdesign', href: '/webdesign/' },
+      { label: 'Website abonnement', href: '/website-abonnement/' },
+      { label: 'Website opfrissen', href: '/website-opfrissen/' },
+      { label: 'Website onderhoud', href: '/website-onderhoud/' },
+      { label: 'Website optimalisatie', href: '/website-optimalisatie/' },
+    ],
+  },
+  {
+    title: 'Marketing',
+    links: [
+      { label: 'SEO / GEO', href: '/seo/' },
+      { label: 'Lokale SEO', href: '/lokale-seo/' },
+      { label: 'Content abonnement', href: '/content-abonnement/' },
+      { label: 'Paid media', href: '/paid-media/' },
+    ],
+  },
+  {
+    title: 'Bedrijf',
+    links: [
+      { label: 'Over ons', href: '/over-ons/' },
+      { label: 'Cases', href: '/cases/' },
+      { label: 'Portfolio', href: '/portfolio/' },
+      { label: 'Kennisbank', href: '/kennisbank/' },
+      { label: 'Gratis tools', href: '/tools/' },
+      { label: 'Contact', href: '/contact/' },
+      { label: 'Privacy- en cookiebeleid', href: '/privacybeleid/' },
+    ],
+  },
+  {
+    title: 'Niche',
+    links: [
+      { label: 'SEO bureau Utrecht', href: '/seo-bureau-utrecht/' },
+      { label: 'Website laten maken Utrecht', href: '/website-laten-maken-utrecht/' },
+      { label: 'Website laten maken ZZP', href: '/website-laten-maken-zzp/' },
+      { label: 'WordPress website onderhoud', href: '/wordpress-website-onderhoud/' },
+      { label: 'Webdesign Maarssen', href: '/maarssen/' },
+    ],
+  },
+];
 ---
 
 <footer class="footer">
-  <div class="footer-big">FROSEO<span class="dot">.</span></div>
+  <a class="footer-logo" href="/" aria-label="Froseo home">
+    <Image
+      src={logoWhite}
+      alt="Froseo"
+      class="footer-logo-img"
+      widths={[400, 800, 1200]}
+      sizes="(max-width: 720px) 70vw, 600px"
+      loading="lazy"
+    />
+  </a>
+
   <div class="footer-grid">
-    {
-      columns.map((col) => (
-        <div class="footer-col">
-          {/* Bewust geen heading-tag: dit zijn navigatie-kolomtitels in de
-              footer, geen content-headings. Een <h3> zou de document-outline
-              vervuilen en op service-pagina's onder een echte <h3> uit het
-              FAQ-blok komen te staan. */}
-          <div class="footer-col-title">{col.title}</div>
-          {col.html && <Fragment set:html={col.html} />}
-          {col.links && (
-            <ul>
-              {col.links.map((link) => (
-                <li><a href={link.href}>{link.label}</a></li>
-              ))}
-            </ul>
-          )}
-        </div>
-      ))
-    }
+    <div class="footer-col footer-col--gegevens">
+      <div class="footer-col-title">Gegevens</div>
+      <address class="footer-address">
+        <p class="footer-address-line"><strong>Hoofdkantoor</strong></p>
+        <p class="footer-address-line">{contact.address.street}</p>
+        <p class="footer-address-line">{contact.address.postalCode} {contact.address.city}</p>
+        <p class="footer-address-line">Nederland</p>
+      </address>
+      <ul class="footer-contact-list">
+        <li><span class="footer-contact-label">Tel:</span> <a href={`tel:${contact.phoneTel}`}>{contact.phoneDisplay}</a></li>
+        <li><span class="footer-contact-label">Mail:</span> <a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+        <li><span class="footer-contact-label">KvK:</span> {contact.kvk}</li>
+      </ul>
+    </div>
+
+    {linkColumns.map((col) => (
+      <div class="footer-col">
+        <div class="footer-col-title">{col.title}</div>
+        <ul>
+          {col.links.map((link) => (
+            <li><a href={link.href}>{link.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </div>
+
+  <div class="footer-social">
+    <ReviewBadge variant="compact" />
+    <a
+      class="footer-linkedin"
+      href={social.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Volg Froseo op LinkedIn"
+    >
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+        <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+      </svg>
+      <span>Volg ons op LinkedIn</span>
+    </a>
+  </div>
+
   <div class="footer-bottom">
     <span>{copyright}</span>
     <span>{signoff}</span>

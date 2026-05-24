@@ -1,0 +1,279 @@
+---
+/**
+ * /privacybeleid — Privacy- en cookiebeleid van Froseo.
+ *
+ * Eenvoudige tekst-pagina. Bedrijfsgegevens uit site-config zodat
+ * adres/contact niet hardcoded staan. Versie-datum bovenin zodat
+ * bezoekers en eventuele controleurs zien wanneer 't laatst is
+ * bijgewerkt.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import { contact } from '@data/site-config';
+
+const pageTitle = 'Privacy- en cookiebeleid | Froseo';
+const pageDesc =
+  'Hoe Froseo omgaat met persoonsgegevens en cookies. Welke gegevens we verzamelen, waarom, hoe lang en welke rechten je hebt.';
+
+const lastUpdated = '24 mei 2026';
+const fullAddress = `${contact.address.street}, ${contact.address.postalCode} ${contact.address.city}`;
+const kvk = '62777335';
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="legal-page">
+      <header class="legal-page-head">
+        <EyebrowPill variant="primary">Juridisch</EyebrowPill>
+        <h1 class="legal-page-title">Privacy- en cookiebeleid</h1>
+        <p class="legal-page-meta">Laatst bijgewerkt: <time>{lastUpdated}</time></p>
+      </header>
+
+      <div class="legal-page-body">
+        <section>
+          <h2>1. Wie wij zijn</h2>
+          <p>
+            Dit is het privacy- en cookiebeleid van <strong>Froseo</strong>,
+            gevestigd aan {fullAddress}. Wij zijn ingeschreven bij de Kamer
+            van Koophandel onder nummer {kvk}. Voor vragen over dit beleid
+            of de verwerking van je gegevens kun je ons bereiken via{' '}
+            <a href={`mailto:${contact.email}`}>{contact.email}</a> of{' '}
+            <a href={`tel:${contact.phoneTel}`}>{contact.phoneDisplay}</a>.
+          </p>
+          <p>
+            We nemen privacy serieus en houden ons aan de Algemene Verordening
+            Gegevensbescherming (AVG/GDPR). Dit document legt uit welke
+            persoonsgegevens we verzamelen, waarom, hoe lang we ze bewaren,
+            met wie we ze eventueel delen en welke rechten je hebt.
+          </p>
+        </section>
+
+        <section>
+          <h2>2. Welke gegevens we verzamelen</h2>
+          <p>
+            We verzamelen alleen wat nodig is om jouw vraag of opdracht goed
+            te behandelen. Concreet gaat het meestal om:
+          </p>
+          <ul>
+            <li><strong>Naam</strong> (voor persoonlijke aanspraak in correspondentie)</li>
+            <li><strong>E-mailadres</strong> (om je te kunnen antwoorden)</li>
+            <li><strong>Telefoonnummer</strong> (optioneel, als je daar de voorkeur aan geeft)</li>
+            <li><strong>Bedrijfsnaam</strong> en eventueel KvK-nummer (voor zakelijke offertes en facturatie)</li>
+            <li><strong>Inhoud van je bericht</strong> en eventuele vrijwillig verstrekte aanvullende informatie</li>
+            <li>Bij opdrachten ook factuur- en betaalgegevens via onze boekhoudsoftware</li>
+          </ul>
+          <p>
+            Daarnaast worden er bij elk bezoek aan deze website beperkte
+            technische gegevens vastgelegd door onze webserver en
+            analytics-tool, zoals een geanonimiseerd IP-adres,
+            browsertype en bezochte pagina's. Daarover meer in het
+            cookies-hoofdstuk hieronder.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Waarvoor we deze gegevens gebruiken</h2>
+          <p>
+            We gebruiken jouw persoonsgegevens uitsluitend voor de
+            volgende doelen:
+          </p>
+          <ul>
+            <li>Beantwoorden van vragen en opvolgen van contactaanvragen</li>
+            <li>Opstellen en versturen van offertes</li>
+            <li>Uitvoering van een opdracht of overeenkomst die we met je sluiten</li>
+            <li>Versturen van facturen en het bijhouden van de boekhouding (wettelijke verplichting)</li>
+            <li>Verbeteren van de website op basis van anonieme bezoekersstatistieken</li>
+          </ul>
+          <p>
+            Wij gebruiken jouw gegevens <strong>nooit</strong> voor
+            ongevraagde marketing, nieuwsbrieven of doorverkoop aan
+            derden. Wil je wel op de hoogte blijven? Dan vragen we daar
+            apart toestemming voor.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. Rechtsgrond voor de verwerking</h2>
+          <p>
+            We verwerken jouw gegevens alleen als daar een geldige
+            rechtsgrond voor is. In ons geval zijn dat:
+          </p>
+          <ul>
+            <li><strong>Toestemming</strong> — wanneer je zelf actief een formulier invult of contact opneemt</li>
+            <li><strong>Uitvoering van een overeenkomst</strong> — als we een opdracht of contract met je hebben</li>
+            <li><strong>Wettelijke verplichting</strong> — onder andere voor de Belastingdienst (7 jaar bewaarplicht voor financiële gegevens)</li>
+            <li><strong>Gerechtvaardigd belang</strong> — voor algemene websiteverbetering via geanonimiseerde analytics</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>5. Hoe lang we gegevens bewaren</h2>
+          <p>
+            We bewaren persoonsgegevens niet langer dan noodzakelijk voor
+            het doel waarvoor ze zijn verzameld:
+          </p>
+          <ul>
+            <li><strong>Contactaanvragen die niet tot een opdracht leiden:</strong> tot maximaal 2 jaar, daarna verwijderen we ze</li>
+            <li><strong>Opdracht- en klantgegevens:</strong> tot 5 jaar na het einde van de samenwerking, voor garantie- en referentievragen</li>
+            <li><strong>Financiële administratie</strong> (facturen, contracten): 7 jaar, zoals wettelijk verplicht</li>
+            <li><strong>Analytics-gegevens:</strong> standaard bewaartermijn van Google Analytics 4 (14 maanden)</li>
+          </ul>
+          <p>
+            Je kunt op elk moment vragen om verwijdering. Zie het hoofdstuk
+            "Jouw rechten" hieronder.
+          </p>
+        </section>
+
+        <section>
+          <h2>6. Met wie we gegevens delen</h2>
+          <p>
+            We verkopen of verhuren jouw gegevens nooit aan derden. Wel
+            werken we met een aantal verwerkers die ons technisch
+            ondersteunen. Met al deze partijen hebben we
+            verwerkersovereenkomsten waarin we afspraken vastleggen over
+            beveiliging en privacy.
+          </p>
+          <ul>
+            <li><strong>Hosting:</strong> onze websites en servers staan bij Europese hosting-partijen</li>
+            <li><strong>E-mail:</strong> we gebruiken Google Workspace voor zakelijke mail</li>
+            <li><strong>Boekhouding:</strong> facturen worden verwerkt in Nederlandse boekhoudsoftware</li>
+            <li><strong>Analytics:</strong> Google Analytics 4 voor anonieme websitestatistieken</li>
+            <li><strong>Formulieren:</strong> contactformulieren worden direct naar onze mail gestuurd, niet bij externe partijen opgeslagen</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>7. Doorgifte buiten de EU</h2>
+          <p>
+            Een aantal van de bovengenoemde diensten (zoals Google) kan
+            betekenen dat gegevens worden doorgegeven naar landen buiten
+            de Europese Economische Ruimte. Deze partijen zijn aangesloten
+            bij het EU-VS Data Privacy Framework of we gebruiken
+            standaardcontractbepalingen van de Europese Commissie als
+            extra waarborg.
+          </p>
+        </section>
+
+        <section>
+          <h2>8. Beveiliging</h2>
+          <p>
+            We nemen passende technische en organisatorische maatregelen
+            om persoonsgegevens te beveiligen:
+          </p>
+          <ul>
+            <li>Verbindingen via TLS/SSL (het hangslot in de browser)</li>
+            <li>Sterke wachtwoorden en tweestapsverificatie op alle relevante accounts</li>
+            <li>Regelmatige software-updates op alle systemen en websites die wij beheren</li>
+            <li>Toegang tot klantgegevens uitsluitend voor teamleden die deze nodig hebben</li>
+            <li>Back-ups en versleutelde cloud-opslag binnen de EU</li>
+          </ul>
+          <p>
+            Mocht er ondanks deze maatregelen toch een datalek plaatsvinden
+            dat een risico vormt voor jouw rechten en vrijheden, dan
+            informeren wij je daarover binnen 72 uur en melden we het
+            datalek bij de Autoriteit Persoonsgegevens.
+          </p>
+        </section>
+
+        <section>
+          <h2>9. Cookies</h2>
+          <p>
+            Cookies zijn kleine bestanden die door je browser worden
+            bewaard tijdens een bezoek aan een website. Op deze site
+            gebruiken we twee categorieën:
+          </p>
+          <h3>Functionele cookies</h3>
+          <p>
+            Noodzakelijk voor het werken van de site. Bijvoorbeeld om je
+            voorkeur voor de cookiebanner te onthouden of om
+            formulieren correct te verwerken. Voor deze cookies hebben we
+            geen toestemming nodig.
+          </p>
+          <h3>Analytische cookies</h3>
+          <p>
+            We gebruiken Google Analytics 4 om te meten hoe bezoekers de
+            site gebruiken. Dit helpt ons de site te verbeteren. We hebben
+            Analytics zo ingesteld dat IP-adressen worden geanonimiseerd
+            en er geen gegevens worden gedeeld met Google voor
+            advertentiedoeleinden. De impact op je privacy is daardoor
+            beperkt; conform de richtlijnen van de Autoriteit
+            Persoonsgegevens vragen wij hiervoor geen aparte toestemming.
+          </p>
+          <p>
+            Wil je toch geen cookies van Google Analytics ontvangen? Dan
+            kun je dit in je browser uitschakelen of een
+            browser-extensie als de Google Analytics Opt-out Add-on
+            installeren.
+          </p>
+        </section>
+
+        <section>
+          <h2>10. Jouw rechten</h2>
+          <p>
+            Onder de AVG heb je een aantal rechten met betrekking tot je
+            persoonsgegevens. Je kunt op elk moment bij ons aankloppen om
+            een van deze rechten uit te oefenen:
+          </p>
+          <ul>
+            <li><strong>Inzage:</strong> opvragen welke gegevens we van je hebben</li>
+            <li><strong>Rectificatie:</strong> onjuiste gegevens laten corrigeren</li>
+            <li><strong>Verwijdering:</strong> je gegevens laten verwijderen, tenzij we wettelijk verplicht zijn ze te bewaren</li>
+            <li><strong>Beperking:</strong> de verwerking tijdelijk laten stoppen</li>
+            <li><strong>Dataportabiliteit:</strong> je gegevens in een gangbaar bestandsformaat ontvangen of laten overdragen naar een andere partij</li>
+            <li><strong>Bezwaar:</strong> bezwaar maken tegen verwerking op basis van gerechtvaardigd belang</li>
+            <li><strong>Intrekken van toestemming:</strong> verleende toestemming op elk moment intrekken</li>
+          </ul>
+          <p>
+            Een verzoek stuur je naar{' '}
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>. We
+            reageren binnen 4 weken. Om misbruik te voorkomen kunnen we
+            je vragen je identiteit te bevestigen voordat we het verzoek
+            uitvoeren.
+          </p>
+        </section>
+
+        <section>
+          <h2>11. Klacht indienen bij de Autoriteit Persoonsgegevens</h2>
+          <p>
+            Heb je een klacht over hoe wij met jouw persoonsgegevens
+            omgaan en komen we er samen niet uit? Dan heb je het recht
+            een klacht in te dienen bij de Autoriteit Persoonsgegevens.
+            Meer informatie en het klachtenformulier vind je op{' '}
+            <a href="https://autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener noreferrer">
+              autoriteitpersoonsgegevens.nl
+            </a>.
+          </p>
+        </section>
+
+        <section>
+          <h2>12. Wijzigingen aan dit beleid</h2>
+          <p>
+            We kunnen dit privacy- en cookiebeleid van tijd tot tijd
+            bijwerken, bijvoorbeeld wanneer we nieuwe tools in gebruik
+            nemen of de wet verandert. De meest recente versie vind je
+            altijd op deze pagina, met de bijgewerkte datum bovenin. Bij
+            ingrijpende wijzigingen melden we dit ook actief via de
+            website of, voor bestaande klanten, per e-mail.
+          </p>
+        </section>
+
+        <section>
+          <h2>13. Contact</h2>
+          <p>
+            Heb je vragen over dit beleid, of wil je een van bovenstaande
+            rechten uitoefenen? Stuur een bericht naar{' '}
+            <a href={`mailto:${contact.email}`}>{contact.email}</a> of bel{' '}
+            <a href={`tel:${contact.phoneTel}`}>{contact.phoneDisplay}</a>.
+            We reageren binnen vier weken.
+          </p>
+        </section>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

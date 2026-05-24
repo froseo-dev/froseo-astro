@@ -16,7 +16,7 @@ const {
   titleLine1 = 'Geen bullshit.',
   titleLine2 = 'Wel',
   accent = 'resultaat.',
-  intro = 'De meeste bureaus leveren een site af en wensen je succes. Wij niet. Wij bouwen een doordachte basis en zorgen daarna met gerichte marketing dat die site daadwerkelijk geld gaat opleveren.',
+  intro = 'Een sterke site is geen eindpunt, maar een fundament. Wij ontwerpen en bouwen, zetten de SEO scherp en houden alles draaiend, zodat je website maand na maand aanvragen en klanten oplevert.',
 } = Astro.props;
 
 const services = (await getCollection('services', ({ data }) => data.featured))
@@ -43,7 +43,7 @@ const services = (await getCollection('services', ({ data }) => data.featured))
           <div class="service-icon">{service.data.icon}</div>
           <div class="service-num">{service.data.eyebrow}</div>
           <h3 class="service-title">{service.data.title}</h3>
-          <p class="service-desc">{service.data.description}</p>
+          <p class="service-desc">{interpolate(service.data.description)}</p>
           <ul class="service-list">
             {service.data.bullets.map((b) => <li>{interpolate(b)}</li>)}
           </ul>

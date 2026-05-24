@@ -3,7 +3,7 @@ slug: renovatie-totaal
 client: Renovatie Totaal
 industry: Isolatiebedrijf
 year: 2024
-role: ontwerp + bouw + SEO
+role: Isolatie-website met SEO + AI-workflows
 tags: [Webdesign, 'SEO/GEO', Lokale SEO]
 mockup: ../../assets/cases/renovatie-totaal/mockup.webp
 gallery:

@@ -37,6 +37,7 @@ import Topbar from '@components/layout/Topbar.astro';
 import Nav from '@components/layout/Nav.astro';
 import Footer from '@components/layout/Footer.astro';
 import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import ReviewAvatars from '@components/ui/ReviewAvatars.astro';
 import SectionIcon from '@components/ui/SectionIcon.astro';
 import LogosTicker from '@components/sections/LogosTicker.astro';
 import CasesStrip from '@components/sections/CasesStrip.astro';
@@ -183,11 +184,7 @@ const faqs = [
               </a>
             </div>
             <div class="service-hero-reviews reviews-inline">
-              <div class="review-avatars">
-                <div class="review-avatar"></div>
-                <div class="review-avatar"></div>
-                <div class="review-avatar"></div>
-              </div>
+              <ReviewAvatars />
               <div class="stars">★★★★★</div>
               <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
             </div>
@@ -579,6 +576,21 @@ const faqs = [
         ctaLabel="Stuur mij je URL ↗"
         ctaHref="/contact/?onderwerp=seo-utrecht-advies"
       />
+
+      <section class="kb-tools-strip">
+        <div class="kb-tools-inner">
+          <div class="kb-tools-copy">
+            <span class="kb-tools-eyebrow">Gratis tools</span>
+            <h2 class="kb-tools-title">Snel even iets checken voor je SEO?</h2>
+            <p class="kb-tools-lead">
+              Met onze gratis keyword density checker, tekenteller en
+              CTR-calculator regel je een eerste sanity-check zonder
+              account of installatie.
+            </p>
+          </div>
+          <a class="kb-tools-cta" href="/tools/">Bekijk de tools <span class="arrow">↗</span></a>
+        </div>
+      </section>
 
       <BetterCallCalvin
         eyebrow="Klaar om hoger in Google te staan?"

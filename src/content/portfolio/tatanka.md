@@ -3,7 +3,7 @@ slug: tatanka
 client: Tatanka
 industry: E-commerce smartshop
 year: 2024
-role: SEO + GEO
+role: Smartshop SEO in 7 talen
 tags: ['SEO/GEO', E-commerce]
 mockup: ../../assets/cases/tatanka/mockup.webp
 gallery:

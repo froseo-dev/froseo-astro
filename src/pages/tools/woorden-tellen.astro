@@ -1,0 +1,205 @@
+---
+/**
+ * /tools/woorden-tellen — gratis woordenteller. Zelfde layout-
+ * patroon als de tekens-tellen pagina: dark hero, widget in
+ * overlap-card, brede body met screenshot en cross-link cards.
+ */
+
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import CounterTool from '@components/tools/CounterTool.astro';
+import { getOtherTools } from '@data/tools';
+import screenshot from '@assets/tools/woorden-tellen.jpg';
+
+const pageTitle = 'Woorden tellen: gratis online woordenteller | Froseo';
+const pageDesc =
+  'Gratis woordenteller. Tel realtime hoeveel woorden en karakters je tekst telt. Perfect voor essays, scripties en blogposts. Niets wordt opgeslagen, werkt op mobiel.';
+
+const others = getOtherTools('woorden-tellen');
+
+const faqItems = [
+  {
+    q: 'Is de woordenteller veilig?',
+    a: 'Ja. Je tekst blijft in je eigen browser. We slaan niets op en sturen niets door. Sluit je het tabblad, dan is de inhoud weg. Geschikt voor scripties, klantwerk en ongepubliceerde concepten.',
+  },
+  {
+    q: 'Hoe telt de tool een woord?',
+    a: 'We splitsen op spaties en leestekens. Aaneengesloten alfanumerieke groepen tellen als een woord. Cijfers tellen mee, koppeltekens splitsen niet (SEO-bureau is dus één woord).',
+  },
+  {
+    q: 'Wat krijg ik naast het woordaantal?',
+    a: 'Karakters met spaties, karakters zonder spaties en een overzicht van de meest gebruikte woorden. Zo zie je niet alleen lengte maar ook variatie in één scherm.',
+  },
+  {
+    q: 'Geschikt voor essays en scripties?',
+    a: 'Ja. Je kunt je hele tekst inplakken (de tool blijft snel) en in realtime checken of je aan de minimum- of maximumeis voldoet. Niets wordt opgeslagen, dus ook voor gevoelige opdrachten oké.',
+  },
+  {
+    q: 'Is de tool gratis?',
+    a: 'Volledig gratis. Geen registratie, geen verborgen kosten, geen advertenties. Bookmark hem voor de volgende deadline.',
+  },
+  {
+    q: 'Werkt het op mobiel?',
+    a: 'Ja, helemaal responsive. Het tekstvlak schaalt comfortabel op smartphone-formaat en de teller blijft in beeld terwijl je typt.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="tool-page">
+      <section class="tool-page-hero">
+        <div class="tool-page-hero-inner">
+          <EyebrowPill variant="highlight" onDark>Gratis tool</EyebrowPill>
+          <h1 class="tool-page-title">
+            Woorden <em>tellen</em>
+          </h1>
+          <p class="tool-page-lead">
+            Realtime woorden- en karakterteller voor blogs, essays, scripties
+            en social posts. Tikt mee terwijl je typt of plakt, zonder dat je
+            een knop hoeft in te drukken.
+          </p>
+        </div>
+      </section>
+
+      <div class="tool-widget-wrap">
+        <div class="tool-widget-card">
+          <CounterTool extended placeholder="Typ of plak hier je tekst voor de woordenteller…" />
+        </div>
+      </div>
+
+      <div class="tool-body-wrap">
+        <div class="tool-page-body">
+          <section class="tool-page-section">
+            <h2>Wat is een <em>woordenteller</em>?</h2>
+            <p>
+              Een woordenteller laat je in één oogopslag zien hoe lang je tekst
+              is en hoe hij is opgebouwd. Niet alleen het totaal aantal
+              woorden, maar ook de karakters met en zonder spaties en welke
+              woorden je het vaakst gebruikt. Voor schrijvers, studenten,
+              marketeers en bloggers een dagelijkse check.
+            </p>
+            <p>
+              Vooral bij teksten met een lengte-eis is dat handig. Een blog
+              voor SEO mikt op 800 tot 1500 woorden. Een nieuwsbericht op 300.
+              Een essay heeft een vaste limiet. Een scriptie een marge eromheen.
+              Plak de tekst, je ziet meteen of je nog moet schrappen of nog
+              uitbreiden.
+            </p>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Wat zie je terug?</h2>
+            <ul>
+              <li><strong>Woorden:</strong> het belangrijkste getal voor schrijvers en studenten.</li>
+              <li><strong>Karakters:</strong> totaal aantal tekens inclusief spaties.</li>
+              <li><strong>Karakters zonder spaties:</strong> voor systemen die alleen pure tekens tellen.</li>
+              <li><strong>Woordfrequentie:</strong> top 30 woorden met aantal en percentage.</li>
+            </ul>
+            <p>
+              De frequentielijst is een onderschatte feature. Hij toont je
+              welke woorden je onbewust herhaalt, en dat helpt bij een
+              tweede leesronde om variatie aan te brengen.
+            </p>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Voor wie is deze tool gebouwd?</h2>
+            <ul>
+              <li><strong>Studenten</strong> met essay- of scriptie-eisen.</li>
+              <li><strong>Bloggers</strong> die hun gemiddelde woordenaantal willen bewaken.</li>
+              <li><strong>Marketeers</strong> die social posts onder een grens willen houden.</li>
+              <li><strong>Redacteuren</strong> die snel checken of een artikel voldoet aan de richtlijnen.</li>
+              <li><strong>Vertalers</strong> die per woord afrekenen en hun productie willen tracken.</li>
+              <li><strong>SEO-specialisten</strong> die concept-content tegen een streefaantal leggen.</li>
+            </ul>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>De woordenteller in gebruik</h2>
+            <p>
+              Een snelle blik op het invoervlak met de drie tellers en de
+              woordfrequentie eronder. Realtime, geen knop, geen wachttijd.
+            </p>
+            <div class="tool-screenshot">
+              <Image
+                src={screenshot}
+                alt="Woorden tellen: voorbeeld van de gratis online woordenteller in gebruik"
+                widths={[640, 960, 1200]}
+                sizes="(max-width: 960px) 100vw, 960px"
+                loading="lazy"
+              />
+            </div>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Veelgebruikte woordaantallen</h2>
+            <ul>
+              <li><strong>SEO-blog:</strong> 800 tot 1500 woorden voor goede ranking-kans.</li>
+              <li><strong>Diepte-artikel of pillar page:</strong> 2000 woorden of meer.</li>
+              <li><strong>Productomschrijving:</strong> 150 tot 300 woorden per product.</li>
+              <li><strong>Nieuwsbericht of persbericht:</strong> 300 tot 500 woorden.</li>
+              <li><strong>HBO-werkstuk:</strong> meestal 2500 tot 5000 woorden.</li>
+              <li><strong>Bachelor-scriptie:</strong> rond de 10.000 woorden, marge 10%.</li>
+            </ul>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Privacy en snelheid</h2>
+            <p>
+              De woordenteller draait in je browser via JavaScript. Geen
+              server, geen log, geen cookies voor de werking. Dat scheelt
+              laadtijd en zorgt ervoor dat je gevoelige teksten zonder
+              twijfels kunt invoeren. Een NDA-document of een ongepubliceerd
+              manuscript is net zo veilig als een blogconcept.
+            </p>
+          </section>
+        </div>
+      </div>
+
+      <section class="tool-cross-section">
+        <div class="tool-cross-inner">
+          <div class="tool-cross-head">
+            <div>
+              <span class="tool-cross-eyebrow">Meer tools</span>
+              <h2 class="tool-cross-title">Andere <em>gratis tools</em></h2>
+            </div>
+            <a class="tool-cross-all" href="/tools/">Bekijk alle tools ↗</a>
+          </div>
+          <ul class="tool-cross-grid">
+            {others.map((tool) => (
+              <li>
+                <a class="tool-cross-card" href={tool.href}>
+                  <span class="tool-cross-card-tag">{tool.category}</span>
+                  <h3 class="tool-cross-card-title">{tool.title}</h3>
+                  <p class="tool-cross-card-tag-line">{tool.tagline}</p>
+                  <span class="tool-cross-card-cta">
+                    Open tool <span class="arrow">↗</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </article>
+
+    <FAQ
+      eyebrow="Veelgestelde vragen"
+      titleLine1="Vragen over"
+      titleAccent="de woordenteller?"
+      items={faqItems}
+    />
+
+    <BetterCallCalvin />
+  </main>
+  <Footer />
+</BaseLayout>

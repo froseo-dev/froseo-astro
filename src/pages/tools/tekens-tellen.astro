@@ -1,0 +1,220 @@
+---
+/**
+ * /tools/tekens-tellen — gratis tekenteller. Dark hero met
+ * pattern, widget in een witte card die over de hero heen valt,
+ * brede body met screenshot en cross-link cards onderaan.
+ */
+
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import CounterTool from '@components/tools/CounterTool.astro';
+import { getOtherTools } from '@data/tools';
+import screenshot from '@assets/tools/tekens-tellen.jpg';
+
+const pageTitle = 'Tekens tellen: gratis online tekenteller | Froseo';
+const pageDesc =
+  'Gratis tekens tellen tool. Telt realtime karakters, woorden en geeft een woordfrequentie-overzicht. Geen account, niets wordt opgeslagen. Werkt op mobiel.';
+
+const others = getOtherTools('tekens-tellen');
+
+const faqItems = [
+  {
+    q: 'Is de tekens tellen tool veilig?',
+    a: 'Ja. Alles wat je typt of plakt blijft in je eigen browser. Er gaat niets naar onze server en we slaan niets op. Sluit je het tabblad, dan is je tekst weg.',
+  },
+  {
+    q: 'Hoe werkt de teller precies?',
+    a: 'Plak of typ je tekst in het vak. De woorden, karakters en karakters zonder spaties worden direct bijgewerkt. Je hoeft nergens op te klikken en er is geen wachttijd.',
+  },
+  {
+    q: 'Wat telt de tool allemaal mee?',
+    a: 'Karakters met spaties, karakters zonder spaties, totaal aantal woorden en een woordfrequentie. Leestekens tellen mee in karakters; bij woorden gaat het om aaneengesloten alfanumerieke groepen.',
+  },
+  {
+    q: 'Kan ik dit gebruiken voor SEO?',
+    a: 'Zeker. Een SEO-titel werkt het beste rond de 55 tot 60 karakters, een meta description tussen 150 en 160. Met deze teller blijf je zonder gokken binnen die grens.',
+  },
+  {
+    q: 'Is de tool helemaal gratis?',
+    a: 'Volledig gratis. Geen account, geen registratie, geen verborgen kosten. Bookmark de pagina en gebruik hem zo vaak je wilt.',
+  },
+  {
+    q: 'Werkt het op smartphone en tablet?',
+    a: 'Ja, helemaal responsive. Het tekstvlak schaalt mee en de drie tellers stapelen onder elkaar op kleinere schermen.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="tool-page">
+      <section class="tool-page-hero">
+        <div class="tool-page-hero-inner">
+          <EyebrowPill variant="highlight" onDark>Gratis tool</EyebrowPill>
+          <h1 class="tool-page-title">
+            Tekens <em>tellen</em>
+          </h1>
+          <p class="tool-page-lead">
+            Plak je tekst en zie direct hoeveel karakters en woorden hij telt.
+            Handig voor meta-titles, descriptions, advertenties en social posts
+            met een hard maximum.
+          </p>
+        </div>
+      </section>
+
+      <div class="tool-widget-wrap">
+        <div class="tool-widget-card">
+          <CounterTool placeholder="Typ of plak hier je tekst voor de tekenteller…" />
+        </div>
+      </div>
+
+      <div class="tool-body-wrap">
+        <div class="tool-page-body">
+          <section class="tool-page-section">
+            <h2>Wat is een <em>tekens tellen tool</em>?</h2>
+            <p>
+              Een teken-teller is een online hulpmiddel dat je realtime laat
+              zien hoe lang je tekst is. Niet alleen het totaal aantal letters,
+              maar ook met en zonder spaties, het aantal woorden en welke
+              woorden je het vaakst gebruikt. Voor schrijvers, marketeers en
+              studenten een vaste tool zodra een platform of opdracht een
+              limiet oplegt.
+            </p>
+            <p>
+              Veel platforms hebben harde tekenlimieten. Een Google-titel knapt
+              af na 60 tekens, een meta description stopt rond de 160. Een
+              tweet zit op 280, LinkedIn presteert het best onder de 1300, en
+              Google Ads geeft je 30 tekens per kop. Hand­matig tellen of
+              gokken kost tijd en gaat altijd mis. Met deze teller weet je
+              meteen waar je staat.
+            </p>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Voorbeeld: hoeveel tekens telt jouw zin?</h2>
+            <p>
+              Stel: je schrijft een meta description en hebt &ldquo;Webdesign &amp;
+              SEO uit Utrecht voor ambitieuze ondernemers&rdquo; staan. Dat zijn 47
+              karakters. Ruim onder de 160 dus, maar je laat zoekruimte liggen.
+              De teller laat je dat in één oogopslag zien, zodat je nog 100
+              karakters benut om je voorstel scherper te maken.
+            </p>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Waarom is tekens tellen handig?</h2>
+            <ul>
+              <li><strong>Nauwkeurigheid:</strong> je weet zeker dat je tekst binnen de limiet past.</li>
+              <li><strong>Tijdwinst:</strong> geen handmatig tellen of gokken meer.</li>
+              <li><strong>Betere structuur:</strong> de woordfrequentie laat zien of je te vaak hetzelfde woord gebruikt.</li>
+              <li><strong>Veilig:</strong> geen tekst die naar een server gaat, ook bij gevoelige concepten.</li>
+              <li><strong>SEO-vriendelijk:</strong> exact passen binnen de Google-richtlijnen voor titels en descriptions.</li>
+            </ul>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Wat zie je terug in de tool?</h2>
+            <ul>
+              <li><strong>Woorden:</strong> hoeveel losse woorden je tekst telt.</li>
+              <li><strong>Karakters:</strong> totaal aantal tekens inclusief spaties.</li>
+              <li><strong>Karakters zonder spaties:</strong> voor systemen die alleen pure tekens tellen.</li>
+              <li><strong>Woordfrequentie:</strong> top 30 woorden met aantal en percentage.</li>
+            </ul>
+            <p>
+              De frequentie­lijst is vooral handig om herhaling te spotten.
+              Schrijf je twintig keer &ldquo;wij&rdquo; in een tekst van 300
+              woorden, dan zie je dat meteen en kun je variëren.
+            </p>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>De tekens tellen tool in gebruik</h2>
+            <p>
+              Zo ziet de tool eruit in de praktijk. Onder de tekstinvoer staan
+              drie statistieken en de woordfrequentie-cloud verschijnt zodra je
+              tekst lang genoeg is.
+            </p>
+            <div class="tool-screenshot">
+              <Image
+                src={screenshot}
+                alt="Tekens tellen: voorbeeld van de gratis online teken-teller in gebruik"
+                widths={[640, 960, 1200]}
+                sizes="(max-width: 960px) 100vw, 960px"
+                loading="lazy"
+              />
+            </div>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>SEO-richtlijnen voor lengtes</h2>
+            <ul>
+              <li><strong>SEO-titel:</strong> 55 tot 60 karakters.</li>
+              <li><strong>Meta description:</strong> 150 tot 160 karakters.</li>
+              <li><strong>Google Ads headline:</strong> 30 karakters per kop.</li>
+              <li><strong>Google Ads description:</strong> 90 karakters per regel.</li>
+              <li><strong>X/Twitter post:</strong> 280 karakters.</li>
+              <li><strong>LinkedIn post:</strong> 1300 karakters voor optimaal bereik.</li>
+              <li><strong>Instagram caption:</strong> max 2200, eerste 125 zichtbaar zonder &ldquo;meer&rdquo;.</li>
+            </ul>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Veilig, privé en altijd beschikbaar</h2>
+            <p>
+              De teller draait volledig in je browser via JavaScript. Geen
+              server, geen log, geen cookies voor de werking. Zodra de pagina
+              is geladen kun je hem zelfs offline gebruiken. Voor SEO- en
+              klantwerk maakt dat verschil: je werkt soms met materiaal dat
+              onder NDA valt en dan wil je geen tool die dat opslaat. Hier is
+              dat geen punt.
+            </p>
+          </section>
+        </div>
+      </div>
+
+      <section class="tool-cross-section">
+        <div class="tool-cross-inner">
+          <div class="tool-cross-head">
+            <div>
+              <span class="tool-cross-eyebrow">Meer tools</span>
+              <h2 class="tool-cross-title">Andere <em>gratis tools</em></h2>
+            </div>
+            <a class="tool-cross-all" href="/tools/">Bekijk alle tools ↗</a>
+          </div>
+          <ul class="tool-cross-grid">
+            {others.map((tool) => (
+              <li>
+                <a class="tool-cross-card" href={tool.href}>
+                  <span class="tool-cross-card-tag">{tool.category}</span>
+                  <h3 class="tool-cross-card-title">{tool.title}</h3>
+                  <p class="tool-cross-card-tag-line">{tool.tagline}</p>
+                  <span class="tool-cross-card-cta">
+                    Open tool <span class="arrow">↗</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </article>
+
+    <FAQ
+      eyebrow="Veelgestelde vragen"
+      titleLine1="Vragen over"
+      titleAccent="de tekenteller?"
+      items={faqItems}
+    />
+
+    <BetterCallCalvin />
+  </main>
+  <Footer />
+</BaseLayout>

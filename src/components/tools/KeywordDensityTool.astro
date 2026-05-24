@@ -1,0 +1,177 @@
+---
+/**
+ * Keyword density checker. Telt voorkomens van losse woorden of
+ * n-grammen (2/3/4 woorden) in een tekst en toont percentages.
+ * Specifieke keywords kun je opgeven (komma-gescheiden); die
+ * worden boven de lijst getoond en visueel gehighlight.
+ *
+ * Alles draait client-side, geen tekst verlaat de browser.
+ */
+---
+
+<div class="tool tool--density" data-tool="density">
+  <textarea
+    class="tool-input"
+    data-density-text
+    placeholder="Plak of typ hier je tekst voor de keyword density…"
+    aria-label="Tekstinvoer voor keyword density"
+  ></textarea>
+
+  <div class="tool-row">
+    <input
+      type="text"
+      class="tool-kw"
+      data-density-kw
+      placeholder="Specifieke keywords (komma-gescheiden), bijv: seo, webdesign, keyword density"
+      aria-label="Specifieke keywords"
+    />
+    <div class="tool-tabs" role="tablist" aria-label="N-gram keuze">
+      <button type="button" data-density-n="1" class="active" aria-selected="true">1 woord</button>
+      <button type="button" data-density-n="2" aria-selected="false">2 woorden</button>
+      <button type="button" data-density-n="3" aria-selected="false">3 woorden</button>
+      <button type="button" data-density-n="4" aria-selected="false">4 woorden</button>
+    </div>
+  </div>
+
+  <div class="tool-stats" data-density-stats>
+    <strong>Woorden:</strong> <span data-s-words>0</span>
+    <span class="sep">·</span>
+    <strong>Karakters:</strong> <span data-s-chars>0</span>
+    <span class="sep">·</span>
+    <strong>Zonder spaties:</strong> <span data-s-nospace>0</span>
+  </div>
+
+  <div class="tool-cloud-wrap" data-density-cloud-wrap hidden>
+    <div class="tool-cloud-head">
+      <span class="tool-cloud-title">Frequentie</span>
+      <span class="tool-cloud-meta" data-density-cloud-meta></span>
+    </div>
+    <div class="tool-cloud" data-density-cloud></div>
+    <button type="button" class="tool-more" data-density-more hidden>Toon alles</button>
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-tool="density"]');
+  if (root) {
+    const input = root.querySelector<HTMLTextAreaElement>('[data-density-text]')!;
+    const kwInput = root.querySelector<HTMLInputElement>('[data-density-kw]')!;
+    const tabs = root.querySelectorAll<HTMLButtonElement>('[data-density-n]');
+    const sWords = root.querySelector<HTMLElement>('[data-s-words]')!;
+    const sChars = root.querySelector<HTMLElement>('[data-s-chars]')!;
+    const sNoSpace = root.querySelector<HTMLElement>('[data-s-nospace]')!;
+    const cloudWrap = root.querySelector<HTMLElement>('[data-density-cloud-wrap]')!;
+    const cloud = root.querySelector<HTMLElement>('[data-density-cloud]')!;
+    const cloudMeta = root.querySelector<HTMLElement>('[data-density-cloud-meta]')!;
+    const moreBtn = root.querySelector<HTMLButtonElement>('[data-density-more]')!;
+
+    const LIMIT = 40;
+    let expanded = false;
+    let gramN = 1;
+    let lastItems: [string, number][] = [];
+    let lastTotal = 0;
+
+    const TOKEN_RE = /[\p{L}\p{N}'']+/gu;
+
+    function tokenize(text: string): string[] {
+      return (text.match(TOKEN_RE) || []).map((w) => w.toLowerCase());
+    }
+
+    function ngrams(arr: string[], n: number): string[] {
+      if (n === 1) return arr.slice();
+      const out: string[] = [];
+      for (let i = 0; i <= arr.length - n; i++) {
+        out.push(arr.slice(i, i + n).join(' '));
+      }
+      return out;
+    }
+
+    function frequencyByN(text: string, n: number) {
+      const arr = tokenize(text);
+      const grams = ngrams(arr, n);
+      const total = grams.length;
+      const map = new Map<string, number>();
+      for (const g of grams) map.set(g, (map.get(g) || 0) + 1);
+      const items: [string, number][] = [...map.entries()].sort(
+        (a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'nl')
+      );
+      return { total, items };
+    }
+
+    function parseKeywords(): string[] {
+      return kwInput.value
+        .split(',')
+        .map((s) => s.trim().toLowerCase())
+        .filter(Boolean);
+    }
+
+    function renderCloud(items: [string, number][], total: number) {
+      cloud.innerHTML = '';
+      const specified = parseKeywords();
+      const setSpecified = new Set(specified);
+      const mapCounts = new Map(items);
+
+      const specifiedEntries: [string, number][] = specified.map((k) => [k, mapCounts.get(k) || 0]);
+      const rest = items.filter(([w]) => !setSpecified.has(w));
+      const ordered: [string, number][] = [...specifiedEntries, ...rest];
+
+      lastItems = ordered;
+      lastTotal = total;
+
+      const shown = expanded ? ordered : ordered.slice(0, LIMIT);
+
+      for (const [phrase, ncount] of shown) {
+        const pct = total ? ((ncount / total) * 100).toFixed(2) : '0.00';
+        const isHit = setSpecified.has(phrase);
+        const tag = document.createElement('span');
+        tag.className = 'tool-tag' + (isHit ? ' tool-tag--hit' : '');
+        tag.title = `${phrase} — ${ncount}× (${pct}%)`;
+        tag.innerHTML = `${phrase} <small>${ncount}× · ${pct}%</small>`;
+        cloud.appendChild(tag);
+      }
+
+      if (ordered.length > LIMIT) {
+        moreBtn.hidden = false;
+        moreBtn.textContent = expanded ? 'Minder tonen' : 'Toon alles';
+      } else {
+        moreBtn.hidden = true;
+      }
+
+      cloudWrap.hidden = ordered.length === 0;
+      cloudMeta.textContent = `${ordered.length} unieke ${gramN === 1 ? 'woorden' : 'combinaties'} · ${total} totaal`;
+    }
+
+    function update() {
+      const text = input.value;
+      sWords.textContent = String(tokenize(text).length);
+      sChars.textContent = String(text.length);
+      sNoSpace.textContent = String(text.replace(/\s/g, '').length);
+      const { items, total } = frequencyByN(text, gramN);
+      expanded = false;
+      renderCloud(items, total);
+    }
+
+    input.addEventListener('input', update);
+    kwInput.addEventListener('input', update);
+
+    tabs.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        tabs.forEach((b) => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        gramN = parseInt(btn.dataset.densityN || '1', 10);
+        update();
+      });
+    });
+
+    moreBtn.addEventListener('click', () => {
+      expanded = !expanded;
+      renderCloud(lastItems, lastTotal);
+    });
+
+    update();
+  }
+</script>

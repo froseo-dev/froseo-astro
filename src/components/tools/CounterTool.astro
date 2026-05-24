@@ -1,0 +1,206 @@
+---
+/**
+ * Tekens/woorden teller — telt realtime karakters, woorden en
+ * geeft een woordenfrequentie-cloud. Volledig client-side, niets
+ * verlaat de browser. Wordt gebruikt op zowel /tools/tekens-tellen/
+ * als /tools/woorden-tellen/.
+ *
+ * Met `extended` aan komt er een compacte stat-rij bij onder de drie
+ * hoofd-cards: zinnen, alinea's, gemiddeld aantal woorden per zin en
+ * leestijd. Wordt gebruikt op de woordenteller-pagina.
+ */
+
+interface Props {
+  /** Placeholder voor textarea, varieert subtiel per pagina-context. */
+  placeholder?: string;
+  /** Extra metrics-rij tonen (zinnen, alinea's, gem/zin, leestijd). */
+  extended?: boolean;
+}
+
+const { placeholder = 'Typ of plak hier je tekst…', extended = false } = Astro.props;
+---
+
+<div class="tool tool--counter" data-tool="counter">
+  <textarea
+    class="tool-input"
+    data-counter-input
+    placeholder={placeholder}
+    aria-label="Tekstinvoer voor teller"
+  ></textarea>
+
+  <div class="tool-cards" aria-live="polite">
+    <div class="tool-card">
+      <span class="tool-card-label">Woorden</span>
+      <span class="tool-card-value" data-counter-words>0</span>
+    </div>
+    <div class="tool-card">
+      <span class="tool-card-label">Karakters</span>
+      <span class="tool-card-value" data-counter-chars>0</span>
+    </div>
+    <div class="tool-card">
+      <span class="tool-card-label">Karakters <small>zonder spaties</small></span>
+      <span class="tool-card-value" data-counter-chars-no-space>0</span>
+    </div>
+  </div>
+
+  {extended && (
+    <div class="tool-stat-strip" aria-live="polite">
+      <div class="tool-stat">
+        <span class="tool-stat-label">Zinnen</span>
+        <span class="tool-stat-value" data-counter-sentences>0</span>
+      </div>
+      <div class="tool-stat">
+        <span class="tool-stat-label">Alinea's</span>
+        <span class="tool-stat-value" data-counter-paragraphs>0</span>
+      </div>
+      <div class="tool-stat">
+        <span class="tool-stat-label">Woorden per zin</span>
+        <span class="tool-stat-value" data-counter-avg-words>0</span>
+      </div>
+      <div class="tool-stat">
+        <span class="tool-stat-label">Leestijd</span>
+        <span class="tool-stat-value" data-counter-reading>0 sec</span>
+      </div>
+    </div>
+  )}
+
+  <div class="tool-cloud-wrap" data-counter-cloud-wrap hidden>
+    <div class="tool-cloud-head">
+      <span class="tool-cloud-title">Woordfrequentie</span>
+      <span class="tool-cloud-meta" data-counter-cloud-meta></span>
+    </div>
+    <div class="tool-cloud" data-counter-cloud aria-label="Woordfrequentie"></div>
+    <button type="button" class="tool-more" data-counter-more hidden>Toon alles</button>
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-tool="counter"]');
+  if (root) {
+    const input = root.querySelector<HTMLTextAreaElement>('[data-counter-input]')!;
+    const wordsEl = root.querySelector<HTMLElement>('[data-counter-words]')!;
+    const charsEl = root.querySelector<HTMLElement>('[data-counter-chars]')!;
+    const charsNoSpaceEl = root.querySelector<HTMLElement>('[data-counter-chars-no-space]')!;
+    const cloudWrap = root.querySelector<HTMLElement>('[data-counter-cloud-wrap]')!;
+    const cloud = root.querySelector<HTMLElement>('[data-counter-cloud]')!;
+    const moreBtn = root.querySelector<HTMLButtonElement>('[data-counter-more]')!;
+    const cloudMeta = root.querySelector<HTMLElement>('[data-counter-cloud-meta]')!;
+
+    /* Extended-elementen optional querySelect: bestaan alleen op de
+       woorden-tellen-pagina (waar `extended` prop = true). Op de
+       tekens-pagina returnen ze gewoon null en slaan we de update over. */
+    const sentencesEl = root.querySelector<HTMLElement>('[data-counter-sentences]');
+    const paragraphsEl = root.querySelector<HTMLElement>('[data-counter-paragraphs]');
+    const avgWordsEl = root.querySelector<HTMLElement>('[data-counter-avg-words]');
+    const readingEl = root.querySelector<HTMLElement>('[data-counter-reading]');
+
+    const LIMIT = 30;
+    /* ~200 woorden per minuut — gemiddelde stille leessnelheid Nederlands. */
+    const WPM = 200;
+    let expanded = false;
+    let lastItems: [string, number][] = [];
+
+    const TOKEN_RE = /[\p{L}\p{N}'']+/gu;
+
+    function tokenize(text: string): string[] {
+      return (text.match(TOKEN_RE) || []).map((w) => w.toLowerCase());
+    }
+
+    function countSentences(text: string): number {
+      const trimmed = text.trim();
+      if (!trimmed) return 0;
+      /* Splits op .!? Leeg fragment = geen volledige zin, dus filter weg.
+         Tekst zonder leesteken telt als 1 zin (de hele bedoel-tekst). */
+      const parts = trimmed
+        .split(/[.!?]+/)
+        .map((p) => p.trim())
+        .filter((p) => p.length > 0);
+      return parts.length;
+    }
+
+    function countParagraphs(text: string): number {
+      const trimmed = text.trim();
+      if (!trimmed) return 0;
+      return trimmed
+        .split(/\n\s*\n+/)
+        .map((p) => p.trim())
+        .filter((p) => p.length > 0).length;
+    }
+
+    function formatReading(words: number): string {
+      if (words === 0) return '0 sec';
+      const seconds = (words / WPM) * 60;
+      if (seconds < 60) return `${Math.max(1, Math.round(seconds))} sec`;
+      const min = Math.floor(seconds / 60);
+      const sec = Math.round(seconds % 60);
+      if (sec === 0 || min >= 5) return `${min} min`;
+      return `${min} min ${sec} sec`;
+    }
+
+    function frequency(text: string) {
+      const arr = tokenize(text);
+      const map = new Map<string, number>();
+      for (const w of arr) map.set(w, (map.get(w) || 0) + 1);
+      const items: [string, number][] = [...map.entries()].sort(
+        (a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'nl')
+      );
+      return { total: arr.length, items };
+    }
+
+    function renderCloud(items: [string, number][], total: number) {
+      cloud.innerHTML = '';
+      const shown = expanded ? items : items.slice(0, LIMIT);
+      for (const [word, n] of shown) {
+        const pct = total ? ((n / total) * 100).toFixed(1) : '0.0';
+        const tag = document.createElement('span');
+        tag.className = 'tool-tag';
+        tag.innerHTML = `${word} <small>${n}× · ${pct}%</small>`;
+        cloud.appendChild(tag);
+      }
+      if (items.length > LIMIT) {
+        moreBtn.hidden = false;
+        moreBtn.textContent = expanded ? 'Minder tonen' : 'Toon alles';
+      } else {
+        moreBtn.hidden = true;
+      }
+      cloudMeta.textContent = `${items.length} unieke woorden · ${total} totaal`;
+    }
+
+    function update() {
+      const text = input.value;
+      const wordCount = tokenize(text).length;
+      wordsEl.textContent = String(wordCount);
+      charsEl.textContent = String(text.length);
+      charsNoSpaceEl.textContent = String(text.replace(/\s/g, '').length);
+
+      if (sentencesEl) {
+        const sentences = countSentences(text);
+        const paragraphs = countParagraphs(text);
+        const avg = sentences > 0 ? wordCount / sentences : 0;
+        sentencesEl.textContent = String(sentences);
+        if (paragraphsEl) paragraphsEl.textContent = String(paragraphs);
+        if (avgWordsEl) avgWordsEl.textContent = avg ? avg.toFixed(1) : '0';
+        if (readingEl) readingEl.textContent = formatReading(wordCount);
+      }
+
+      const { items, total } = frequency(text);
+      expanded = false;
+      lastItems = items;
+      if (items.length > 0) {
+        cloudWrap.hidden = false;
+        renderCloud(items, total);
+      } else {
+        cloudWrap.hidden = true;
+      }
+    }
+
+    input.addEventListener('input', update);
+    moreBtn.addEventListener('click', () => {
+      expanded = !expanded;
+      const total = lastItems.reduce((acc, [, n]) => acc + n, 0);
+      renderCloud(lastItems, total);
+    });
+
+    update();
+  }
+</script>

@@ -3,7 +3,7 @@ slug: millstreet
 client: Millstreet
 industry: Coverband
 year: 2023
-role: ontwerp + bouw
+role: Explosieve one-pager voor coverband
 tags: [Webdesign, WordPress, 'Custom design']
 mockup: ../../assets/cases/millstreet/mockup.webp
 gallery:

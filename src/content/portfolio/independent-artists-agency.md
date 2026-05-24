@@ -3,7 +3,7 @@ slug: independent-artists-agency
 client: Independent Artists Agency
 industry: Artistenmanagementbureau
 year: 2023
-role: ontwerp + bouw
+role: Visuele site voor artiestenbureau
 tags: [Webdesign, WordPress]
 mockup: ../../assets/cases/independent-artists-agency/mockup.webp
 gallery:

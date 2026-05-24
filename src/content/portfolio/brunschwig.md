@@ -3,7 +3,7 @@ slug: brunschwig
 client: Brunschwig
 industry: Dienstverlening
 year: 2023
-role: ontwerp + bouw
+role: Professionele dienstverlener-site
 tags: [Webdesign]
 mockup: ../../assets/portfolio/brunschwig/mockup.webp
 gallery:

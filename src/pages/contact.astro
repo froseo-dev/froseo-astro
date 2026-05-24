@@ -4,10 +4,11 @@ import Topbar from '@components/layout/Topbar.astro';
 import Nav from '@components/layout/Nav.astro';
 import Footer from '@components/layout/Footer.astro';
 import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import ReviewAvatars from '@components/ui/ReviewAvatars.astro';
 import CalvinNote from '@components/sections/CalvinNote.astro';
 import LogosTicker from '@components/sections/LogosTicker.astro';
 import VisitAddress from '@components/sections/VisitAddress.astro';
-import { contact, review, calendly } from '@data/site-config';
+import { contact, review } from '@data/site-config';
 
 /* WhatsApp deep-link volgens wa.me-pattern. Tekst wordt URL-encoded. */
 const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(contact.whatsappMessage)}`;
@@ -48,11 +49,7 @@ const onderwerpLabel = onderwerpLabels[onderwerpKey];
             Heb je een vraag over je website, SEO of online marketing? Of wil je bespreken wat slim is voor jouw bedrijf? Stuur ons een bericht of plan direct een kennismaking. Altijd geheel vrijblijvend.
           </p>
           <div class="contact-hero-reviews reviews-inline">
-            <div class="review-avatars">
-              <div class="review-avatar"></div>
-              <div class="review-avatar"></div>
-              <div class="review-avatar"></div>
-            </div>
+            <ReviewAvatars />
             <div class="stars">★★★★★</div>
             <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
           </div>
@@ -68,9 +65,6 @@ const onderwerpLabel = onderwerpLabels[onderwerpKey];
           <div class="contact-form-wrap">
             <div class="contact-form-head">
               <h2 class="contact-form-title">Stuur een bericht</h2>
-              <p class="contact-form-sub">
-                Vul de basics in. We reageren persoonlijk, niet met een autoresponder.
-              </p>
               {onderwerpLabel && (
                 <div class="contact-onderwerp-badge" data-onderwerp-badge>
                   <span class="contact-onderwerp-label">Onderwerp:</span>
@@ -126,34 +120,6 @@ const onderwerpLabel = onderwerpLabels[onderwerpKey];
           </div>
 
           <div class="contact-aside">
-            <!-- Afspraak-planner als accordion (klik om agenda te openen) -->
-            <details class="contact-planner">
-              <summary class="contact-planner-summary">
-                <span class="contact-planner-icon" aria-hidden="true">📅</span>
-                <span class="contact-planner-text">
-                  <strong>Plan hier jouw afspraak</strong>
-                  <span>Vrijblijvende kennismaking, 30 minuten</span>
-                </span>
-                <span class="contact-planner-chev" aria-hidden="true">+</span>
-              </summary>
-              <div class="contact-planner-body">
-                {calendly.url ? (
-                  <>
-                    <div class="calendly-inline-widget" data-url={calendly.url} style="min-width:280px;height:640px;"></div>
-                    <script async src="https://assets.calendly.com/assets/external/widget.js"></script>
-                  </>
-                ) : (
-                  <div class="contact-planner-placeholder">
-                    <p>Online planner staat binnenkort live. Plan voor nu via WhatsApp of mail, dan zoeken we samen een tijd die past.</p>
-                    <div class="contact-planner-placeholder-actions">
-                      <a class="btn-primary" href={waUrl} target="_blank" rel="noopener noreferrer">Plan via WhatsApp ↗</a>
-                      <a class="btn-ghost" href={`mailto:${contact.email}?subject=${encodeURIComponent('Afspraak inplannen')}`}>Of via mail ↗</a>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </details>
-
             <!-- Directe contact-info -->
             <aside class="contact-info">
               <h2 class="contact-info-title">Liever direct contact</h2>

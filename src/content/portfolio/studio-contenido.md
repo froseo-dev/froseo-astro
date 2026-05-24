@@ -3,7 +3,7 @@ slug: studio-contenido
 client: Studio Contenido
 industry: Content- en creatief bureau
 year: 2024
-role: ontwerp + bouw
+role: Re-build voor content-bureau
 tags: [Webdesign, WordPress]
 mockup: ../../assets/cases/studio-contenido/mockup.webp
 gallery:

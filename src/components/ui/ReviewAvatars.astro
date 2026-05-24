@@ -1,0 +1,37 @@
+---
+/**
+ * ReviewAvatars — drie overlappende cirkels die naast de
+ * Google review-sterren staan. Eerste cirkel = initialen-fallback,
+ * tweede + derde cirkel = klantfoto's (Bas Bertrams van Renovatie
+ * Totaal, Auke van der Heijden van Club 12).
+ *
+ * Vervangt het oude `<div class="review-avatars"><div class="review-avatar">...`
+ * pattern dat op 9 plekken handmatig stond.
+ */
+
+import { Image } from 'astro:assets';
+import basPhoto from '@assets/testimonials/bas-bertrams.webp';
+import aukePhoto from '@assets/testimonials/auke-van-der-heijden.webp';
+---
+
+<div class="review-avatars">
+  <div class="review-avatar review-avatar--initial" aria-hidden="true">EB</div>
+  <div class="review-avatar">
+    <Image
+      src={basPhoto}
+      alt=""
+      widths={[36, 72]}
+      sizes="36px"
+      loading="lazy"
+    />
+  </div>
+  <div class="review-avatar">
+    <Image
+      src={aukePhoto}
+      alt=""
+      widths={[36, 72]}
+      sizes="36px"
+      loading="lazy"
+    />
+  </div>
+</div>

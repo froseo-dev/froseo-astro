@@ -3,7 +3,7 @@ slug: steunder
 client: Steunder
 industry: EMVI- en tenderspecialist
 year: 2024
-role: ontwerp + bouw
+role: One-pager voor tenderspecialist
 tags: [Webdesign, WordPress, One-pager]
 mockup: ../../assets/cases/steunder/mockup.webp
 gallery:

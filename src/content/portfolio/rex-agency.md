@@ -3,7 +3,7 @@ slug: rex-agency
 client: Rex The Agency
 industry: Booking agency techno/house
 year: 2024
-role: ontwerp + bouw
+role: Site voor techno booking-label
 tags: [Webdesign, WordPress]
 mockup: ../../assets/cases/rex-agency/mockup.webp
 gallery:

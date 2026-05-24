@@ -1,0 +1,235 @@
+---
+/**
+ * /tools/keyword-density-checker — n-gram density analyse met
+ * highlight voor opgegeven keywords. Zelfde layout-patroon als
+ * de andere tools: dark hero, widget in overlap-card, brede
+ * body, screenshot, cross-link cards.
+ */
+
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import KeywordDensityTool from '@components/tools/KeywordDensityTool.astro';
+import { getOtherTools } from '@data/tools';
+import screenshot from '@assets/tools/keyword-density-checker.jpg';
+
+const pageTitle = 'Keyword density checker: gratis tool voor SEO | Froseo';
+const pageDesc =
+  'Gratis keyword density checker. Controleer zoekwoorddichtheid voor losse woorden en combinaties van 2, 3 of 4 woorden. Highlight je eigen keywords. Werkt client-side.';
+
+const others = getOtherTools('keyword-density-checker');
+
+const faqItems = [
+  {
+    q: 'Wat is keyword density precies?',
+    a: 'Het percentage van een tekst dat uit een bepaald zoekwoord (of combinatie) bestaat. Komt "webdesign" 8 keer voor in een tekst van 400 woorden, dan is de density 2%.',
+  },
+  {
+    q: 'Wat is een gezonde density?',
+    a: 'Tussen de 1 en 3% voor je hoofdkeyword is een veilige bandbreedte. Onder 1% mist het signaal naar Google, boven 3% riskeer je keyword stuffing. Belangrijker dan het percentage: dat de tekst natuurlijk leest.',
+  },
+  {
+    q: 'Wanneer is keyword stuffing een probleem?',
+    a: 'Zodra je een zoekwoord onnatuurlijk vaak herhaalt om Google te plezieren. Dat werkt averechts: rankings zakken, gebruikerservaring verslechtert. Met deze tool spot je het vroeg.',
+  },
+  {
+    q: 'Wat zijn die 2-, 3- en 4-woord-opties?',
+    a: 'N-grammen. Combinaties van 2, 3 of 4 opeenvolgende woorden. Zo zie je of "seo bureau utrecht" terugkomt in plaats van alleen "seo", "bureau" en "utrecht" los.',
+  },
+  {
+    q: 'Hoe gebruik ik de keyword-input?',
+    a: 'Vul je belangrijkste zoekwoorden in (komma-gescheiden). Die komen bovenaan in de cloud met een afwijkende kleur, ook als ze 0 keer voorkomen. Zo weet je direct of je hoofdkeyword überhaupt in de tekst staat.',
+  },
+  {
+    q: 'Is de tool veilig?',
+    a: 'Ja. Je tekst en keywords blijven volledig in je browser. Niets gaat naar onze server. Gebruik hem gerust voor concept-content of klantwerk onder NDA.',
+  },
+  {
+    q: 'Werkt het op mobiel?',
+    a: 'Ja. De tabs voor 1, 2, 3 en 4 woorden wrappen netjes en het keyword-veld past zich aan smartphone-breedtes aan.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="tool-page">
+      <section class="tool-page-hero">
+        <div class="tool-page-hero-inner">
+          <EyebrowPill variant="highlight" onDark>Gratis tool</EyebrowPill>
+          <h1 class="tool-page-title">
+            Keyword <em>density</em> checker
+          </h1>
+          <p class="tool-page-lead">
+            Check zoekwoorddichtheid voor losse woorden of combinaties van 2
+            tot 4 woorden. Geef je belangrijkste keywords op en zie ze direct
+            uitgelicht in de cloud.
+          </p>
+        </div>
+      </section>
+
+      <div class="tool-widget-wrap">
+        <div class="tool-widget-card">
+          <KeywordDensityTool />
+        </div>
+      </div>
+
+      <div class="tool-body-wrap">
+        <div class="tool-page-body">
+          <section class="tool-page-section">
+            <h2>Wat is <em>keyword density</em>?</h2>
+            <p>
+              Zoekwoorddichtheid is het percentage van een tekst dat uit een
+              specifiek zoekwoord bestaat. Het laat zien hoe vaak een term
+              voorkomt ten opzichte van het totaal aantal woorden. Voor SEO
+              is dat een handige indicator: te weinig, en je signaal is
+              zwak. Te veel, en je riskeert keyword stuffing.
+            </p>
+            <p>
+              Een dichtheid van 1 tot 3% voor je hoofdkeyword wordt vaak als
+              gezond gezien. Geen wet, wel een veilige bandbreedte. Onze
+              checker rekent dit automatisch uit voor losse woorden én
+              combinaties.
+            </p>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Een rekenvoorbeeld</h2>
+            <div class="tool-callout">
+              Tekst van <strong>500 woorden</strong>, hoofdkeyword komt <strong>10 keer</strong>
+              voor: 10 ÷ 500 × 100 = <strong>2%</strong>. Precies binnen de
+              aanbevolen marge.
+            </div>
+            <p>
+              Belangrijker dan dat percentage: hoe natuurlijk het zoekwoord in
+              de tekst zit. Combineer met synoniemen en gerelateerde termen,
+              dan blijft de tekst lekker lezen én relevant voor zoekmachines.
+            </p>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Waarom zoekwoorddichtheid analyseren?</h2>
+            <ul>
+              <li><strong>Overzicht:</strong> zie welke woorden of zinnen je onbewust herhaalt.</li>
+              <li><strong>SEO scherper:</strong> optimaliseer zonder in stuffing te vervallen.</li>
+              <li><strong>Leesbaarheid bewaken:</strong> balans tussen zoekwoord en vlotte zinnen.</li>
+              <li><strong>Conceptcheck:</strong> ontdek of een hoofdterm überhaupt voorkomt.</li>
+              <li><strong>Variatie:</strong> spot waar synoniemen het verschil maken.</li>
+            </ul>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Hoe werkt de tool?</h2>
+            <p>
+              Plak je tekst in het bovenste vlak. In het keyword-veld geef je
+              je belangrijkste zoekwoorden op (komma-gescheiden). Daarna kies
+              je of je losse woorden wilt zien of combinaties van 2, 3 of 4
+              woorden. De tool berekent direct hoe vaak elke term voorkomt en
+              welk percentage van de tekst die term beslaat.
+            </p>
+            <p>
+              Je opgegeven keywords komen bovenaan de lijst te staan en
+              krijgen een afwijkende kleur (magenta in onze huisstijl). Zo zie
+              je in één oogopslag of je hoofdkeywords daadwerkelijk in de
+              tekst staan en hoe vaak.
+            </p>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>De keyword density checker in gebruik</h2>
+            <p>
+              Een voorbeeld met meerdere keywords ingevuld en n-gram op 2
+              woorden. De gehighlighte tags zijn de termen die je hebt
+              opgegeven; de rest is normale frequentie.
+            </p>
+            <div class="tool-screenshot">
+              <Image
+                src={screenshot}
+                alt="Keyword density checker: voorbeeld van de gratis tool in gebruik"
+                widths={[640, 960, 1200]}
+                sizes="(max-width: 960px) 100vw, 960px"
+                loading="lazy"
+              />
+            </div>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Voor wie is deze tool?</h2>
+            <ul>
+              <li><strong>SEO-specialisten</strong> die on-page content optimaliseren.</li>
+              <li><strong>Copywriters</strong> die willen checken of het keyword genoeg terugkomt.</li>
+              <li><strong>Bloggers</strong> die hun eigen herhalingen willen spotten.</li>
+              <li><strong>Webbouwers</strong> die snel een SEO-check willen doen op klantcopy.</li>
+              <li><strong>E-commerce eigenaren</strong> die categorie- en productteksten willen aanscherpen.</li>
+            </ul>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Tips voor een gezonde dichtheid</h2>
+            <ul>
+              <li><strong>Schrijf eerst voor je publiek:</strong> duidelijke en waardevolle informatie, zoekwoorden volgen vanzelf.</li>
+              <li><strong>Varieer met synoniemen:</strong> zo blijft de tekst leesbaar én relevant.</li>
+              <li><strong>Check de verhouding:</strong> 1 tot 3% voor je hoofdkeyword voelt meestal natuurlijk.</li>
+              <li><strong>Gebruik keywords in koppen en intro&apos;s:</strong> dat helpt lezer én Google de tekst plaatsen.</li>
+              <li><strong>Denk in n-grammen:</strong> "lokale SEO" zegt meer dan "SEO" en "lokale" los.</li>
+              <li><strong>Lees hardop voor:</strong> hapert het ritme, dan zit er een term te vaak in.</li>
+            </ul>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Privacy en snelheid</h2>
+            <p>
+              Alle berekeningen draaien in je browser. Geen tekst gaat naar
+              onze server, niets wordt gelogd. Je kunt de tool gebruiken voor
+              klantmateriaal onder NDA, voor ongepubliceerde blogs en voor
+              concepten die nog niet de wereld in mogen.
+            </p>
+          </section>
+        </div>
+      </div>
+
+      <section class="tool-cross-section">
+        <div class="tool-cross-inner">
+          <div class="tool-cross-head">
+            <div>
+              <span class="tool-cross-eyebrow">Meer tools</span>
+              <h2 class="tool-cross-title">Andere <em>gratis tools</em></h2>
+            </div>
+            <a class="tool-cross-all" href="/tools/">Bekijk alle tools ↗</a>
+          </div>
+          <ul class="tool-cross-grid">
+            {others.map((tool) => (
+              <li>
+                <a class="tool-cross-card" href={tool.href}>
+                  <span class="tool-cross-card-tag">{tool.category}</span>
+                  <h3 class="tool-cross-card-title">{tool.title}</h3>
+                  <p class="tool-cross-card-tag-line">{tool.tagline}</p>
+                  <span class="tool-cross-card-cta">
+                    Open tool <span class="arrow">↗</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </article>
+
+    <FAQ
+      eyebrow="Veelgestelde vragen"
+      titleLine1="Vragen over"
+      titleAccent="de density checker?"
+      items={faqItems}
+    />
+
+    <BetterCallCalvin />
+  </main>
+  <Footer />
+</BaseLayout>

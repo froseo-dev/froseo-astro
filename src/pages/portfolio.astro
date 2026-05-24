@@ -1,0 +1,144 @@
+---
+/**
+ * /portfolio — visuele showcase van alle opgeleverde websites.
+ *
+ * Layout: minimale hero (eyebrow + h1 + lead), grid van portfolio-cards
+ * direct daaronder, CTA naar cases, close-CTA (BetterCallCalvin).
+ *
+ * Per card: mockup + client + meta. Klik opent lightbox met de mockup +
+ * 4 page-screenshots. Lightbox toont buttons naar de case (als die er is)
+ * en de live site.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import Lightbox from '@components/ui/Lightbox.astro';
+import { Image, getImage } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+const pageTitle = 'Portfolio: visueel overzicht van ons werk | Froseo';
+const pageDesc =
+  'Een visuele showcase van klant-websites die we hebben gebouwd. Klik door voor meer beelden of bezoek de live site.';
+
+const all = await getCollection('portfolio', ({ data }) => data.published !== false);
+const sorted = all.sort((a, b) => a.data.order - b.data.order);
+
+/* Per portfolio-item: maak een lightbox-items array van mockup + gallery,
+   met getImage voor thumb (160) + full (1600). Mockup krijgt isMockup-flag
+   zodat de lightbox geen extra background/shadow eromheen tekent. CaseUrl
+   en liveUrl op alle items zodat de action-row consistent verschijnt. */
+async function buildLightboxData(p: (typeof sorted)[number]) {
+  const d = p.data;
+  const sources = [d.mockup, ...(d.gallery ?? [])];
+  const items = await Promise.all(
+    sources.map(async (src, i) => {
+      const [thumb, full] = await Promise.all([
+        getImage({ src, width: 160, format: 'webp' }),
+        getImage({ src, width: 1600, format: 'webp' }),
+      ]);
+      return {
+        src: full.src,
+        thumb: thumb.src,
+        alt: i === 0 ? `${d.client}: mockup` : `${d.client}: pagina ${i}`,
+        isMockup: i === 0,
+        caseUrl: d.caseSlug ? `/cases/${d.caseSlug}/` : undefined,
+        liveUrl: d.liveUrl,
+      };
+    }),
+  );
+  return items;
+}
+
+const cards = await Promise.all(
+  sorted.map(async (p) => ({
+    entry: p,
+    lightboxItems: await buildLightboxData(p),
+  })),
+);
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="portfolio-page">
+      <!-- Minimale hero -->
+      <section class="portfolio-hero">
+        <div class="portfolio-hero-inner">
+          <EyebrowPill variant="primary">Portfolio</EyebrowPill>
+          <h1 class="portfolio-hero-title">
+            Werk dat we <em>hebben opgeleverd.</em>
+          </h1>
+          <p class="portfolio-hero-lead">
+            Klik een tegel open voor meer beelden of bezoek de live site.
+            Wil je meer weten over de aanpak en cijfers? Onze cases gaan
+            de diepte in.
+          </p>
+        </div>
+      </section>
+
+      <!-- Grid: mockup-tegels die lightbox openen -->
+      <section class="portfolio-grid-wrap">
+        <div class="portfolio-grid">
+          {cards.map(({ entry, lightboxItems }) => {
+            const d = entry.data;
+            return (
+              <button
+                type="button"
+                class="portfolio-card"
+                data-portfolio-trigger
+                data-portfolio-items={JSON.stringify(lightboxItems)}
+                aria-label={`Bekijk beelden van ${d.client}`}
+              >
+                <div class="portfolio-card-media">
+                  <Image
+                    src={d.mockup}
+                    alt={`${d.client}: mockup`}
+                    class="portfolio-card-img"
+                    widths={[400, 600, 800, 1000]}
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="portfolio-card-meta">
+                  <h3 class="portfolio-card-name">{d.client}</h3>
+                  {d.role && (
+                    <p class="portfolio-card-sub">{d.role}</p>
+                  )}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <!-- CTA naar cases -->
+      <div class="portfolio-cta-row">
+        <a class="btn-primary" href="/cases/">Bekijk ook onze cases ↗</a>
+      </div>
+    </article>
+
+    <!-- Close-CTA buiten de container zodat de dark background full-bleed is -->
+    <BetterCallCalvin />
+  </main>
+  <Footer />
+  <Lightbox />
+</BaseLayout>
+
+<script>
+  /* Klik op portfolio-card → parsen data-portfolio-items → openLightbox.
+     De Lightbox component registreert openLightbox als window-method. */
+  document.querySelectorAll<HTMLButtonElement>('[data-portfolio-trigger]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      try {
+        const items = JSON.parse(btn.dataset.portfolioItems ?? '[]');
+        (window as any).openLightbox?.(items, 0);
+      } catch (e) {
+        console.warn('portfolio: kon items niet parsen', e);
+      }
+    });
+  });
+</script>

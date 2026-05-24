@@ -24,6 +24,7 @@ import Topbar from '@components/layout/Topbar.astro';
 import Nav from '@components/layout/Nav.astro';
 import Footer from '@components/layout/Footer.astro';
 import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import ReviewAvatars from '@components/ui/ReviewAvatars.astro';
 import SectionIcon from '@components/ui/SectionIcon.astro';
 import LogosTicker from '@components/sections/LogosTicker.astro';
 import BeforeAfter from '@components/sections/BeforeAfter.astro';
@@ -232,11 +233,7 @@ const faqs = [
               </a>
             </div>
             <div class="service-hero-reviews reviews-inline">
-              <div class="review-avatars">
-                <div class="review-avatar"></div>
-                <div class="review-avatar"></div>
-                <div class="review-avatar"></div>
-              </div>
+              <ReviewAvatars />
               <div class="stars">★★★★★</div>
               <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
             </div>

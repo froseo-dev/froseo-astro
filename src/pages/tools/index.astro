@@ -1,0 +1,157 @@
+---
+/**
+ * /tools — landingspagina voor onze 4 gratis marketing/SEO-tools.
+ *
+ * Structuur:
+ *   - Topbar + Nav
+ *   - Hero met EyebrowPill + H1 + intro-alinea
+ *   - 4 tool-cards in een 2x2 grid (data uit src/data/tools.ts)
+ *   - Korte body-tekst: voor wie zijn deze tools, hoe werken ze,
+ *     wat staat er nog op de planning (CPM, ROAS, UTM, CLV)
+ *   - FAQ in onze huisstijl
+ *   - BetterCallCalvin
+ *
+ * Geen tracking, geen account, alles client-side. Dat is de USP.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import { tools } from '@data/tools';
+
+const pageTitle = 'Gratis SEO- en marketingtools | Froseo';
+const pageDesc =
+  'Gratis tools voor SEO, copy en online marketing. Tekens tellen, keyword density checker, woordenteller en CTR-calculator. Geen account, niets wordt opgeslagen.';
+
+const faqItems = [
+  {
+    q: 'Zijn deze tools echt gratis?',
+    a: 'Ja. Geen account, geen creditcard, geen advertenties. We bouwen ze omdat we ze zelf ook dagelijks gebruiken voor klantwerk en het ons niets kost om ze te delen.',
+  },
+  {
+    q: 'Wordt mijn tekst opgeslagen of doorgestuurd?',
+    a: 'Nee. Alle berekeningen draaien in je eigen browser via JavaScript. Er gaat niets naar onze server of naar derden. Je kunt offline werken zodra de pagina is geladen.',
+  },
+  {
+    q: 'Werken de tools op mobiel?',
+    a: 'Ja, alle tools zijn volledig responsive en werken op smartphone, tablet en desktop. De tag clouds en cards passen zich automatisch aan.',
+  },
+  {
+    q: 'Welke tools komen er nog bij?',
+    a: 'Op de planning staan een CPM-calculator, ROAS-calculator, UTM-builder en CLV-calculator. Heb je zelf een idee dat er nog mist? Laat het weten via de contactpagina.',
+  },
+  {
+    q: 'Mag ik de tools gebruiken voor klantwerk?',
+    a: 'Zeker. Gebruik ze voor eigen werk, klantwerk, school of hobby. Een linkje terug naar froseo.nl is geen verplichting, maar wel altijd welkom.',
+  },
+  {
+    q: 'Kan ik een fout of bug melden?',
+    a: 'Graag. Stuur een mailtje naar info@froseo.nl met een korte omschrijving en wij kijken er snel naar. We bouwen alles zelf, dus updates rollen meestal binnen een week uit.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="tools-page">
+      <section class="tools-hero">
+        <div class="tools-hero-inner">
+          <header class="tools-page-head">
+            <EyebrowPill variant="highlight" onDark>Gratis tools</EyebrowPill>
+            <h1 class="tools-page-title">
+              Gratis SEO- en <em>marketingtools</em>
+            </h1>
+            <p class="tools-page-lead">
+              Een kleine verzameling tools die we zelf dagelijks gebruiken bij
+              klantwerk. Geen account, geen advertenties, niets wordt opgeslagen.
+              Alles draait in je browser.
+            </p>
+          </header>
+
+          <div class="tools-grid">
+            {tools.map((tool) => (
+              <a class="tools-card" href={tool.href}>
+                <span class="tools-card-tag">{tool.category}</span>
+                <h2 class="tools-card-title">{tool.title}</h2>
+                <p class="tools-card-body">{tool.tagline}</p>
+                <span class="tools-card-cta">
+                  Open tool <span class="arrow">↗</span>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div class="tools-body-wrap">
+      <div class="tool-page-body">
+        <section class="tool-page-section">
+          <h2>Voor wie zijn deze tools?</h2>
+          <p>
+            Voor iedereen die met tekst, SEO of online marketing werkt.
+            Tekstschrijvers en bloggers checken er hun lengte en
+            herhalingen mee. SEO-specialisten gebruiken de density checker
+            voor on-page optimalisatie. Marketeers rekenen klikken,
+            vertoningen en CTR uit zonder Excel te openen.
+          </p>
+          <p>
+            Studenten gebruiken de woordenteller voor essays en scripties.
+            Webbouwers schrijven sneller titels en meta-descriptions van de
+            juiste lengte. Allemaal zonder dat je een tool hoeft te
+            installeren of een account aan te maken.
+          </p>
+        </section>
+
+        <section class="tool-page-section">
+          <h2>Waarom alles in de browser?</h2>
+          <p>
+            Veel gratis tools online bieden hun functionaliteit aan in ruil
+            voor jouw data. Wij vinden dat onnodig. Alle berekeningen die
+            wij doen, kunnen prima in JavaScript op jouw apparaat. Geen
+            server, geen log, geen cookies voor de tools zelf.
+          </p>
+          <p>
+            Voor jou betekent dat: snel, privé, en ook bruikbaar als je
+            even offline zit. Voor ons betekent dat: minder onderhoud en
+            geen verantwoordelijkheid voor jouw teksten.
+          </p>
+        </section>
+
+        <section class="tool-page-section">
+          <h2>Wat staat er nog op de planning?</h2>
+          <p>
+            We bouwen rustig door. De volgende vier staan op het lijstje:
+          </p>
+          <ul>
+            <li><strong>CPM-calculator</strong> voor display- en social-campagnes</li>
+            <li><strong>ROAS-calculator</strong> om de return on ad spend door te rekenen</li>
+            <li><strong>UTM-builder</strong> voor schone tracking-URL's</li>
+            <li><strong>CLV-calculator</strong> voor de customer lifetime value</li>
+          </ul>
+          <p>
+            Een idee voor een tool die er nog mist? <a href="/contact/">Laat
+            het weten</a>, we voegen graag toe wat onze klanten ook
+            daadwerkelijk gebruiken.
+          </p>
+        </section>
+      </div>
+      </div>
+    </article>
+
+    <FAQ
+      eyebrow="Veelgestelde vragen"
+      titleLine1="Vragen over"
+      titleAccent="onze tools?"
+      items={faqItems}
+    />
+
+    <BetterCallCalvin />
+  </main>
+  <Footer />
+</BaseLayout>

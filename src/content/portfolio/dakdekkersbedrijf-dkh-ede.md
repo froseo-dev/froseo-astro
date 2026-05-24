@@ -3,7 +3,7 @@ slug: dakdekkersbedrijf-dkh-ede
 client: Dakdekkersbedrijf DKH Ede
 industry: Dakdekkersbedrijf
 year: 2024
-role: ontwerp + bouw + SEO
+role: Dakdekker-site + lokale SEO
 tags: [Webdesign, 'SEO/GEO', Lokale SEO]
 mockup: ../../assets/cases/dakdekkersbedrijf-dkh-ede/mockup.webp
 gallery:

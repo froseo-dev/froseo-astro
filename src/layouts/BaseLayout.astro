@@ -15,6 +15,7 @@ import '@fontsource/jetbrains-mono/700.css';
 import '@styles/global.css';
 import PaletteSwitcher from '../components/dev/PaletteSwitcher.astro';
 import MobileCTA from '../components/layout/MobileCTA.astro';
+import { social, review as reviewData } from '@data/site-config';
 
 interface Props {
   title?: string;
@@ -27,7 +28,7 @@ interface Props {
 
 const {
   title = 'Webdesign & SEO bureau Utrecht — Froseo Digital Agency',
-  description = 'Effectieve websites & SEO uit Utrecht voor ambitieus MKB. 15+ jaar ervaring, 80+ projecten live, 5/5 op Google reviews. Plan een gratis website-analyse.',
+  description = 'Effectieve websites & SEO uit Utrecht voor ambitieuze ondernemers. 15+ jaar ervaring, 80+ projecten live, 5/5 op Google reviews. Plan een gratis website-analyse.',
   theme,
   pathname = Astro.url.pathname,
 } = Astro.props;
@@ -41,7 +42,7 @@ const businessSchema = {
   '@type': 'LocalBusiness',
   '@id': 'https://froseo.nl/#agency',
   name: 'Froseo Digital Agency',
-  description: 'Webdesign, SEO en online marketing bureau in Utrecht voor ambitieus MKB.',
+  description: 'Webdesign, SEO en online marketing bureau in Utrecht voor ambitieuze ondernemers.',
   url: 'https://froseo.nl/',
   telephone: '+31302378053',
   email: 'info@froseo.nl',
@@ -56,20 +57,27 @@ const businessSchema = {
   priceRange: '€€',
   aggregateRating: {
     '@type': 'AggregateRating',
-    ratingValue: '5',
-    reviewCount: '13',
+    ratingValue: reviewData.rating,
+    reviewCount: reviewData.count,
     bestRating: '5',
   },
-  sameAs: [
-    'https://www.instagram.com/froseo',
-    'https://www.linkedin.com/company/froseo',
-  ],
+  sameAs: social.sameAs,
 };
 ---
 
 <!doctype html>
 <html lang="nl" data-theme={theme}>
   <head>
+    {/* Google Tag Manager — zo hoog mogelijk in <head> volgens Google's
+        installatie-instructies. Container-ID GTM-TLW4G9R beheert alle
+        analytics + advertising tags via de Tag Manager UI. */}
+    <script is:inline>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-TLW4G9R');
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
@@ -82,6 +90,15 @@ const businessSchema = {
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="nl_NL" />
+    <meta property="og:site_name" content="Froseo" />
+    <meta property="og:image" content={new URL('/og-froseo.png', Astro.site ?? 'https://froseo.nl').toString()} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Froseo — Webdesign & SEO uit Utrecht" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL('/og-froseo.png', Astro.site ?? 'https://froseo.nl').toString()} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -101,6 +118,17 @@ const businessSchema = {
     </script>
   </head>
   <body>
+    {/* GTM noscript-fallback direct na <body> openen — voor bezoekers
+        zonder JavaScript (en voor server-side rendering analytics). */}
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-TLW4G9R"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+        title="Google Tag Manager"
+      ></iframe>
+    </noscript>
     <slot />
     <MobileCTA />
     <PaletteSwitcher />

@@ -3,7 +3,7 @@ slug: kroostwijk
 client: Kroostwijk
 industry: Dienstverlening
 year: 2023
-role: ontwerp + bouw
+role: Frisse uitstraling gevestigde naam
 tags: [Webdesign]
 mockup: ../../assets/portfolio/kroostwijk/mockup.webp
 gallery:

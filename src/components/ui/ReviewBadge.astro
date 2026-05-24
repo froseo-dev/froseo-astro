@@ -1,0 +1,74 @@
+---
+/**
+ * ReviewBadge — compacte Google reviews-pill met sterren, score en
+ * link naar Google Business Profile. Wordt gebruikt in de footer en
+ * onderaan de service-pagina's.
+ *
+ * Schema-markup: per-pagina AggregateRating zit al in BaseLayout op
+ * organisatie-niveau. Voor SERP-sterren op specifieke service-pagina's
+ * voeg je apart een `Service` + `aggregateRating` JSON-LD toe — niet
+ * deze badge zelf, want anders dupliceer je per pagina.
+ *
+ * Props:
+ *   variant: 'compact' (footer) | 'standard' (sectie boven footer)
+ */
+
+import { review, social } from '@data/site-config';
+
+interface Props {
+  variant?: 'compact' | 'standard';
+  /** Optionele label boven de badge (alleen bij variant=standard). */
+  eyebrow?: string;
+  /** Tekst rechts van de sterren. Default: "X reviews op Google". */
+  label?: string;
+}
+
+const {
+  variant = 'compact',
+  eyebrow = 'Wat klanten zeggen',
+  label = `${review.count} reviews op Google`,
+} = Astro.props;
+
+/* g.page is de korte review-URL die rechtstreeks Calvin's Google Business
+   profile opent. Komt uit de sameAs-lijst en is dezelfde link die klanten
+   krijgen om een review te schrijven. */
+const reviewsUrl =
+  social.sameAs.find((u) => u.includes('g.page')) ?? 'https://www.google.com/maps';
+---
+
+{variant === 'standard' && (
+  <section class="review-badge-section">
+    <div class="review-badge-inner">
+      <span class="review-badge-eyebrow">{eyebrow}</span>
+      <a
+        class="review-badge review-badge--standard"
+        href={reviewsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${review.ratingDisplay} sterren op basis van ${review.count} Google reviews`}
+      >
+        <span class="review-badge-stars" aria-hidden="true">★★★★★</span>
+        <span class="review-badge-score">
+          <strong>{review.ratingDisplay}</strong>
+          <span class="review-badge-label">{label} ↗</span>
+        </span>
+      </a>
+    </div>
+  </section>
+)}
+
+{variant === 'compact' && (
+  <a
+    class="review-badge review-badge--compact"
+    href={reviewsUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`${review.ratingDisplay} sterren op basis van ${review.count} Google reviews`}
+  >
+    <span class="review-badge-stars" aria-hidden="true">★★★★★</span>
+    <span class="review-badge-score">
+      <strong>{review.ratingDisplay}</strong>
+      <span class="review-badge-label">{label}</span>
+    </span>
+  </a>
+)}

@@ -3,7 +3,7 @@ slug: equipe-acteurs
 client: Equipe Acteurs
 industry: Acteursbureau
 year: 2023
-role: ontwerp + bouw
+role: Acteursbureau met roster-focus
 tags: [Webdesign, WordPress]
 mockup: ../../assets/portfolio/equipe-acteurs/mockup.webp
 gallery:

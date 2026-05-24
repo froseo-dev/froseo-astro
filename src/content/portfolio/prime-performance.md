@@ -3,7 +3,7 @@ slug: prime-performance
 client: Prime Performance
 industry: Health- en performance-coaching
 year: 2024
-role: ontwerp + bouw + abonnement
+role: Astro-site binnen Online Plus
 tags: [Webdesign, 'Website abonnement']
 mockup: ../../assets/cases/prime-performance/mockup.webp
 gallery:

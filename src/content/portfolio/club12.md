@@ -3,7 +3,7 @@ slug: club12
 client: Club 12
 industry: Personal training en vitaliteit
 year: 2023
-role: ontwerp + bouw + SEO-migratie
+role: Re-brand + SEO-migratie
 tags: [Webdesign, 'SEO/GEO']
 mockup: ../../assets/cases/club12/mockup.webp
 gallery:

@@ -1,0 +1,228 @@
+---
+/**
+ * /tools/ctr-berekenen-calculator — CTR-calculator. Geen
+ * screenshot beschikbaar (live pagina had er ook geen), dus
+ * iets meer body-content om de pagina visueel te vullen.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import CtrCalculatorTool from '@components/tools/CtrCalculatorTool.astro';
+import { getOtherTools } from '@data/tools';
+
+const pageTitle = 'CTR berekenen: gratis click through rate calculator | Froseo';
+const pageDesc =
+  'Gratis CTR-calculator. Bereken click through rate, klikken of vertoningen. Vul twee waarden in, de derde rolt eruit. Voor Google Ads, social, display en organic.';
+
+const others = getOtherTools('ctr-berekenen-calculator');
+
+const faqItems = [
+  {
+    q: 'Wat is de formule voor CTR?',
+    a: 'CTR = (klikken ÷ vertoningen) × 100. Wil je klikken berekenen: klikken = (CTR × vertoningen) ÷ 100. Vertoningen terugrekenen: vertoningen = klikken ÷ (CTR ÷ 100).',
+  },
+  {
+    q: 'Wat is een goede CTR?',
+    a: 'Verschilt per kanaal. Search-ads draaien vaak boven de 2%, display en programmatic onder de 1%, social ergens daartussen. Organisch op positie 1 zit gemiddeld op 25 tot 35%. Vergelijk altijd binnen je eigen kanaal.',
+  },
+  {
+    q: 'Waarom verschilt mijn CTR per kanaal of apparaat?',
+    a: 'Zoekintentie, plaatsing en context verschillen. Iemand die actief Googelt is verder in het beslissingsproces dan iemand die door Instagram scrollt. Mobiel klikt anders dan desktop. Een SERP-positie 1 trekt 25x meer klikken dan positie 10.',
+  },
+  {
+    q: 'Helpt een hogere CTR mijn conversie?',
+    a: 'Niet automatisch. Een clickbait-titel trekt veel klikken maar slechte leads. Kijk altijd naar CTR samen met conversie of CPA. Een lagere CTR met een betere conversie is vaak meer waard.',
+  },
+  {
+    q: 'Hoe verbeter ik mijn CTR zonder conversies te schaden?',
+    a: 'Heldere belofte in titel en omschrijving, een specifieke call-to-action, en consistentie tussen advertentie en landingspagina. Niet schreeuwen, wel relevant zijn.',
+  },
+  {
+    q: 'Voor wie is deze CTR-calculator?',
+    a: 'SEA-specialisten, social-marketeers, SEO-ers en ondernemers die snel willen rekenen zonder Excel of dashboard. Handig voor briefings, budget-inschatting en sanity-checks op campagnes.',
+  },
+  {
+    q: 'Worden mijn cijfers opgeslagen?',
+    a: 'Nee. Alle berekeningen gebeuren in je browser. Cijfers gaan nergens heen, ook niet naar ons. Je kunt veilig met klantdata werken.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="tool-page">
+      <section class="tool-page-hero">
+        <div class="tool-page-hero-inner">
+          <EyebrowPill variant="highlight" onDark>Gratis tool</EyebrowPill>
+          <h1 class="tool-page-title">
+            CTR <em>berekenen</em>
+          </h1>
+          <p class="tool-page-lead">
+            Reken click through rate, klikken of vertoningen razendsnel uit.
+            Vul twee waarden in, de derde rolt eruit, inclusief de formule
+            erbij voor in je rapportage.
+          </p>
+        </div>
+      </section>
+
+      <div class="tool-widget-wrap">
+        <div class="tool-widget-card">
+          <CtrCalculatorTool />
+        </div>
+      </div>
+
+      <div class="tool-body-wrap">
+        <div class="tool-page-body">
+          <section class="tool-page-section">
+            <h2>Wat is <em>CTR</em>?</h2>
+            <p>
+              CTR staat voor click through rate. Het is het percentage mensen
+              dat op je advertentie, zoekresultaat of link klikt nadat ze hem
+              te zien hebben gekregen. Hoe hoger, hoe relevanter de boodschap
+              voor het publiek.
+            </p>
+            <div class="tool-callout">
+              CTR = <strong>(klikken ÷ vertoningen) × 100</strong>. 500 klikken op
+              25.000 vertoningen geeft een CTR van <strong>2%</strong>.
+            </div>
+            <p>
+              Met deze calculator hoef je dat niet meer uit te rekenen, en kun
+              je ook andersom werken: hoeveel vertoningen heb ik nodig om bij
+              een CTR van 2,5% op 1000 klikken te komen? Vul de twee bekende
+              velden in en het derde wordt automatisch berekend.
+            </p>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Voor wie is deze calculator?</h2>
+            <ul>
+              <li><strong>SEA-specialisten</strong> die varianten van advertenties willen vergelijken.</li>
+              <li><strong>SEO-teams</strong> die hun snippet-CTR willen aanscherpen.</li>
+              <li><strong>Social-marketeers</strong> die campagnes per platform doorrekenen.</li>
+              <li><strong>Ondernemers</strong> die zelf hun cijfers willen begrijpen, zonder agency-rapport.</li>
+              <li><strong>Studenten en stagiairs</strong> die formules in de praktijk willen oefenen.</li>
+            </ul>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Benchmarks per kanaal</h2>
+            <p>
+              Een CTR los van zijn kanaal zegt weinig. Hier ruwe gemiddeldes
+              ter context:
+            </p>
+            <ul>
+              <li><strong>Google Search Ads:</strong> 2 tot 6%, branche-afhankelijk.</li>
+              <li><strong>Google Display:</strong> 0,3 tot 0,8%.</li>
+              <li><strong>Meta (Facebook/Instagram):</strong> 0,9 tot 1,6%.</li>
+              <li><strong>LinkedIn Ads:</strong> 0,4 tot 1%.</li>
+              <li><strong>Organic Google (positie 1):</strong> 25 tot 35%.</li>
+              <li><strong>Organic Google (positie 10):</strong> 1 tot 3%.</li>
+              <li><strong>E-mailcampagne:</strong> 2 tot 5% op de klik, sterk afhankelijk van segmentatie.</li>
+            </ul>
+            <p>
+              Zit jij eronder? Niet meteen panieken. Check je positie, je
+              concurrenten en de match tussen advertentie en landingspagina.
+            </p>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Wanneer CTR misleidt</h2>
+            <p>
+              CTR is een sterk signaal van relevantie, maar één getal zegt
+              nooit alles. Drie momenten om voorzichtig te zijn:
+            </p>
+            <ul>
+              <li><strong>Awareness boven verkeer:</strong> bij een bereik-campagne mag CTR best laag zijn, daar telt vertoningen.</li>
+              <li><strong>Positie-effecten in search:</strong> vergelijk appels met appels. Positie 1 versus positie 5 is geen eerlijke meting.</li>
+              <li><strong>Hoge CTR, lage conversie:</strong> dan zit er een mismatch tussen ad-belofte en landingspagina.</li>
+            </ul>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Praktische verbeterpunten</h2>
+            <ul>
+              <li><strong>Maak je kop specifiek:</strong> wat krijgt iemand als hij klikt? Beloof concreet.</li>
+              <li><strong>Zet een duidelijke CTA in:</strong> "Plan gesprek" beats "Lees meer".</li>
+              <li><strong>Segmenteer op thema of doelgroep:</strong> één advertentie voor iedereen werkt nooit.</li>
+              <li><strong>Test koppen, beschrijvingen en visuals:</strong> A/B is geen luxe, het is hygiëne.</li>
+              <li><strong>Match snippet aan landingspagina:</strong> consistentie verhoogt conversie meer dan CTR.</li>
+            </ul>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>CTR en conversie horen bij elkaar</h2>
+            <p>
+              Een hoge CTR voelt fijn maar zegt niets over geld in de kassa.
+              Een clickbait-ad kan een prachtige CTR halen en daarna een
+              beroerde conversie. Stuur dus altijd op CTR samen met conversie
+              of cost per acquisition.
+            </p>
+            <p>
+              Awareness-campagnes mogen prima een lagere CTR hebben. Daar
+              telt bereik en herhaling. Performance-campagnes moeten beide
+              kanten goed scoren: lokken én leveren.
+            </p>
+          </section>
+
+          <section class="tool-page-section">
+            <h2>Wat doet de tool nog meer?</h2>
+            <p>
+              Naast het percentage toont de calculator ook de gebruikte
+              formule. Handig voor een briefing aan een klant of in een
+              campagnerapportage. Met de "kopieer"-knop plak je het resultaat
+              direct in een mail of document.
+            </p>
+            <p>
+              Alle berekeningen draaien in je browser via JavaScript. Geen
+              server, geen log, geen tracking. Veilig dus om klant-data of
+              vertrouwelijke campagne-cijfers in te voeren.
+            </p>
+          </section>
+        </div>
+      </div>
+
+      <section class="tool-cross-section">
+        <div class="tool-cross-inner">
+          <div class="tool-cross-head">
+            <div>
+              <span class="tool-cross-eyebrow">Meer tools</span>
+              <h2 class="tool-cross-title">Andere <em>gratis tools</em></h2>
+            </div>
+            <a class="tool-cross-all" href="/tools/">Bekijk alle tools ↗</a>
+          </div>
+          <ul class="tool-cross-grid">
+            {others.map((tool) => (
+              <li>
+                <a class="tool-cross-card" href={tool.href}>
+                  <span class="tool-cross-card-tag">{tool.category}</span>
+                  <h3 class="tool-cross-card-title">{tool.title}</h3>
+                  <p class="tool-cross-card-tag-line">{tool.tagline}</p>
+                  <span class="tool-cross-card-cta">
+                    Open tool <span class="arrow">↗</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </article>
+
+    <FAQ
+      eyebrow="Veelgestelde vragen"
+      titleLine1="Vragen over"
+      titleAccent="de CTR-calculator?"
+      items={faqItems}
+    />
+
+    <BetterCallCalvin />
+  </main>
+  <Footer />
+</BaseLayout>

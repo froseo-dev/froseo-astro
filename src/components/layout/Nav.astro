@@ -1,10 +1,29 @@
 ---
+/**
+ * Hoofdnavigatie met twee dropdowns:
+ *   - "Diensten" → 3-koloms mega-menu (Bouwen/Onderhouden/Groei)
+ *   - "Ons werk" → compacte 1-koloms dropdown (Cases + Portfolio)
+ *
+ * Trigger: hover op desktop (CSS), click-toggle op touch en als
+ * keyboard-fallback. Mobiel: alles als ingeklapte secties in de drawer.
+ */
+
 import { Image } from 'astro:assets';
 import logoWhite from '@assets/brand/froseo-logo-wit.webp';
 
 interface NavItem {
   label: string;
   href: string;
+}
+
+interface DropdownItem {
+  label: string;
+  href: string;
+  desc: string;
+}
+interface DropdownGroup {
+  title: string;
+  items: DropdownItem[];
 }
 
 interface Props {
@@ -15,25 +34,121 @@ interface Props {
 
 const {
   items = [
-    { label: 'Diensten', href: '/diensten/' },
-    { label: 'Cases', href: '/cases/' },
-    { label: 'Aanpak', href: '#aanpak' },
     { label: 'Over ons', href: '/over-ons/' },
     { label: 'Kennisbank', href: '/kennisbank/' },
+    { label: 'Tools', href: '/tools/' },
     { label: 'Contact', href: '/contact/' },
   ],
   ctaLabel = 'Contact ↗',
   ctaHref = '/contact/',
 } = Astro.props;
+
+/* Diensten mega-menu — 3 kolommen matchen de groepering op /diensten/ */
+const serviceGroups: DropdownGroup[] = [
+  {
+    title: 'Bouwen & ontwerpen',
+    items: [
+      { label: 'Maatwerk webdesign', href: '/webdesign/', desc: 'WordPress of Astro, op maat gebouwd' },
+      { label: 'Website abonnement', href: '/website-abonnement/', desc: 'Vaste maandprijs, alles inbegrepen' },
+      { label: 'Website opfrissen', href: '/website-opfrissen/', desc: 'Refresh zonder volledige rebuild' },
+    ],
+  },
+  {
+    title: 'Onderhouden & verbeteren',
+    items: [
+      { label: 'Website onderhoud', href: '/website-onderhoud/', desc: 'WordPress-onderhoud per maand' },
+      { label: 'Website optimalisatie', href: '/website-optimalisatie/', desc: 'Meer halen uit je huidige site' },
+    ],
+  },
+  {
+    title: 'Online groei',
+    items: [
+      { label: 'SEO / GEO', href: '/seo/', desc: 'Zichtbaar in Google en AI-zoekmachines' },
+      { label: 'Lokale SEO', href: '/lokale-seo/', desc: 'Ranken in je eigen regio' },
+      { label: 'Content abonnement', href: '/content-abonnement/', desc: 'Maandelijks SEO-content die rankt' },
+      { label: 'Paid media', href: '/paid-media/', desc: 'Google Ads en Meta Ads' },
+    ],
+  },
+];
+
+/* Ons werk: compacte dropdown */
+const workItems: DropdownItem[] = [
+  { label: 'Cases', href: '/cases/', desc: 'Diepgaande projecten met cijfers en uitleg' },
+  { label: 'Portfolio', href: '/portfolio/', desc: 'Snelle visuele scroll door al ons werk' },
+];
 ---
 
 <nav class="nav">
   <a class="logo" href="/" aria-label="Froseo home">
     <Image src={logoWhite} alt="Froseo" class="logo-img" loading="eager" />
   </a>
+
   <div class="nav-links">
+    {/* Diensten — 3-koloms mega */}
+    <div class="nav-mega-wrap" data-mega-wrap="diensten">
+      <button
+        type="button"
+        class="nav-mega-trigger"
+        aria-expanded="false"
+        aria-haspopup="true"
+        data-mega-trigger="diensten"
+      >
+        Diensten <span class="nav-mega-caret" aria-hidden="true">▾</span>
+      </button>
+      <div class="nav-mega" role="region" aria-label="Diensten" data-mega-panel="diensten">
+        <div class="nav-mega-inner">
+          {serviceGroups.map((group) => (
+            <div class="nav-mega-col">
+              <p class="nav-mega-col-title">{group.title}</p>
+              <ul class="nav-mega-list">
+                {group.items.map((item) => (
+                  <li>
+                    <a class="nav-mega-link" href={item.href}>
+                      <span class="nav-mega-link-label">{item.label}</span>
+                      <span class="nav-mega-link-desc">{item.desc}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div class="nav-mega-foot">
+          <a class="nav-mega-foot-link" href="/diensten/">
+            Alle diensten op één pagina <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {/* Ons werk — compacte dropdown */}
+    <div class="nav-mega-wrap nav-mega-wrap--compact" data-mega-wrap="werk">
+      <button
+        type="button"
+        class="nav-mega-trigger"
+        aria-expanded="false"
+        aria-haspopup="true"
+        data-mega-trigger="werk"
+      >
+        Ons werk <span class="nav-mega-caret" aria-hidden="true">▾</span>
+      </button>
+      <div class="nav-mega nav-mega--compact" role="region" aria-label="Ons werk" data-mega-panel="werk">
+        <ul class="nav-mega-list">
+          {workItems.map((item) => (
+            <li>
+              <a class="nav-mega-link" href={item.href}>
+                <span class="nav-mega-link-label">{item.label}</span>
+                <span class="nav-mega-link-desc">{item.desc}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
     {items.map((item) => <a href={item.href}>{item.label}</a>)}
   </div>
+
   <div class="nav-right">
     <a class="nav-cta" href={ctaHref}>{ctaLabel}</a>
     <button
@@ -53,6 +168,46 @@ const {
 
 <div class="nav-drawer" id="nav-drawer" data-menu-drawer="closed" aria-hidden="true">
   <ul class="nav-drawer-list">
+    <li class="nav-drawer-section">
+      <details class="nav-drawer-details">
+        <summary class="nav-drawer-summary">
+          Diensten <span class="nav-drawer-chev" aria-hidden="true">▾</span>
+        </summary>
+        <div class="nav-drawer-mega">
+          {serviceGroups.map((group) => (
+            <div class="nav-drawer-mega-col">
+              <p class="nav-drawer-mega-title">{group.title}</p>
+              <ul>
+                {group.items.map((item) => (
+                  <li><a href={item.href} data-drawer-link>{item.label}</a></li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <a class="nav-drawer-mega-foot" href="/diensten/" data-drawer-link>
+            Alle diensten op één pagina ↗
+          </a>
+        </div>
+      </details>
+    </li>
+
+    <li class="nav-drawer-section">
+      <details class="nav-drawer-details">
+        <summary class="nav-drawer-summary">
+          Ons werk <span class="nav-drawer-chev" aria-hidden="true">▾</span>
+        </summary>
+        <div class="nav-drawer-mega">
+          <div class="nav-drawer-mega-col">
+            <ul>
+              {workItems.map((item) => (
+                <li><a href={item.href} data-drawer-link>{item.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </details>
+    </li>
+
     {items.map((item) => (
       <li><a href={item.href} data-drawer-link>{item.label}</a></li>
     ))}
@@ -81,6 +236,46 @@ const {
   links.forEach((a) => a.addEventListener('click', () => setOpen(false)));
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') setOpen(false);
+  });
+
+  /* Mega-menu trigger handling — werkt voor alle dropdowns met
+     [data-mega-wrap]. Hover-open via CSS, click-toggle als
+     keyboard/touch-fallback. Sluit bij Escape of klik-buiten. */
+  const megaWraps = document.querySelectorAll<HTMLElement>('[data-mega-wrap]');
+
+  function setMegaOpen(wrap: HTMLElement, next: boolean) {
+    const trigger = wrap.querySelector<HTMLButtonElement>('[data-mega-trigger]');
+    if (!trigger) return;
+    wrap.dataset.megaOpen = next ? 'true' : 'false';
+    trigger.setAttribute('aria-expanded', String(next));
+  }
+
+  function closeAllMegas() {
+    megaWraps.forEach((w) => setMegaOpen(w, false));
+  }
+
+  megaWraps.forEach((wrap) => {
+    const trigger = wrap.querySelector<HTMLButtonElement>('[data-mega-trigger]');
+    const panel = wrap.querySelector<HTMLElement>('[data-mega-panel]');
+    trigger?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      closeAllMegas();
+      setMegaOpen(wrap, !isOpen);
+    });
+    panel?.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', () => setMegaOpen(wrap, false));
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as Node;
+    let inside = false;
+    megaWraps.forEach((w) => { if (w.contains(target)) inside = true; });
+    if (!inside) closeAllMegas();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAllMegas();
   });
 </script>
 

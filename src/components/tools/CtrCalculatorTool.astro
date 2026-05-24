@@ -1,0 +1,132 @@
+---
+/**
+ * CTR-calculator. Vul twee van de drie velden in
+ * (vertoningen, klikken, CTR), de derde wordt automatisch berekend.
+ * Volledig client-side; toont ook de gebruikte formule.
+ */
+---
+
+<div class="tool tool--ctr" data-tool="ctr">
+  <p class="tool-help">
+    Vul twee velden in. Wij rekenen het derde realtime uit (CTR, klikken of vertoningen).
+  </p>
+
+  <div class="tool-fields" aria-live="polite">
+    <div class="tool-field">
+      <label class="tool-label" for="ctr-impr">Vertoningen</label>
+      <input id="ctr-impr" class="tool-in" type="number" min="0" step="1" placeholder="Bijv. 25000" />
+      <span class="tool-help">Totaal aantal impressies</span>
+    </div>
+
+    <div class="tool-field">
+      <label class="tool-label" for="ctr-clicks">Klikken</label>
+      <input id="ctr-clicks" class="tool-in" type="number" min="0" step="1" placeholder="Bijv. 500" />
+      <span class="tool-help">Totaal aantal klikken</span>
+    </div>
+
+    <div class="tool-field">
+      <label class="tool-label" for="ctr-pct">CTR (%)</label>
+      <input id="ctr-pct" class="tool-in" type="number" min="0" step="0.01" placeholder="Bijv. 2" />
+      <span class="tool-help">Doorklikratio in procenten</span>
+    </div>
+  </div>
+
+  <div class="tool-result" data-ctr-out>
+    Vul <strong>twee</strong> waarden in. Wij rekenen de derde automatisch uit.
+  </div>
+
+  <div class="tool-actions">
+    <button type="button" class="tool-btn" data-ctr-copy>Kopieer resultaat</button>
+    <button type="button" class="tool-btn tool-btn--ghost" data-ctr-reset>Reset</button>
+  </div>
+
+  <div class="tool-formula" data-ctr-stats></div>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-tool="ctr"]');
+  if (root) {
+    const elImpr = root.querySelector<HTMLInputElement>('#ctr-impr')!;
+    const elClicks = root.querySelector<HTMLInputElement>('#ctr-clicks')!;
+    const elPct = root.querySelector<HTMLInputElement>('#ctr-pct')!;
+    const out = root.querySelector<HTMLElement>('[data-ctr-out]')!;
+    const stats = root.querySelector<HTMLElement>('[data-ctr-stats]')!;
+    const btnCopy = root.querySelector<HTMLButtonElement>('[data-ctr-copy]')!;
+    const btnReset = root.querySelector<HTMLButtonElement>('[data-ctr-reset]')!;
+
+    const isNum = (v: number): v is number => typeof v === 'number' && !Number.isNaN(v);
+    const val = (el: HTMLInputElement): number => {
+      const v = parseFloat(el.value.replace(',', '.'));
+      return Number.isFinite(v) ? v : NaN;
+    };
+    const fmtPct = (v: number): string =>
+      isNum(v) ? (Math.round(v * 100) / 100).toFixed(2) + '%' : '—';
+    const fmtInt = (v: number): string =>
+      isNum(v) ? Math.round(v).toLocaleString('nl-NL') : '—';
+
+    function compute() {
+      let impr = val(elImpr);
+      let clicks = val(elClicks);
+      let pct = val(elPct);
+
+      const haveImpr = isNum(impr) && impr > 0;
+      const haveClicks = isNum(clicks) && clicks >= 0;
+      const havePct = isNum(pct) && pct >= 0;
+
+      let msg = 'Vul <strong>twee</strong> waarden in. Wij rekenen de derde automatisch uit.';
+      let sum = '';
+
+      if (haveClicks && haveImpr) {
+        pct = (clicks / impr) * 100;
+        msg = `CTR: <strong>${fmtPct(pct)}</strong> · Klikken: <strong>${fmtInt(clicks)}</strong> · Vertoningen: <strong>${fmtInt(impr)}</strong>`;
+        sum = `Formule: CTR = (klikken ÷ vertoningen) × 100. (${fmtInt(clicks)} ÷ ${fmtInt(impr)}) × 100 = ${fmtPct((clicks / impr) * 100)}`;
+      } else if (havePct && haveImpr) {
+        clicks = (pct / 100) * impr;
+        msg = `CTR: <strong>${fmtPct(pct)}</strong> · Klikken (berekend): <strong>${fmtInt(clicks)}</strong> · Vertoningen: <strong>${fmtInt(impr)}</strong>`;
+        sum = `Benodigde klikken = (CTR × vertoningen) ÷ 100. (${fmtPct(pct)} × ${fmtInt(impr)}) ÷ 100 = ${fmtInt((pct / 100) * impr)}`;
+      } else if (havePct && haveClicks) {
+        if (pct === 0) {
+          msg = `CTR is 0% met ${fmtInt(clicks)} klikken. Controleer je invoer.`;
+        } else {
+          impr = clicks / (pct / 100);
+          msg = `CTR: <strong>${fmtPct(pct)}</strong> · Klikken: <strong>${fmtInt(clicks)}</strong> · Vertoningen (berekend): <strong>${fmtInt(impr)}</strong>`;
+          sum = `Benodigde vertoningen = klikken ÷ (CTR ÷ 100). ${fmtInt(clicks)} ÷ (${fmtPct(pct)} ÷ 100) ≈ ${fmtInt(clicks / (pct / 100))}`;
+        }
+      }
+
+      out.innerHTML = msg;
+      stats.textContent = sum;
+    }
+
+    function reset() {
+      elImpr.value = '';
+      elClicks.value = '';
+      elPct.value = '';
+      out.innerHTML = 'Vul <strong>twee</strong> waarden in. Wij rekenen de derde automatisch uit.';
+      stats.textContent = '';
+    }
+
+    function copy() {
+      const text = (out.textContent || '') + (stats.textContent ? '\n' + stats.textContent : '');
+      navigator.clipboard
+        ?.writeText(text)
+        .then(() => {
+          btnCopy.textContent = 'Gekopieerd';
+          setTimeout(() => (btnCopy.textContent = 'Kopieer resultaat'), 1200);
+        })
+        .catch(() => {
+          /* clipboard niet beschikbaar — stilletjes negeren */
+        });
+    }
+
+    ['input', 'change'].forEach((ev) => {
+      elImpr.addEventListener(ev, compute);
+      elClicks.addEventListener(ev, compute);
+      elPct.addEventListener(ev, compute);
+    });
+    btnReset.addEventListener('click', reset);
+    btnCopy.addEventListener('click', copy);
+
+    compute();
+  }
+</script>

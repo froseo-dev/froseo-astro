@@ -24,7 +24,7 @@ description: 'Google Ads, Meta Ads en LinkedIn Ads die rendement uit je budget h
 icon: '↗'
 shadow: primary
 order: 4
-featured: true
+featured: false
 bullets:
   - 'Google Ads (Search, Shopping, Performance Max)'
   - Meta en LinkedIn Ads
