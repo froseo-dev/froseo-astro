@@ -52,10 +52,11 @@ const pageDesc =
 const allCases = await getCollection('cases', ({ data }) => data.published !== false);
 const showcaseSlugs = [
   'renovatie-totaal',
-  'top-dakdekker-zeist',
   'club12',
   'studio-contenido',
-  'studio-max-dance',
+  'prime-performance',
+  'tatanka',
+  'independent-artists-agency',
 ];
 const showcaseCases = showcaseSlugs
   .map((slug) => allCases.find((c) => c.data.slug === slug))

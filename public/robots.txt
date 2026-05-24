@@ -1,5 +1,10 @@
-# Test/build phase — block all crawlers.
-# Replace BEFORE going live on froseo.nl with a permissive robots.txt that
-# allows indexing of /, /diensten, /werk, /blog, etc. (and Disallow /lab/).
+# Productie-robots: alle crawlers welkom op de hele site.
+# Noindex op de Cloudflare preview-URL (*.pages.dev) gaat via een
+# X-Robots-Tag header in functions/_middleware.ts — dat blokkeert
+# de index zonder de crawl te blokkeren (Screaming Frog werkt dus
+# wel op beide hostnames).
+
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://froseo.nl/sitemap-index.xml
