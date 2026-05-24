@@ -11,7 +11,10 @@
 # --- Cases: oude /projecten/ structuur naar nieuwe /cases/ -----
 # Specifieke slug-mappings eerst (waar de nieuwe naam afwijkt):
 /projecten/hdg-dakdekker-zeist  /cases/top-dakdekker-zeist  301
-/projecten/alignment-club       /cases/club12              301
+/projecten/alignment-club       /cases/club12               301
+/projecten/rex-the-agency       /cases/rex-agency           301
+/projecten/millstreet-band      /cases/millstreet           301
+/projecten/studio-max-dance     /cases/studio-max           301
 
 # Daarna de catch-all voor cases met dezelfde slug:
 /projecten/*  /cases/:splat  301
@@ -19,6 +22,16 @@
 # --- Service-pagina's: oude slug → nieuwe slug --------------------
 /zoekmachine-optimalisatie  /seo                              301
 /webdesign-utrecht          /website-laten-maken-utrecht      301
+/website-optimaliseren      /website-optimalisatie            301
+
+# --- Tools: oude redirect-checker bestaat niet meer --------------
+/tools/redirect-checker  /tools/  301
+
+# --- Oude root-blogpost → nieuwe kennisbank-structuur ------------
+/lovable-ai  /kennisbank/lovable-ai  301
+
+# --- Oude analyse-pagina → contact met onderwerp -----------------
+/gratis-analyse  /contact/?onderwerp=gratis-analyse  301
 
 # --- Academy → Kennisbank (incl. sub-pages) ----------------------
 /academy        /kennisbank          301
