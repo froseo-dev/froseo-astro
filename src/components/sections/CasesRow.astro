@@ -80,19 +80,33 @@ const items = cases.map((c) => ({
 </div>
 
 <script>
-  /* Per .cases-row-wrap: koppel prev/next-knoppen aan de horizontale
-     scroll van de bijbehorende rij. Scroll-bedrag = breedte van 1 card
-     (inclusief gap) zodat één klik één tegel verschuift. */
+  /* Infinite carousel met silent-reset techniek:
+     - Items worden via JS 2x gekloond (totaal 3 sets) zodat de rij
+       visueel oneindig doorgaat.
+     - Scrollpositie start in de middelste set.
+     - Na elke scroll-eind (scrollend event of debounced fallback): als
+       de gebruiker in de eerste of derde set zit, springen we silent
+       (zonder animatie) terug naar de equivalente positie in de middelste
+       set. Voor de gebruiker is dit onzichtbaar omdat de cards identiek
+       zijn aan wat ze net zagen.
+     - Op mobile is de rij stacked (geen scroll), dus geen cloning. */
   type Direction = -1 | 1;
 
-  function scrollByCard(row: HTMLElement, direction: Direction) {
+  function cardStep(row: HTMLElement): number {
     const firstCard = row.querySelector<HTMLElement>('.cases-row-card');
-    if (!firstCard) return;
+    if (!firstCard) return 0;
     const styles = window.getComputedStyle(row);
     const gap = parseFloat(styles.columnGap || styles.gap || '0');
-    const step = firstCard.offsetWidth + gap;
+    return firstCard.offsetWidth + gap;
+  }
+
+  function scrollByCard(row: HTMLElement, direction: Direction) {
+    const step = cardStep(row);
+    if (step === 0) return;
     row.scrollBy({ left: step * direction, behavior: 'smooth' });
   }
+
+  const mql = window.matchMedia('(max-width: 640px)');
 
   document.querySelectorAll<HTMLElement>('[data-cases-wrap]').forEach((wrap) => {
     const id = wrap.dataset.casesWrap;
@@ -102,30 +116,76 @@ const items = cases.map((c) => ({
     const next = wrap.querySelector<HTMLButtonElement>(`[data-cases-next="${id}"]`);
     if (!row || !prev || !next) return;
 
-    /* Carousel-loop: aan het einde wraps next terug naar start, aan
-       het begin wraps prev naar het einde. Geen disabled-state. */
-    prev.addEventListener('click', () => {
-      if (row.scrollLeft <= 4) {
-        row.scrollTo({ left: row.scrollWidth - row.clientWidth, behavior: 'smooth' });
-      } else {
-        scrollByCard(row, -1);
-      }
-    });
-    next.addEventListener('click', () => {
-      if (row.scrollLeft + row.clientWidth >= row.scrollWidth - 4) {
-        row.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        scrollByCard(row, 1);
-      }
-    });
+    const originals = Array.from(row.children) as HTMLElement[];
+    let setWidth = 0;
+    let cloned = false;
 
-    /* Knoppen verbergen als alle cards al in beeld zijn (geen scroll mogelijk). */
-    const updateNav = () => {
-      const noOverflow = row.scrollWidth <= row.clientWidth + 4;
+    /* Bouw clones op desktop, sloop ze op mobile. */
+    function syncClones() {
+      const isMobile = mql.matches;
+      if (isMobile && cloned) {
+        Array.from(row.querySelectorAll<HTMLElement>('.is-clone')).forEach((n) => n.remove());
+        cloned = false;
+        setWidth = 0;
+      } else if (!isMobile && !cloned) {
+        for (let i = 0; i < 2; i++) {
+          originals.forEach((item) => {
+            const clone = item.cloneNode(true) as HTMLElement;
+            clone.classList.add('is-clone');
+            clone.setAttribute('aria-hidden', 'true');
+            clone.removeAttribute('id');
+            row.appendChild(clone);
+          });
+        }
+        cloned = true;
+        const step = cardStep(row);
+        setWidth = step * originals.length;
+        /* Start in middelste set zodat zowel links als rechts content is. */
+        row.scrollLeft = setWidth;
+      }
+    }
+
+    /* Silent reposition naar middelste set wanneer scroll buiten range valt. */
+    function maybeReposition() {
+      if (!cloned || setWidth === 0) return;
+      if (row.scrollLeft < setWidth * 0.5) {
+        row.scrollTo({ left: row.scrollLeft + setWidth, behavior: 'instant' as ScrollBehavior });
+      } else if (row.scrollLeft > setWidth * 2.5) {
+        row.scrollTo({ left: row.scrollLeft - setWidth, behavior: 'instant' as ScrollBehavior });
+      }
+    }
+
+    /* Listener: scrollend waar mogelijk, anders debounced scroll. */
+    const supportsScrollend = 'onscrollend' in window;
+    if (supportsScrollend) {
+      row.addEventListener('scrollend', maybeReposition);
+    } else {
+      let timer = 0;
+      row.addEventListener('scroll', () => {
+        clearTimeout(timer);
+        timer = window.setTimeout(maybeReposition, 180);
+      }, { passive: true });
+    }
+
+    prev.addEventListener('click', () => scrollByCard(row, -1));
+    next.addEventListener('click', () => scrollByCard(row, 1));
+
+    function updateNav() {
       const navWrap = wrap.querySelector<HTMLElement>('.cases-row-nav-wrap');
-      if (navWrap) navWrap.style.display = noOverflow ? 'none' : '';
-    };
+      if (!navWrap) return;
+      if (mql.matches) {
+        navWrap.style.display = 'none';
+        return;
+      }
+      const noOverflow = row.scrollWidth <= row.clientWidth + 4;
+      navWrap.style.display = noOverflow ? 'none' : '';
+    }
+
+    syncClones();
     updateNav();
-    window.addEventListener('resize', updateNav);
+    window.addEventListener('resize', () => {
+      syncClones();
+      updateNav();
+    });
   });
 </script>

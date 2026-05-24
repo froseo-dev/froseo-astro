@@ -1,12 +1,21 @@
 ---
+/**
+ * Topbar boven het menu — promo-strookje. Splitsing in twee delen
+ * zodat het tweede deel op mobiel verbergt en het bericht op één regel
+ * past.
+ */
 import { pricing } from '@data/site-config';
 
 interface Props {
+  /** Korte hoofdtekst, altijd zichtbaar. */
   text?: string;
+  /** Aanvulling, alleen zichtbaar op tablet/desktop. */
+  extra?: string;
 }
 const {
-  text = `Nieuw, AI-powered website vanaf ${pricing.abboFromShort}, inclusief hosting en onderhoud`,
+  text = `Nieuw, AI-powered website vanaf ${pricing.abboFromShort}`,
+  extra = ', inclusief hosting en onderhoud',
 } = Astro.props;
 ---
 
-<div class="topbar"><span class="star">★</span> {text}</div>
+<div class="topbar"><span class="star">★</span> {text}<span class="topbar-extra">{extra}</span></div>

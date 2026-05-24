@@ -927,7 +927,7 @@ main { display: contents; }
 }
 @media (max-width: 640px) {
   /* Mobile: geen scroll-snap, gewoon stacked. Alleen eerste N cards.
-     Geen prev/next-knoppen nodig. */
+     Geen prev/next-knoppen nodig. Clones worden via JS verwijderd. */
   .cases-row-wrap { margin-left: 0; margin-right: 0; }
   .cases-row {
     flex-direction: column;
@@ -937,6 +937,7 @@ main { display: contents; }
   }
   .cases-row-card { flex: 1 1 auto; }
   .cases-row-card.is-desktop-only { display: none; }
+  .cases-row-card.is-clone { display: none; }
   .cases-row-name { font-size: 22px; }
   .cases-row-nav-wrap { display: none; }
 }
@@ -3160,6 +3161,9 @@ main { display: contents; }
 @media (max-width: 640px) {
   /* Mobiele menu-balk slanker — Topbar + Nav samen waren te dik. */
   .topbar { padding: 7px var(--gutter-mobile); font-size: 10px; letter-spacing: 0.08em; }
+  /* Op mobile alleen de korte hoofdtekst tonen, zodat het strookje op
+     één regel past. */
+  .topbar-extra { display: none; }
   .nav { padding: 10px var(--gutter-mobile); }
   .nav-cta { padding: 8px 14px; font-size: 12px; box-shadow: 2px 2px 0 var(--line-color); }
   .menu-toggle { width: 42px; height: 42px; border-radius: 10px; box-shadow: 2px 2px 0 var(--line-color); }
