@@ -5,7 +5,6 @@ import Nav from '@components/layout/Nav.astro';
 import Footer from '@components/layout/Footer.astro';
 import EyebrowPill from '@components/ui/EyebrowPill.astro';
 import ReviewAvatars from '@components/ui/ReviewAvatars.astro';
-import ReviewBadge from '@components/ui/ReviewBadge.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
 import LogosTicker from '@components/sections/LogosTicker.astro';
 import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
@@ -454,8 +453,6 @@ const pageDesc = s.description;
       <!-- (Cases-detail block verwijderd uit service-template: WebsitesShowcase
            hierboven is de single projecten-block. "Alle projecten ↗" CTA zit
            daar al in. Voorkomt duplicate projecten-content op één pagina.) -->
-
-      <ReviewBadge variant="standard" />
 
       {s.calvinNote ? (
         <BetterCallCalvin
