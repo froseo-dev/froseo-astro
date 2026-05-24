@@ -18,9 +18,13 @@ interface Props {
   /** ID voor de scroll-container; nodig om meerdere rows op één page te
       laten coexisteren met eigen prev/next-knoppen. */
   id?: string;
+  /** Compact-modus: blijft binnen de container (geen page-wide breakout).
+      Voor secties op pagina's met eigen layout (zoals related-cases op
+      case-page) waar de full-bleed breakout misalignement geeft. */
+  compact?: boolean;
 }
 
-const { cases, mobileLimit = 4, id = 'cases-row' } = Astro.props;
+const { cases, mobileLimit = 4, id = 'cases-row', compact = false } = Astro.props;
 
 const items = cases.map((c) => ({
   slug: c.data.slug,
@@ -33,7 +37,7 @@ const items = cases.map((c) => ({
 }));
 ---
 
-<div class="cases-row-wrap" data-cases-wrap={id}>
+<div class={`cases-row-wrap${compact ? ' cases-row-wrap--compact' : ''}`} data-cases-wrap={id}>
   <div class="cases-row" data-cases-row={id} role="list" aria-label="Cases">
     {items.map((it, i) => (
       <a
@@ -98,18 +102,30 @@ const items = cases.map((c) => ({
     const next = wrap.querySelector<HTMLButtonElement>(`[data-cases-next="${id}"]`);
     if (!row || !prev || !next) return;
 
-    prev.addEventListener('click', () => scrollByCard(row, -1));
-    next.addEventListener('click', () => scrollByCard(row, 1));
+    /* Carousel-loop: aan het einde wraps next terug naar start, aan
+       het begin wraps prev naar het einde. Geen disabled-state. */
+    prev.addEventListener('click', () => {
+      if (row.scrollLeft <= 4) {
+        row.scrollTo({ left: row.scrollWidth - row.clientWidth, behavior: 'smooth' });
+      } else {
+        scrollByCard(row, -1);
+      }
+    });
+    next.addEventListener('click', () => {
+      if (row.scrollLeft + row.clientWidth >= row.scrollWidth - 4) {
+        row.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        scrollByCard(row, 1);
+      }
+    });
 
-    /* Disable-state op knoppen op basis van scroll-positie. */
-    const updateButtons = () => {
-      const atStart = row.scrollLeft <= 4;
-      const atEnd = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
-      prev.toggleAttribute('disabled', atStart);
-      next.toggleAttribute('disabled', atEnd);
+    /* Knoppen verbergen als alle cards al in beeld zijn (geen scroll mogelijk). */
+    const updateNav = () => {
+      const noOverflow = row.scrollWidth <= row.clientWidth + 4;
+      const navWrap = wrap.querySelector<HTMLElement>('.cases-row-nav-wrap');
+      if (navWrap) navWrap.style.display = noOverflow ? 'none' : '';
     };
-    updateButtons();
-    row.addEventListener('scroll', updateButtons, { passive: true });
-    window.addEventListener('resize', updateButtons);
+    updateNav();
+    window.addEventListener('resize', updateNav);
   });
 </script>

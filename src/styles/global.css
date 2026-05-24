@@ -778,6 +778,20 @@ main { display: contents; }
   margin-left: calc(-1 * var(--gutter));
   margin-right: calc(-1 * var(--gutter));
 }
+/* Compact-modus: blijft binnen de container, geen page-wide breakout.
+   Voor secties zoals related-cases waar de full-bleed te wild voelt. */
+.cases-row-wrap--compact {
+  margin-left: 0;
+  margin-right: 0;
+}
+.cases-row-wrap--compact .cases-row {
+  scroll-padding-left: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+.cases-row-wrap--compact .cases-row-card {
+  flex: 0 0 clamp(280px, 32%, 380px);
+}
 .cases-row {
   display: flex;
   gap: 24px;
