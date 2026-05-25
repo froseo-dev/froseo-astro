@@ -135,5 +135,72 @@ const businessSchema = {
     <slot />
     <MobileCTA />
     <PaletteSwitcher />
+
+    {/* Attributie-capture voor CRM-leads: legt UTM-params, gclid, referrer en
+        landingspagina vast en injecteert ze als verborgen velden in de
+        website-formulieren (action=/api/contact). De server stuurt ze door
+        naar Zoho. Campagne-bezoek (gclid/utm) overschrijft, anders first-touch. */}
+    <script>
+      (function () {
+        var KEY = 'froseo_attribution';
+        var FIELDS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'gclid', 'referrer_url', 'landing_page'];
+
+        function readStored() {
+          try { return JSON.parse(localStorage.getItem(KEY) || '{}') || {}; }
+          catch (e) { return {}; }
+        }
+        function store(data) {
+          try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+        }
+
+        function capture() {
+          var stored = readStored();
+          var p = new URLSearchParams(location.search);
+          var hasCampaign = p.get('gclid') || p.get('utm_source') || p.get('utm_medium') || p.get('utm_campaign');
+
+          // Campagne-bezoek → altijd vastleggen (last campaign touch, nodig voor
+          // Google Ads gclid-matching).
+          if (hasCampaign) {
+            var data = {
+              utm_source: p.get('utm_source') || '',
+              utm_medium: p.get('utm_medium') || '',
+              utm_campaign: p.get('utm_campaign') || '',
+              utm_term: p.get('utm_term') || '',
+              gclid: p.get('gclid') || '',
+              referrer_url: document.referrer || '',
+              landing_page: location.href || '',
+            };
+            store(data);
+            return data;
+          }
+          // Anders: bestaande attributie behouden (first-touch).
+          if (stored && (stored.landing_page || stored.gclid)) return stored;
+          // Eerste bezoek zonder campagne → referrer + landingspagina vastleggen.
+          var first = {
+            utm_source: '', utm_medium: '', utm_campaign: '', utm_term: '', gclid: '',
+            referrer_url: document.referrer || '',
+            landing_page: location.href || '',
+          };
+          store(first);
+          return first;
+        }
+
+        function inject(attr) {
+          var forms = document.querySelectorAll('form[action="/api/contact"], form[action$="/api/contact"]');
+          forms.forEach(function (form) {
+            FIELDS.forEach(function (name) {
+              if (form.querySelector('input[name="' + name + '"]')) return;
+              var input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = name;
+              input.value = attr[name] || '';
+              form.appendChild(input);
+            });
+          });
+        }
+
+        inject(capture());
+      })();
+    </script>
   </body>
 </html>

@@ -32,6 +32,105 @@ const json = (body: object, status = 200) =>
     headers: { 'Content-Type': 'application/json' },
   });
 
+/**
+ * Zoho CRM Web-to-Lead — server-side push naar de Leads-module.
+ *
+ * Deze identifiers zijn GEEN secrets: ze zijn ontworpen om in publieke
+ * formulier-HTML te staan. We posten server-side (ná de spamfilters) zodat
+ * er alleen schone leads in de CRM komen. De `LEADCF…`-codes komen 1-op-1 uit
+ * het door Zoho gegenereerde webform (zie _reference/zoho-crm.md).
+ */
+const ZOHO = {
+  endpoint: 'https://crm.zoho.eu/crm/WebToLeadForm',
+  xnQsjsdp: '10375a70dc46d8d7f9ed7b28f85389c0c33d0377ac081f7a5efd1c80caa49cc2',
+  xmIwtLD: '1f611ccce42008e872a429693e2e4380583708ca975e9468e91be68baee7385b873dd336d4f117d3acc575df7fe394f9',
+  actionType: 'TGVhZHM=', // base64("Leads")
+  fields: {
+    formType: 'LEADCF10',
+    serviceInterest: 'LEADCF9',
+    utmSource: 'LEADCF3',
+    utmMedium: 'LEADCF6',
+    utmCampaign: 'LEADCF5',
+    utmTerm: 'LEADCF8',
+    gclid: 'LEADCF7',
+    referrer: 'LEADCF1',
+    landing: 'LEADCF4',
+  },
+} as const;
+
+/** Leidt de Service-interest picklist-waarde af uit de onderwerp-context. */
+const deriveServiceInterest = (formSource: string, onderwerp: string): string => {
+  if (formSource === 'analyse') return 'Gratis analyse';
+  const o = onderwerp.toLowerCase();
+  if (o.includes('abonnement')) return 'Website abonnement';
+  if (o.includes('onderhoud') || o.includes('care')) return 'Website onderhoud';
+  if (o.includes('lokale') || o.includes('local')) return 'Local SEO';
+  if (o.includes('seo')) return 'SEO';
+  if (o.includes('content')) return 'Content abonnement';
+  if (o.includes('optimalisatie') || o.includes('opfris')) return 'Website optimalisatie';
+  if (o.includes('webdesign') || o.includes('wordpress') || o.includes('website')) return 'WordPress website';
+  return ''; // -None-
+};
+
+interface ZohoLead {
+  lastName: string;
+  email: string;
+  phone: string;
+  company: string;
+  description: string;
+  formType: string;
+  serviceInterest: string;
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string;
+  utmTerm: string;
+  gclid: string;
+  referrer: string;
+  landing: string;
+}
+
+/**
+ * POST de lead naar Zoho. Best-effort: faalt dit, dan loggen we het maar
+ * laten we de bezoeker-response ongemoeid (de Resend-mail is de backup).
+ */
+async function pushToZohoLead(lead: ZohoLead): Promise<void> {
+  const body = new URLSearchParams({
+    xnQsjsdp: ZOHO.xnQsjsdp,
+    xmIwtLD: ZOHO.xmIwtLD,
+    actionType: ZOHO.actionType,
+    returnURL: 'https://froseo.nl/',
+    'Last Name': lead.lastName,
+    Email: lead.email,
+    Phone: lead.phone,
+    Company: lead.company,
+    Description: lead.description,
+    [ZOHO.fields.formType]: lead.formType,
+    [ZOHO.fields.serviceInterest]: lead.serviceInterest,
+    [ZOHO.fields.utmSource]: lead.utmSource,
+    [ZOHO.fields.utmMedium]: lead.utmMedium,
+    [ZOHO.fields.utmCampaign]: lead.utmCampaign,
+    [ZOHO.fields.utmTerm]: lead.utmTerm,
+    [ZOHO.fields.gclid]: lead.gclid,
+    [ZOHO.fields.referrer]: lead.referrer,
+    [ZOHO.fields.landing]: lead.landing,
+  });
+
+  const res = await fetch(ZOHO.endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // Matcht de gewhiteliste "Form Location URL" in Zoho.
+      Referer: 'https://froseo.nl/',
+    },
+    body: body.toString(),
+  });
+
+  if (!res.ok) {
+    const txt = await res.text().catch(() => '');
+    console.error('Zoho Web-to-Lead error', res.status, txt.slice(0, 300));
+  }
+}
+
 export async function onRequestPost(ctx: RequestContext): Promise<Response> {
   const { request, env } = ctx;
   let data: FormData;
@@ -48,6 +147,19 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
   const message = (data.get('message') ?? '').toString().trim();
   /* Optioneel context-veld vanaf service-CTA's (?onderwerp=...). */
   const onderwerp = (data.get('onderwerp') ?? '').toString().trim().slice(0, 120);
+
+  /* Welk formulier: 'analyse' (homepage-CTA) of 'contact'. Stuurt de
+     Form Type / Service interest mapping richting Zoho. */
+  const formSource = (data.get('form_source') ?? '').toString().trim();
+
+  /* Attributie-velden, geïnjecteerd door het site-brede attributie-script. */
+  const utmSource = (data.get('utm_source') ?? '').toString().trim().slice(0, 255);
+  const utmMedium = (data.get('utm_medium') ?? '').toString().trim().slice(0, 255);
+  const utmCampaign = (data.get('utm_campaign') ?? '').toString().trim().slice(0, 255);
+  const utmTerm = (data.get('utm_term') ?? '').toString().trim().slice(0, 255);
+  const gclid = (data.get('gclid') ?? '').toString().trim().slice(0, 255);
+  const referrerUrl = (data.get('referrer_url') ?? '').toString().trim().slice(0, 450);
+  const landingPage = (data.get('landing_page') ?? '').toString().trim().slice(0, 450);
 
   /* Spam: twee honeypots met onschuldige veldnamen. Slimme bots skippen
      `website_url` (lijkt verdacht naast `current_website`), maar vullen
@@ -102,6 +214,29 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
      in message zonder context = spam. */
   const domains = new Set((message.match(/[a-z0-9-]+\.(?:com|net|org|io|co|info|biz|ru|cn|xyz)/gi) || []).map((d) => d.toLowerCase()));
   if (domains.size >= 4) return json({ ok: true }, 200);
+
+  /* === Lead naar Zoho CRM (best-effort, blokkeert de response niet) ===
+     Company + Last Name zijn verplicht in Zoho — vandaar de fallbacks. */
+  try {
+    await pushToZohoLead({
+      lastName: name || 'Website lead',
+      email,
+      phone,
+      company: website || 'Onbekend (via website)',
+      description: message,
+      formType: formSource === 'analyse' ? 'Gratis analyse' : 'Contactformulier',
+      serviceInterest: deriveServiceInterest(formSource, onderwerp),
+      utmSource,
+      utmMedium,
+      utmCampaign,
+      utmTerm,
+      gclid,
+      referrer: referrerUrl,
+      landing: landingPage,
+    });
+  } catch (err) {
+    console.error('Zoho push faalde (lead valt terug op Resend-mail):', err);
+  }
 
   const html = `
     <h2>Nieuw bericht via froseo.nl</h2>

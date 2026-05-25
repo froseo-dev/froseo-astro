@@ -73,8 +73,11 @@ const onderwerpLabel = onderwerpLabels[onderwerpKey];
               )}
             </div>
             <form class="contact-form" method="POST" action="/api/contact" data-contact-form novalidate>
-              {onderwerpLabel && (
-                <input type="hidden" name="onderwerp" value={onderwerpLabel} />
+              <input type="hidden" name="form_source" value="contact" />
+              {/* Onderwerp-context altijd doorsturen (raw key als er geen
+                  vriendelijk label is) zodat de server Service interest kan afleiden. */}
+              {onderwerpKey && (
+                <input type="hidden" name="onderwerp" value={onderwerpLabel ?? onderwerpKey} />
               )}
               <div class="form-row">
                 <label class="form-field">
