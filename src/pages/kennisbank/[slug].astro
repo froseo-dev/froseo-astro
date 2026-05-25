@@ -118,7 +118,7 @@ const articleSchema = {
         {tocItems.length > 1 && (
           <aside class="kb-toc" aria-label="Inhoudsopgave">
             <div class="kb-toc-sticky">
-              <h2 class="kb-toc-title">Inhoud</h2>
+              <div class="kb-toc-title">Inhoud</div>
               <ol class="kb-toc-list">
                 {tocItems.map((h) => (
                   <li><a href={`#${h.slug}`}>{h.text}</a></li>
