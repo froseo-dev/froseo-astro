@@ -25,10 +25,12 @@ import { interpolate, review } from '@data/site-config';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
-  return services.map((entry) => ({
-    params: { slug: entry.data.slug },
-    props: { entry },
-  }));
+  return services
+    .filter((entry) => !entry.data.external)
+    .map((entry) => ({
+      params: { slug: entry.data.slug },
+      props: { entry },
+    }));
 }
 
 const { entry } = Astro.props;

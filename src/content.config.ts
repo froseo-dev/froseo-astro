@@ -111,6 +111,10 @@ const services = defineCollection({
     shadow: z.enum(['primary', 'rare', 'highlight', 'dark', 'teal']).default('dark'),
     order: z.number().default(0),
     featured: z.boolean().default(true),
+    /** True = dienst heeft een eigen standalone page (src/pages/<slug>.astro).
+        [slug].astro skipt dan deze entry zodat er geen route-conflict ontstaat.
+        ServicesGrid en mega-menu kunnen 'm wel gewoon tonen. */
+    external: z.boolean().default(false),
 
     /* === Velden voor service-detail pagina (/[slug]) ============= */
 
