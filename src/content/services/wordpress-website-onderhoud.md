@@ -5,7 +5,8 @@ shortTitle: WordPress-onderhoud
 heroTitle: WordPress-onderhoud
 heroAccent: 'zonder kopzorgen.'
 heroAccentBlock: true
-heroImage: ../../assets/hero/froseo-mockup.webp
+heroImage: ../../assets/hero/wordpress-website-onderhoud-hero.webp
+heroAlt: 'WordPress website onderhoud door Froseo: Millstreet op desktop, Steunder op mobiel'
 heroEyebrow: '60+ WordPress-sites in beheer'
 heroChecks:
   - Jouw WordPress-site altijd veilig, snel en bijgewerkt

@@ -37,7 +37,7 @@ import Testimonial from '@components/sections/Testimonial.astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { review } from '@data/site-config';
-import heroMockup from '@assets/hero/froseo-mockup.webp';
+import heroMockup from '@assets/hero/website-optimalisatie-hero.webp';
 import froseoLogoWit from '@assets/brand/froseo-logo-wit.webp';
 import studioContenidoBefore from '@assets/before-after/studio-contenido-before.webp';
 import studioContenidoAfter from '@assets/before-after/studio-contenido-after.webp';
@@ -243,7 +243,8 @@ const faqs = [
           <div class="service-hero-media">
             <Image
               src={heroMockup}
-              alt="Voorbeeld van een door Froseo geoptimaliseerde website"
+              alt="Website optimalisatie door Froseo: Independent Artists Agency op desktop, Studio Contenido op mobiel"
+              title="Website optimalisatie door Froseo: Independent Artists Agency op desktop, Studio Contenido op mobiel"
               class="service-hero-img"
               widths={[640, 960, 1280, 1600]}
               sizes="(max-width: 1024px) 100vw, 640px"

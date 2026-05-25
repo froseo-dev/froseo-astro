@@ -4,7 +4,8 @@ title: Lokale SEO die écht rankt
 shortTitle: Lokale SEO
 heroTitle: Lokaal scoren in
 heroAccent: 'Google.'
-heroImage: ../../assets/hero/froseo-mockup.webp
+heroImage: ../../assets/hero/lokale-seo-hero.webp
+heroAlt: 'Lokale SEO door Froseo: Club12 op desktop, Renovatie Totaal op mobiel'
 eyebrow: 'Lokale SEO'
 heroEyebrow: 'Top-3 in Google Maps · klanten in heel NL'
 heroChecks:

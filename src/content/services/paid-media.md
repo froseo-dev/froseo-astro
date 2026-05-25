@@ -4,7 +4,8 @@ title: Advertenties die leveren
 shortTitle: Paid Media
 heroTitle: Online
 heroAccent: 'adverteren.'
-heroImage: ../../assets/hero/froseo-mockup.webp
+heroImage: ../../assets/hero/paid-media-hero.webp
+heroAlt: 'Paid media campagnes door Froseo: Renovatie Totaal op desktop, Dakdekkersbedrijf DKH Ede op mobiel'
 heroEyebrow: 'Google Ads · Meta · LinkedIn'
 heroChecks:
   - Campagnes gericht op omzet, niet alleen op kliks

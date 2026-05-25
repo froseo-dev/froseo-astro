@@ -4,7 +4,8 @@ title: SEO/GEO
 shortTitle: SEO/GEO
 heroTitle: Zoekmachine
 heroAccent: 'optimalisatie.'
-heroImage: ../../assets/hero/froseo-mockup.webp
+heroImage: ../../assets/hero/seo-hero.webp
+heroAlt: 'SEO door Froseo: Dakdekkersbedrijf DKH Ede op desktop, Renovatie Totaal op mobiel'
 eyebrow: 'Zoekmachine optimalisatie'
 heroEyebrow: 'Scoren in Google en AI'
 heroChecks:

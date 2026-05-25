@@ -5,7 +5,8 @@ shortTitle: Website abonnement
 heroTitle: Het website abonnement
 heroAccent: 'dat met je meegroeit.'
 heroAccentBlock: true
-heroImage: ../../assets/hero/froseo-mockup.webp
+heroImage: ../../assets/hero/website-abonnement-hero.webp
+heroAlt: 'Website abonnement van Froseo: Club12 op desktop, Prime Performance op mobiel'
 heroEyebrow: '15+ jaar ervaring in webdesign'
 heroChecks:
   - 'Razendsnel: we streven naar 90+ Google PageSpeed'

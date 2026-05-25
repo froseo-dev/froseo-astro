@@ -95,6 +95,9 @@ const services = defineCollection({
     heroTitle: z.string().optional(),
     /** Optionele hero-image op de detail-pagina (mockup, illustratie). */
     heroImage: image().optional(),
+    /** Alt-tekst voor de hero-image. Bevat liefst het hoofdkeyword. Falls back
+        naar een generieke "<service> — Froseo" als ontbrekend. */
+    heroAlt: z.string().optional(),
     eyebrow: z.string(),
     description: z.string(),
     icon: z.string(),

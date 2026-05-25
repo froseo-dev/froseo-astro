@@ -33,7 +33,7 @@ import FAQ from '@components/sections/FAQ.astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { review, pricing, contact } from '@data/site-config';
-import heroMockup from '@assets/hero/froseo-mockup.webp';
+import heroMockup from '@assets/hero/website-laten-maken-zzp-hero.webp';
 
 const pageTitle = 'Website laten maken voor ZZP en MKB | Froseo';
 const pageDesc =
@@ -234,7 +234,8 @@ const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent
           <div class="service-hero-media">
             <Image
               src={heroMockup}
-              alt="Voorbeeld website voor ZZP gemaakt door Froseo"
+              alt="Website laten maken voor ZZP door Froseo: Steunder op desktop, Prime Performance op mobiel"
+              title="Website laten maken voor ZZP door Froseo: Steunder op desktop, Prime Performance op mobiel"
               class="service-hero-img"
               widths={[640, 960, 1280, 1600]}
               sizes="(max-width: 1024px) 100vw, 640px"

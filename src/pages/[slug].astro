@@ -104,7 +104,8 @@ const pageDesc = s.description;
             <div class="service-hero-media">
               <Image
                 src={s.heroImage}
-                alt={`${s.shortTitle ?? s.title} — Froseo`}
+                alt={s.heroAlt ?? `${s.shortTitle ?? s.title} — Froseo`}
+                title={s.heroAlt ?? `${s.shortTitle ?? s.title} — Froseo`}
                 class="service-hero-img"
                 widths={[640, 960, 1280, 1600]}
                 sizes="(max-width: 1024px) 100vw, 640px"

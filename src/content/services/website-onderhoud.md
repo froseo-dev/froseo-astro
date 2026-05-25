@@ -5,7 +5,8 @@ shortTitle: Website onderhoud
 heroTitle: Website onderhoud
 heroAccent: 'zonder kopzorgen.'
 heroAccentBlock: true
-heroImage: ../../assets/hero/froseo-mockup.webp
+heroImage: ../../assets/hero/website-onderhoud-hero.webp
+heroAlt: 'Website onderhoud door Froseo: Renovatie Totaal op desktop, Theo Mackaay op mobiel'
 heroEyebrow: '60+ WordPress-sites in beheer'
 heroChecks:
   - Jouw website altijd veilig, snel en up-to-date
