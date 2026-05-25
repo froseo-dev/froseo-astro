@@ -7,7 +7,7 @@ heroAccent: 'dat met je meegroeit.'
 heroAccentBlock: true
 heroImage: ../../assets/hero/website-abonnement-hero.webp
 heroAlt: 'Website abonnement van Froseo: Club12 op desktop, Prime Performance op mobiel'
-metaTitle: 'Website abonnement vanaf €89/m: alles inbegrepen | Froseo'
+metaTitle: 'Website abonnement voor een vaste lage prijs | Zonder opstartkosten'
 heroEyebrow: '15+ jaar ervaring in webdesign'
 heroChecks:
   - 'Razendsnel: we streven naar 90+ Google PageSpeed'
