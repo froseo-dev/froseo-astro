@@ -2,36 +2,37 @@
 # Format:  <from>  <to>  <status>
 #
 # Belangrijk: Cloudflare evalueert top-down + first-match wint, dus
-# zet specifieke regels boven wildcards. Trailing slash hoeft niet:
-# de directory-build matcht beide varianten automatisch.
+# zet specifieke regels boven wildcards. We schrijven source én target
+# mét trailing slash zodat Cloudflare 1-op-1 matcht met onze
+# `trailingSlash: 'always'` build-format.
 #
 # 410 (Gone) wordt niet ondersteund in _redirects. Pages-Function
 # in `functions/<slug>/index.ts` retourneert een echte 410-status.
 
 # --- Cases: oude /projecten/ structuur naar nieuwe /cases/ -----
 # Specifieke slug-mappings eerst (waar de nieuwe naam afwijkt):
-/projecten/hdg-dakdekker-zeist  /cases/top-dakdekker-zeist  301
-/projecten/alignment-club       /cases/club12               301
-/projecten/millstreet-band      /cases/millstreet           301
+/projecten/hdg-dakdekker-zeist/  /cases/top-dakdekker-zeist/  301
+/projecten/alignment-club/       /cases/club12/               301
+/projecten/millstreet-band/      /cases/millstreet/           301
 
 # Daarna de catch-all voor cases met dezelfde slug:
 /projecten/*  /cases/:splat  301
 
 # --- Service-pagina's: oude slug → nieuwe slug --------------------
-/zoekmachine-optimalisatie  /seo                              301
-/webdesign-utrecht          /website-laten-maken-utrecht      301
+/zoekmachine-optimalisatie/  /seo/                              301
+/webdesign-utrecht/          /website-laten-maken-utrecht/      301
 
 # /website-optimaliseren bestond op de oude site als kennisbank-
 # artikel, niet als service-pagina. Redirect dus naar kennisbank,
 # niet naar /website-optimalisatie (die hebben we nu wel apart).
-/website-optimaliseren      /kennisbank/website-optimaliseren 301
+/website-optimaliseren/      /kennisbank/website-optimaliseren/ 301
 
-# --- Oude root-blogpost → nieuwe kennisbank-structuur ------------
-/lovable-ai  /kennisbank/lovable-ai  301
+# --- Oude root-blogposts → nieuwe kennisbank-structuur -----------
+/lovable-ai/                 /kennisbank/lovable-ai/            301
 
 # --- Oude analyse-pagina → contact met onderwerp -----------------
-/gratis-analyse  /contact/?onderwerp=gratis-analyse  301
+/gratis-analyse/             /contact/?onderwerp=gratis-analyse 301
 
 # --- Academy → Kennisbank (incl. sub-pages) ----------------------
-/academy        /kennisbank          301
-/academy/*      /kennisbank/:splat   301
+/academy/                    /kennisbank/                       301
+/academy/*                   /kennisbank/:splat                 301
