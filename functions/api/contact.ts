@@ -49,9 +49,15 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
   /* Optioneel context-veld vanaf service-CTA's (?onderwerp=...). */
   const onderwerp = (data.get('onderwerp') ?? '').toString().trim().slice(0, 120);
 
-  /* Spam: honeypot moet leeg zijn (verborgen veld). */
-  const honeypot = (data.get('website_url') ?? '').toString();
-  if (honeypot) return json({ ok: true }, 200); // silent succeed for bots
+  /* Spam: twee honeypots met onschuldige veldnamen. Slimme bots skippen
+     `website_url` (lijkt verdacht naast `current_website`), maar vullen
+     vaak alles wat plausibel klinkt zoals `subject` of `company`. */
+  const honeypot1 = (data.get('website_url') ?? '').toString();
+  const honeypot2 = (data.get('subject') ?? '').toString();
+  const honeypot3 = (data.get('company') ?? '').toString();
+  if (honeypot1 || honeypot2 || honeypot3) {
+    return json({ ok: true }, 200); // silent succeed for bots
+  }
 
   /* Spam: form moet minimaal 2 sec open zijn (form-render-tijd in ms). */
   const startedAt = Number(data.get('form_started_at') ?? 0);
@@ -69,6 +75,33 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
   if (message.length < 10) {
     return json({ error: 'Bericht is te kort.' }, 400);
   }
+
+  /* Content-filters: SEO/marketing-spam herkennen aan patronen.
+     Bewust silent-succeed (bots krijgen geen feedback over wat fout ging). */
+
+  /* 1. Te veel URLs in het bericht — 99% van legitieme aanvragen heeft
+     er 0 of 1, spam-pitches hebben er meerdere. */
+  const urlCount = (message.match(/https?:\/\/|www\./gi) || []).length;
+  if (urlCount > 2) return json({ ok: true }, 200);
+
+  /* 2. Cyrillisch of Chinees schrift — niet-Latijnse karakters wijzen
+     op niet-Nederlandse afzender, vrijwel altijd spam voor onze markt. */
+  if (/[Ѐ-ӿ一-鿿]/.test(message + name)) {
+    return json({ ok: true }, 200);
+  }
+
+  /* 3. Veelvoorkomende spam-frases (case-insensitive). Houden we kort
+     om false positives te voorkomen — alleen termen die in een
+     legitieme webdesign/SEO-aanvraag niet voorkomen. */
+  const spamPatterns = /\b(?:crypto|bitcoin|casino|viagra|forex|seo backlinks?|guest post(?:ing)?|link insertion|increase your ranking|low cost seo|cheap seo|outsourc(?:e|ing)|virtual assistant|loan offer|investment opportunity)\b/i;
+  if (spamPatterns.test(message)) return json({ ok: true }, 200);
+
+  /* 4. Email-domain mismatch — als afzender domain @gmail.com is maar
+     'message' een ander business-domein pusht, vaak cold outreach. Niet
+     blokkeren maar wel een lichte heuristiek: alleen 4+ external domains
+     in message zonder context = spam. */
+  const domains = new Set((message.match(/[a-z0-9-]+\.(?:com|net|org|io|co|info|biz|ru|cn|xyz)/gi) || []).map((d) => d.toLowerCase()));
+  if (domains.size >= 4) return json({ ok: true }, 200);
 
   const html = `
     <h2>Nieuw bericht via froseo.nl</h2>
