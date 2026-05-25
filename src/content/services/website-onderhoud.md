@@ -7,6 +7,7 @@ heroAccent: 'zonder kopzorgen.'
 heroAccentBlock: true
 heroImage: ../../assets/hero/website-onderhoud-hero.webp
 heroAlt: 'Website onderhoud door Froseo: Renovatie Totaal op desktop, Theo Mackaay op mobiel'
+metaTitle: 'Website onderhoud: WordPress veilig en up-to-date | Froseo'
 heroEyebrow: '60+ WordPress-sites in beheer'
 heroChecks:
   - Jouw website altijd veilig, snel en up-to-date

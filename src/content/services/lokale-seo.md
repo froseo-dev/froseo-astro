@@ -6,6 +6,7 @@ heroTitle: Lokaal scoren in
 heroAccent: 'Google.'
 heroImage: ../../assets/hero/lokale-seo-hero.webp
 heroAlt: 'Lokale SEO door Froseo: Club12 op desktop, Renovatie Totaal op mobiel'
+metaTitle: 'Lokale SEO bureau: top-3 in Google Maps + jouw regio | Froseo'
 eyebrow: 'Lokale SEO'
 heroEyebrow: 'Top-3 in Google Maps · klanten in heel NL'
 heroChecks:

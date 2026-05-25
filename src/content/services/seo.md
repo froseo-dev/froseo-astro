@@ -6,6 +6,7 @@ heroTitle: Zoekmachine
 heroAccent: 'optimalisatie.'
 heroImage: ../../assets/hero/seo-hero.webp
 heroAlt: 'SEO door Froseo: Dakdekkersbedrijf DKH Ede op desktop, Renovatie Totaal op mobiel'
+metaTitle: 'SEO bureau: zoekmachine optimalisatie + AI search | Froseo'
 eyebrow: 'Zoekmachine optimalisatie'
 heroEyebrow: 'Scoren in Google en AI'
 heroChecks:

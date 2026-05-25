@@ -6,6 +6,7 @@ heroTitle: Websites
 heroAccent: 'die werken.'
 heroImage: ../../assets/hero/webdesign-hero.webp
 heroAlt: 'Maatwerk webdesign door Froseo: Rex The Agency op desktop, Renovatie Totaal op mobiel'
+metaTitle: 'Maatwerk webdesign: snelle websites met karakter | Froseo'
 eyebrow: 'Webdesign'
 heroEyebrow: '15+ jaar ervaring · vanaf {{abboFromShort}}'
 heroChecks:

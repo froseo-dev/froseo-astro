@@ -5,6 +5,7 @@ shortTitle: Content abonnement
 heroTitle: SEO Content abonnement.
 heroImage: ../../assets/hero/content-abonnement-hero.webp
 heroAlt: 'SEO content abonnement van Froseo: Balderstone op desktop, Studio Contenido op mobiel'
+metaTitle: 'SEO content abonnement: rankende artikelen per maand | Froseo'
 heroEyebrow: '15+ jaar SEO-ervaring · vanaf €599/m'
 heroChecks:
   - Maandelijks SEO-artikelen en landingspagina''s die ranken

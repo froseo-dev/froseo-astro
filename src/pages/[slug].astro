@@ -61,8 +61,8 @@ const showcaseFeatured = featuredCaseEntry
   : undefined;
 
 const heroLead = s.heroLead ?? s.description;
-const pageTitle = `${s.shortTitle ?? s.title} | Froseo`;
-const pageDesc = s.description;
+const pageTitle = s.metaTitle ?? `${s.shortTitle ?? s.title} | Froseo`;
+const pageDesc = s.metaDescription ?? s.description;
 ---
 
 <BaseLayout title={pageTitle} description={pageDesc}>

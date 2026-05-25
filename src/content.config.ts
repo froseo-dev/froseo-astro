@@ -98,6 +98,11 @@ const services = defineCollection({
     /** Alt-tekst voor de hero-image. Bevat liefst het hoofdkeyword. Falls back
         naar een generieke "<service> — Froseo" als ontbrekend. */
     heroAlt: z.string().optional(),
+    /** SEO meta-title override. Default = "<shortTitle> | Froseo". Gebruik
+        voor click-optimized titels met hoofdkeyword vooraan, ~55-60 chars. */
+    metaTitle: z.string().optional(),
+    /** SEO meta-description override. Default = `description`. */
+    metaDescription: z.string().optional(),
     eyebrow: z.string(),
     description: z.string(),
     icon: z.string(),
