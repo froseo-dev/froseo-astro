@@ -143,6 +143,14 @@ const {
       const res = await fetch('/api/contact', { method: 'POST', body: formData });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {
+        /* Conversie-signaal voor GTM. Trigger hierop in GTM (Custom Event =
+           generate_lead) en koppel je GA4- + Google Ads-conversietag eraan. */
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({
+          event: 'generate_lead',
+          lead_type: 'analyse',
+          form_location: 'homepage-cta',
+        });
         status.textContent = '✓ Verstuurd. We nemen snel contact op.';
         status.className = 'form-small is-success';
         form.reset();

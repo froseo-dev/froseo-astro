@@ -206,6 +206,14 @@ const onderwerpLabel = onderwerpLabels[onderwerpKey];
         const json = await res.json().catch(() => ({}));
 
         if (res.ok && json.ok) {
+          /* Conversie-signaal voor GTM. Zelfde event als de homepage-CTA;
+             lead_type onderscheidt de bron in GA4/Ads. */
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          (window as any).dataLayer.push({
+            event: 'generate_lead',
+            lead_type: 'contact',
+            form_location: 'contact-pagina',
+          });
           status.textContent = 'Bericht verzonden. We nemen snel contact op.';
           status.className = 'form-status is-success';
           form.reset();
