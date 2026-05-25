@@ -53,18 +53,40 @@ const {
     </div>
 
     {variant === 'form' ? (
-      <form class="cta-form" action={formAction} method="post">
+      <form
+        class="cta-form"
+        action="/api/contact"
+        method="post"
+        data-analyse-form
+        novalidate
+      >
         <div class="cta-form-title">{formTitle}</div>
         <div class="form-field">
           <label for="cta-website">Jouw website</label>
-          <input id="cta-website" name="website" type="url" placeholder="www.jouwbedrijf.nl" required />
+          <input id="cta-website" name="current_website" type="url" placeholder="www.jouwbedrijf.nl" required />
         </div>
         <div class="form-field">
           <label for="cta-email">E-mailadres</label>
           <input id="cta-email" name="email" type="email" placeholder="je@jouwbedrijf.nl" required />
         </div>
+
+        {/* Hidden context-velden — onderwerp tag + synthetische name/message
+            zodat /api/contact's validatie slaagt zonder dat we extra inputs
+            van de bezoeker vragen. JS vult name+message bij submit aan. */}
+        <input type="hidden" name="onderwerp" value="Gratis website-analyse" />
+        <input type="hidden" name="name" value="Analyse-aanvraag" data-cta-name />
+        <input type="hidden" name="message" value="Verzoek voor een gratis website-analyse." data-cta-message />
+
+        {/* Anti-bot: honeypot + tijd-op-pagina. Server checkt beide. */}
+        <div class="form-honeypot" aria-hidden="true">
+          <label>Website (laat dit veld leeg)
+            <input type="text" name="website_url" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+        <input type="hidden" name="form_started_at" value="" data-cta-started-at />
+
         <button class="form-btn" type="submit">{submitLabel}</button>
-        <div class="form-small">100% vrijblijvend</div>
+        <span class="form-small" data-cta-status role="status" aria-live="polite">100% vrijblijvend</span>
       </form>
     ) : (
       <div class="cta-action">
@@ -74,3 +96,56 @@ const {
     )}
   </div>
 </section>
+
+<script>
+  /* CTA-form submit-handler — fetch naar /api/contact zonder page-reload.
+     Synthetiseert name + message uit de URL/email zodat de gedeelde endpoint
+     z'n validatie kan doen, en geeft inline status terug aan de bezoeker. */
+  const form = document.querySelector<HTMLFormElement>('[data-analyse-form]');
+  const status = document.querySelector<HTMLElement>('[data-cta-status]');
+  const startedAt = document.querySelector<HTMLInputElement>('[data-cta-started-at]');
+  const nameField = document.querySelector<HTMLInputElement>('[data-cta-name]');
+  const messageField = document.querySelector<HTMLInputElement>('[data-cta-message]');
+
+  if (startedAt) startedAt.value = String(Date.now());
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form || !status) return;
+
+    const submitBtn = form.querySelector<HTMLButtonElement>('.form-btn');
+    submitBtn?.setAttribute('disabled', 'true');
+    status.textContent = 'Versturen…';
+
+    /* Vul name + message met context vanuit het ingevulde formulier
+       (e-mail-prefix als naam, URL in het bericht) — server-side
+       validatie eist beide velden ≥ 1 char en bericht ≥ 10 chars. */
+    const formData = new FormData(form);
+    const email = (formData.get('email') ?? '').toString();
+    const website = (formData.get('current_website') ?? '').toString();
+    if (nameField && email) {
+      nameField.value = email.split('@')[0] || 'Analyse-aanvraag';
+      formData.set('name', nameField.value);
+    }
+    if (messageField && website) {
+      messageField.value = `Verzoek voor een gratis website-analyse van ${website}.`;
+      formData.set('message', messageField.value);
+    }
+
+    try {
+      const res = await fetch('/api/contact', { method: 'POST', body: formData });
+      const json = await res.json().catch(() => ({}));
+      if (res.ok && json.ok) {
+        status.textContent = 'Verstuurd. We nemen snel contact op.';
+        form.reset();
+        if (startedAt) startedAt.value = String(Date.now());
+      } else {
+        status.textContent = json.error ?? 'Versturen mislukt. Probeer het later opnieuw.';
+      }
+    } catch {
+      status.textContent = 'Versturen mislukt. Probeer het later opnieuw.';
+    } finally {
+      submitBtn?.removeAttribute('disabled');
+    }
+  });
+</script>
