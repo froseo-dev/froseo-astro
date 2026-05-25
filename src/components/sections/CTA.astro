@@ -142,14 +142,17 @@ const {
       const res = await fetch('/api/contact', { method: 'POST', body: formData });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {
-        status.textContent = 'Verstuurd. We nemen snel contact op.';
+        status.textContent = '✓ Verstuurd. We nemen snel contact op.';
+        status.className = 'form-small is-success';
         form.reset();
         if (startedAt) startedAt.value = String(Date.now());
       } else {
         status.textContent = json.error ?? 'Versturen mislukt. Probeer het later opnieuw.';
+        status.className = 'form-small is-error';
       }
     } catch {
       status.textContent = 'Versturen mislukt. Probeer het later opnieuw.';
+      status.className = 'form-small is-error';
     } finally {
       submitBtn?.removeAttribute('disabled');
     }

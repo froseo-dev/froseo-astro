@@ -2996,7 +2996,33 @@ main { display: contents; }
   background: var(--accent-primary-strong);
 }
 
-.form-small { text-align: center; font-size: 12px; color: var(--text-muted); }
+.form-small {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  display: block;
+  transition: all 0.2s var(--ease-pop);
+}
+.form-small.is-success {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--color-teal);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 var(--surface-dark);
+}
+.form-small.is-error {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--accent-rare);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 10px;
+}
 
 /* Link variant — same dark card as form variant, just without the form column.
    Title + text match the form variant's font sizes for visual consistency. */
