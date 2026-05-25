@@ -202,5 +202,29 @@ const businessSchema = {
         inject(capture());
       })();
     </script>
+
+    {/* Klik-leads: site-brede listener die tel-, WhatsApp- en mailto-kliks
+        als `contact_click`-event naar de dataLayer pusht. Bedoeld als
+        secundaire/micro-conversie (in Google Ads op "observeren" zetten,
+        niet om op te bieden). Eén listener vangt alle instanties op. */}
+    <script>
+      (function () {
+        document.addEventListener('click', function (e) {
+          var link = (e.target as HTMLElement)?.closest?.('a[href]') as HTMLAnchorElement | null;
+          if (!link) return;
+          var href = link.getAttribute('href') || '';
+          var method = '';
+          if (href.indexOf('tel:') === 0) method = 'phone';
+          else if (href.indexOf('mailto:') === 0) method = 'email';
+          else if (/wa\.me|whatsapp/i.test(href)) method = 'whatsapp';
+          if (!method) return;
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          (window as any).dataLayer.push({
+            event: 'contact_click',
+            contact_method: method,
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
