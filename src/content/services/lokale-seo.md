@@ -2,15 +2,15 @@
 slug: lokale-seo
 title: Lokale SEO die écht rankt
 shortTitle: Lokale SEO
-heroTitle: Lokale SEO voor de top 3 in
-heroAccent: 'Google Maps.'
+heroTitle: Lokale SEO gericht op het
+heroAccent: 'local pack.'
 heroImage: ../../assets/hero/lokale-seo-hero.webp
 heroAlt: 'Lokale SEO door Froseo: Club12 op desktop, Renovatie Totaal op mobiel'
-metaTitle: 'Lokale SEO bureau: top 3 in Google Maps + jouw regio | Froseo'
+metaTitle: 'Lokale SEO bureau: scoor in het local pack van je regio | Froseo'
 eyebrow: 'Lokale SEO'
-heroEyebrow: 'Top 3 in Google Maps · klanten in heel NL'
+heroEyebrow: 'Top 3 in het local pack · klanten in heel NL'
 heroChecks:
-  - Sterk gericht op de top 3 in Google Maps voor jouw regio
+  - Sterk gericht op de top 3 in het local pack van jouw regio
   - Google Business Profile compleet uitgewerkt
   - Maandelijks bijsturen op rankings en reviews
 description: 'Lokale SEO en Google Maps optimalisatie voor MKB en ZZP. Beter scoren in Google Maps, lokale zoekresultaten en het local pack van jouw regio.'
@@ -136,7 +136,7 @@ faqs:
 
 Zoekt iemand op zijn telefoon naar "kapper in de buurt" of "dakdekker Utrecht", dan gebruikt Google een ander algoritme dan voor brede landelijke zoektermen. Lokale SEO (in het Engels local SEO) bepaalt waar jouw bedrijf in die lokale resultaten opduikt.
 
-De top 3 in Google Maps, het zogenoemde local pack, pakt het overgrote deel van de klikken. Sta je daar niet tussen, dan word je nauwelijks gezien. Zelfs niet als je website beter is dan die van de drie erboven.
+Het local pack (ook wel map pack genoemd) is dat blok met drie bedrijven plus kaartje dat bovenaan verschijnt. Het pakt het overgrote deel van de klikken. Sta je daar niet tussen, dan word je nauwelijks gezien. Zelfs niet als je website beter is dan die van de drie erboven.
 
 En het is nooit klaar. Concurrenten worden actiever, Google sleutelt aan z'n algoritme, reviews stromen binnen of juist niet. Lokale SEO is een doorlopend proces, geen knop die je één keer omzet en daarna vergeet.
 
