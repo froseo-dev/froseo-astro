@@ -36,3 +36,13 @@
 # --- Academy → Kennisbank (incl. sub-pages) ----------------------
 /academy/                    /kennisbank/                       301
 /academy/*                   /kennisbank/:splat                 301
+
+# --- Privacy: common slug die externe sites/bookmarks gebruiken --
+/privacy/                    /privacybeleid/                    301
+
+# --- Oude WordPress sitemap-URLs → nieuwe Astro sitemap ----------
+# Google's gecachte crawl-paden naar de nieuwe index.
+/sitemap_index.xml           /sitemap-index.xml                 301
+/page-sitemap.xml            /sitemap-index.xml                 301
+/post-sitemap.xml            /sitemap-index.xml                 301
+/projecten-sitemap.xml       /sitemap-index.xml                 301
