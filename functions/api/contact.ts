@@ -33,6 +33,15 @@ const json = (body: object, status = 200) =>
   });
 
 /**
+ * Generieke afwijzing voor bot-/spamsignalen (honeypot, te-snel, content-filters).
+ * Bewust generiek geformuleerd (verraadt niet wélk filter aansloeg) maar met een
+ * fallback, zodat een eventuele false-positive bij een échte bezoeker niet stil
+ * verdwijnt: die ziet een foutmelding en kan alsnog direct mailen.
+ */
+const rejected = () =>
+  json({ error: 'Je bericht kon niet worden verstuurd. Probeer het opnieuw of mail ons direct op info@froseo.nl.' }, 422);
+
+/**
  * Zoho CRM Web-to-Lead — server-side push naar de Leads-module.
  *
  * Deze identifiers zijn GEEN secrets: ze zijn ontworpen om in publieke
@@ -169,13 +178,13 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
   const honeypot1 = (data.get('website_url') ?? '').toString();
   const honeypot2 = (data.get('subject') ?? '').toString();
   if (honeypot1 || honeypot2) {
-    return json({ ok: true }, 200); // silent succeed for bots
+    return rejected();
   }
 
   /* Spam: form moet minimaal 2 sec open zijn (form-render-tijd in ms). */
   const startedAt = Number(data.get('form_started_at') ?? 0);
   if (startedAt && Date.now() - startedAt < 2000) {
-    return json({ ok: true }, 200); // silent succeed for too-fast bots
+    return rejected();
   }
 
   /* Validatie: naam, e-mail en bericht verplicht. */
@@ -189,32 +198,33 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
     return json({ error: 'Bericht is te kort.' }, 400);
   }
 
-  /* Content-filters: SEO/marketing-spam herkennen aan patronen.
-     Bewust silent-succeed (bots krijgen geen feedback over wat fout ging). */
+  /* Content-filters: SEO/marketing-spam herkennen aan patronen. Bij een
+     match een nette foutmelding (rejected) i.p.v. nep-succes, zodat een
+     eventuele false-positive bij een echte bezoeker niet stil verdwijnt. */
 
   /* 1. Te veel URLs in het bericht — 99% van legitieme aanvragen heeft
      er 0 of 1, spam-pitches hebben er meerdere. */
   const urlCount = (message.match(/https?:\/\/|www\./gi) || []).length;
-  if (urlCount > 2) return json({ ok: true }, 200);
+  if (urlCount > 2) return rejected();
 
   /* 2. Cyrillisch of Chinees schrift — niet-Latijnse karakters wijzen
      op niet-Nederlandse afzender, vrijwel altijd spam voor onze markt. */
   if (/[Ѐ-ӿ一-鿿]/.test(message + name)) {
-    return json({ ok: true }, 200);
+    return rejected();
   }
 
   /* 3. Veelvoorkomende spam-frases (case-insensitive). Houden we kort
      om false positives te voorkomen — alleen termen die in een
      legitieme webdesign/SEO-aanvraag niet voorkomen. */
   const spamPatterns = /\b(?:crypto|bitcoin|casino|viagra|forex|seo backlinks?|guest post(?:ing)?|link insertion|increase your ranking|low cost seo|cheap seo|outsourc(?:e|ing)|virtual assistant|loan offer|investment opportunity)\b/i;
-  if (spamPatterns.test(message)) return json({ ok: true }, 200);
+  if (spamPatterns.test(message)) return rejected();
 
   /* 4. Email-domain mismatch — als afzender domain @gmail.com is maar
      'message' een ander business-domein pusht, vaak cold outreach. Niet
      blokkeren maar wel een lichte heuristiek: alleen 4+ external domains
      in message zonder context = spam. */
   const domains = new Set((message.match(/[a-z0-9-]+\.(?:com|net|org|io|co|info|biz|ru|cn|xyz)/gi) || []).map((d) => d.toLowerCase()));
-  if (domains.size >= 4) return json({ ok: true }, 200);
+  if (domains.size >= 4) return rejected();
 
   /* === Lead naar Zoho CRM (best-effort, blokkeert de response niet) ===
      Company + Last Name zijn verplicht in Zoho — vandaar de fallbacks. */
