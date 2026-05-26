@@ -140,10 +140,12 @@ const faqs = [
       <a class="lp-logo" href="/" aria-label="Froseo home">
         <Image src={logoWit} alt="Froseo" height={28} loading="eager" />
       </a>
-      <nav class="lp-nav" aria-label="Op deze pagina">
+      <nav class="lp-nav" aria-label="Menu">
         <a href="#waarom">Waarom onderhoud</a>
         <a href="#pakketten">Pakketten</a>
-        <a href="#faq">Veelgestelde vragen</a>
+        <a href="/cases/">Ons werk</a>
+        <a href="/over-ons/">Over ons</a>
+        <a href="#faq">FAQ</a>
       </nav>
       <div class="lp-header-actions">
         <a class="lp-header-phone" href={`tel:${contact.phoneTel}`}>
@@ -371,15 +373,16 @@ const faqs = [
   }
   .lp-header-phone:hover { text-decoration: underline; }
   .lp-header-cta { padding: 0.55rem 1.1rem; font-size: 0.9rem; }
-  .lp-nav { display: flex; gap: 1.5rem; }
+  .lp-nav { display: flex; gap: 1.35rem; }
   .lp-nav a {
     color: rgba(255, 255, 255, 0.82);
     text-decoration: none;
     font-size: 0.92rem;
     font-weight: 500;
+    white-space: nowrap;
   }
   .lp-nav a:hover { color: #fff; }
-  @media (max-width: 860px) {
+  @media (max-width: 1000px) {
     .lp-nav { display: none; }
   }
   @media (max-width: 640px) {
