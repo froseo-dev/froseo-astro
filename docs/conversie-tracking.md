@@ -28,8 +28,11 @@ Conversie-ID is account-breed gelijk; alleen het label verschilt per actie.
 
 | Conversieactie | Categorie | Conversie-ID | Label |
 |---|---|---|---|
-| Gratis analyse aangevraagd | Leadformulier indienen | `AW-18179117088` | `LBh1CNTbsbMcEKCgvdxD` |
-| Contactformulier verzonden | Leadformulier indienen | `AW-18179117088` | `jAdJCKLembMcEKCgvdxD` |
+| Gratis analyse aangevraagd | Leadformulier indienen | `18179117088` | `LBh1CNTbsbMcEKCgvdxD` |
+| Contactformulier verzonden | Leadformulier indienen | `18179117088` | `jAdJCKLembMcEKCgvdxD` |
+
+> Let op: in het GTM-veld "Conversie-ID" vul je het ID **zonder** `AW-`-prefix in
+> (alleen `18179117088`), anders geeft GTM "moet een positief geheel getal zijn".
 
 Verbeterde conversies: **uit** (kan later aan zodra we het e-mailadres meesturen
 in de dataLayer-push).
@@ -48,8 +51,8 @@ in de dataLayer-push).
 
 ### Tags
 - `Conversion Linker` — type Conversielinker, trigger: Initialisatie / Alle pagina's
-- `Ads - lead analyse` — Google Ads-conversietracking, ID `AW-18179117088`, label `LBh1CNTbsbMcEKCgvdxD`, trigger `Trigger - lead analyse`
-- `Ads - lead contact` — Google Ads-conversietracking, ID `AW-18179117088`, label `jAdJCKLembMcEKCgvdxD`, trigger `Trigger - lead contact`
+- `Ads - lead analyse` — Google Ads-conversietracking, ID `18179117088`, label `LBh1CNTbsbMcEKCgvdxD`, trigger `Trigger - lead analyse`
+- `Ads - lead contact` — Google Ads-conversietracking, ID `18179117088`, label `jAdJCKLembMcEKCgvdxD`, trigger `Trigger - lead contact`
 - `GA4 - generate_lead` — GA4-gebeurtenis `generate_lead`, param `lead_type = {{dlv - lead_type}}`, trigger `Trigger - generate_lead (alle)`
 - (optioneel) `GA4 - contact_click` — GA4-gebeurtenis `contact_click`, param `contact_method = {{dlv - contact_method}}`, trigger `Trigger - contact_click`
 

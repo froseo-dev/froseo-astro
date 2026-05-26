@@ -161,13 +161,14 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
   const referrerUrl = (data.get('referrer_url') ?? '').toString().trim().slice(0, 450);
   const landingPage = (data.get('landing_page') ?? '').toString().trim().slice(0, 450);
 
-  /* Spam: twee honeypots met onschuldige veldnamen. Slimme bots skippen
-     `website_url` (lijkt verdacht naast `current_website`), maar vullen
-     vaak alles wat plausibel klinkt zoals `subject` of `company`. */
+  /* Spam: twee honeypots met onschuldige veldnamen. Bots vullen vaak alles
+     wat plausibel klinkt zoals `website_url` of `subject`.
+     LET OP: géén `company`-honeypot meer — dat verborgen veld werd door de
+     browser-adres-autofill (organisatie) ingevuld bij échte bezoekers op het
+     contactformulier, waardoor legitieme leads stil werden weggegooid. */
   const honeypot1 = (data.get('website_url') ?? '').toString();
   const honeypot2 = (data.get('subject') ?? '').toString();
-  const honeypot3 = (data.get('company') ?? '').toString();
-  if (honeypot1 || honeypot2 || honeypot3) {
+  if (honeypot1 || honeypot2) {
     return json({ ok: true }, 200); // silent succeed for bots
   }
 
