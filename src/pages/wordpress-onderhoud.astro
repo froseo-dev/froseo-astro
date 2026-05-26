@@ -152,8 +152,20 @@ const faqs = [
           <span aria-hidden="true">☎</span> {contact.phoneDisplay}
         </a>
         <a class="btn-primary lp-header-cta" href="#check">Gratis check ↗</a>
+        <button class="lp-burger" type="button" aria-label="Menu openen" aria-expanded="false" data-lp-burger>
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
+    {/* Mobiel uitklap-menu — verschijnt onder de breakpoint waar .lp-nav verdwijnt. */}
+    <nav class="lp-mobile-menu" data-lp-mobile aria-label="Menu">
+      <a href="#waarom">Waarom onderhoud</a>
+      <a href="#pakketten">Pakketten</a>
+      <a href="/cases/">Ons werk</a>
+      <a href="/over-ons/">Over ons</a>
+      <a href="#faq">FAQ</a>
+      <a href={`tel:${contact.phoneTel}`}>Bel {contact.phoneDisplay}</a>
+    </nav>
   </header>
 
   <main class="lp-page">
@@ -220,7 +232,10 @@ const faqs = [
       />
     </div>
 
-    {/* Vergelijking — dichte achtergrond zodat dit blok visueel afwijkt. */}
+    {/* Klant-quote tussen pakketten en de vergelijking. */}
+    <Testimonial id="auke-club12" variant="card" />
+
+    {/* Vergelijking — donkerpaars + grid zodat dit blok visueel afwijkt. */}
     <div class="lp-cmp-section">
       <Comparison
         title={comparison.title}
@@ -229,12 +244,6 @@ const faqs = [
         withLabel={comparison.withLabel}
         items={comparison.items}
       />
-    </div>
-
-    <Testimonial id="auke-club12" variant="card" />
-
-    <div id="faq">
-      <FAQ items={faqs} />
     </div>
 
     <!-- ============================================================
@@ -314,6 +323,22 @@ const faqs = [
         </div>
       </div>
     </section>
+
+    <div id="faq">
+      <FAQ items={faqs} />
+    </div>
+
+    {/* Slot: route naar direct contact voor wie liever belt of mailt. */}
+    <section class="lp-contact">
+      <div class="lp-contact-inner">
+        <h2 class="lp-contact-title">Liever even sparren over je WordPress-onderhoud?</h2>
+        <p class="lp-contact-body">Geen zin in een formulier? Bel of mail ons gerust, of plan een kort vrijblijvend gesprek. We denken graag mee.</p>
+        <div class="lp-contact-actions">
+          <a class="btn-primary" href="/contact/">Neem contact op ↗</a>
+          <a class="lp-contact-phone" href={`tel:${contact.phoneTel}`}>of bel {contact.phoneDisplay}</a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ============================================================
@@ -324,22 +349,27 @@ const faqs = [
       <div class="lp-footer-brand">
         <Image src={logoWit} alt="Froseo" height={26} loading="lazy" />
         <p class="lp-footer-naw">
-          {contact.address.street}, {contact.address.postalCode} {contact.address.city}<br />
-          <a href={`tel:${contact.phoneTel}`}>{contact.phoneDisplay}</a> · <a href={`mailto:${contact.email}`}>{contact.email}</a><br />
+          {contact.address.street}<br />
+          {contact.address.postalCode} {contact.address.city}
+        </p>
+        <p class="lp-footer-naw">
+          <a href={`tel:${contact.phoneTel}`}>{contact.phoneDisplay}</a><br />
+          <a href={`mailto:${contact.email}`}>{contact.email}</a><br />
           KvK {contact.kvk}
         </p>
       </div>
-      <div class="lp-footer-reviews">
+      <a class="lp-footer-reviews" href={contact.mapsLink} target="_blank" rel="noopener noreferrer" aria-label="Bekijk onze Google-reviews">
         <ReviewBadge variant="compact" />
-      </div>
+      </a>
       <nav class="lp-footer-links" aria-label="Meer over Froseo">
-        <a href="/over-ons/">Over ons</a>
+        <a href="/over-ons/">Over Froseo</a>
         <a href="/cases/">Cases</a>
-        <a href="/website-onderhoud/">Alle onderhoudsinfo</a>
+        <a href="#pakketten">Onderhoudspakketten</a>
+        <a href="/contact/">Contact</a>
         <a href="/privacybeleid/">Privacy</a>
       </nav>
     </div>
-    <p class="lp-footer-copy">© {new Date().getFullYear()} Froseo · WordPress onderhoud uit Utrecht</p>
+    <p class="lp-footer-copy">© {new Date().getFullYear()} Froseo · WordPress onderhoud voor ondernemers</p>
   </footer>
 </BaseLayout>
 
@@ -382,8 +412,54 @@ const faqs = [
     white-space: nowrap;
   }
   .lp-nav a:hover { color: #fff; }
+
+  /* Hamburger — alleen onder de breakpoint waar .lp-nav verdwijnt. */
+  .lp-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 42px;
+    height: 38px;
+    padding: 0 9px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+  .lp-burger span {
+    display: block;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .lp-burger[aria-expanded='true'] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .lp-burger[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+  .lp-burger[aria-expanded='true'] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .lp-mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: var(--surface-dark);
+    padding: 0.25rem 1.5rem 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .lp-mobile-menu.is-open { display: flex; }
+  .lp-mobile-menu a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .lp-mobile-menu a:last-child { border-bottom: 0; }
+
   @media (max-width: 1000px) {
     .lp-nav { display: none; }
+    .lp-burger { display: inline-flex; }
+  }
+  @media (min-width: 1001px) {
+    .lp-mobile-menu { display: none !important; }
   }
   @media (max-width: 640px) {
     .lp-header-phone { display: none; }
@@ -400,11 +476,23 @@ const faqs = [
   }
   /* Pakketten: ook het pagina-grid laten doorkomen (dicht vlak weg). */
   .lp-pkg-section :global(.pricing-packages) { background: transparent; }
-  /* Vergelijking: juist een dicht vlak zodat het blok visueel afwijkt
-     van de grid-secties eromheen. */
+  /* Vergelijking: donkerpaars + subtiel grid-patroon (witte lijnen met
+     radial-fade), zodat dit blok sterk afwijkt van de lichte secties. */
   .lp-cmp-section :global(.comparison) {
-    background: var(--surface-page-deep);
-    border-block: 1px solid rgba(0, 0, 0, 0.06);
+    background-color: var(--color-purple-strong);
+    background-image:
+      radial-gradient(ellipse at center, transparent 35%, var(--color-purple-strong) 90%),
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 60px),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 60px);
+    background-size: cover, 60px 60px, 60px 60px;
+    background-repeat: no-repeat, repeat, repeat;
+    border-block: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .lp-cmp-section :global(.comparison-title) { color: #fff; }
+  .lp-cmp-section :global(.comparison-head .eyebrow-pill) {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
   }
   .lp-hero-inner {
     max-width: var(--container, 1200px);
@@ -472,8 +560,13 @@ const faqs = [
   }
   @media (max-width: 900px) {
     .lp-hero-inner { grid-template-columns: 1fr; }
-    .lp-hero-media { order: -1; }
+    /* Afbeelding onder de tekst op mobiel (geen order-flip meer). */
   }
+
+  /* PainPoints-kop: breder + iets kleiner zodat 'Waar je tegenaan loopt
+     zonder WordPress onderhoud.' netjes op ~2 regels valt i.p.v. te smal/groot. */
+  #waarom :global(.pain-points-head) { max-width: 940px; }
+  #waarom :global(.pain-points-title) { font-size: clamp(26px, 3vw, 38px); }
 
   /* ============================================================
      Onderhoudscheck-sectie + formulier
@@ -481,7 +574,9 @@ const faqs = [
   .lp-check {
     scroll-margin-top: 80px;
     padding: clamp(3rem, 6vw, 5rem) 1.5rem;
-    background: var(--color-purple-strong, #3b006d);
+    /* Surface-dark (navy) i.p.v. het paars van de comparison hierboven,
+       zodat de twee donkere blokken niet in elkaar overlopen. */
+    background: var(--surface-dark);
     color: #fff;
   }
   .lp-check-inner {
@@ -573,6 +668,35 @@ const faqs = [
   }
 
   /* ============================================================
+     Contact-slot (teal band) — alternatieve route voor wie liever belt/mailt
+     ============================================================ */
+  .lp-contact {
+    background: var(--color-teal, #00807d);
+    color: #fff;
+    text-align: center;
+    padding: clamp(3rem, 6vw, 4.5rem) 1.5rem;
+  }
+  .lp-contact-inner { max-width: 42rem; margin: 0 auto; }
+  .lp-contact-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+    color: #fff;
+  }
+  .lp-contact-body { opacity: 0.92; line-height: 1.6; margin-bottom: 1.5rem; }
+  .lp-contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .lp-contact-phone { color: #fff; text-decoration: none; font-weight: 600; }
+  .lp-contact-phone:hover { text-decoration: underline; }
+
+  /* ============================================================
      Slanke footer
      ============================================================ */
   .lp-footer {
@@ -593,6 +717,7 @@ const faqs = [
   .lp-footer-naw { font-size: 0.9rem; line-height: 1.7; }
   .lp-footer-naw a { color: #fff; text-decoration: none; }
   .lp-footer-naw a:hover { text-decoration: underline; }
+  .lp-footer-reviews { display: inline-flex; align-items: flex-start; text-decoration: none; }
   .lp-footer-links { display: grid; gap: 0.55rem; align-content: start; }
   .lp-footer-links a { color: rgba(255, 255, 255, 0.85); text-decoration: none; font-size: 0.92rem; }
   .lp-footer-links a:hover { color: #fff; text-decoration: underline; }
@@ -611,6 +736,24 @@ const faqs = [
 </style>
 
 <script>
+  /* ============================================================
+     Mobiel hamburger-menu — toggelt het uitklap-menu onder de breakpoint.
+     ============================================================ */
+  const burger = document.querySelector<HTMLButtonElement>('[data-lp-burger]');
+  const mobileMenu = document.querySelector<HTMLElement>('[data-lp-mobile]');
+  burger?.addEventListener('click', () => {
+    const open = mobileMenu?.classList.toggle('is-open') ?? false;
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
+  });
+  /* Sluit het menu zodra een link wordt gekozen (anchor scrollt al). */
+  mobileMenu?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('is-open');
+      burger?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
   /* ============================================================
      Pakket-knoppen (PricingPackages ctaMode="leadform") koppelen aan
      het formulier: zet hulpvraag + verberg-velden en scroll naar #check.
