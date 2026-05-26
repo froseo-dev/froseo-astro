@@ -24,6 +24,8 @@ interface Props {
   theme?: string;
   /** Canonical URL path. */
   pathname?: string;
+  /** Zet de pagina op noindex (bv. Ads-landingspagina's die niet mogen ranken). */
+  noindex?: boolean;
 }
 
 const {
@@ -31,6 +33,7 @@ const {
   description = 'Effectieve websites & SEO uit Utrecht voor ambitieuze ondernemers. 15+ jaar ervaring, 80+ projecten live, 5/5 op Google reviews. Plan een gratis website-analyse.',
   theme,
   pathname = Astro.url.pathname,
+  noindex = false,
 } = Astro.props;
 
 const canonical = new URL(pathname, Astro.site ?? 'https://froseo.nl').toString();
@@ -86,6 +89,7 @@ const businessSchema = {
     <meta name="google-site-verification" content="gJdefKHd5pQ7vnvoFgiIMjoE5WFN4BYQTHUAP_uPEFw" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical} />
 
     <meta property="og:title" content={title} />

@@ -9,7 +9,13 @@ export default defineConfig({
      volgt automatisch. Combineert met build.format 'directory' zodat
      elke pagina als index.html in een eigen folder wordt gebouwd. */
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      /* Ads-landingspagina's uit de sitemap houden: ze staan op noindex
+         en mogen niet met de organische onderhoudspagina's concurreren. */
+      filter: (page) => !page.includes('/wordpress-onderhoud/'),
+    }),
+  ],
   image: {
     service: { entrypoint: 'astro/assets/services/sharp' },
   },

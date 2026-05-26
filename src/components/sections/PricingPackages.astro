@@ -18,6 +18,10 @@ interface Props {
   title?: string;
   titleAccent?: string;
   lead?: string;
+  /** 'contact' (default): knop linkt naar /contact/?onderwerp=<slug>.
+   *  'leadform': knop scrollt naar het #check-formulier op dezelfde pagina
+   *  (gebruikt op de Ads-landingspagina, houdt de bezoeker op het pad). */
+  ctaMode?: 'contact' | 'leadform';
 }
 
 const {
@@ -25,6 +29,7 @@ const {
   title = 'Onze',
   titleAccent = 'onderhoudspakketten.',
   lead = 'Drie pakketten met heldere prijzen. Maandelijks opzegbaar, of jaarlijks met één maand gratis. Doorgroeien tussen pakketten kan op elk moment.',
+  ctaMode = 'contact',
 } = Astro.props;
 ---
 
@@ -79,9 +84,20 @@ const {
             </li>
           ))}
         </ul>
-        <a class={pkg.isFeatured ? 'btn-primary pricing-card-cta' : 'btn-ghost pricing-card-cta'} href={`/contact/?onderwerp=${pkg.slug}`}>
-          Kies {pkg.shortName ?? pkg.name} ↗
-        </a>
+        {ctaMode === 'leadform' ? (
+          <a
+            class={pkg.isFeatured ? 'btn-primary pricing-card-cta' : 'btn-ghost pricing-card-cta'}
+            href="#check"
+            data-package={pkg.slug}
+            data-package-name={pkg.shortName ?? pkg.name}
+          >
+            Vraag {pkg.shortName ?? pkg.name} aan ↗
+          </a>
+        ) : (
+          <a class={pkg.isFeatured ? 'btn-primary pricing-card-cta' : 'btn-ghost pricing-card-cta'} href={`/contact/?onderwerp=${pkg.slug}`}>
+            Kies {pkg.shortName ?? pkg.name} ↗
+          </a>
+        )}
       </article>
       );
     })}

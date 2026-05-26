@@ -1,0 +1,674 @@
+---
+/**
+ * Ads-landingspagina /wordpress-onderhoud.
+ *
+ * NOINDEX + niet in sitemap (zie astro.config sitemap-filter): puur voor
+ * advertentieverkeer, zodat hij niet concurreert met de organische pagina's
+ * /website-onderhoud/ en /wordpress-website-onderhoud/.
+ *
+ * Conversie-opzet:
+ *   - Gestripte chrome (donkere mini-header, geen menu) = min uitgangen.
+ *   - Hoofd-CTA = "Gratis WordPress-onderhoudscheck" (zacht, laagdrempelig),
+ *     formulier lager op de pagina (#check), bereikbaar via hero-knop.
+ *   - Pakketten met "Vraag X aan"-knoppen die naar hetzelfde formulier
+ *     scrollen (PricingPackages ctaMode="leadform").
+ *   - Vertrouwen wordt op de pagina zelf opgebouwd (stats, reviews, pijlers,
+ *     vergelijking, FAQ) i.p.v. via een menu naar andere pagina's.
+ *
+ * Tracking: het formulier pusht `generate_lead` met lead_type
+ * `onderhoud-check` (of `onderhoud-pakket` als een pakket is aangeklikt) naar
+ * de dataLayer. GA4 vangt dit al op; de aparte Google Ads-conversie
+ * ("WordPress onderhoud lead") maak je aan wanneer de campagne live gaat.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import ReviewAvatars from '@components/ui/ReviewAvatars.astro';
+import ReviewBadge from '@components/ui/ReviewBadge.astro';
+import StatsRibbon from '@components/sections/StatsRibbon.astro';
+import PainPoints from '@components/sections/PainPoints.astro';
+import Comparison from '@components/sections/Comparison.astro';
+import PricingPackages from '@components/sections/PricingPackages.astro';
+import Testimonial from '@components/sections/Testimonial.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import { Image } from 'astro:assets';
+import { contact, review } from '@data/site-config';
+import heroImage from '@assets/hero/wordpress-website-onderhoud-hero.webp';
+import logoWit from '@assets/brand/froseo-logo-wit.webp';
+
+const pageTitle = 'WordPress onderhoud uitbesteden | Veilig & zorgeloos | Froseo';
+const pageDesc =
+  'WordPress onderhoud uitbesteden aan specialisten. Updates, backups, beveiliging en snelheid voor een vaste maandprijs. Vraag een gratis WordPress-onderhoudscheck aan.';
+
+const statsItems = [
+  { value: '60+', label: 'WordPress-sites in beheer' },
+  { value: '15+', label: 'Jaar WordPress-ervaring' },
+  { value: '24/7', label: 'Uptime-monitoring op elke site' },
+  { value: '€350+', label: 'Aan plug-in-licenties per jaar' },
+];
+
+const checkItems = [
+  'Updates van core, plug-ins en thema: draait alles op de laatste veilige versie?',
+  'Beveiliging en malware: een scan op bekende kwetsbaarheden en verdachte activiteit.',
+  'Backups: heb je ze, en kunnen ze ook écht teruggezet worden?',
+  'Snelheid en Core Web Vitals: waar verlies je bezoekers en SEO?',
+  'Foutmeldingen en kapotte links: stille problemen die je zelf niet ziet.',
+];
+
+const painPoints = [
+  {
+    stat: '90%',
+    title: 'Verouderde plug-ins zijn de hoofdroute voor hacks',
+    body: 'Het overgrote deel van WordPress-hacks komt binnen via plug-ins die te lang geen update hebben gehad. Eén gepubliceerde kwetsbaarheid die jij niet patcht is genoeg.',
+  },
+  {
+    stat: '40%',
+    title: 'Een trage WP-site jaagt bezoekers weg',
+    body: 'Bij meer dan drie seconden laadtijd klikt vier op de tien bezoekers terug. Zware page-builders, vergeten plug-ins en een opgeblazen database zijn de gewone verdachten.',
+  },
+  {
+    stat: '43%',
+    title: 'WordPress is het grootste doelwit van het web',
+    body: 'Bijna de helft van het internet draait op WordPress. Daarmee is het ook het platform waar hackers het eerst kijken. Onderhoud is hier geen extraatje, het is basishygiëne.',
+  },
+  {
+    icon: 'alertBurst',
+    title: 'Een plug-in-update sloopt zomaar je pagina',
+    body: 'Auto-updates klinken makkelijk, totdat een nieuwe versie je formulier of paginabouwer breekt. Je merkt het pas als iemand belt dat het bestelformulier het niet doet.',
+  },
+  {
+    icon: 'archiveStack',
+    title: 'Backups die alleen op papier bestaan',
+    body: 'Veel WordPress-sites hebben backups die al maanden niet meer goed wegschrijven. Of die nooit zijn teruggezet. Bij een crash kom je daar pijnlijk achter.',
+  },
+  {
+    icon: 'chartDown',
+    title: 'Stille SEO-afkalving in Google',
+    body: 'Trage pagina\'s, kapotte links, achterhaalde schema-markup: Google ziet het allemaal. Je positie zakt geleidelijk, zonder dat je het op één moment kan aanwijzen.',
+  },
+];
+
+const comparison = {
+  title: 'WordPress zelf bijhouden versus',
+  titleAccent: 'het uit handen geven.',
+  withoutLabel: 'Zonder Froseo',
+  withLabel: 'Met Froseo',
+  items: [
+    { without: 'Plug-ins draaien al maanden op een verouderde versie', with: 'Elke update gecontroleerd uitgevoerd, met restore-point binnen handbereik' },
+    { without: 'Bij een vreemde foutmelding zelf zoeken op fora', with: 'Eén berichtje naar ons en we duiken erin, via mail, telefoon of WhatsApp' },
+    { without: 'Een hack wordt pas opgemerkt als Google waarschuwt', with: 'Dagelijkse beveiligingsscan die kwetsbaarheden meldt voordat ze worden uitgebuit' },
+    { without: 'Je site wordt elk kwartaal merkbaar trager', with: 'Maandelijkse performance-check en database-optimalisatie houden de boel licht' },
+    { without: 'De laatste backup is van een halfjaar terug, of je weet het niet zeker', with: 'Verse backup van afgelopen nacht, off-site opgeslagen, terug te zetten als het moet' },
+    { without: 'Voor elke premium plug-in een eigen abonnement en factuur', with: 'Elementor Pro, WP Rocket en Gravity Forms onder ons account, jij betaalt niks extra' },
+  ],
+};
+
+const faqs = [
+  {
+    q: 'Wat is WordPress onderhoud precies?',
+    a: 'Het up-to-date houden van core, plug-ins en thema\'s, het maken en testen van backups, dagelijks scannen op malware en kwetsbaarheden, uptime en snelheid bewaken en geregeld de database opruimen. Zonder dat onderhoud worden WordPress-sites in de loop van de tijd onveilig, trager en breekbaar bij grote core-updates.',
+  },
+  {
+    q: 'Wat houdt de gratis onderhoudscheck in?',
+    a: 'We kijken naar de actuele staat van je WordPress-site: welke versie draait, welke plug-ins en thema\'s erin zitten, hoe het staat met beveiliging en backups, en hoe snel de site is. Je krijgt een eerlijk advies welk pakket past, of dat onderhoud op dit moment nog niet nodig is. Vrijblijvend.',
+  },
+  {
+    q: 'Wat valt er onder "kleine reparaties"?',
+    a: 'Korte fixes als er iets stuk gaat: een plug-in die na een update niet meer werkt, een formulier dat geen mail meer stuurt, een afbeelding die niet laadt of een vreemde foutmelding. Niet inbegrepen: nieuwe pagina\'s, design-aanpassingen, nieuwe functionaliteit, content of SEO-werk. Dat gaat tegen ons normale uurtarief, met €10/u korting voor pakketklanten.',
+  },
+  {
+    q: 'Hoe lang zit ik vast aan een pakket?',
+    a: 'Nergens aan. Maandelijks abonnement is per maand opzegbaar, jaarlijks na afloop van het jaar. Geen langlopende contracten, geen stilzwijgende verlenging zonder bericht.',
+  },
+  {
+    q: 'Welke premium plug-in-licenties krijg ik?',
+    a: 'Bij Standard Care en Pro Care zit een set premium-licenties inbegrepen, samen goed voor €350+ per jaar: onder andere ACF Pro, WP Rocket, Elementor Pro, WP Armour Premium en Gravity Forms. We installeren wat jouw site nodig heeft. Bij Basic Care regel je eventuele licenties zelf.',
+  },
+  {
+    q: 'Wat als mijn site al gehackt blijkt te zijn?',
+    a: 'Dan pakken we dat los op via een hack-recovery met een eigen prijsafspraak. De pakketten zijn bedoeld om problemen te voorkomen, niet om een bestaande hack gratis op te ruimen. Pakketklanten krijgen wel een gunstig tarief. Bij de check zien we vrijwel altijd direct of er iets actief misgaat.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} noindex={true}>
+  <!-- ============================================================
+       Gestripte header — logo + telefoon + pakketten-anchor.
+       Geen menu: bewust min uitgangen op betaald verkeer.
+       ============================================================ -->
+  <header class="lp-header">
+    <div class="lp-header-inner">
+      <a class="lp-logo" href="/" aria-label="Froseo home">
+        <Image src={logoWit} alt="Froseo" height={28} loading="eager" />
+      </a>
+      <div class="lp-header-actions">
+        <a class="lp-header-phone" href={`tel:${contact.phoneTel}`}>
+          <span aria-hidden="true">☎</span> {contact.phoneDisplay}
+        </a>
+        <a class="btn-primary lp-header-cta" href="#check">Gratis check ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="lp-page">
+    <!-- ============================================================
+         Hero
+         ============================================================ -->
+    <section class="lp-hero">
+      <div class="lp-hero-inner">
+        <div class="lp-hero-text">
+          <EyebrowPill>60+ WordPress-sites in beheer</EyebrowPill>
+          <h1 class="lp-hero-title">
+            WordPress onderhoud <em>zonder kopzorgen.</em>
+          </h1>
+          <p class="lp-hero-lead">
+            Laat updates, backups, beveiliging en snelheid over aan WordPress-specialisten. Voor een vaste maandprijs houden wij je site veilig, snel en bijgewerkt. Jij hoeft nergens meer naar om te kijken.
+          </p>
+          <ul class="lp-hero-checks">
+            <li>Jouw WordPress-site altijd veilig, snel en bijgewerkt</li>
+            <li>Handmatige updates met automatisch restore-point</li>
+            <li>Dagelijkse backups en beveiligingsscans</li>
+            <li>Premium plug-in-licenties t.w.v. €350+/jaar inbegrepen</li>
+          </ul>
+          <div class="lp-hero-actions">
+            <a class="btn-primary lp-hero-cta" href="#check">Gratis onderhoudscheck aanvragen ↗</a>
+            <a class="btn-ghost lp-hero-secondary" href="#pakketten">Bekijk pakketten ↓</a>
+          </div>
+          <div class="lp-hero-reviews reviews-inline">
+            <ReviewAvatars />
+            <div class="stars">★★★★★</div>
+            <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
+          </div>
+        </div>
+        <div class="lp-hero-media">
+          <Image
+            src={heroImage}
+            alt="WordPress website onderhoud door Froseo"
+            class="lp-hero-img"
+            widths={[640, 960, 1280, 1600]}
+            sizes="(max-width: 1024px) 100vw, 560px"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+      </div>
+    </section>
+
+    <StatsRibbon items={statsItems} />
+
+    <!-- ============================================================
+         Onderhoudscheck — 2-koloms: wat we checken + formulier
+         ============================================================ -->
+    <section class="lp-check" id="check">
+      <div class="lp-check-inner">
+        <div class="lp-check-intro">
+          <EyebrowPill variant="highlight">Gratis &amp; vrijblijvend</EyebrowPill>
+          <h2 class="lp-check-title">De gratis <em>WordPress-onderhoudscheck.</em></h2>
+          <p class="lp-check-lead">
+            We controleren je WordPress-site kort op de punten die het vaakst misgaan en sturen je een eerlijk advies. Geen verkooppraatje: blijkt onderhoud nog niet nodig, dan zeggen we dat.
+          </p>
+          <ul class="lp-check-list">
+            {checkItems.map((c) => <li>{c}</li>)}
+          </ul>
+        </div>
+
+        <div class="lp-form-wrap">
+          <form class="lp-form" method="POST" action="/api/contact" data-lp-form novalidate>
+            <div class="lp-form-title">Vraag je gratis check aan</div>
+
+            <label class="lp-field">
+              <span>Naam</span>
+              <input type="text" name="name" required autocomplete="name" />
+            </label>
+            <label class="lp-field">
+              <span>E-mailadres</span>
+              <input type="email" name="email" required autocomplete="email" placeholder="je@bedrijf.nl" />
+            </label>
+            <label class="lp-field">
+              <span>Je website-URL</span>
+              <input type="url" name="current_website" required placeholder="www.jouwbedrijf.nl" />
+            </label>
+            <label class="lp-field">
+              <span>Waar wil je hulp bij?</span>
+              <select name="hulpvraag" data-lp-hulpvraag>
+                <option value="">Kies een onderwerp</option>
+                <option value="WordPress onderhoud">WordPress onderhoud (algemeen)</option>
+                <option value="Updates en backups">Updates en backups</option>
+                <option value="Beveiliging">Beveiliging</option>
+                <option value="Trage website">Trage website</option>
+                <option value="Pakket aanvragen">Een pakket aanvragen</option>
+                <option value="Weet ik nog niet">Weet ik nog niet precies</option>
+              </select>
+            </label>
+            <label class="lp-field">
+              <span>Toelichting <em class="lp-optional">(optioneel)</em></span>
+              <textarea name="toelichting" rows="3" placeholder="Vertel kort wat er speelt of wat je wilt weten."></textarea>
+            </label>
+
+            {/* Hidden context-velden voor de gedeelde /api/contact endpoint. */}
+            <input type="hidden" name="form_source" value="onderhoud-lp" />
+            <input type="hidden" name="onderwerp" value="WordPress onderhoudscheck" data-lp-onderwerp />
+            <input type="hidden" name="package" value="" data-lp-package />
+            <input type="hidden" name="message" value="Aanvraag gratis WordPress-onderhoudscheck." data-lp-message />
+
+            {/* Honeypots (verborgen) + tijd-check. Server valideert beide. */}
+            <div class="form-honeypot" aria-hidden="true">
+              <label>Website (laat dit veld leeg)
+                <input type="text" name="website_url" tabindex="-1" autocomplete="off" />
+              </label>
+              <label>Onderwerp
+                <input type="text" name="subject" tabindex="-1" autocomplete="off" />
+              </label>
+            </div>
+            <input type="hidden" name="form_started_at" value="" data-lp-started-at />
+
+            <button type="submit" class="btn-primary lp-form-submit">Vraag gratis check aan ↗</button>
+            <span class="lp-form-status" data-lp-status role="status" aria-live="polite">100% vrijblijvend, reactie meestal binnen één werkdag.</span>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <PainPoints
+      title="Waar je tegenaan loopt zonder"
+      titleAccent="WordPress onderhoud."
+      items={painPoints}
+    />
+
+    <Comparison
+      title={comparison.title}
+      titleAccent={comparison.titleAccent}
+      withoutLabel={comparison.withoutLabel}
+      withLabel={comparison.withLabel}
+      items={comparison.items}
+    />
+
+    <PricingPackages
+      title="Onze"
+      titleAccent="WordPress-onderhoudspakketten."
+      lead="Drie pakketten met heldere maandprijzen, speciaal voor WordPress-sites. Maandelijks opzegbaar of jaarlijks met één maand gratis. Tussen pakketten switchen kan altijd."
+      ctaMode="leadform"
+    />
+
+    <Testimonial id="auke-club12" variant="card" />
+
+    <FAQ items={faqs} />
+
+    <!-- ============================================================
+         Slot-CTA → terug naar het formulier
+         ============================================================ -->
+    <section class="lp-closing">
+      <div class="lp-closing-inner">
+        <h2 class="lp-closing-title">Benieuwd hoe jouw WordPress-site ervoor staat?</h2>
+        <p class="lp-closing-body">Vraag de gratis onderhoudscheck aan. Je krijgt een eerlijk beeld en concreet advies, zonder verplichtingen.</p>
+        <a class="btn-primary lp-closing-cta" href="#check">Gratis onderhoudscheck aanvragen ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       Slanke footer — vertrouwen (NAW + reviews) + paar zachte links
+       ============================================================ -->
+  <footer class="lp-footer">
+    <div class="lp-footer-inner">
+      <div class="lp-footer-brand">
+        <Image src={logoWit} alt="Froseo" height={26} loading="lazy" />
+        <p class="lp-footer-naw">
+          {contact.address.street}, {contact.address.postalCode} {contact.address.city}<br />
+          <a href={`tel:${contact.phoneTel}`}>{contact.phoneDisplay}</a> · <a href={`mailto:${contact.email}`}>{contact.email}</a><br />
+          KvK {contact.kvk}
+        </p>
+      </div>
+      <div class="lp-footer-reviews">
+        <ReviewBadge variant="compact" />
+      </div>
+      <nav class="lp-footer-links" aria-label="Meer over Froseo">
+        <a href="/over-ons/">Over ons</a>
+        <a href="/cases/">Cases</a>
+        <a href="/website-onderhoud/">Alle onderhoudsinfo</a>
+        <a href="/privacybeleid/">Privacy</a>
+      </nav>
+    </div>
+    <p class="lp-footer-copy">© {new Date().getFullYear()} Froseo · WordPress onderhoud uit Utrecht</p>
+  </footer>
+</BaseLayout>
+
+<style>
+  /* ============================================================
+     Gestripte header
+     ============================================================ */
+  .lp-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--surface-dark);
+  }
+  .lp-header-inner {
+    max-width: var(--container, 1200px);
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .lp-logo img { display: block; height: 28px; width: auto; }
+  .lp-header-actions { display: flex; align-items: center; gap: 1.25rem; }
+  .lp-header-phone {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+  .lp-header-phone:hover { text-decoration: underline; }
+  .lp-header-cta { padding: 0.55rem 1.1rem; font-size: 0.9rem; }
+  @media (max-width: 640px) {
+    .lp-header-phone { display: none; }
+  }
+
+  /* ============================================================
+     Hero
+     ============================================================ */
+  .lp-hero {
+    background: var(--surface, #faf6f0);
+    padding: clamp(2.5rem, 6vw, 5rem) 1.5rem clamp(2.5rem, 5vw, 4rem);
+  }
+  .lp-hero-inner {
+    max-width: var(--container, 1200px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .lp-hero-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height: 1.05;
+    margin: 1rem 0 1.25rem;
+  }
+  .lp-hero-title em { color: var(--accent-primary); font-style: normal; }
+  .lp-hero-lead {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-muted, #555);
+    max-width: 34rem;
+    margin-bottom: 1.5rem;
+  }
+  .lp-hero-checks {
+    list-style: none;
+    margin: 0 0 1.75rem;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .lp-hero-checks li {
+    position: relative;
+    padding-left: 1.9rem;
+    line-height: 1.45;
+    font-weight: 500;
+  }
+  .lp-hero-checks li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.35rem;
+    height: 1.35rem;
+    display: grid;
+    place-items: center;
+    background: var(--accent-rare);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .lp-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+  .lp-hero-media { display: flex; justify-content: center; }
+  .lp-hero-img {
+    width: 100%;
+    height: auto;
+    max-width: 560px;
+    border-radius: 1rem;
+  }
+  @media (max-width: 900px) {
+    .lp-hero-inner { grid-template-columns: 1fr; }
+    .lp-hero-media { order: -1; }
+  }
+
+  /* ============================================================
+     Onderhoudscheck-sectie + formulier
+     ============================================================ */
+  .lp-check {
+    scroll-margin-top: 80px;
+    padding: clamp(3rem, 6vw, 5rem) 1.5rem;
+    background: var(--color-purple-strong, #3b006d);
+    color: #fff;
+  }
+  .lp-check-inner {
+    max-width: var(--container, 1200px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .lp-check-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    line-height: 1.1;
+    margin: 1rem 0 1rem;
+  }
+  .lp-check-title em { color: var(--accent-highlight); font-style: normal; }
+  .lp-check-lead { font-size: 1.05rem; line-height: 1.6; opacity: 0.9; margin-bottom: 1.5rem; }
+  .lp-check-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+  .lp-check-list li {
+    position: relative;
+    padding-left: 1.9rem;
+    line-height: 1.45;
+    opacity: 0.95;
+  }
+  .lp-check-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    background: var(--accent-highlight);
+    border-radius: 2px;
+    transform: rotate(45deg);
+  }
+
+  /* Formulier-card (licht, contrast op donkere sectie) */
+  .lp-form-wrap { position: relative; }
+  .lp-form {
+    background: #fff;
+    color: var(--text, #1a1a1a);
+    border-radius: 1rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    display: grid;
+    gap: 1rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  }
+  .lp-form-title { font-weight: 800; font-size: 1.2rem; font-family: var(--font-display, sans-serif); }
+  .lp-field { display: grid; gap: 0.35rem; }
+  .lp-field > span { font-size: 0.9rem; font-weight: 600; }
+  .lp-optional { font-style: normal; font-weight: 400; opacity: 0.6; }
+  .lp-field input,
+  .lp-field select,
+  .lp-field textarea {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid #d8d2cb;
+    border-radius: 0.55rem;
+    font: inherit;
+    background: #fff;
+  }
+  .lp-field input:focus,
+  .lp-field select:focus,
+  .lp-field textarea:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(105, 1, 170, 0.15);
+  }
+  .lp-form-submit { width: 100%; margin-top: 0.25rem; }
+  .lp-form-status { font-size: 0.85rem; text-align: center; opacity: 0.7; }
+  .lp-form-status.is-success { color: var(--accent-teal); opacity: 1; font-weight: 600; }
+  .lp-form-status.is-error { color: #c0392b; opacity: 1; font-weight: 600; }
+  @media (max-width: 900px) {
+    .lp-check-inner { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================================
+     Slot-CTA
+     ============================================================ */
+  .lp-closing {
+    background: var(--surface-dark);
+    color: #fff;
+    padding: clamp(3rem, 6vw, 4.5rem) 1.5rem;
+    text-align: center;
+  }
+  .lp-closing-inner { max-width: 40rem; margin: 0 auto; }
+  .lp-closing-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    line-height: 1.15;
+    margin-bottom: 0.85rem;
+  }
+  .lp-closing-body { opacity: 0.85; line-height: 1.6; margin-bottom: 1.75rem; }
+
+  /* ============================================================
+     Slanke footer
+     ============================================================ */
+  .lp-footer {
+    background: var(--surface-dark);
+    color: rgba(255, 255, 255, 0.85);
+    padding: clamp(2.5rem, 5vw, 3.5rem) 1.5rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .lp-footer-inner {
+    max-width: var(--container, 1200px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .lp-footer-brand img { height: 26px; width: auto; margin-bottom: 0.85rem; }
+  .lp-footer-naw { font-size: 0.9rem; line-height: 1.7; }
+  .lp-footer-naw a { color: #fff; text-decoration: none; }
+  .lp-footer-naw a:hover { text-decoration: underline; }
+  .lp-footer-links { display: grid; gap: 0.55rem; align-content: start; }
+  .lp-footer-links a { color: rgba(255, 255, 255, 0.85); text-decoration: none; font-size: 0.92rem; }
+  .lp-footer-links a:hover { color: #fff; text-decoration: underline; }
+  .lp-footer-copy {
+    max-width: var(--container, 1200px);
+    margin: 2rem auto 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.82rem;
+    opacity: 0.6;
+    text-align: center;
+  }
+  @media (max-width: 760px) {
+    .lp-footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+</style>
+
+<script>
+  /* ============================================================
+     Pakket-knoppen (PricingPackages ctaMode="leadform") koppelen aan
+     het formulier: zet hulpvraag + verberg-velden en scroll naar #check.
+     ============================================================ */
+  const form = document.querySelector<HTMLFormElement>('[data-lp-form]');
+  const status = document.querySelector<HTMLElement>('[data-lp-status]');
+  const startedAt = document.querySelector<HTMLInputElement>('[data-lp-started-at]');
+  const hulpvraag = document.querySelector<HTMLSelectElement>('[data-lp-hulpvraag]');
+  const onderwerpField = document.querySelector<HTMLInputElement>('[data-lp-onderwerp]');
+  const packageField = document.querySelector<HTMLInputElement>('[data-lp-package]');
+  const messageField = document.querySelector<HTMLInputElement>('[data-lp-message]');
+
+  if (startedAt) startedAt.value = String(Date.now());
+
+  /* Klik op een pakket-knop → formulier voorvullen op "pakket aanvragen". */
+  document.querySelectorAll<HTMLAnchorElement>('a[data-package]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const slug = btn.dataset.package ?? '';
+      const name = btn.dataset.packageName ?? '';
+      if (hulpvraag) hulpvraag.value = 'Pakket aanvragen';
+      if (packageField) packageField.value = slug;
+      if (onderwerpField) onderwerpField.value = `WordPress onderhoud — ${name}`;
+      /* Korte visuele hint dat het formulier is voorgevuld. */
+      if (status) {
+        status.textContent = `Pakket gekozen: ${name}. Vul je gegevens in om aan te vragen.`;
+        status.className = 'lp-form-status';
+      }
+    });
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form || !status) return;
+
+    const submitBtn = form.querySelector<HTMLButtonElement>('.lp-form-submit');
+    submitBtn?.setAttribute('disabled', 'true');
+    status.textContent = 'Versturen…';
+    status.className = 'lp-form-status';
+
+    /* Bericht synthetiseren uit hulpvraag + website + toelichting zodat de
+       gedeelde endpoint z'n validatie (message >= 10) haalt. */
+    const data = new FormData(form);
+    const website = (data.get('current_website') ?? '').toString();
+    const vraag = (data.get('hulpvraag') ?? '').toString();
+    const toelichting = (data.get('toelichting') ?? '').toString();
+    const pkg = (data.get('package') ?? '').toString();
+    const onderwerp = (onderwerpField?.value ?? 'WordPress onderhoudscheck');
+
+    let msg = `Aanvraag gratis WordPress-onderhoudscheck. Onderwerp: ${onderwerp}.`;
+    if (vraag) msg += ` Hulpvraag: ${vraag}.`;
+    if (website) msg += ` Website: ${website}.`;
+    if (toelichting) msg += ` Toelichting: ${toelichting}`;
+    if (messageField) messageField.value = msg;
+    data.set('message', msg);
+
+    try {
+      const res = await fetch('/api/contact', { method: 'POST', body: data });
+      const json = await res.json().catch(() => ({}));
+      if (res.ok && json.ok) {
+        /* Conversie-signaal. lead_type onderscheidt check vs pakketaanvraag;
+           de Ads-conversie "WordPress onderhoud lead" koppel je hier later op. */
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({
+          event: 'generate_lead',
+          lead_type: pkg ? 'onderhoud-pakket' : 'onderhoud-check',
+          package: pkg || undefined,
+          form_location: 'wordpress-onderhoud-lp',
+        });
+        status.textContent = '✓ Verstuurd. We nemen snel contact op met je gratis check.';
+        status.className = 'lp-form-status is-success';
+        form.reset();
+        if (startedAt) startedAt.value = String(Date.now());
+        if (onderwerpField) onderwerpField.value = 'WordPress onderhoudscheck';
+        if (packageField) packageField.value = '';
+      } else {
+        status.textContent = json.error ?? 'Versturen mislukt. Probeer het opnieuw of mail ons direct.';
+        status.className = 'lp-form-status is-error';
+      }
+    } catch {
+      status.textContent = 'Versturen mislukt. Probeer het opnieuw of mail ons direct.';
+      status.className = 'lp-form-status is-error';
+    } finally {
+      submitBtn?.removeAttribute('disabled');
+    }
+  });
+</script>
