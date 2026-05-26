@@ -48,11 +48,11 @@ const statsItems = [
 ];
 
 const checkItems = [
-  'Updates van core, plug-ins en thema: draait alles op de laatste veilige versie?',
-  'Beveiliging en malware: een scan op bekende kwetsbaarheden en verdachte activiteit.',
-  'Backups: heb je ze, en kunnen ze ook écht teruggezet worden?',
-  'Snelheid en Core Web Vitals: waar verlies je bezoekers en SEO?',
-  'Foutmeldingen en kapotte links: stille problemen die je zelf niet ziet.',
+  'Snelheid en Core Web Vitals: waar verlies je bezoekers en SEO-positie?',
+  'Zichtbaar verouderde WordPress-versie, plug-ins of thema.',
+  'Beveiligingssignalen: SSL, bekende kwetsbaarheden en blootgestelde info.',
+  'Kapotte links en zichtbare foutmeldingen op je site.',
+  'Basis-SEO: titels, indexeerbaarheid en structured data.',
 ];
 
 const painPoints = [
@@ -171,7 +171,7 @@ const faqs = [
             <li>Premium plug-in-licenties t.w.v. €350+/jaar inbegrepen</li>
           </ul>
           <div class="lp-hero-actions">
-            <a class="btn-primary lp-hero-cta" href="#check">Gratis onderhoudscheck aanvragen ↗</a>
+            <a class="btn-primary lp-hero-cta" href="#check">Gratis WordPress-check aanvragen ↗</a>
             <a class="btn-ghost lp-hero-secondary" href="#pakketten">Bekijk pakketten ↓</a>
           </div>
           <div class="lp-hero-reviews reviews-inline">
@@ -196,25 +196,55 @@ const faqs = [
 
     <StatsRibbon items={statsItems} />
 
+    <PainPoints
+      title="Waar je tegenaan loopt zonder"
+      titleAccent="WordPress onderhoud."
+      items={painPoints}
+    />
+
+    <Comparison
+      title={comparison.title}
+      titleAccent={comparison.titleAccent}
+      withoutLabel={comparison.withoutLabel}
+      withLabel={comparison.withLabel}
+      items={comparison.items}
+    />
+
+    <PricingPackages
+      title="Onze"
+      titleAccent="WordPress-onderhoudspakketten."
+      lead="Drie pakketten met heldere maandprijzen, speciaal voor WordPress-sites. Maandelijks opzegbaar of jaarlijks met één maand gratis. Tussen pakketten switchen kan altijd."
+      ctaMode="leadform"
+    />
+
+    <Testimonial id="auke-club12" variant="card" />
+
+    <FAQ items={faqs} />
+
     <!-- ============================================================
-         Onderhoudscheck — 2-koloms: wat we checken + formulier
+         Onderhoudscheck — staat bewust onderaan: eerst verlangen
+         opbouwen (pijn → pakketten → vergelijking → proof), dán pas vragen.
+         2-koloms: wat we checken + formulier.
          ============================================================ -->
     <section class="lp-check" id="check">
       <div class="lp-check-inner">
         <div class="lp-check-intro">
           <EyebrowPill variant="highlight">Gratis &amp; vrijblijvend</EyebrowPill>
-          <h2 class="lp-check-title">De gratis <em>WordPress-onderhoudscheck.</em></h2>
+          <h2 class="lp-check-title">Vraag je gratis <em>WordPress-check</em> aan.</h2>
           <p class="lp-check-lead">
-            We controleren je WordPress-site kort op de punten die het vaakst misgaan en sturen je een eerlijk advies. Geen verkooppraatje: blijkt onderhoud nog niet nodig, dan zeggen we dat.
+            We kijken op basis van je URL naar de punten die het vaakst misgaan en sturen je een eerlijk advies. Geen login nodig en geen verkooppraatje: blijkt onderhoud nog niet nodig, dan zeggen we dat.
           </p>
           <ul class="lp-check-list">
             {checkItems.map((c) => <li>{c}</li>)}
           </ul>
+          <p class="lp-check-note">
+            De diepere intake (backups, plug-in-versies en instellingen achter je login) doen we pas wanneer je klant wordt. Voor deze check hebben we alleen je webadres nodig.
+          </p>
         </div>
 
         <div class="lp-form-wrap">
           <form class="lp-form" method="POST" action="/api/contact" data-lp-form novalidate>
-            <div class="lp-form-title">Vraag je gratis check aan</div>
+            <div class="lp-form-title">Gratis WordPress-check aanvragen</div>
 
             <label class="lp-field">
               <span>Naam</span>
@@ -249,7 +279,7 @@ const faqs = [
             <input type="hidden" name="form_source" value="onderhoud-lp" />
             <input type="hidden" name="onderwerp" value="WordPress onderhoudscheck" data-lp-onderwerp />
             <input type="hidden" name="package" value="" data-lp-package />
-            <input type="hidden" name="message" value="Aanvraag gratis WordPress-onderhoudscheck." data-lp-message />
+            <input type="hidden" name="message" value="Aanvraag gratis WordPress-check." data-lp-message />
 
             {/* Honeypots (verborgen) + tijd-check. Server valideert beide. */}
             <div class="form-honeypot" aria-hidden="true">
@@ -266,42 +296,6 @@ const faqs = [
             <span class="lp-form-status" data-lp-status role="status" aria-live="polite">100% vrijblijvend, reactie meestal binnen één werkdag.</span>
           </form>
         </div>
-      </div>
-    </section>
-
-    <PainPoints
-      title="Waar je tegenaan loopt zonder"
-      titleAccent="WordPress onderhoud."
-      items={painPoints}
-    />
-
-    <Comparison
-      title={comparison.title}
-      titleAccent={comparison.titleAccent}
-      withoutLabel={comparison.withoutLabel}
-      withLabel={comparison.withLabel}
-      items={comparison.items}
-    />
-
-    <PricingPackages
-      title="Onze"
-      titleAccent="WordPress-onderhoudspakketten."
-      lead="Drie pakketten met heldere maandprijzen, speciaal voor WordPress-sites. Maandelijks opzegbaar of jaarlijks met één maand gratis. Tussen pakketten switchen kan altijd."
-      ctaMode="leadform"
-    />
-
-    <Testimonial id="auke-club12" variant="card" />
-
-    <FAQ items={faqs} />
-
-    <!-- ============================================================
-         Slot-CTA → terug naar het formulier
-         ============================================================ -->
-    <section class="lp-closing">
-      <div class="lp-closing-inner">
-        <h2 class="lp-closing-title">Benieuwd hoe jouw WordPress-site ervoor staat?</h2>
-        <p class="lp-closing-body">Vraag de gratis onderhoudscheck aan. Je krijgt een eerlijk beeld en concreet advies, zonder verplichtingen.</p>
-        <a class="btn-primary lp-closing-cta" href="#check">Gratis onderhoudscheck aanvragen ↗</a>
       </div>
     </section>
   </main>
@@ -528,24 +522,14 @@ const faqs = [
     .lp-check-inner { grid-template-columns: 1fr; }
   }
 
-  /* ============================================================
-     Slot-CTA
-     ============================================================ */
-  .lp-closing {
-    background: var(--surface-dark);
-    color: #fff;
-    padding: clamp(3rem, 6vw, 4.5rem) 1.5rem;
-    text-align: center;
+  .lp-check-note {
+    margin-top: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    opacity: 0.75;
+    border-left: 2px solid var(--accent-highlight);
+    padding-left: 0.85rem;
   }
-  .lp-closing-inner { max-width: 40rem; margin: 0 auto; }
-  .lp-closing-title {
-    font-family: var(--font-display, sans-serif);
-    font-weight: 800;
-    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-    line-height: 1.15;
-    margin-bottom: 0.85rem;
-  }
-  .lp-closing-body { opacity: 0.85; line-height: 1.6; margin-bottom: 1.75rem; }
 
   /* ============================================================
      Slanke footer
