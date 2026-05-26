@@ -26,6 +26,7 @@ import EyebrowPill from '@components/ui/EyebrowPill.astro';
 import ReviewAvatars from '@components/ui/ReviewAvatars.astro';
 import ReviewBadge from '@components/ui/ReviewBadge.astro';
 import StatsRibbon from '@components/sections/StatsRibbon.astro';
+import LogosTicker from '@components/sections/LogosTicker.astro';
 import PainPoints from '@components/sections/PainPoints.astro';
 import Comparison from '@components/sections/Comparison.astro';
 import PricingPackages from '@components/sections/PricingPackages.astro';
@@ -245,6 +246,9 @@ const faqs = [
         items={comparison.items}
       />
     </div>
+
+    {/* Logo-ticker als proof-break tussen de vergelijking en het formulier. */}
+    <LogosTicker />
 
     <!-- ============================================================
          Onderhoudscheck — staat bewust onderaan: eerst verlangen
@@ -770,7 +774,8 @@ const faqs = [
 
   /* Klik op een pakket-knop → formulier voorvullen op "pakket aanvragen". */
   document.querySelectorAll<HTMLAnchorElement>('a[data-package]').forEach((btn) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
       const slug = btn.dataset.package ?? '';
       const name = btn.dataset.packageName ?? '';
       if (hulpvraag) hulpvraag.value = 'Pakket aanvragen';
@@ -781,6 +786,9 @@ const faqs = [
         status.textContent = `Pakket gekozen: ${name}. Vul je gegevens in om aan te vragen.`;
         status.className = 'lp-form-status';
       }
+      /* Expliciet (smooth) naar het formulier scrollen — betrouwbaarder
+         dan alleen de #check-anchor. */
+      document.getElementById('check')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
