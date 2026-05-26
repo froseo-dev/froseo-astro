@@ -48,11 +48,10 @@ const statsItems = [
 ];
 
 const checkItems = [
-  'Snelheid en Core Web Vitals: waar verlies je bezoekers en SEO-positie?',
-  'Zichtbaar verouderde WordPress-versie, plug-ins of thema.',
-  'Beveiligingssignalen: SSL, bekende kwetsbaarheden en blootgestelde info.',
-  'Kapotte links en zichtbare foutmeldingen op je site.',
-  'Basis-SEO: titels, indexeerbaarheid en structured data.',
+  'Laadtijd en Core Web Vitals: hoe snel is je site echt? (via Google PageSpeed)',
+  'Veiligheid: draait alles netjes op HTTPS en staat je SSL goed?',
+  'Zichtbaar verouderde WordPress-versie of plug-ins.',
+  'Een heldere samenvatting in gewone taal, met concreet advies.',
 ];
 
 const painPoints = [
@@ -141,6 +140,11 @@ const faqs = [
       <a class="lp-logo" href="/" aria-label="Froseo home">
         <Image src={logoWit} alt="Froseo" height={28} loading="eager" />
       </a>
+      <nav class="lp-nav" aria-label="Op deze pagina">
+        <a href="#waarom">Waarom onderhoud</a>
+        <a href="#pakketten">Pakketten</a>
+        <a href="#faq">Veelgestelde vragen</a>
+      </nav>
       <div class="lp-header-actions">
         <a class="lp-header-phone" href={`tel:${contact.phoneTel}`}>
           <span aria-hidden="true">☎</span> {contact.phoneDisplay}
@@ -196,30 +200,40 @@ const faqs = [
 
     <StatsRibbon items={statsItems} />
 
-    <PainPoints
-      title="Waar je tegenaan loopt zonder"
-      titleAccent="WordPress onderhoud."
-      items={painPoints}
-    />
+    <div id="waarom">
+      <PainPoints
+        title="Waar je tegenaan loopt zonder"
+        titleAccent="WordPress onderhoud."
+        items={painPoints}
+      />
+    </div>
 
-    <Comparison
-      title={comparison.title}
-      titleAccent={comparison.titleAccent}
-      withoutLabel={comparison.withoutLabel}
-      withLabel={comparison.withLabel}
-      items={comparison.items}
-    />
+    {/* Pakketten — pagina-grid laten doorkomen (zie .lp-pkg-section in styles). */}
+    <div class="lp-pkg-section">
+      <PricingPackages
+        title="Onze"
+        titleAccent="WordPress-onderhoudspakketten."
+        lead="Drie pakketten met heldere maandprijzen, speciaal voor WordPress-sites. Maandelijks opzegbaar of jaarlijks met één maand gratis. Tussen pakketten switchen kan altijd."
+        ctaMode="leadform"
+      />
+    </div>
 
-    <PricingPackages
-      title="Onze"
-      titleAccent="WordPress-onderhoudspakketten."
-      lead="Drie pakketten met heldere maandprijzen, speciaal voor WordPress-sites. Maandelijks opzegbaar of jaarlijks met één maand gratis. Tussen pakketten switchen kan altijd."
-      ctaMode="leadform"
-    />
+    {/* Vergelijking — dichte achtergrond zodat dit blok visueel afwijkt. */}
+    <div class="lp-cmp-section">
+      <Comparison
+        title={comparison.title}
+        titleAccent={comparison.titleAccent}
+        withoutLabel={comparison.withoutLabel}
+        withLabel={comparison.withLabel}
+        items={comparison.items}
+      />
+    </div>
 
     <Testimonial id="auke-club12" variant="card" />
 
-    <FAQ items={faqs} />
+    <div id="faq">
+      <FAQ items={faqs} />
+    </div>
 
     <!-- ============================================================
          Onderhoudscheck — staat bewust onderaan: eerst verlangen
@@ -232,7 +246,7 @@ const faqs = [
           <EyebrowPill variant="highlight">Gratis &amp; vrijblijvend</EyebrowPill>
           <h2 class="lp-check-title">Vraag je gratis <em>WordPress-check</em> aan.</h2>
           <p class="lp-check-lead">
-            We kijken op basis van je URL naar de punten die het vaakst misgaan en sturen je een eerlijk advies. Geen login nodig en geen verkooppraatje: blijkt onderhoud nog niet nodig, dan zeggen we dat.
+            We draaien een snelle gezondheidscheck op je site (vooral snelheid en beveiliging) op basis van je URL en sturen je in begrijpelijke taal terug wat opvalt. Geen login nodig en geen verkooppraatje: blijkt onderhoud nog niet nodig, dan zeggen we dat.
           </p>
           <ul class="lp-check-list">
             {checkItems.map((c) => <li>{c}</li>)}
@@ -357,6 +371,17 @@ const faqs = [
   }
   .lp-header-phone:hover { text-decoration: underline; }
   .lp-header-cta { padding: 0.55rem 1.1rem; font-size: 0.9rem; }
+  .lp-nav { display: flex; gap: 1.5rem; }
+  .lp-nav a {
+    color: rgba(255, 255, 255, 0.82);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+  .lp-nav a:hover { color: #fff; }
+  @media (max-width: 860px) {
+    .lp-nav { display: none; }
+  }
   @media (max-width: 640px) {
     .lp-header-phone { display: none; }
   }
@@ -365,8 +390,18 @@ const faqs = [
      Hero
      ============================================================ */
   .lp-hero {
-    background: var(--surface, #faf6f0);
+    /* Transparant: laat het pagina-grid (--bg-decoration-light op body)
+       doorkomen, hetzelfde patroontje als de andere lichte secties. */
+    background: transparent;
     padding: clamp(2.5rem, 6vw, 5rem) 1.5rem clamp(2.5rem, 5vw, 4rem);
+  }
+  /* Pakketten: ook het pagina-grid laten doorkomen (dicht vlak weg). */
+  .lp-pkg-section :global(.pricing-packages) { background: transparent; }
+  /* Vergelijking: juist een dicht vlak zodat het blok visueel afwijkt
+     van de grid-secties eromheen. */
+  .lp-cmp-section :global(.comparison) {
+    background: var(--surface-page-deep);
+    border-block: 1px solid rgba(0, 0, 0, 0.06);
   }
   .lp-hero-inner {
     max-width: var(--container, 1200px);
@@ -379,8 +414,8 @@ const faqs = [
   .lp-hero-title {
     font-family: var(--font-display, sans-serif);
     font-weight: 800;
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
-    line-height: 1.05;
+    font-size: clamp(2rem, 4.2vw, 2.9rem);
+    line-height: 1.08;
     margin: 1rem 0 1.25rem;
   }
   .lp-hero-title em { color: var(--accent-primary); font-style: normal; }
@@ -460,6 +495,9 @@ const faqs = [
     font-size: clamp(1.8rem, 3.5vw, 2.6rem);
     line-height: 1.1;
     margin: 1rem 0 1rem;
+    /* Expliciet wit: globale h2-kleur won anders van de geërfde witte
+       tekstkleur op de donkere sectie (zwarte koptekst = onleesbaar). */
+    color: #fff;
   }
   .lp-check-title em { color: var(--accent-highlight); font-style: normal; }
   .lp-check-lead { font-size: 1.05rem; line-height: 1.6; opacity: 0.9; margin-bottom: 1.5rem; }
