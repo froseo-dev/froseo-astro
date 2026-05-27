@@ -77,13 +77,24 @@ const {
           <p class="pricing-card-for">{pkg.forWhom}</p>
         </header>
         <ul class="pricing-card-features">
-          {pkg.features.map((f) => (
+          {pkg.features.filter((f) => f.primary).map((f) => (
             <li class={f.highlight ? 'is-highlight' : ''}>
               <span class="check-icon" aria-hidden="true">✓</span>
               <span>{f.label}</span>
             </li>
           ))}
+          {pkg.features.filter((f) => !f.primary).map((f) => (
+            <li class={`pricing-feat-extra${f.highlight ? ' is-highlight' : ''}`} hidden>
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <span>{f.label}</span>
+            </li>
+          ))}
         </ul>
+        {pkg.features.some((f) => !f.primary) && (
+          <button type="button" class="pricing-more" data-more data-count={pkg.features.length} aria-expanded="false">
+            Toon alle {pkg.features.length} punten
+          </button>
+        )}
         {ctaMode === 'leadform' ? (
           <a
             class={pkg.isFeatured ? 'btn-primary pricing-card-cta' : 'btn-ghost pricing-card-cta'}
@@ -141,4 +152,36 @@ const {
   toggleBtns.forEach((b) => {
     b.addEventListener('click', () => setFrequency(b.dataset.frequency as 'monthly' | 'yearly'));
   });
+
+  /* "Toon alle punten" — klapt de extra features per card uit/in. */
+  document.querySelectorAll<HTMLButtonElement>('[data-more]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.pricing-card');
+      const extras = card?.querySelectorAll<HTMLElement>('.pricing-feat-extra');
+      if (!extras) return;
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      extras.forEach((el) => { el.hidden = expanded; });
+      btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      btn.textContent = expanded ? `Toon alle ${btn.dataset.count} punten` : 'Toon minder';
+    });
+  });
 </script>
+
+<style>
+  /* Verborgen extra-features echt verbergen (li is flex in global.css). */
+  .pricing-card-features li[hidden] { display: none; }
+  .pricing-more {
+    align-self: flex-start;
+    margin: 0.4rem 0 0.75rem;
+    padding: 0;
+    background: none;
+    border: 0;
+    font: inherit;
+    font-weight: 600;
+    color: var(--accent-primary, #6901aa);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .pricing-more:hover { opacity: 0.75; }
+</style>

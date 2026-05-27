@@ -26,21 +26,21 @@ statsRibbon:
   - value: '24/7'
     label: 'Monitoring op elke site'
   - value: '€350+'
-    label: 'Aan plug-in-licenties inbegrepen'
+    label: 'Aan plug-inlicenties inbegrepen'
 
 calvinNote:
   message: 'Niet zeker welk pakket bij jouw site past? Stuur even wat je hebt staan, dan kijken we vrijblijvend mee en geven we eerlijk advies.'
   ctaLabel: 'Vraag advies aan ↗'
   ctaHref: '/contact/?onderwerp=advies-onderhoud'
 eyebrow: 'Website onderhoud'
-description: 'WordPress onderhoud met vaste maandprijs. Updates, backups, beveiliging en monitoring. Inclusief premium plug-in-licenties t.w.v. €350+/jaar.'
+description: 'WordPress onderhoud met vaste maandprijs. Updates, backups, beveiliging en monitoring. Inclusief premium plug-inlicenties t.w.v. €350+/jaar.'
 icon: '⚙'
 shadow: rare
 order: 5
 bullets:
   - Handmatige updates met restore-point
-  - Dagelijkse backups en beveiligings-scans
-  - Premium plug-in-licenties inbegrepen (€350+/jaar)
+  - Dagelijkse backups en beveiligingsscans
+  - Premium plug-inlicenties inbegrepen (€350+/jaar)
   - Vaste maandprijs, maandelijks opzegbaar
 
 showMaintenancePackages: true
@@ -54,7 +54,7 @@ painPoints:
     body: 'Verouderde plug-ins zijn jaar in jaar uit de hoofdoorzaak van WordPress-hacks. Eén missende security-update is genoeg voor een open deur.'
   - stat: '40%'
     title: Bezoekers haken af bij trage site
-    body: 'Veertig procent klikt al weg als een pagina langer dan drie seconden laadt. Database-vervuiling en onnodige plug-ins zijn de stille killers.'
+    body: 'Veertig procent klikt al weg als een pagina langer dan drie seconden laadt. Vaak komt het door een database die volloopt en plug-ins die je niet meer gebruikt.'
   - stat: '43%'
     title: Aandeel WordPress wereldwijd
     body: 'WordPress draait op 43% van alle websites. Daarmee ook het meest aangevallen platform. Goed onderhoud is geen luxe, het is hygiëne.'
@@ -79,9 +79,9 @@ comparison:
     - without: 'Plug-in-problemen zelf oplossen op fora'
       with: 'WordPress-specialisten direct bereikbaar via mail, telefoon of WhatsApp'
     - without: 'Hacks blijven onopgemerkt totdat het te laat is'
-      with: 'Dagelijkse beveiligings-scan met vulnerability detection'
-    - without: 'Site wordt geleidelijk trager door database-vervuiling'
-      with: 'Maandelijkse performance-check en database-optimalisatie'
+      with: 'Dagelijkse beveiligingsscan met detectie van kwetsbaarheden'
+    - without: 'Site wordt langzaamaan trager door een database die volloopt'
+      with: 'Maandelijkse performance-check en databaseoptimalisatie'
     - without: 'Geen recente backup als er iets fout gaat'
       with: 'Dagelijkse backups, off-site opgeslagen, snel terug te zetten'
     - without: 'Jij bent verantwoordelijk voor elke security-melding'
@@ -96,23 +96,23 @@ approachSteps:
   - title: Gratis intake-audit
     body: 'Voordat we starten kijken we naar de huidige staat van je site. Als alles in orde is starten we direct. Is er flink achterstallig onderhoud, dan stellen we eenmalig een opschoning voor met heldere prijs vooraf.'
   - title: Wij houden alles bij
-    body: 'Vanaf dat moment hoef je niets meer. Updates, backups, beveiliging, monitoring en performance-checks lopen op de achtergrond. Bij jouw pakket hoort een set premium plug-in-licenties die we voor je beheren.'
+    body: 'Vanaf dat moment hoef je niets meer. Updates, backups, beveiliging, monitoring en performance-checks lopen op de achtergrond. Bij jouw pakket hoort een set premium plug-inlicenties die we voor je beheren.'
   - title: Maandrapport
     body: 'Vanaf het Standard Care Package ontvang je elke maand een rapport: wat we hebben gedaan, wat we hebben gevonden en hoe je site ervoor staat. Je weet altijd waar je geld naartoe gaat.'
 
 pillarsTitle: 'Wat website onderhoud precies <em>inhoudt.</em>'
 pillars:
   - title: WordPress, plug-in en thema updates
-    body: 'WordPress brengt regelmatig updates uit van core, plug-ins en themas. Veel daarvan bevatten security-patches die kwetsbaarheden dichten. Verouderde plug-ins zijn de belangrijkste oorzaak van hacks. Wij voeren updates handmatig en gecontroleerd uit, met een restore-point vooraf zodat we direct kunnen terugrollen als een update onverwacht iets breekt. Geen automatische bulk-updates op de achtergrond zonder controle.'
+    body: 'WordPress brengt regelmatig updates uit van core, plug-ins en themas. Veel daarvan bevatten beveiligingsupdates die kwetsbaarheden dichten. Verouderde plug-ins zijn de belangrijkste oorzaak van hacks. Wij voeren updates handmatig en gecontroleerd uit, met een restore-point vooraf zodat we direct kunnen terugrollen als een update onverwacht iets breekt. Geen automatische bulk-updates op de achtergrond zonder controle.'
   - title: Backups en restore-mogelijkheid
     body: 'Een goede backup is je redding bij een crash, hack of menselijke fout. Wij maken regelmatig backups van je site en database, slaan ze veilig off-site op, en kunnen ze in geval van nood snel terugzetten. Frequentie verschilt per pakket: wekelijks (Basic Care) tot dagelijks (Standard en Pro Care). Pro Care krijgt 30 dagen retentie zodat je verder terug kunt in de tijd.'
-  - title: Beveiliging en vulnerability detection
+  - title: Beveiliging en detectie van kwetsbaarheden
     body: 'WordPress is het meest gebruikte CMS ter wereld en daarom het meest aangevallen. Wij scannen je site op malware en bekende kwetsbaarheden in WordPress core, plug-ins en themas. Bij een gevonden risico schakelen we direct in. Daarnaast nemen we maatregelen tegen brute-force-aanvallen, beperken we login-pogingen en monitoren we verdachte activiteit.'
   - title: Snelheid en Core Web Vitals
-    body: 'Een trage site kost je bezoekers en SEO-ranking. We checken regelmatig je Core Web Vitals (Largest Contentful Paint, First Input Delay, Cumulative Layout Shift) en optimaliseren waar nodig: caching, image-compressie, database-cleanup, lazy loading en plug-in-overzicht. Bij Pro Care loopt continue image-optimalisatie en maandelijkse database-optimalisatie mee.'
+    body: 'Een trage site kost je bezoekers en SEO-ranking. We checken regelmatig je Core Web Vitals (Largest Contentful Paint, First Input Delay, Cumulative Layout Shift) en optimaliseren waar nodig: caching, image-compressie, database-cleanup, lazy loading en plug-in-overzicht. Bij Pro Care loopt continue afbeeldingsoptimalisatie en maandelijkse databaseoptimalisatie mee.'
   - title: Spam-bescherming en monitoring
-    body: 'Spam in formulieren, comments en gebruikersregistraties kost tijd en kan in het ergste geval security-issues veroorzaken. We installeren en beheren spam-bescherming op alle ingangen. Daarnaast houden we je uptime 24/7 in de gaten. Bij downtime krijg jij (en wij) direct een melding zodat we snel kunnen ingrijpen.'
-  - title: SEO ranking-monitoring (Standard en Pro Care)
+    body: 'Spam in formulieren, comments en gebruikersregistraties kost tijd en kan in het ergste geval security-issues veroorzaken. We installeren en beheren spambescherming op alle ingangen. Daarnaast houden we je uptime 24/7 in de gaten. Bij downtime krijg jij (en wij) direct een melding zodat we snel kunnen ingrijpen.'
+  - title: SEO rankingmonitoring (Standard en Pro Care)
     body: 'Je SEO-positie verandert constant. Wij monitoren je ranking op zoekwoorden die voor jouw bedrijf belangrijk zijn (tot 10 op Standard Care, tot 100 op Pro Care). Veranderingen zien we vroeg en kunnen we koppelen aan recente updates of wijzigingen op de site. Je krijgt dit terug in je maandrapport. Voor diepere SEO-trajecten verwijzen we door naar onze SEO-dienst.'
     link:
       label: Lees meer over SEO en GEO
@@ -133,7 +133,7 @@ faqs:
     a: 'Dan vangen we dat op via een eenmalige hack-recovery, met een aparte prijs vooraf. Onze pakketten zijn bedoeld om problemen te voorkomen, niet om bestaande hacks gratis op te lossen. Als pakketklant krijg je wel een gunstig tarief voor de recovery. Tijdens de intake-audit zien we direct of er een hack speelt.'
   - q: Krijg ik korting bij jaarlijks betalen?
     a: 'Ja, je betaalt 11 maanden voor 12. Effectief één maand gratis. Cashflow upfront voor jou, prikkel om langer klant te blijven voor ons. Je kan op elk moment switchen tussen maandelijks en jaarlijks.'
-  - q: Wat zit er in het pakket aan premium plug-in-licenties?
+  - q: Wat zit er in het pakket aan premium plug-inlicenties?
     a: 'Bij elk pakket horen licenties van premium plug-ins t.w.v. €350+ per jaar, dus ook bij Basic Care. Onder andere ACF Pro, WP Rocket, Elementor Pro, WP Armour Premium en Gravity Forms. We installeren wat jouw site nodig heeft, niet allemaal tegelijk. Voor specifieke gevallen hebben we meer plug-ins beschikbaar.'
   - q: Wat doen jullie als er een groot WordPress-update komt?
     a: 'Bij grote WordPress-updates (bijvoorbeeld een nieuwe major-versie) kijken we eerst of jouw plug-ins en thema er compatibel mee zijn. Pas als we zeker weten dat alles werkt, voeren we de update uit. Bij twijfel testen we eerst en wachten we kort als het kan. Je site krijgt nooit een grote update opgedrongen waarvan we niet zeker zijn dat het goed gaat.'
