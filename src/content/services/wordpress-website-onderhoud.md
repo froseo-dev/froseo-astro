@@ -141,7 +141,7 @@ faqs:
   - q: Krijg ik korting als ik jaarlijks betaal?
     a: 'Ja. Bij jaarlijkse betaling betaal je elf maanden voor twaalf, dus effectief één maand gratis. Wisselen tussen maandelijks en jaarlijks kan op elk moment.'
   - q: Welke premium plug-inlicenties krijg ik bij het pakket?
-    a: 'Bij elk pakket zit een set licenties van premium plug-ins inbegrepen, in totaal goed voor €350+ per jaar. Dat geldt ook voor Basic Care. Concreet onder andere ACF Pro, WP Rocket, Elementor Pro, WP Armour Premium en Gravity Forms. We installeren niet alles standaard, maar wat jouw site nodig heeft. Voor speciale gevallen hebben we een breder arsenaal beschikbaar.'
+    a: 'Bij Standard Care en Pro Care zit een set premium plug-inlicenties inbegrepen, in totaal goed voor €350+ per jaar. Concreet onder andere ACF Pro, WP Rocket, Elementor Pro, WP Armour Premium en Gravity Forms. We installeren niet alles standaard, maar wat jouw site nodig heeft. Voor speciale gevallen hebben we een breder arsenaal beschikbaar. Bij Basic Care zitten deze licenties niet in het pakket.'
   - q: Wat doen jullie bij een grote WordPress-versie-update?
     a: 'Major-updates van WordPress (zeg 6.4 naar 6.5) en PHP-upgrades pakken we voorzichtig op. Eerst checken we of jouw plug-ins en thema er goed mee zouden moeten omgaan. Zien we twijfels, dan testen we eerst, of houden we de update kort vast tot de plug-ins erop zijn aangepast. Geen blind doorklikken op zoiets groots.'
   - q: Doen jullie ook WordPress-hosting?

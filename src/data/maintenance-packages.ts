@@ -20,7 +20,7 @@ export interface MaintenancePackage {
   name: string;
   /** Korte naam voor knoppen ("Kies Basic Care ↗"). Fallback naar name. */
   shortName?: string;
-  /** 1-zin positionering onder de naam. */
+  /** Eén subtitel onder de naam ("voor wie"). */
   tagline: string;
   /** Maandprijs (zonder valuta-prefix). */
   monthlyPrice: number;
@@ -28,9 +28,11 @@ export interface MaintenancePackage {
   yearlyPrice: number;
   /** Wordt featured/highlighted in de UI. Eén pakket markeren als true. */
   isFeatured?: boolean;
-  /** Korte 1-line "voor wie". */
-  forWhom: string;
-  /** Lijst features die op de card verschijnen. */
+  /** Optionele samenvattende regel ("Alles uit Basic Care"), alleen zichtbaar
+   *  in ingeklapte staat. Bij uitklappen toont de volledige features-lijst. */
+  summary?: string;
+  /** Volledige, zelfstandige features-lijst voor dit pakket. `primary` =
+   *  zichtbaar in ingeklapte staat; de rest komt achter "Bekijk alle onderdelen". */
   features: MaintenanceFeature[];
 }
 
@@ -41,61 +43,68 @@ export const maintenancePackages: MaintenancePackage[] = [
     slug: 'basic-care',
     name: 'Basic Care Package',
     shortName: 'Basic Care',
-    tagline: 'De basis netjes op orde.',
+    tagline: 'Voor kleine websites en online visitekaartjes.',
     monthlyPrice: 29,
     yearlyPrice: 27 * 12, // €324/jaar = €27/m
-    forWhom: 'Voor een site die vooral als visitekaartje werkt',
     features: [
       { label: 'Maandelijkse updates met restore-point', primary: true },
       { label: 'Wekelijkse backups', primary: true },
       { label: 'Wekelijkse beveiligingsscan', primary: true },
       { label: 'Basis spambescherming', primary: true },
       { label: '24/7 monitoring van je uptime', primary: true },
-      { label: 'Premium plug-inlicenties t.w.v. €350+/jaar', highlight: true, primary: true },
+      { label: '€10/u korting op het Froseo-uurtarief', highlight: true, primary: true },
       { label: 'Jaarlijkse Core Web Vitals check' },
       { label: 'Support via e-mail' },
-      { label: '€10/u korting op het Froseo-uurtarief', highlight: true },
     ],
   },
   {
     slug: 'standard-care',
     name: 'Standard Care Package',
     shortName: 'Standard Care',
-    tagline: 'Onze standaard voor de meeste ondernemers.',
+    tagline: 'Voor websites die klanten of aanvragen opleveren.',
     monthlyPrice: 39,
     yearlyPrice: 36 * 12, // €432/jaar = €36/m
     isFeatured: true,
-    forWhom: 'Voor sites waar klanten en aanvragen op binnenkomen',
+    summary: 'Alles uit Basic Care',
     features: [
-      { label: 'Alles uit Basic Care', highlight: true, primary: true },
+      { label: 'Premium plug-inlicenties t.w.v. €350+/jaar', highlight: true, primary: true },
       { label: 'Dagelijkse backups', primary: true },
       { label: 'Dagelijkse beveiligingsscan op kwetsbaarheden', primary: true },
+      { label: 'Snelheidsoptimalisatie', primary: true },
       { label: 'SEO-posities bijhouden tot 10 zoekwoorden', primary: true },
-      { label: 'Webhosting inbegrepen (optioneel)', primary: true },
-      { label: 'Maandrapport', primary: true },
+      { label: 'Webhosting inbegrepen', primary: true },
       { label: 'Wekelijkse updates met restore-point' },
       { label: 'Uitgebreide spambescherming' },
+      { label: '24/7 monitoring van je uptime' },
       { label: 'Maandelijkse Core Web Vitals check' },
       { label: 'Databaseoptimalisatie per kwartaal' },
       { label: 'Support via e-mail, telefoon en WhatsApp' },
+      { label: 'Maandrapport' },
     ],
   },
   {
     slug: 'pro-care',
     name: 'Pro Care Package',
     shortName: 'Pro Care',
-    tagline: 'Maximale zekerheid en snelheid.',
+    tagline: 'Voor webshops en bedrijfskritische websites.',
     monthlyPrice: 59,
     yearlyPrice: 54 * 12, // €648/jaar = €54/m
-    forWhom: 'Voor drukke sites en webshops waar uitval direct geld kost',
+    summary: 'Alles uit Standard Care',
     features: [
-      { label: 'Alles uit Standard Care', highlight: true, primary: true },
       { label: 'Dagelijkse backups (30 dagen retentie)', primary: true },
+      { label: 'Doorlopende snelheids- en afbeeldingsoptimalisatie', primary: true },
       { label: 'Databaseoptimalisatie elke maand', primary: true },
-      { label: 'Doorlopende afbeeldingsoptimalisatie', primary: true },
       { label: 'SEO-posities bijhouden tot 100 zoekwoorden', primary: true },
       { label: 'Kapotte links monitoren', primary: true },
       { label: 'Support via e-mail, telefoon en WhatsApp (voorrang)', primary: true },
+      { label: 'Premium plug-inlicenties t.w.v. €350+/jaar', highlight: true },
+      { label: 'Wekelijkse updates met restore-point' },
+      { label: 'Dagelijkse beveiligingsscan op kwetsbaarheden' },
+      { label: 'Uitgebreide spambescherming' },
+      { label: '24/7 monitoring van je uptime' },
+      { label: 'Maandelijkse Core Web Vitals check' },
+      { label: 'Webhosting inbegrepen' },
+      { label: 'Maandrapport' },
     ],
   },
 ];

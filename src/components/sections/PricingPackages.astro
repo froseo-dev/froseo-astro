@@ -74,9 +74,14 @@ const {
             <span data-frequency-label="monthly" hidden>Maandelijks gefactureerd</span>
             <span data-frequency-label="yearly">Jaarlijks gefactureerd, €{pkg.yearlyPrice}/jaar</span>
           </p>
-          <p class="pricing-card-for">{pkg.forWhom}</p>
         </header>
         <ul class="pricing-card-features">
+          {pkg.summary && (
+            <li class="pricing-summary is-highlight">
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <span>{pkg.summary}</span>
+            </li>
+          )}
           {pkg.features.filter((f) => f.primary).map((f) => (
             <li class={f.highlight ? 'is-highlight' : ''}>
               <span class="check-icon" aria-hidden="true">✓</span>
@@ -84,15 +89,15 @@ const {
             </li>
           ))}
           {pkg.features.filter((f) => !f.primary).map((f) => (
-            <li class={`pricing-feat-extra${f.highlight ? ' is-highlight' : ''}`} hidden>
+            <li class={`pricing-feat-extra${f.highlight ? ' is-highlight' : ''}`}>
               <span class="check-icon" aria-hidden="true">✓</span>
               <span>{f.label}</span>
             </li>
           ))}
         </ul>
         {pkg.features.some((f) => !f.primary) && (
-          <button type="button" class="pricing-more" data-more data-count={pkg.features.length} aria-expanded="false">
-            Toon alle {pkg.features.length} punten
+          <button type="button" class="pricing-more" data-more aria-expanded="false">
+            Bekijk alle onderdelen
           </button>
         )}
         {ctaMode === 'leadform' ? (
@@ -153,23 +158,26 @@ const {
     b.addEventListener('click', () => setFrequency(b.dataset.frequency as 'monthly' | 'yearly'));
   });
 
-  /* "Toon alle punten" — klapt de extra features per card uit/in. */
+  /* "Bekijk alle onderdelen" — klapt de volledige lijst per card uit/in.
+     Ingeklapt: summary + kernpunten. Uitgeklapt: summary weg, alle onderdelen. */
   document.querySelectorAll<HTMLButtonElement>('[data-more]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const card = btn.closest('.pricing-card');
-      const extras = card?.querySelectorAll<HTMLElement>('.pricing-feat-extra');
-      if (!extras) return;
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      extras.forEach((el) => { el.hidden = expanded; });
-      btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-      btn.textContent = expanded ? `Toon alle ${btn.dataset.count} punten` : 'Toon minder';
+      if (!card) return;
+      const expanded = card.classList.toggle('is-expanded');
+      btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      btn.textContent = expanded ? 'Verberg onderdelen' : 'Bekijk alle onderdelen';
     });
   });
 </script>
 
 <style>
-  /* Verborgen extra-features echt verbergen (li is flex in global.css). */
-  .pricing-card-features li[hidden] { display: none; }
+  /* Ingeklapt: extra-onderdelen verborgen, summary zichtbaar.
+     Uitgeklapt (.is-expanded): extra's zichtbaar (grid, zoals global li),
+     summary verborgen zodat de volledige concrete lijst overblijft. */
+  .pricing-card-features li.pricing-feat-extra { display: none; }
+  .pricing-card.is-expanded .pricing-card-features li.pricing-feat-extra { display: grid; }
+  .pricing-card.is-expanded .pricing-summary { display: none; }
   .pricing-more {
     align-self: flex-start;
     margin: 0.4rem 0 0.75rem;
@@ -183,5 +191,8 @@ const {
     text-decoration: underline;
     text-underline-offset: 2px;
   }
+  /* Featured (Standaard) card heeft een donkerpaarse achtergrond: paars valt
+     daar weg, dus daar geel. */
+  .pricing-card.is-featured .pricing-more { color: var(--accent-highlight); }
   .pricing-more:hover { opacity: 0.75; }
 </style>
