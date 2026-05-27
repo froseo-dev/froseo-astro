@@ -50,6 +50,7 @@ export const maintenancePackages: MaintenancePackage[] = [
       { label: 'Wekelijkse beveiligings-scan' },
       { label: 'Basis spam-bescherming' },
       { label: 'Jaarlijkse Core Web Vitals check' },
+      { label: 'Premium plug-in-licenties t.w.v. €350+/jaar', highlight: true },
       { label: 'E-mail support' },
       { label: '€10/u korting op het Froseo-uurtarief', highlight: true },
     ],
