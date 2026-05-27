@@ -33,13 +33,16 @@ import PricingPackages from '@components/sections/PricingPackages.astro';
 import Testimonial from '@components/sections/Testimonial.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import { Image } from 'astro:assets';
-import { contact, review } from '@data/site-config';
+import { contact, review, social } from '@data/site-config';
 import heroImage from '@assets/hero/wordpress-website-onderhoud-hero.webp';
 import logoWit from '@assets/brand/froseo-logo-wit.webp';
 
 const pageTitle = 'WordPress onderhoud uitbesteden | Veilig & zorgeloos | Froseo';
 const pageDesc =
   'WordPress onderhoud uitbesteden aan specialisten. Updates, backups, beveiliging en snelheid voor een vaste maandprijs. Vraag een gratis WordPress-onderhoudscheck aan.';
+
+/* WhatsApp deep-link (wa.me) — voorkeurskanaal i.p.v. bellen. */
+const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(contact.whatsappMessage + ' WordPress onderhoud')}`;
 
 const statsItems = [
   { value: '60+', label: 'WordPress-sites in beheer' },
@@ -149,8 +152,9 @@ const faqs = [
         <a href="#faq">FAQ</a>
       </nav>
       <div class="lp-header-actions">
-        <a class="lp-header-phone" href={`tel:${contact.phoneTel}`}>
-          <span aria-hidden="true">☎</span> {contact.phoneDisplay}
+        <a class="lp-header-phone" href={waUrl} target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M19.05 4.91A9.82 9.82 0 0012.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01zm-7.01 15.24a8.23 8.23 0 01-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.21 8.21 0 01-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 012.42 5.83c0 4.55-3.7 8.23-8.25 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.38-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.74 2.66 4.22 3.74.59.25 1.05.4 1.41.51.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+          WhatsApp
         </a>
         <a class="btn-primary lp-header-cta" href="#check">Gratis check ↗</a>
         <button class="lp-burger" type="button" aria-label="Menu openen" aria-expanded="false" data-lp-burger>
@@ -165,7 +169,7 @@ const faqs = [
       <a href="/cases/">Ons werk</a>
       <a href="/over-ons/">Over ons</a>
       <a href="#faq">FAQ</a>
-      <a href={`tel:${contact.phoneTel}`}>Bel {contact.phoneDisplay}</a>
+      <a href={waUrl} target="_blank" rel="noopener noreferrer">WhatsApp ons</a>
     </nav>
   </header>
 
@@ -336,10 +340,13 @@ const faqs = [
     <section class="lp-contact">
       <div class="lp-contact-inner">
         <h2 class="lp-contact-title">Liever even sparren over je WordPress-onderhoud?</h2>
-        <p class="lp-contact-body">Geen zin in een formulier? Bel of mail ons gerust, of plan een kort vrijblijvend gesprek. We denken graag mee.</p>
+        <p class="lp-contact-body">Geen zin in een formulier? Stuur ons gerust een WhatsApp of een bericht. We denken vrijblijvend mee en reageren meestal binnen één werkdag.</p>
         <div class="lp-contact-actions">
-          <a class="btn-primary" href="/contact/">Neem contact op ↗</a>
-          <a class="lp-contact-phone" href={`tel:${contact.phoneTel}`}>of bel {contact.phoneDisplay}</a>
+          <a class="btn-primary lp-contact-wa" href={waUrl} target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M19.05 4.91A9.82 9.82 0 0012.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01zm-7.01 15.24a8.23 8.23 0 01-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.21 8.21 0 01-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 012.42 5.83c0 4.55-3.7 8.23-8.25 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.38-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.74 2.66 4.22 3.74.59.25 1.05.4 1.41.51.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+            Stuur een WhatsApp
+          </a>
+          <a class="lp-contact-phone" href="/contact/">of stuur een bericht ↗</a>
         </div>
       </div>
     </section>
@@ -351,29 +358,59 @@ const faqs = [
   <footer class="lp-footer">
     <div class="lp-footer-inner">
       <div class="lp-footer-brand">
-        <Image src={logoWit} alt="Froseo" height={26} loading="lazy" />
-        <p class="lp-footer-naw">
-          {contact.address.street}<br />
-          {contact.address.postalCode} {contact.address.city}
+        <Image src={logoWit} alt="Froseo" height={30} loading="lazy" />
+        <p class="lp-footer-tagline">
+          WordPress onderhoud zonder kopzorgen. Updates, backups, beveiliging en snelheid voor een vaste maandprijs, door specialisten uit Utrecht.
         </p>
-        <p class="lp-footer-naw">
-          <a href={`tel:${contact.phoneTel}`}>{contact.phoneDisplay}</a><br />
-          <a href={`mailto:${contact.email}`}>{contact.email}</a><br />
-          KvK {contact.kvk}
-        </p>
+        <div class="lp-footer-social">
+          <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.2 8h4.6v14H.2V8zm7.5 0h4.4v1.9h.06c.61-1.16 2.1-2.38 4.32-2.38 4.62 0 5.47 3.04 5.47 7v8.48h-4.6v-7.5c0-1.79-.03-4.1-2.5-4.1-2.5 0-2.88 1.95-2.88 3.97V22H7.7V8z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/froseo_nl/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 01-1.38-.9 3.7 3.7 0 01-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 1.62c-3.15 0-3.5.01-4.74.07-1.14.05-1.76.24-2.17.4-.55.21-.94.47-1.35.88-.41.41-.67.8-.88 1.35-.16.41-.35 1.03-.4 2.17-.06 1.24-.07 1.59-.07 4.74s.01 3.5.07 4.74c.05 1.14.24 1.76.4 2.17.21.55.47.94.88 1.35.41.41.8.67 1.35.88.41.16 1.03.35 2.17.4 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c1.14-.05 1.76-.24 2.17-.4.55-.21.94-.47 1.35-.88.41-.41.67-.8.88-1.35.16-.41.35-1.03.4-2.17.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.05-1.14-.24-1.76-.4-2.17a3.6 3.6 0 00-.88-1.35 3.6 3.6 0 00-1.35-.88c-.41-.16-1.03-.35-2.17-.4-1.24-.06-1.59-.07-4.74-.07zm0 2.76a5.46 5.46 0 110 10.92 5.46 5.46 0 010-10.92zm0 9a3.54 3.54 0 100-7.08 3.54 3.54 0 000 7.08zm6.95-9.22a1.28 1.28 0 11-2.55 0 1.28 1.28 0 012.55 0z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/froseomarketing" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.03 4.39 11.03 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8v8.44C19.61 23.1 24 18.1 24 12.07z"/></svg>
+          </a>
+        </div>
       </div>
-      <a class="lp-footer-reviews" href={contact.mapsLink} target="_blank" rel="noopener noreferrer" aria-label="Bekijk onze Google-reviews">
-        <ReviewBadge variant="compact" />
-      </a>
-      <nav class="lp-footer-links" aria-label="Meer over Froseo">
+
+      <nav class="lp-footer-col" aria-label="Onderhoud">
+        <h3 class="lp-footer-h">Onderhoud</h3>
+        <a href="#waarom">Waarom onderhoud</a>
+        <a href="#pakketten">Onderhoudspakketten</a>
+        <a href="#check">Gratis WordPress-check</a>
+        <a href="#faq">Veelgestelde vragen</a>
+      </nav>
+
+      <nav class="lp-footer-col" aria-label="Froseo">
+        <h3 class="lp-footer-h">Froseo</h3>
         <a href="/over-ons/">Over Froseo</a>
         <a href="/cases/">Cases</a>
-        <a href="#pakketten">Onderhoudspakketten</a>
         <a href="/contact/">Contact</a>
         <a href="/privacybeleid/">Privacy</a>
       </nav>
+
+      <div class="lp-footer-col lp-footer-contact">
+        <h3 class="lp-footer-h">Direct contact</h3>
+        <a class="lp-footer-wa" href={waUrl} target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.05 4.91A9.82 9.82 0 0012.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01zm-7.01 15.24a8.23 8.23 0 01-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.21 8.21 0 01-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 012.42 5.83c0 4.55-3.7 8.23-8.25 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.38-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.74 2.66 4.22 3.74.59.25 1.05.4 1.41.51.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+          WhatsApp ons
+        </a>
+        <a href={`mailto:${contact.email}`}>{contact.email}</a>
+        <address class="lp-footer-naw">
+          {contact.address.street}, {contact.address.postalCode} {contact.address.city}<br />
+          Tel {contact.phoneDisplay} · KvK {contact.kvk}
+        </address>
+        <a class="lp-footer-reviews" href={contact.mapsLink} target="_blank" rel="noopener noreferrer" aria-label="Bekijk onze Google-reviews">
+          <ReviewBadge variant="compact" />
+        </a>
+      </div>
     </div>
-    <p class="lp-footer-copy">© {new Date().getFullYear()} Froseo · WordPress onderhoud voor ondernemers</p>
+
+    <div class="lp-footer-bottom">
+      <p class="lp-footer-copy">© {new Date().getFullYear()} Froseo · WordPress onderhoud voor ondernemers</p>
+    </div>
   </footer>
 </BaseLayout>
 
@@ -399,6 +436,9 @@ const faqs = [
   .lp-logo img { display: block; height: 28px; width: auto; }
   .lp-header-actions { display: flex; align-items: center; gap: 1.25rem; }
   .lp-header-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     color: #fff;
     text-decoration: none;
     font-weight: 600;
@@ -699,43 +739,90 @@ const faqs = [
   }
   .lp-contact-phone { color: #fff; text-decoration: none; font-weight: 600; }
   .lp-contact-phone:hover { text-decoration: underline; }
+  .lp-contact-wa { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .lp-contact-wa svg { fill: currentColor; flex-shrink: 0; }
 
   /* ============================================================
      Slanke footer
      ============================================================ */
   .lp-footer {
     background: var(--surface-dark);
-    color: rgba(255, 255, 255, 0.85);
-    padding: clamp(2.5rem, 5vw, 3.5rem) 1.5rem 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    padding: clamp(3rem, 5vw, 4.5rem) 1.5rem 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
   .lp-footer-inner {
     max-width: var(--container, 1200px);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr;
-    gap: 2rem;
+    grid-template-columns: 1.7fr 1fr 1fr 1.2fr;
+    gap: 2.5rem;
     align-items: start;
   }
-  .lp-footer-brand img { height: 26px; width: auto; margin-bottom: 0.85rem; }
-  .lp-footer-naw { font-size: 0.9rem; line-height: 1.7; }
-  .lp-footer-naw a { color: #fff; text-decoration: none; }
-  .lp-footer-naw a:hover { text-decoration: underline; }
-  .lp-footer-reviews { display: inline-flex; align-items: flex-start; text-decoration: none; }
-  .lp-footer-links { display: grid; gap: 0.55rem; align-content: start; }
-  .lp-footer-links a { color: rgba(255, 255, 255, 0.85); text-decoration: none; font-size: 0.92rem; }
-  .lp-footer-links a:hover { color: #fff; text-decoration: underline; }
-  .lp-footer-copy {
-    max-width: var(--container, 1200px);
-    margin: 2rem auto 0;
-    padding-top: 1.25rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.82rem;
-    opacity: 0.6;
-    text-align: center;
+  .lp-footer-brand img { height: 30px; width: auto; margin-bottom: 1rem; }
+  .lp-footer-tagline {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    max-width: 26rem;
+    margin-bottom: 1.35rem;
+    opacity: 0.8;
   }
-  @media (max-width: 760px) {
-    .lp-footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+  .lp-footer-social { display: flex; gap: 0.7rem; }
+  .lp-footer-social a {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 50%;
+    color: #fff;
+    transition: background 0.15s ease;
+  }
+  .lp-footer-social a:hover { background: rgba(255, 255, 255, 0.12); }
+  .lp-footer-social svg { width: 16px; height: 16px; fill: currentColor; }
+
+  .lp-footer-h {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #fff;
+    font-weight: 700;
+    margin: 0 0 1.1rem;
+  }
+  .lp-footer-col { display: grid; gap: 0.7rem; align-content: start; }
+  .lp-footer-col a { color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 0.92rem; }
+  .lp-footer-col a:hover { color: #fff; }
+  .lp-footer-wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff !important;
+    font-weight: 600;
+  }
+  .lp-footer-wa svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
+  .lp-footer-naw {
+    font-style: normal;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    opacity: 0.7;
+    margin: 0.35rem 0 0.25rem;
+  }
+  .lp-footer-reviews { display: inline-flex; text-decoration: none; margin-top: 0.35rem; }
+
+  .lp-footer-bottom {
+    max-width: var(--container, 1200px);
+    margin: 2.5rem auto 0;
+    padding: 1.25rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .lp-footer-copy { font-size: 0.82rem; opacity: 0.55; text-align: center; margin: 0; }
+
+  @media (max-width: 880px) {
+    .lp-footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .lp-footer-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 520px) {
+    .lp-footer-inner { grid-template-columns: 1fr; }
   }
 </style>
 
