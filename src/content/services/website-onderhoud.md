@@ -103,11 +103,11 @@ approachSteps:
 pillarsTitle: 'Wat website onderhoud precies <em>inhoudt.</em>'
 pillars:
   - title: WordPress, plug-in en thema updates
-    body: 'WordPress brengt regelmatig updates uit van core, plug-ins en thema's. Veel daarvan bevatten beveiligingsupdates die kwetsbaarheden dichten. Verouderde plug-ins zijn de belangrijkste oorzaak van hacks. Wij voeren updates handmatig en gecontroleerd uit, met een restore-point vooraf zodat we direct kunnen terugrollen als een update onverwacht iets breekt. Geen automatische bulk-updates op de achtergrond zonder controle.'
+    body: 'WordPress brengt regelmatig updates uit van core, plug-ins en thema''s. Veel daarvan bevatten beveiligingsupdates die kwetsbaarheden dichten. Verouderde plug-ins zijn de belangrijkste oorzaak van hacks. Wij voeren updates handmatig en gecontroleerd uit, met een restore-point vooraf zodat we direct kunnen terugrollen als een update onverwacht iets breekt. Geen automatische bulk-updates op de achtergrond zonder controle.'
   - title: Backups en restore-mogelijkheid
     body: 'Een goede backup is je redding bij een crash, hack of menselijke fout. Wij maken regelmatig backups van je site en database, slaan ze veilig off-site op, en kunnen ze in geval van nood snel terugzetten. Frequentie verschilt per pakket: wekelijks (Basic Care) tot dagelijks (Standard en Pro Care). Pro Care krijgt 30 dagen retentie zodat je verder terug kunt in de tijd.'
   - title: Beveiliging en detectie van kwetsbaarheden
-    body: 'WordPress is het meest gebruikte CMS ter wereld en daarom het meest aangevallen. Wij scannen je site op malware en bekende kwetsbaarheden in WordPress core, plug-ins en thema's. Bij een gevonden risico schakelen we direct in. Daarnaast nemen we maatregelen tegen brute-force-aanvallen, beperken we login-pogingen en monitoren we verdachte activiteit.'
+    body: 'WordPress is het meest gebruikte CMS ter wereld en daarom het meest aangevallen. Wij scannen je site op malware en bekende kwetsbaarheden in WordPress core, plug-ins en thema''s. Bij een gevonden risico schakelen we direct in. Daarnaast nemen we maatregelen tegen brute-force-aanvallen, beperken we login-pogingen en monitoren we verdachte activiteit.'
   - title: Snelheid en Core Web Vitals
     body: 'Een trage site kost je bezoekers en SEO-ranking. We checken regelmatig je Core Web Vitals (Largest Contentful Paint, First Input Delay, Cumulative Layout Shift) en optimaliseren waar nodig: caching, image-compressie, database-cleanup, lazy loading en plug-in-overzicht. Bij Pro Care loopt continue afbeeldingsoptimalisatie en maandelijkse databaseoptimalisatie mee.'
   - title: Spam-bescherming en monitoring
@@ -120,7 +120,7 @@ pillars:
 
 faqs:
   - q: Wat is website onderhoud precies?
-    a: 'Website onderhoud is het structureel up-to-date houden van je site. Voor WordPress betekent dit het bijwerken van WordPress core, plug-ins en thema's, het maken van backups, het scannen op malware en kwetsbaarheden, het monitoren van uptime en performance en het optimaliseren van snelheid en database. Zonder onderhoud worden sites na verloop van tijd traag, onveilig en stoppen ze met goed werken na grote WordPress-updates.'
+    a: 'Website onderhoud is het structureel up-to-date houden van je site. Voor WordPress betekent dit het bijwerken van WordPress core, plug-ins en thema''s, het maken van backups, het scannen op malware en kwetsbaarheden, het monitoren van uptime en performance en het optimaliseren van snelheid en database. Zonder onderhoud worden sites na verloop van tijd traag, onveilig en stoppen ze met goed werken na grote WordPress-updates.'
   - q: Wat valt er onder "kleine reparaties"?
     a: 'Snelle fixes van technische problemen op je site, bijvoorbeeld: een plug-in die niet meer werkt na een update, een formulier dat geen mail meer verstuurt, een weergavefout op een pagina, een afbeelding die niet meer laadt of een onverwachte foutmelding. Niet inbegrepen zijn aanpassingen of uitbreidingen van je site, zoals nieuwe pagina''s, ontwerpaanpassingen, nieuwe functionaliteit, content bijwerken, SEO-werk of migraties. Voor dat soort werk geldt ons normale uurtarief, met €10/uur korting voor pakketklanten (geldt voor alle Froseo-diensten, niet alleen onderhoud).'
   - q: Bieden jullie ook onderhoud voor andere CMS''en zoals Drupal of Webflow?
@@ -128,7 +128,7 @@ faqs:
   - q: Hoe lang ben ik gebonden aan een onderhoudspakket?
     a: 'Je zit nergens aan vast. Het maandelijkse abonnement is per maand opzegbaar, het jaarlijkse na het jaar. Geen langdurige contracten, geen automatische verlenging zonder waarschuwing.'
   - q: Wat houdt de gratis intake-audit precies in?
-    a: 'Voordat we starten kijken we naar de staat van je site. We controleren je WordPress-versie, je plug-ins en thema's, je beveiliging, je backup-instellingen, je hosting en je site-snelheid. Als alles in goede staat is, starten we direct met je gekozen pakket. Vinden we serieus achterstallig onderhoud (verouderde site, malware, slechte hosting), dan stellen we een eenmalige opschoning voor met heldere prijs vooraf. Je weet vooraf wat je krijgt en betaalt.'
+    a: 'Voordat we starten kijken we naar de staat van je site. We controleren je WordPress-versie, je plug-ins en thema''s, je beveiliging, je backup-instellingen, je hosting en je site-snelheid. Als alles in goede staat is, starten we direct met je gekozen pakket. Vinden we serieus achterstallig onderhoud (verouderde site, malware, slechte hosting), dan stellen we een eenmalige opschoning voor met heldere prijs vooraf. Je weet vooraf wat je krijgt en betaalt.'
   - q: Wat als mijn site al gehackt is op het moment dat ik me aanmeld?
     a: 'Dan vangen we dat op via een eenmalige hack-recovery, met een aparte prijs vooraf. Onze pakketten zijn bedoeld om problemen te voorkomen, niet om bestaande hacks gratis op te lossen. Als pakketklant krijg je wel een gunstig tarief voor de recovery. Tijdens de intake-audit zien we direct of er een hack speelt.'
   - q: Krijg ik korting bij jaarlijks betalen?
