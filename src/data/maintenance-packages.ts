@@ -11,8 +11,11 @@ export interface MaintenanceFeature {
   label: string;
   /** True wanneer dit een hoofd-USP is (krijgt highlight). */
   highlight?: boolean;
-  /** True = altijd zichtbaar op de card. De rest zit achter "Toon alle punten". */
+  /** True = altijd zichtbaar op de card. De rest zit achter "Bekijk alle onderdelen". */
   primary?: boolean;
+  /** Optionele sub-regel onder de feature (bv. welke licenties), alleen
+   *  zichtbaar in uitgeklapte staat. */
+  detail?: string;
 }
 
 export interface MaintenancePackage {
@@ -67,12 +70,12 @@ export const maintenancePackages: MaintenancePackage[] = [
     isFeatured: true,
     summary: 'Alles uit Basic Care',
     features: [
-      { label: 'Premium plug-inlicenties t.w.v. €350+/jaar', highlight: true, primary: true },
+      { label: 'Premium plug-inlicenties t.w.v. €350+/jaar', highlight: true, primary: true, detail: 'o.a. Elementor Pro, WP Rocket, Gravity Forms en ACF Pro' },
       { label: 'Dagelijkse backups', primary: true },
       { label: 'Dagelijkse beveiligingsscan op kwetsbaarheden', primary: true },
       { label: 'Snelheidsoptimalisatie', primary: true },
       { label: 'SEO-posities bijhouden tot 10 zoekwoorden', primary: true },
-      { label: 'Webhosting inbegrepen', primary: true },
+      { label: 'Webhosting inbegrepen (indien gewenst)', primary: true },
       { label: 'Wekelijkse updates met restore-point' },
       { label: 'Uitgebreide spambescherming' },
       { label: '24/7 monitoring van je uptime' },
@@ -97,13 +100,13 @@ export const maintenancePackages: MaintenancePackage[] = [
       { label: 'SEO-posities bijhouden tot 100 zoekwoorden', primary: true },
       { label: 'Kapotte links monitoren', primary: true },
       { label: 'Support via e-mail, telefoon en WhatsApp (voorrang)', primary: true },
-      { label: 'Premium plug-inlicenties t.w.v. €350+/jaar', highlight: true },
+      { label: 'Premium plug-inlicenties t.w.v. €350+/jaar', highlight: true, detail: 'o.a. Elementor Pro, WP Rocket, Gravity Forms en ACF Pro' },
       { label: 'Wekelijkse updates met restore-point' },
       { label: 'Dagelijkse beveiligingsscan op kwetsbaarheden' },
       { label: 'Uitgebreide spambescherming' },
       { label: '24/7 monitoring van je uptime' },
       { label: 'Maandelijkse Core Web Vitals check' },
-      { label: 'Webhosting inbegrepen' },
+      { label: 'Webhosting inbegrepen (indien gewenst)' },
       { label: 'Maandrapport' },
     ],
   },

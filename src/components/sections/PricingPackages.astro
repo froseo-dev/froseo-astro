@@ -85,13 +85,13 @@ const {
           {pkg.features.filter((f) => f.primary).map((f) => (
             <li class={f.highlight ? 'is-highlight' : ''}>
               <span class="check-icon" aria-hidden="true">✓</span>
-              <span>{f.label}</span>
+              <span>{f.label}{f.detail && <small class="pricing-feat-detail">{f.detail}</small>}</span>
             </li>
           ))}
           {pkg.features.filter((f) => !f.primary).map((f) => (
             <li class={`pricing-feat-extra${f.highlight ? ' is-highlight' : ''}`}>
               <span class="check-icon" aria-hidden="true">✓</span>
-              <span>{f.label}</span>
+              <span>{f.label}{f.detail && <small class="pricing-feat-detail">{f.detail}</small>}</span>
             </li>
           ))}
         </ul>
@@ -178,6 +178,15 @@ const {
   .pricing-card-features li.pricing-feat-extra { display: none; }
   .pricing-card.is-expanded .pricing-card-features li.pricing-feat-extra { display: grid; }
   .pricing-card.is-expanded .pricing-summary { display: none; }
+  /* Licentie-detailregel: alleen zichtbaar bij uitklappen. */
+  .pricing-feat-detail { display: none; }
+  .pricing-card.is-expanded .pricing-feat-detail {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.82em;
+    line-height: 1.4;
+    opacity: 0.7;
+  }
   .pricing-more {
     align-self: flex-start;
     margin: 0.4rem 0 0.75rem;
