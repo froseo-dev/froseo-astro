@@ -8,12 +8,13 @@ dat om in conversies.
 
 | Event | Wanneer | Parameters |
 |---|---|---|
-| `generate_lead` | Formulier succesvol verzonden | `lead_type`: `analyse` of `contact`, `form_location` |
+| `generate_lead` | Formulier succesvol verzonden | `lead_type`: `analyse` / `contact` / `onderhoud-check` / `onderhoud-pakket`, `package` (bij pakketaanvraag), `form_location` |
 | `contact_click` | Klik op tel-, WhatsApp- of mailto-link (site-breed) | `contact_method`: `phone` / `whatsapp` / `email` |
 
 Bronbestanden:
 - `src/components/sections/CTA.astro` — homepage analyse-form (`lead_type: analyse`)
 - `src/pages/contact.astro` — contactformulier (`lead_type: contact`)
+- `src/pages/wordpress-onderhoud.astro` — Ads-LP onderhoudscheck (`lead_type: onderhoud-check` / `onderhoud-pakket`)
 - `src/layouts/BaseLayout.astro` — site-brede klik-listener (`contact_click`)
 
 ## GTM-container
@@ -30,6 +31,7 @@ Conversie-ID is account-breed gelijk; alleen het label verschilt per actie.
 |---|---|---|---|
 | Gratis analyse aangevraagd | Leadformulier indienen | `18179117088` | `LBh1CNTbsbMcEKCgvdxD` |
 | Contactformulier verzonden | Leadformulier indienen | `18179117088` | `jAdJCKLembMcEKCgvdxD` |
+| WordPress onderhoud lead | Leadformulier indienen | `18179117088` | `mWlKCJrZn7QcEKCgvdxD` |
 
 > Let op: in het GTM-veld "Conversie-ID" vul je het ID **zonder** `AW-`-prefix in
 > (alleen `18179117088`), anders geeft GTM "moet een positief geheel getal zijn".
@@ -46,6 +48,7 @@ in de dataLayer-push).
 ### Triggers
 - `Trigger - lead analyse` — Aangepaste gebeurtenis `generate_lead`, waar `dlv - lead_type` = `analyse`
 - `Trigger - lead contact` — Aangepaste gebeurtenis `generate_lead`, waar `dlv - lead_type` = `contact`
+- `Trigger - lead onderhoud` — Aangepaste gebeurtenis `generate_lead`, waar `dlv - lead_type` **bevat** `onderhoud` (vangt check + pakket)
 - `Trigger - generate_lead (alle)` — Aangepaste gebeurtenis `generate_lead`, alle
 - `Trigger - contact_click` — Aangepaste gebeurtenis `contact_click`, alle
 
@@ -53,6 +56,7 @@ in de dataLayer-push).
 - `Conversion Linker` — type Conversielinker, trigger: Initialisatie / Alle pagina's
 - `Ads - lead analyse` — Google Ads-conversietracking, ID `18179117088`, label `LBh1CNTbsbMcEKCgvdxD`, trigger `Trigger - lead analyse`
 - `Ads - lead contact` — Google Ads-conversietracking, ID `18179117088`, label `jAdJCKLembMcEKCgvdxD`, trigger `Trigger - lead contact`
+- `Ads - lead onderhoud` — Google Ads-conversietracking, ID `18179117088`, label `mWlKCJrZn7QcEKCgvdxD`, trigger `Trigger - lead onderhoud`
 - `GA4 - generate_lead` — GA4-gebeurtenis `generate_lead`, param `lead_type = {{dlv - lead_type}}`, trigger `Trigger - generate_lead (alle)`
 - (optioneel) `GA4 - contact_click` — GA4-gebeurtenis `contact_click`, param `contact_method = {{dlv - contact_method}}`, trigger `Trigger - contact_click`
 
