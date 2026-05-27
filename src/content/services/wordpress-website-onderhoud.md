@@ -129,7 +129,7 @@ faqs:
   - q: Wat is WordPress-onderhoud precies?
     a: 'Onder WordPress-onderhoud verstaan wij: het up-to-date houden van core, plug-ins en thema''s, het maken en testen van backups, dagelijks scannen op malware en kwetsbaarheden, in de gaten houden van uptime en snelheid, en geregeld de database opruimen. Zonder dat onderhoud worden WordPress-sites in de loop van de tijd onveilig, trager en breekbaar bij grotere core-updates.'
   - q: Wat valt er onder "kleine reparaties"?
-    a: 'Korte fixes als er iets stuk gaat op je WordPress-site. Bijvoorbeeld: een plug-in die na een update niet meer werkt, een formulier dat geen mail meer stuurt, een afbeelding die niet laadt, een vreemde witte pagina of een foutmelding ergens. Wat er niet onder valt: nieuwe pagina''s maken, design-aanpassingen, nieuwe functionaliteit toevoegen, content schrijven, SEO-werk of migraties. Dat soort werk gaat tegen ons normale uurtarief, met €10/u korting voor pakketklanten.'
+    a: 'Korte fixes als er iets stuk gaat op je WordPress-site. Bijvoorbeeld: een plug-in die na een update niet meer werkt, een formulier dat geen mail meer stuurt, een afbeelding die niet laadt, een vreemde witte pagina of een foutmelding ergens. Wat er niet onder valt: nieuwe pagina''s maken, ontwerpaanpassingen, nieuwe functionaliteit toevoegen, content schrijven, SEO-werk of migraties. Dat soort werk gaat tegen ons normale uurtarief, met €10/u korting voor pakketklanten.'
   - q: Bieden jullie ook onderhoud voor Drupal, Webflow of Wix?
     a: 'Onze pakketten zijn specifiek voor WordPress, omdat dat is waar we het meeste in zitten. Drupal en Joomla doen we incidenteel op uurbasis, maar zonder vast pakket. Webflow en Wix kunnen we vooral helpen met losse opdrachten of een eventuele migratie richting WordPress.'
   - q: Hoe lang zit ik vast aan een onderhoudspakket?
@@ -144,6 +144,12 @@ faqs:
     a: 'Bij Standard Care en Pro Care zit een set premium plug-inlicenties inbegrepen, in totaal goed voor €350+ per jaar. Concreet onder andere ACF Pro, WP Rocket, Elementor Pro, WP Armour Premium en Gravity Forms. We installeren niet alles standaard, maar wat jouw site nodig heeft. Voor speciale gevallen hebben we een breder arsenaal beschikbaar. Bij Basic Care zitten deze licenties niet in het pakket.'
   - q: Wat doen jullie bij een grote WordPress-versie-update?
     a: 'Major-updates van WordPress (zeg 6.4 naar 6.5) en PHP-upgrades pakken we voorzichtig op. Eerst checken we of jouw plug-ins en thema er goed mee zouden moeten omgaan. Zien we twijfels, dan testen we eerst, of houden we de update kort vast tot de plug-ins erop zijn aangepast. Geen blind doorklikken op zoiets groots.'
-  - q: Doen jullie ook WordPress-hosting?
-    a: 'We verkopen geen eigen hosting binnen deze pakketten. Wel werken we met een aantal vaste hosting-partners die we graag adviseren als je toe bent aan een verhuizing. Voor heel specifieke hosting-setups (eigen VPS, multi-site, white-label) kunnen we maatwerk leveren via een Custom-pakket.'
+  - q: Zit WordPress-hosting bij het onderhoud in?
+    a: 'Vanaf het Standard Care Package zit hosting gratis bij je pakket, als je dat wilt. We verhuizen je WordPress-site dan kosteloos naar onze omgeving en houden de techniek in de gaten. Wil je liever bij je huidige host blijven, dan kan dat ook. Bij Basic Care is hosting niet inbegrepen, daar houd je je eigen hosting aan. Voor bijzondere setups zoals een eigen VPS, multisite of white-label leveren we maatwerk via een Custom-pakket.'
+  - q: Kan ik later van pakket wisselen?
+    a: 'Ja, up- of downgraden kan op elk moment. Veel ondernemers beginnen met Standard Care en stappen over op Pro Care zodra hun site drukker of bedrijfskritischer wordt. Het verschil rekenen we netjes naar rato door.'
+  - q: Wat gebeurt er met mijn site als ik stop?
+    a: 'Je WordPress-site blijft altijd van jou. Stop je met het onderhoud, dan leveren we alles netjes op. Hebben we je hosting meeverhuisd, dan helpen we met de overstap naar een nieuwe partij. Geen vastzittende websites, geen gedoe.'
+  - q: Hoe snel reageren jullie als er iets stuk gaat?
+    a: 'Meldingen pakken we meestal binnen één werkdag op, vaak sneller. Onze uptime-monitor seint ons direct in als je site plat gaat, dus grote problemen zien we vaak al voordat jij ze merkt. Bij Pro Care heb je voorrang.'
 ---
