@@ -29,7 +29,7 @@ statsRibbon:
     label: 'Aan plug-inlicenties per jaar'
 
 calvinNote:
-  message: 'Twijfel je of jouw WordPress-site goed wordt onderhouden? Stuur ons toegang of een paar screenshots, dan kijken we mee en zeggen we eerlijk wat we zouden doen.'
+  message: 'Twijfel je of jouw website goed wordt onderhouden? Stuur je website gerust naar ons door. We kijken vrijblijvend met je mee en geven eerlijk advies.'
   ctaLabel: 'Vraag advies aan ↗'
   ctaHref: '/contact/?onderwerp=advies-wp-onderhoud'
 
@@ -53,8 +53,8 @@ pricingTitle: 'Onze'
 pricingTitleAccent: 'WordPress-onderhoudspakketten.'
 pricingLead: 'Drie pakketten met heldere maandprijzen, speciaal voor WordPress-sites. Maandelijks opzegbaar of jaarlijks met één maand gratis. Tussen pakketten switchen kan altijd.'
 
-painPointsTitle: 'Waar je tegenaan loopt zonder'
-painPointsTitleAccent: 'WordPress-onderhoud.'
+painPointsTitle: 'Waar je tegenaan loopt'
+painPointsTitleAccent: 'zonder onderhoud.'
 painPoints:
   - stat: '90%'
     title: Verouderde plug-ins zijn de hoofdroute voor hacks
