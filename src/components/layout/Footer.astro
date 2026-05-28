@@ -21,6 +21,10 @@ import { Image } from 'astro:assets';
 import ReviewBadge from '@components/ui/ReviewBadge.astro';
 import logoWhite from '@assets/brand/froseo-logo-wit.webp';
 import { contact, social } from '@data/site-config';
+import { getSwitchHref } from '@data/i18n';
+
+/* EN-taalwissel: tegenhanger uit de route-map, anders de Engelse homepage. */
+const langSwitchHref = getSwitchHref(Astro.url.pathname, 'nl');
 
 interface Props {
   copyright?: string;
@@ -138,6 +142,17 @@ const linkColumns: FooterColumn[] = [
 
   <div class="footer-bottom">
     <span>{copyright}</span>
+    <a class="footer-lang" href={langSwitchHref} hreflang="en" lang="en">English version ↗</a>
     <span>{signoff}</span>
   </div>
 </footer>
+
+<style>
+  .footer-lang {
+    color: inherit;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity var(--transition-fast);
+  }
+  .footer-lang:hover { opacity: 1; text-decoration: underline; }
+</style>

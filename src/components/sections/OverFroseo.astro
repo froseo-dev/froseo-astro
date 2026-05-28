@@ -9,9 +9,21 @@ interface USPItem {
 interface Props {
   cities?: string[];
   usps?: USPItem[];
+  eyebrow?: string;
+  titleLine1?: string;
+  titleAccent?: string;
+  /** Lead-alinea's. Default = NL-copy. Engelse homepage geeft eigen tekst mee. */
+  lead?: string[];
 }
 
 const {
+  eyebrow = 'Over Froseo',
+  titleLine1 = 'Utrechtse eigenzinnigheid.',
+  titleAccent = 'Efficiënt & creatief.',
+  lead = [
+    'Froseo is born and raised in Utrecht en daar zijn we trots op! Zo benutten wij onze Utrechtse eigenzinnigheid volop tijdens het uitvoeren van onze webdesign & marketing projecten.',
+    'Ons hoofdkwartier staat weliswaar in de Domstad, maar we beperken ons natuurlijk niet tot Utrecht. Wij werken met dezelfde passie voor bedrijven buiten "het hartsie van het land". Zo zijn wij minimaal net zo blij met onze samenwerkingen in onder andere Amersfoort, Zeist, Rotterdam, Delft, Hoorn, Doetinchem en Deventer.',
+  ],
   cities = [
     'Utrecht',
     'Amersfoort',
@@ -41,25 +53,15 @@ const cityLoop = [...cities, ...cities];
 <section class="over-froseo" id="over-ons">
   <div class="over-froseo-inner">
     <div class="over-froseo-head">
-      <EyebrowPill variant="highlight" star="◆">Over Froseo</EyebrowPill>
+      <EyebrowPill variant="highlight" star="◆">{eyebrow}</EyebrowPill>
       <h2 class="over-froseo-title">
-        Utrechtse eigenzinnigheid.<br /><em>Efficiënt &amp; creatief.</em>
+        {titleLine1}<br /><em>{titleAccent}</em>
       </h2>
     </div>
 
     <div class="over-froseo-body">
       <div class="over-froseo-lead">
-        <p>
-          Froseo is born and raised in Utrecht en daar zijn we trots op! Zo benutten wij
-          onze Utrechtse eigenzinnigheid volop tijdens het uitvoeren van onze webdesign &amp;
-          marketing projecten.
-        </p>
-        <p>
-          Ons hoofdkwartier staat weliswaar in de Domstad, maar we beperken ons natuurlijk
-          niet tot Utrecht. Wij werken met dezelfde passie voor bedrijven buiten "het hartsie
-          van het land". Zo zijn wij minimaal net zo blij met onze samenwerkingen in onder
-          andere Amersfoort, Zeist, Rotterdam, Delft, Hoorn, Doetinchem en Deventer.
-        </p>
+        {lead.map((p) => <p>{p}</p>)}
       </div>
 
       <ol class="over-froseo-usps">

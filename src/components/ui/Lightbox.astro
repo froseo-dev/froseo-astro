@@ -42,6 +42,8 @@
       isMockup?: boolean;
       caseUrl?: string;
       liveUrl?: string;
+      caseLabel?: string;
+      liveLabel?: string;
     };
     const triggers = Array.from(
       document.querySelectorAll<HTMLElement>('[data-lightbox-trigger]'),
@@ -105,8 +107,14 @@
       caseLink.hidden = !hasCase;
       liveLink.hidden = !hasLive;
       actionsRow.hidden = !(hasCase || hasLive);
-      if (hasCase) caseLink.href = item.caseUrl!;
-      if (hasLive) liveLink.href = item.liveUrl!;
+      if (hasCase) {
+        caseLink.href = item.caseUrl!;
+        caseLink.textContent = item.caseLabel ?? 'Bekijk de case ↗';
+      }
+      if (hasLive) {
+        liveLink.href = item.liveUrl!;
+        liveLink.textContent = item.liveLabel ?? 'Bezoek site ↗';
+      }
       counter.textContent = `${currentIndex + 1} / ${currentSet.length}`;
       const multi = currentSet.length > 1;
       prevBtn.style.display = multi ? '' : 'none';
@@ -144,6 +152,8 @@
       isMockup?: boolean;
       caseUrl?: string;
       liveUrl?: string;
+      caseLabel?: string;
+      liveLabel?: string;
     };
     (window as any).openLightbox = (items: ExternalItem[], startIndex = 0) => {
       const adHoc: Item[] = items.map((it) => ({
@@ -154,6 +164,8 @@
         isMockup: it.isMockup,
         caseUrl: it.caseUrl,
         liveUrl: it.liveUrl,
+        caseLabel: it.caseLabel,
+        liveLabel: it.liveLabel,
       }));
       currentSet = adHoc;
       buildThumbs();

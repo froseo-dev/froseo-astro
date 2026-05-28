@@ -10,6 +10,11 @@
 
 import { Image } from 'astro:assets';
 import logoWhite from '@assets/brand/froseo-logo-wit.webp';
+import { getSwitchHref } from '@data/i18n';
+
+/* Doel van de EN-taalwissel: de Engelse tegenhanger als die bestaat, anders
+   de Engelse homepage. Volgt uit de centrale route-map (src/data/i18n.ts). */
+const langSwitchHref = getSwitchHref(Astro.url.pathname, 'nl');
 
 interface NavItem {
   label: string;
@@ -150,6 +155,7 @@ const workItems: DropdownItem[] = [
   </div>
 
   <div class="nav-right">
+    <a class="nav-lang" href={langSwitchHref} hreflang="en" lang="en" aria-label="Switch to English">EN</a>
     <a class="nav-cta" href={ctaHref}>{ctaLabel}</a>
     <button
       class="menu-toggle"
@@ -211,6 +217,7 @@ const workItems: DropdownItem[] = [
     {items.map((item) => (
       <li><a href={item.href} data-drawer-link>{item.label}</a></li>
     ))}
+    <li><a href={langSwitchHref} hreflang="en" lang="en" data-drawer-link>English version ↗</a></li>
   </ul>
   <a class="btn-primary nav-drawer-cta" href={ctaHref} data-drawer-link>{ctaLabel}</a>
 </div>

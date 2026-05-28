@@ -326,6 +326,27 @@ main { display: contents; }
   background: var(--action-bg-hover);
 }
 
+/* Taalwissel — subtiel pill-linkje (NL→EN in Nav, EN→NL in NavEN).
+   Mobiel verborgen: daar zit de switch onderin de drawer. */
+.nav-lang {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  border: 2px solid var(--line-color);
+  border-radius: 8px;
+  padding: 5px 9px;
+  line-height: 1;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+.nav-lang:hover { color: var(--accent-primary); }
+@media (max-width: 900px) {
+  .nav-lang { display: none; }
+}
+
 /* ==========================================================================
    MEGA MENU — Diensten dropdown met 3 kolommen (desktop)
    Hover opent op desktop, click-toggle als fallback. Op mobiel verborgen

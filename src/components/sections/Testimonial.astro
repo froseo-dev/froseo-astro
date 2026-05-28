@@ -17,6 +17,11 @@ interface Props {
   /** Optional avatar image for the speaker. Falls back to a per-id lookup
       (see avatarMap), of een gekleurde placeholder-circle als laatste fallback. */
   avatar?: ImageMetadata;
+  /** Optionele copy-overrides — wanneer gezet winnen ze van de collection-
+      data. Gebruikt om hetzelfde design met vertaalde (Engelse) copy te tonen. */
+  quote?: string;
+  name?: string;
+  role?: string;
 }
 
 /* Per-testimonial avatar-resolver. Houdt de caller schoon: een service-
@@ -30,11 +35,14 @@ const avatarMap: Record<string, ImageMetadata> = {
   'auke-club12-optimalisatie': aukeAvatar,
 };
 
-const { id, variant = 'card', bgImage, bgAlt = '', avatar } = Astro.props;
+const { id, variant = 'card', bgImage, bgAlt = '', avatar, quote, name, role } = Astro.props;
 const all = await getCollection('testimonials');
 const t = (id ? all.find((x) => x.data.id === id) : all.find((x) => x.data.featured)) ?? all[0];
 const stars = '★'.repeat(t.data.rating);
 const resolvedAvatar = avatar ?? avatarMap[t.data.id];
+const quoteText = quote ?? t.data.quote;
+const speakerName = name ?? t.data.name;
+const speakerRole = role ?? t.data.role;
 ---
 
 <section class={`testi testi--${variant}${bgImage ? ' testi--with-bg' : ''}`}>
@@ -57,10 +65,10 @@ const resolvedAvatar = avatar ?? avatarMap[t.data.id];
     </div>
     <div class="testi-right">
       <div class="testi-stars">{stars}</div>
-      <blockquote class="testi-quote">"{t.data.quote}"</blockquote>
+      <blockquote class="testi-quote">"{quoteText}"</blockquote>
       <div class="testi-author">
-        <div class="name">{t.data.name}</div>
-        <div class="role">{t.data.role}</div>
+        <div class="name">{speakerName}</div>
+        <div class="role">{speakerRole}</div>
       </div>
     </div>
   </div>

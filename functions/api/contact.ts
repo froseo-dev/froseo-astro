@@ -71,13 +71,15 @@ const ZOHO = {
 const deriveServiceInterest = (formSource: string, onderwerp: string): string => {
   if (formSource === 'analyse') return 'Gratis analyse';
   const o = onderwerp.toLowerCase();
-  if (o.includes('abonnement')) return 'Website abonnement';
-  if (o.includes('onderhoud') || o.includes('care')) return 'Website onderhoud';
+  /* NL + EN-termen: de Engelse servicebloks sturen Engelse onderwerp-labels mee
+     (subscription/maintenance/optimization/web design), dus die herkennen we hier ook. */
+  if (o.includes('abonnement') || o.includes('subscription')) return 'Website abonnement';
+  if (o.includes('onderhoud') || o.includes('care') || o.includes('maintenance')) return 'Website onderhoud';
   if (o.includes('lokale') || o.includes('local')) return 'Local SEO';
   if (o.includes('seo')) return 'SEO';
   if (o.includes('content')) return 'Content abonnement';
-  if (o.includes('optimalisatie') || o.includes('opfris')) return 'Website optimalisatie';
-  if (o.includes('webdesign') || o.includes('wordpress') || o.includes('website')) return 'WordPress website';
+  if (o.includes('optimalisatie') || o.includes('opfris') || o.includes('optimi')) return 'Website optimalisatie';
+  if (o.includes('webdesign') || o.includes('wordpress') || o.includes('website') || o.includes('web design')) return 'WordPress website';
   return ''; // -None-
 };
 
@@ -161,6 +163,11 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
      Form Type / Service interest mapping richting Zoho. */
   const formSource = (data.get('form_source') ?? '').toString().trim();
 
+  /* Taal van de afzender ('en' vanaf de Engelse pagina's). Additief: tagt de
+     lead zonder de NL-flow te raken, zodat Calvin Engelstalige aanvragen ziet. */
+  const lang = (data.get('lang') ?? '').toString().trim().toLowerCase();
+  const isEnglish = lang === 'en';
+
   /* Attributie-velden, geïnjecteerd door het site-brede attributie-script. */
   const utmSource = (data.get('utm_source') ?? '').toString().trim().slice(0, 255);
   const utmMedium = (data.get('utm_medium') ?? '').toString().trim().slice(0, 255);
@@ -234,7 +241,7 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
       email,
       phone,
       company: website || 'Onbekend (via website)',
-      description: message,
+      description: isEnglish ? `${message}\n\n— Taal: Engels (via /en/)` : message,
       formType: formSource === 'analyse' ? 'Gratis analyse' : 'Contactformulier',
       serviceInterest: deriveServiceInterest(formSource, onderwerp),
       utmSource,
@@ -272,9 +279,9 @@ export async function onRequestPost(ctx: RequestContext): Promise<Response> {
       from: `Froseo Website <${env.CONTACT_FROM_EMAIL}>`,
       to: [env.CONTACT_TO_EMAIL],
       reply_to: email,
-      subject: onderwerp
-        ? `[${onderwerp}] Nieuw bericht van ${name}`
-        : `Nieuw bericht van ${name}`,
+      subject: `${isEnglish ? '[EN] ' : ''}${
+        onderwerp ? `[${onderwerp}] Nieuw bericht van ${name}` : `Nieuw bericht van ${name}`
+      }`,
       html,
     }),
   });

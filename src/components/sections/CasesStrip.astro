@@ -21,6 +21,10 @@ interface Props {
   casesHref?: string;
   portfolioLabel?: string;
   portfolioHref?: string;
+  /** Override-link voor de case-kaarten (doorgegeven aan CasesRow). */
+  cardHref?: string;
+  /** Render de case-kaarten zonder link (doorgegeven aan CasesRow). */
+  linkless?: boolean;
 }
 
 const {
@@ -35,6 +39,8 @@ const {
   casesHref = '/cases/',
   portfolioLabel = 'Bekijk portfolio ↗',
   portfolioHref = '/portfolio/',
+  cardHref,
+  linkless = false,
 } = Astro.props;
 
 const all = await getCollection('cases', ({ data }) => data.published !== false);
@@ -55,7 +61,7 @@ const cases = pickSlugs
     <p class="cases-strip-lead">{lead}</p>
   </div>
 
-  <CasesRow cases={cases} mobileLimit={mobileLimit} id="homepage-cases" />
+  <CasesRow cases={cases} mobileLimit={mobileLimit} id="homepage-cases" cardHref={cardHref} linkless={linkless} />
 
   <div class="cases-footer cases-footer--dual">
     <a class="btn-primary cases-footer-btn" href={casesHref}>{casesLabel}</a>

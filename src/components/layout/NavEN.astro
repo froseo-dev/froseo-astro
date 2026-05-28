@@ -1,0 +1,117 @@
+---
+/**
+ * Engelse hoofdnavigatie — bewust simpeler dan de NL-Nav: geen mega-menu
+ * (er zijn nog geen Engelse servicepagina's). Links wijzen naar on-page
+ * secties van /en/ + de Engelse About/Contact. Hergebruikt de globale
+ * nav-classes (.nav, .nav-links, .nav-cta, .nav-lang, .nav-drawer) zodat
+ * de styling 1-op-1 met de rest van de site meeloopt.
+ */
+
+import { Image } from 'astro:assets';
+import logoWhite from '@assets/brand/froseo-logo-wit.webp';
+import { getSwitchHref } from '@data/i18n';
+
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const { ctaLabel = 'Contact ↗', ctaHref = '/en/contact/' } = Astro.props;
+
+/* NL-tegenhanger uit de route-map (anders de NL-homepage). */
+const langSwitchHref = getSwitchHref(Astro.url.pathname, 'en');
+
+/* Absolute paden zodat de anchors ook werken vanaf /en/about/ en /en/contact/. */
+const items: NavItem[] = [
+  { label: 'Services', href: '/en/#services' },
+  { label: 'Work', href: '/en/portfolio/' },
+  { label: 'About', href: '/en/about/' },
+];
+---
+
+<nav class="nav">
+  <a class="logo" href="/en/" aria-label="Froseo home">
+    <Image src={logoWhite} alt="Froseo" class="logo-img" loading="eager" />
+  </a>
+
+  <div class="nav-links">
+    {items.map((item) => <a href={item.href}>{item.label}</a>)}
+  </div>
+
+  <div class="nav-right">
+    <a class="nav-lang" href={langSwitchHref} hreflang="nl" lang="nl" aria-label="Schakel naar Nederlands">NL</a>
+    <a class="nav-cta" href={ctaHref}>{ctaLabel}</a>
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="nav-drawer"
+      data-menu-toggle
+    >
+      <span class="menu-toggle-bar"></span>
+      <span class="menu-toggle-bar"></span>
+      <span class="menu-toggle-bar"></span>
+    </button>
+  </div>
+</nav>
+
+<div class="nav-drawer" id="nav-drawer" data-menu-drawer="closed" aria-hidden="true">
+  <ul class="nav-drawer-list">
+    {items.map((item) => (
+      <li><a href={item.href} data-drawer-link>{item.label}</a></li>
+    ))}
+    <li><a href="/en/contact/" data-drawer-link>Contact</a></li>
+    <li><a href={langSwitchHref} hreflang="nl" lang="nl" data-drawer-link>Nederlandse versie ↗</a></li>
+  </ul>
+  <a class="btn-primary nav-drawer-cta" href={ctaHref} data-drawer-link>{ctaLabel}</a>
+</div>
+
+<script>
+  /* Drawer-toggle — zelfde mechaniek als de NL-Nav, zonder mega-menu. */
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const drawer = document.querySelector<HTMLElement>('[data-menu-drawer]');
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-drawer-link]');
+
+  function setOpen(next: boolean) {
+    if (!toggle || !drawer) return;
+    toggle.setAttribute('aria-expanded', String(next));
+    toggle.setAttribute('aria-label', next ? 'Close menu' : 'Open menu');
+    drawer.dataset.menuDrawer = next ? 'open' : 'closed';
+    drawer.setAttribute('aria-hidden', String(!next));
+    document.body.style.overflow = next ? 'hidden' : '';
+  }
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    setOpen(!isOpen);
+  });
+  links.forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+</script>
+
+<style>
+  /* Logo-sizing. De NL-Nav zet deze regels global, maar die styles laden niet
+     op /en/-pagina's (daar draait alleen NavEN). Zonder dit rendert het logo
+     op natuurlijke grootte (enorm). Wit logo + `--logo-shadow` voor contrast
+     op de cream nav-achtergrond, identiek aan de NL-nav. */
+  :global(.logo-img) {
+    height: 32px;
+    width: auto;
+    display: block;
+    filter: var(--logo-shadow);
+  }
+  @media (max-width: 640px) {
+    :global(.logo-img) { height: 26px; }
+  }
+
+  /* Engelse nav-labels mogen niet afbreken (bv. "Why us" → twee regels). */
+  .nav .nav-links a { white-space: nowrap; }
+</style>

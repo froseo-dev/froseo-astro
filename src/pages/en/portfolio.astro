@@ -1,0 +1,142 @@
+---
+/**
+ * /en/portfolio/ — Engelse portfolio. Visuele kopie van /portfolio/, maar
+ * per item GEEN case-link (die bestaat nog niet in het Engels): de lightbox
+ * toont alleen een "Visit live site"-knop naar de live URL. NavEN/FooterEN,
+ * lang="en". De `role`-subtitel (NL) verbergen we hier.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import NavEN from '@components/layout/NavEN.astro';
+import FooterEN from '@components/layout/FooterEN.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import Lightbox from '@components/ui/Lightbox.astro';
+import { Image, getImage } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+const pageTitle = 'Portfolio | Web design & SEO by Froseo, Utrecht';
+const pageDesc =
+  'A visual showcase of client websites we built. Click through for more images or visit the live site.';
+
+const all = await getCollection('portfolio', ({ data }) => data.published !== false);
+const sorted = all.sort((a, b) => a.data.order - b.data.order);
+
+/* Lightbox-data per item: mockup + gallery. Geen caseUrl (geen Engelse
+   case-pagina's), wel liveUrl met een Engels knoplabel. */
+async function buildLightboxData(p: (typeof sorted)[number]) {
+  const d = p.data;
+  const sources = [d.mockup, ...(d.gallery ?? [])];
+  const items = await Promise.all(
+    sources.map(async (src, i) => {
+      const [thumb, full] = await Promise.all([
+        getImage({ src, width: 160, format: 'webp' }),
+        getImage({ src, width: 1600, format: 'webp' }),
+      ]);
+      return {
+        src: full.src,
+        thumb: thumb.src,
+        alt: i === 0 ? `${d.client}: mockup` : `${d.client}: image ${i}`,
+        isMockup: i === 0,
+        caseUrl: undefined,
+        liveUrl: d.liveUrl,
+        liveLabel: 'Visit live site ↗',
+      };
+    }),
+  );
+  return items;
+}
+
+const cards = await Promise.all(
+  sorted.map(async (p) => ({
+    entry: p,
+    lightboxItems: await buildLightboxData(p),
+  })),
+);
+---
+
+<BaseLayout lang="en" title={pageTitle} description={pageDesc}>
+  <NavEN />
+  <main>
+    <article class="portfolio-page">
+      <section class="portfolio-hero">
+        <div class="portfolio-hero-inner">
+          <EyebrowPill variant="primary">Portfolio</EyebrowPill>
+          <h1 class="portfolio-hero-title">
+            Websites we <em>delivered.</em>
+          </h1>
+          <p class="portfolio-hero-lead">
+            Click a tile for more images or visit the live site. Want to know more about the approach and the numbers? Get in touch and we will walk you through it.
+          </p>
+        </div>
+      </section>
+
+      <section class="portfolio-grid-wrap">
+        <div class="portfolio-grid">
+          {cards.map(({ entry, lightboxItems }) => {
+            const d = entry.data;
+            return (
+              <button
+                type="button"
+                class="portfolio-card"
+                data-portfolio-trigger
+                data-portfolio-items={JSON.stringify(lightboxItems)}
+                aria-label={`View images of ${d.client}`}
+              >
+                <div class="portfolio-card-media">
+                  <Image
+                    src={d.mockup}
+                    alt={`${d.client}: mockup`}
+                    class="portfolio-card-img"
+                    widths={[400, 600, 800, 1000]}
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="portfolio-card-meta">
+                  <h3 class="portfolio-card-name">{d.client}</h3>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <div class="portfolio-cta-row">
+        <a class="btn-primary" href="/en/contact/">Start a project ↗</a>
+      </div>
+    </article>
+
+    <BetterCallCalvin
+      eyebrow="Get in touch"
+      titleLine1="Better call"
+      titleAccent="Calvin."
+      body={[
+        'Want to spar about what could be better on your website? Or just find out if Froseo is a good fit? Plan a free, no obligation call with Calvin.',
+        'In 30 minutes we look at your website, your findability and where the growth is.',
+      ]}
+      primaryLabel="Plan a call ↗"
+      primaryHref="/en/contact/"
+      secondaryLabel="Send a message"
+      secondaryHref="/en/contact/"
+      rating="5/5"
+      reviewCount="Google reviews"
+    />
+  </main>
+  <FooterEN />
+  <Lightbox />
+</BaseLayout>
+
+<script>
+  /* Klik op portfolio-card → parse data-portfolio-items → openLightbox. */
+  document.querySelectorAll<HTMLButtonElement>('[data-portfolio-trigger]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      try {
+        const items = JSON.parse(btn.dataset.portfolioItems ?? '[]');
+        (window as any).openLightbox?.(items, 0);
+      } catch (e) {
+        console.warn('portfolio: could not parse items', e);
+      }
+    });
+  });
+</script>

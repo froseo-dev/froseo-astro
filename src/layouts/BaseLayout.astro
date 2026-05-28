@@ -16,6 +16,7 @@ import '@styles/global.css';
 import PaletteSwitcher from '../components/dev/PaletteSwitcher.astro';
 import MobileCTA from '../components/layout/MobileCTA.astro';
 import { social, review as reviewData } from '@data/site-config';
+import { getAlternates, type Lang } from '@data/i18n';
 
 interface Props {
   title?: string;
@@ -24,6 +25,8 @@ interface Props {
   theme?: string;
   /** Canonical URL path. */
   pathname?: string;
+  /** Paginataal — stuurt <html lang>, og:locale en hreflang-afleiding. */
+  lang?: Lang;
   /** Zet de pagina op noindex (bv. Ads-landingspagina's die niet mogen ranken). */
   noindex?: boolean;
 }
@@ -33,10 +36,17 @@ const {
   description = 'Effectieve websites & SEO uit Utrecht voor ambitieuze ondernemers. 15+ jaar ervaring, 80+ projecten live, 5/5 op Google reviews. Plan een gratis website-analyse.',
   theme,
   pathname = Astro.url.pathname,
+  lang = 'nl',
   noindex = false,
 } = Astro.props;
 
-const canonical = new URL(pathname, Astro.site ?? 'https://froseo.nl').toString();
+const site = Astro.site ?? 'https://froseo.nl';
+const canonical = new URL(pathname, site).toString();
+
+/* Hreflang volgt uit de centrale route-map (src/data/i18n.ts) o.b.v. het pad:
+   alleen tweetalige pagina's krijgen alternate-tags, eentalige niets. */
+const alt = getAlternates(pathname);
+const absolutize = (path: string) => new URL(path, site).toString();
 
 /* JSON-LD: LocalBusiness + Organization on every page. Search engines use
    this for rich snippets, the local pack and brand-knowledge graph. */
@@ -69,7 +79,7 @@ const businessSchema = {
 ---
 
 <!doctype html>
-<html lang="nl" data-theme={theme}>
+<html lang={lang} data-theme={theme}>
   <head>
     {/* Google Tag Manager — zo hoog mogelijk in <head> volgens Google's
         installatie-instructies. Container-ID GTM-TLW4G9R beheert alle
@@ -91,12 +101,19 @@ const businessSchema = {
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical} />
+    {alt && (
+      <>
+        <link rel="alternate" hreflang="nl" href={absolutize(alt.nl)} />
+        <link rel="alternate" hreflang="en" href={absolutize(alt.en)} />
+        <link rel="alternate" hreflang="x-default" href={absolutize(alt.nl)} />
+      </>
+    )}
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content="nl_NL" />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'nl_NL'} />
     <meta property="og:site_name" content="Froseo" />
     <meta property="og:image" content={new URL('/og-froseo.png', Astro.site ?? 'https://froseo.nl').toString()} />
     <meta property="og:image:width" content="1200" />
@@ -137,7 +154,10 @@ const businessSchema = {
       ></iframe>
     </noscript>
     <slot />
-    <MobileCTA />
+    <MobileCTA
+      label={lang === 'en' ? 'Request a free proposal' : undefined}
+      href={lang === 'en' ? '/en/contact/' : undefined}
+    />
     <PaletteSwitcher />
 
     {/* Attributie-capture voor CRM-leads: legt UTM-params, gclid, referrer en

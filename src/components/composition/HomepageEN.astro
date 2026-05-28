@@ -1,0 +1,485 @@
+---
+/**
+ * Engelse homepage-compositie. Mirrort de sectie-volgorde van HomepageV2
+ * 1-op-1, maar met bespoke/vertaalde Engelse copy gericht op Engelstalige
+ * ondernemers, expats en internationale bedrijven in (de regio) Utrecht.
+ *
+ * Interne links wijzen voorlopig uitsluitend naar /en/contact/ en /en/about/
+ * (er zijn nog geen Engelse service-, case- of portfolio-pagina's). De
+ * prop-gestuurde, taal-neutrale secties worden hergebruikt met Engelse props;
+ * de servicegrid en de analyse-CTA zijn bespoke omdat hun NL-tegenhangers
+ * hun copy hardcoden.
+ */
+
+import Topbar from '../layout/Topbar.astro';
+import NavEN from '../layout/NavEN.astro';
+import Hero from '../sections/Hero.astro';
+import LogosTicker from '../sections/LogosTicker.astro';
+import CasesStrip from '../sections/CasesStrip.astro';
+import PricingTeaser from '../sections/PricingTeaser.astro';
+import ServicesTicker from '../sections/ServicesTicker.astro';
+import TeamNote from '../sections/TeamNote.astro';
+import InlineCTA from '../sections/InlineCTA.astro';
+import Testimonial from '../sections/Testimonial.astro';
+import Stats from '../sections/Stats.astro';
+import OverFroseo from '../sections/OverFroseo.astro';
+import Approach from '../sections/Approach.astro';
+import BetterCallCalvin from '../sections/BetterCallCalvin.astro';
+import FAQ from '../sections/FAQ.astro';
+import FooterEN from '../layout/FooterEN.astro';
+import EyebrowPill from '../ui/EyebrowPill.astro';
+import { pricing } from '@data/site-config';
+
+import testiBg from '@assets/testimonials/renovatie-totaal-bg.webp';
+import basAvatar from '@assets/testimonials/bas-bertrams.webp';
+
+/* Bespoke servicebloks: 1-op-1 de zes featured NL-diensten, in het Engels.
+   `topic` stuurt de querystring naar /en/contact/ zodat de juiste Service
+   interest in Zoho wordt afgeleid (zie en/contact.astro). */
+interface ServiceBlock {
+  eyebrow: string;
+  title: string;
+  desc: string;
+  bullets: string[];
+  icon: string;
+  shadow: 'dark' | 'primary' | 'rare' | 'teal' | 'highlight';
+  topic: string;
+}
+
+const services: ServiceBlock[] = [
+  {
+    eyebrow: 'Web design',
+    title: 'Custom web design',
+    desc: 'A website built around your business, not a template you have seen a hundred times. We design for structure, speed and conversion, so it looks good and actually works.',
+    bullets: ['WordPress or Astro', 'Built for mobile and speed', 'Clear structure and copy'],
+    icon: '◆',
+    shadow: 'dark',
+    topic: 'web-design',
+  },
+  {
+    eyebrow: 'Website subscription',
+    title: 'Website on subscription',
+    desc: `A professional website for a fixed monthly price. Hosting, maintenance and small changes included. From ${pricing.abboFromAmount} per month.`,
+    bullets: [`From ${pricing.abboFromAmount} per month`, 'Hosting and maintenance included', 'Small changes when you need them'],
+    icon: '◇',
+    shadow: 'primary',
+    topic: 'website-subscription',
+  },
+  {
+    eyebrow: 'Local SEO',
+    title: 'Local SEO that ranks',
+    desc: 'Be easier to find in your own region. We set up your Google Business Profile, fix your local listings and build pages that rank for the places you serve.',
+    bullets: ['Google Business Profile', 'Local landing pages', 'Reviews and map rankings'],
+    icon: '◎',
+    shadow: 'rare',
+    topic: 'local-seo',
+  },
+  {
+    eyebrow: 'SEO & GEO',
+    title: 'SEO and AI search',
+    desc: 'Technical and content SEO for growth in Google and the new AI search engines. We make sure your pages are understood, load fast and are worth ranking.',
+    bullets: ['Technical SEO', 'Content that ranks', 'Ready for AI search'],
+    icon: '⌕',
+    shadow: 'teal',
+    topic: 'seo-geo',
+  },
+  {
+    eyebrow: 'Optimization',
+    title: 'Website optimization',
+    desc: 'Already have a site but few enquiries? We look at speed, structure and conversion and fix what holds it back. Often without rebuilding everything.',
+    bullets: ['Speed and Core Web Vitals', 'Conversion improvements', 'A clearer structure'],
+    icon: '⚡',
+    shadow: 'highlight',
+    topic: 'website-optimization',
+  },
+  {
+    eyebrow: 'Website maintenance',
+    title: 'WordPress maintenance',
+    desc: 'WordPress care for a fixed monthly price. Updates, backups, security and monitoring, so your site stays fast and safe. We manage 60+ sites.',
+    bullets: ['Updates and backups', 'Security and monitoring', '60+ sites in care'],
+    icon: '⚙',
+    shadow: 'rare',
+    topic: 'website-maintenance',
+  },
+];
+
+const enStats = [
+  { num: '80+', label: 'Projects delivered' },
+  { num: '25+', label: '#1 rankings on Google' },
+  { num: '15+', label: 'Years of experience' },
+  { num: '5/5', label: 'Google reviews' },
+];
+
+const enFaq = [
+  {
+    q: 'Do you work with English speaking clients?',
+    a: 'Yes. We are based in Utrecht and work with both Dutch and international businesses. Communication, contracts and support can all be in English.',
+  },
+  {
+    q: 'What does a website cost?',
+    a: `It depends on what you need. A website on subscription starts at ${pricing.abboFromAmount} per month including hosting and maintenance. For custom projects we make a fixed quote after a short call.`,
+  },
+  {
+    q: 'Can you help my business rank in Google?',
+    a: 'We build your site so Google understands it well: a logical structure, fast pages, clear content and strong internal links. For local businesses we also set up your Google Business Profile and local SEO.',
+  },
+  {
+    q: 'Do you do WordPress maintenance?',
+    a: 'Yes. We keep WordPress sites updated, backed up, secure and monitored for a fixed monthly price. We currently manage more than 60 sites.',
+  },
+  {
+    q: 'Do I need to be in Utrecht to work with you?',
+    a: 'No. We are based in Utrecht but work with businesses across the Netherlands. Most contact happens by email, phone and video call.',
+  },
+  {
+    q: 'My website is slow. Can you fix that?',
+    a: 'Often, yes. We look at what makes pages load slowly and improve speed and structure. That usually helps your ranking and your conversion too.',
+  },
+];
+
+const enSteps = [
+  {
+    num: '01',
+    title: 'Intro call',
+    description: 'We get to know your business and figure out what you need online: a stronger website, better findability, more enquiries, or all of it at once.',
+  },
+  {
+    num: '02',
+    title: 'A clear plan',
+    description: 'We turn your goals into a concrete plan for design, content and SEO. No thick reports, just clear choices.',
+  },
+  {
+    num: '03',
+    title: 'Build and optimize',
+    description: 'We build what moves you forward: pages, content, technical SEO and conversion improvements.',
+  },
+  {
+    num: '04',
+    title: 'Measure and grow',
+    description: 'After launch we keep measuring and adjusting, so your online base keeps getting stronger.',
+  },
+];
+
+const enCities = [
+  'Utrecht', 'Amersfoort', 'Zeist', 'Rotterdam', 'Delft', 'Hoorn',
+  'Doetinchem', 'Deventer', 'Amsterdam', 'Haarlem', 'Den Bosch', 'Eindhoven',
+];
+
+const enUsps = [
+  { num: '01', headline: 'Direct contact with your expert.' },
+  { num: '02', headline: 'No long lock-in contracts.' },
+  { num: '03', headline: 'Fully handled, done for you.' },
+  { num: '04', headline: 'The power of AI put to use.' },
+];
+---
+
+<Topbar
+  text={`New: AI-powered website from ${pricing.abboFromShort}`}
+  extra=", including hosting and maintenance"
+/>
+<NavEN />
+<main>
+  <Hero
+    eyebrow="15+ years · 80+ projects · Utrecht based"
+    titleLine1="Web design & SEO"
+    titleLine2="agency in"
+    accent="Utrecht."
+    bullets={[
+      'Custom websites that load fast and turn visitors into clients.',
+      'Local SEO and GEO so you show up in Google, Maps and AI search.',
+      `Website subscriptions and WordPress maintenance from ${pricing.abboFromAmount} per month.`,
+      'One team for design, tech, SEO and conversion. Working across the Netherlands.',
+    ]}
+    primaryCta={{ label: 'Get in touch ↗', href: '/en/contact/' }}
+    secondaryCta={{ label: 'See what we do', href: '#services' }}
+    reviewsLabel="5/5"
+    resultLabel="★ Recent"
+    resultValue="+450% traffic"
+    resultMeta="Club 12"
+    mockupAlt="Froseo — web design and SEO from Utrecht"
+  />
+
+  <LogosTicker label="Proud to work with:" />
+
+  <CasesStrip
+    eyebrow="Our work"
+    titleLine1="Proven results"
+    titleLead="for"
+    titleAccent="ambitious businesses."
+    lead="A selection of clients where our approach made a measurable difference. The numbers are right there, the vague growth talk is not."
+    linkless={true}
+    casesLabel="Get in touch ↗"
+    casesHref="/en/contact/"
+    portfolioLabel="About Froseo ↗"
+    portfolioHref="/en/about/"
+  />
+
+  <PricingTeaser
+    eyebrow="New · AI-powered website"
+    unit="/month"
+    title="A complete website with AI under the hood."
+    body={`Ideal for business owners who want their website handled. ${pricing.abboFromShort} is the entry point, with different packages available and custom work on request for those who want more. Always transparent, and often lower than what other agencies charge just for hosting.`}
+    ctaLabel="Plan a free intro call ↗"
+    ctaHref="/en/contact/"
+  />
+
+  <ServicesTicker
+    items={[
+      { label: 'Local SEO', num: '01' },
+      { label: 'Web design', num: '02' },
+      { label: 'SEO & GEO', num: '03' },
+      { label: 'Paid Advertising', num: '04' },
+      { label: 'WordPress Websites', num: '05' },
+      { label: 'Conversion optimization', num: '06' },
+      { label: 'Website maintenance', num: '07' },
+      { label: 'Google Business Profile', num: '08' },
+      { label: 'AI implementation', num: '09' },
+    ]}
+  />
+
+  <TeamNote
+    eyebrow="The team"
+    message="Time for action? Send us your plans or book an intro call. Then the four of us look at what you need and whether we are a match."
+    byline="Calvin, Rowan, Thom and Charlotte"
+    ctaLabel="Book an intro call ↗"
+    ctaHref="/en/contact/"
+  />
+
+  {/* ===== Services (bespoke) ===== */}
+  <section class="services" id="services">
+    <div class="section-head">
+      <div class="section-head-left">
+        <EyebrowPill>What we do</EyebrowPill>
+        <h2 class="title">
+          No bullshit.<br />Just <span class="accent">results.</span>
+        </h2>
+      </div>
+      <div class="section-head-right">
+        <p>
+          A strong website is not the finish line, it is the foundation. We design and build
+          it, sharpen the SEO and keep it running, so it brings in enquiries month after month.
+        </p>
+      </div>
+    </div>
+
+    <div class="services-grid">
+      {services.map((s) => (
+        <a href={`/en/contact/?topic=${s.topic}`} class={`service-card ${s.shadow}-shadow`}>
+          <div class="service-icon">{s.icon}</div>
+          <div class="service-num">{s.eyebrow}</div>
+          <h3 class="service-title">{s.title}</h3>
+          <p class="service-desc">{s.desc}</p>
+          <ul class="service-list">
+            {s.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+          <div class="service-arrow">↗</div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <InlineCTA
+    primaryLabel="Plan a free call ↗"
+    primaryHref="/en/contact/"
+    secondaryLabel="About Froseo ↗"
+    secondaryHref="/en/about/"
+  />
+
+  <Testimonial
+    bgImage={testiBg}
+    bgAlt="Renovatie Totaal at work"
+    avatar={basAvatar}
+    quote="At my previous agency the communication was a disaster and I sometimes waited weeks for anything to ship. With Froseo I just call Calvin and he often fixes it the same day. He also comes up with creative ideas to improve our site himself. Brilliant."
+    name="Bas Bertrams"
+    role="Owner, Renovatie Totaal"
+  />
+
+  <Stats
+    eyebrow="The numbers"
+    titleLine1="Web design & SEO"
+    titleLine2="from Utrecht,"
+    titleAccent="for the whole of the Netherlands."
+    stats={enStats}
+  />
+
+  <OverFroseo
+    eyebrow="About Froseo"
+    titleLine1="Utrecht-grown and proud of it."
+    titleAccent="Efficient & creative."
+    lead={[
+      'Froseo was born and raised in Utrecht, and we are proud of it. That local, slightly stubborn mindset goes into every web design and marketing project we do.',
+      'Our head office is in Utrecht, but we do not stop at the city limits. We work with the same energy for businesses across the Netherlands and for international companies based here. From Amersfoort and Zeist to Rotterdam, Delft and beyond.',
+    ]}
+    usps={enUsps}
+    cities={enCities}
+  />
+
+  {/* ===== Analyse-CTA (bespoke Engels formulier, zelfde /api/contact-flow) ===== */}
+  <section class="cta cta--form" id="analyse">
+    <div class="cta-card">
+      <div class="cta-left">
+        <EyebrowPill variant="highlight">Free website analysis</EyebrowPill>
+        <h2 class="cta-title">
+          Want to know where you stand?<br /><em>Ask for a free analysis.</em>
+        </h2>
+        <p class="cta-text">
+          A free website analysis within 48 hours. We look at the SEO, speed and conversion
+          of your current site and send back three concrete recommendations you can act on
+          right away.
+        </p>
+        <div class="cta-features">
+          <span><span class="check">✓</span> Within 48h</span>
+          <span><span class="check">✓</span> No obligation</span>
+          <span><span class="check">✓</span> No sales pitch</span>
+        </div>
+      </div>
+
+      <form class="cta-form" action="/api/contact" method="post" data-en-analyse-form novalidate>
+        <div class="cta-form-title">Start your analysis ↗</div>
+        <div class="form-field">
+          <label for="en-cta-website">Your website</label>
+          <input id="en-cta-website" name="current_website" type="url" placeholder="www.yourbusiness.com" required />
+        </div>
+        <div class="form-field">
+          <label for="en-cta-email">Email address</label>
+          <input id="en-cta-email" name="email" type="email" placeholder="you@yourbusiness.com" required />
+        </div>
+
+        {/* Context + synthetische velden zodat /api/contact's validatie slaagt. */}
+        <input type="hidden" name="onderwerp" value="Free website analysis" />
+        <input type="hidden" name="form_source" value="analyse" />
+        <input type="hidden" name="lang" value="en" />
+        <input type="hidden" name="name" value="Analysis request" data-en-cta-name />
+        <input type="hidden" name="message" value="Request for a free website analysis." data-en-cta-message />
+
+        {/* Anti-bot: honeypots + tijd-op-pagina (server checkt beide). */}
+        <div class="form-honeypot" aria-hidden="true">
+          <label>Website (leave this field empty)
+            <input type="text" name="website_url" tabindex="-1" autocomplete="off" />
+          </label>
+          <label>Subject
+            <input type="text" name="subject" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+        <input type="hidden" name="form_started_at" value="" data-en-cta-started-at />
+
+        <button class="form-btn" type="submit">Send analysis request ↗</button>
+        <span class="form-small" data-en-cta-status role="status" aria-live="polite">100% no obligation</span>
+      </form>
+    </div>
+  </section>
+
+  <Approach
+    eyebrow="How it works"
+    titleLine1="A way of working"
+    titleAccent="without"
+    titleLine3="the hassle."
+    desc1="No week long discovery phases, no vague quotes and no layers of account managers between you and the work. We look at what your business needs online and turn that into a concrete plan for your website, your findability and your growth."
+    desc2="After that we build, improve and measure. In clear steps, with short lines and without unnecessary fuss."
+    ctaLabel="Get in touch ↗"
+    ctaHref="/en/contact/"
+    steps={enSteps}
+    watermark={true}
+  />
+
+  <BetterCallCalvin
+    eyebrow="Get in touch"
+    titleLine1="Better call"
+    titleAccent="Calvin."
+    body={[
+      'Want to spar about what could be better on your website? Or just find out if Froseo is a good fit? Plan a free, no obligation call with Calvin.',
+      'In 30 minutes we look at your website, your findability and where the growth is.',
+    ]}
+    primaryLabel="Plan a call ↗"
+    primaryHref="/en/contact/"
+    secondaryLabel="Send a message"
+    secondaryHref="/en/contact/"
+    rating="5/5"
+    reviewCount="Google reviews"
+  />
+
+  <FAQ
+    eyebrow="Frequently asked"
+    titleLine1="Any"
+    titleAccent="questions?"
+    items={enFaq}
+  />
+</main>
+<FooterEN />
+
+<style is:global>
+  /* De Engelse H1 ("Web design & SEO / in Utrecht.") is langer dan de NL-hero;
+     iets kleiner zodat 'ie netjes op twee regels past. Alleen op EN-pagina's
+     (BaseLayout zet <html lang="en">), dus de NL-hero blijft ongemoeid. */
+  html[lang='en'] .hero-title {
+    font-size: clamp(32px, 4.6vw, 58px);
+  }
+
+  /* Twee hero-knoppen: niet over de halve kolom stretchen (flex:1), maar op
+     natuurlijke contentbreedte zoals een normale knop. */
+  html[lang='en'] .hero-actions:has(.btn-ghost) > .btn-primary,
+  html[lang='en'] .hero-actions:has(.btn-ghost) > .btn-ghost {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+</style>
+
+<script>
+  /* Analyse-CTA submit-handler (Engels). Fetch naar /api/contact zonder reload,
+     synthetiseert name + message zodat de gedeelde endpoint z'n validatie kan
+     doen. Eigen data-attrs zodat het niet botst met andere formulieren. */
+  const form = document.querySelector<HTMLFormElement>('[data-en-analyse-form]');
+  const status = document.querySelector<HTMLElement>('[data-en-cta-status]');
+  const startedAt = document.querySelector<HTMLInputElement>('[data-en-cta-started-at]');
+  const nameField = document.querySelector<HTMLInputElement>('[data-en-cta-name]');
+  const messageField = document.querySelector<HTMLInputElement>('[data-en-cta-message]');
+
+  if (startedAt) startedAt.value = String(Date.now());
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form || !status) return;
+
+    const submitBtn = form.querySelector<HTMLButtonElement>('.form-btn');
+    submitBtn?.setAttribute('disabled', 'true');
+    status.textContent = 'Sending…';
+    status.className = 'form-small';
+
+    const formData = new FormData(form);
+    const email = (formData.get('email') ?? '').toString();
+    const website = (formData.get('current_website') ?? '').toString();
+    if (nameField && email) {
+      nameField.value = email.split('@')[0] || 'Analysis request';
+      formData.set('name', nameField.value);
+    }
+    if (messageField && website) {
+      messageField.value = `Request for a free website analysis of ${website}.`;
+      formData.set('message', messageField.value);
+    }
+
+    try {
+      const res = await fetch('/api/contact', { method: 'POST', body: formData });
+      const json = await res.json().catch(() => ({}));
+      if (res.ok && json.ok) {
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({
+          event: 'generate_lead',
+          lead_type: 'analyse',
+          form_location: 'homepage-en-cta',
+        });
+        status.textContent = '✓ Sent. We will get back to you soon.';
+        status.className = 'form-small is-success';
+        form.reset();
+        if (startedAt) startedAt.value = String(Date.now());
+      } else {
+        status.textContent = json.error ?? 'Something went wrong. Please try again later.';
+        status.className = 'form-small is-error';
+      }
+    } catch {
+      status.textContent = 'Something went wrong. Please try again later.';
+      status.className = 'form-small is-error';
+    } finally {
+      submitBtn?.removeAttribute('disabled');
+    }
+  });
+</script>

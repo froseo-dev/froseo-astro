@@ -22,9 +22,17 @@ interface Props {
       Voor secties op pagina's met eigen layout (zoals related-cases op
       case-page) waar de full-bleed breakout misalignement geeft. */
   compact?: boolean;
+  /** Override-link voor álle kaarten. Default: /cases/<slug>/. Gebruikt op
+      de Engelse homepage om naar /en/contact/ te sturen zolang er nog geen
+      Engelse case-pagina's zijn. */
+  cardHref?: string;
+  /** Render de kaarten zonder link (geen <a>, geen href). Voor de Engelse
+      homepage: er zijn nog geen Engelse case-pagina's, dus de kaart zelf
+      linkt nergens heen — alleen de knoppen onder de rij. */
+  linkless?: boolean;
 }
 
-const { cases, mobileLimit = 4, id = 'cases-row', compact = false } = Astro.props;
+const { cases, mobileLimit = 4, id = 'cases-row', compact = false, cardHref, linkless = false } = Astro.props;
 
 const items = cases.map((c) => ({
   slug: c.data.slug,
@@ -39,12 +47,16 @@ const items = cases.map((c) => ({
 
 <div class={`cases-row-wrap${compact ? ' cases-row-wrap--compact' : ''}`} data-cases-wrap={id}>
   <div class="cases-row" data-cases-row={id} role="list" aria-label="Cases">
-    {items.map((it, i) => (
-      <a
-        class={`cases-row-card ${i >= mobileLimit ? 'is-desktop-only' : ''}`}
-        href={`/cases/${it.slug}/`}
+    {items.map((it, i) => {
+      const Card = linkless ? 'div' : 'a';
+      const linkAttrs = linkless
+        ? {}
+        : { href: cardHref ?? `/cases/${it.slug}/`, 'aria-label': `Bekijk case ${it.client}` };
+      return (
+      <Card
+        class={`cases-row-card${linkless ? ' is-linkless' : ''} ${i >= mobileLimit ? 'is-desktop-only' : ''}`}
         role="listitem"
-        aria-label={`Bekijk case ${it.client}`}
+        {...linkAttrs}
       >
         <div class="cases-row-media">
           <Image
@@ -69,8 +81,9 @@ const items = cases.map((c) => ({
             <div class="cases-row-result">{it.result}</div>
           )}
         </div>
-      </a>
-    ))}
+      </Card>
+      );
+    })}
   </div>
 
   <div class="cases-row-nav-wrap" aria-hidden="false">
@@ -78,6 +91,11 @@ const items = cases.map((c) => ({
     <button class="cases-row-nav" type="button" data-cases-next={id} aria-label="Volgende cases">›</button>
   </div>
 </div>
+
+<style>
+  /* Niet-klikbare kaarten (Engelse homepage): geen klik-affordance. */
+  .cases-row-card.is-linkless { cursor: default; }
+</style>
 
 <script>
   /* Infinite carousel met silent-reset techniek:

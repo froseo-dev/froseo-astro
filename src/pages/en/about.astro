@@ -1,0 +1,232 @@
+---
+/**
+ * /en/about/ — Engelse About. Compacte, vertaalde variant van /over-ons/.
+ * Hergebruikt de globale `over-*`-classes (styling staat in global.css) en
+ * NavEN/FooterEN. Interne links wijzen naar /en/contact/. Geen services-grid,
+ * cases-showcase of VisitAddress (die linken/teksten zijn nog NL).
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import NavEN from '@components/layout/NavEN.astro';
+import FooterEN from '@components/layout/FooterEN.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import LogosTicker from '@components/sections/LogosTicker.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import { Image } from 'astro:assets';
+import calvinPhoto from '@assets/team/calvin.webp';
+import rowanPhoto from '@assets/team/rowan.webp';
+import charlottePhoto from '@assets/team/charlotte.webp';
+import thomPhoto from '@assets/team/thom.webp';
+import senNoRikyu from '@assets/team/sen-no-rikyu.jpg';
+
+const pageTitle = 'About Froseo | Web design & SEO agency in Utrecht';
+const pageDesc =
+  'A small team of opinionated specialists from Utrecht. Web design, SEO and online marketing for ambitious businesses. Active since 2010, a collective since 2021.';
+
+type ImageMetadata = import('astro').ImageMetadata;
+type TeamMember = {
+  name: string;
+  role: string;
+  body: string;
+  photo?: ImageMetadata;
+  accent: 'highlight' | 'teal' | 'primary' | 'rare';
+};
+
+const team: TeamMember[] = [
+  {
+    name: 'Calvin',
+    role: 'SEO, AI & WordPress',
+    body: 'The brain behind Froseo. An SEO specialist and WordPress designer with 15+ years on the clock. Regularly pushes his limits with AI and Astro projects. Has a big love for ice hockey and his little daughter.',
+    photo: calvinPhoto,
+    accent: 'teal',
+  },
+  {
+    name: 'Rowan',
+    role: 'Development & Design',
+    body: 'Martial arts specialist and graphic designer. Our guy for DTP work and great logos (f*ck ai!). Would happily work from Japan 365 days a year.',
+    photo: rowanPhoto,
+    accent: 'rare',
+  },
+  {
+    name: 'Thom',
+    role: 'Paid media & tag manager',
+    body: 'Our paid media (ads) and tag manager guru. Built ad campaigns for big names like NS and ABN AMRO, but prefers helping smaller business owners. Also an Asia fanatic.',
+    photo: thomPhoto,
+    accent: 'highlight',
+  },
+  {
+    name: 'Charlotte',
+    role: 'SEO & content specialist',
+    body: 'SEO and content specialist. Has made an obsessive sport out of reaching #1 positions. Keeps trying to get the boys to try a yoga or tai chi class. So far without success.',
+    photo: charlottePhoto,
+    accent: 'primary',
+  },
+];
+
+const values = [
+  {
+    title: 'Small team, big impact',
+    body: 'No layers between you and the people doing the work. Emails reach whoever needs them, decisions get made fast, and someone is always reachable.',
+  },
+  {
+    title: 'Honest about what works',
+    body: 'No vague reports, no hidden conditions. We say what we do, what it costs and what you can expect. If we are not the right fit, we say that too.',
+  },
+  {
+    title: 'Creative with nerve',
+    body: 'No off-the-shelf templates. We design what fits your business, even when that differs from what everyone else does. Opinionated, but grounded.',
+  },
+  {
+    title: 'In the game since 2010',
+    body: '15+ years in web design and online marketing, 80+ projects live, across many industries. That experience goes into every project we deliver.',
+  },
+];
+---
+
+<BaseLayout lang="en" title={pageTitle} description={pageDesc}>
+  <NavEN />
+  <main>
+    <article class="over-page">
+
+      <section class="over-hero">
+        <div class="over-hero-inner">
+          <div class="over-hero-text">
+            <EyebrowPill variant="primary">About Froseo</EyebrowPill>
+            <h1 class="over-hero-title">
+              A small team of <em>opinionated specialists</em> from Utrecht.
+            </h1>
+            <p class="over-hero-lead">
+              We work for ambitious business owners with direct lines, honest work and tech that holds up. Our first website went live in 2010. In web design, SEO and online marketing we have kept building, learning and sharpening ever since.
+            </p>
+          </div>
+          <div class="over-hero-collage" aria-hidden="true">
+            <div class="over-hero-tile tile-1">
+              <Image src={calvinPhoto} alt="" widths={[200, 300, 420]} sizes="220px" loading="eager" />
+            </div>
+            <div class="over-hero-tile tile-2">
+              <Image src={rowanPhoto} alt="" widths={[200, 300, 420]} sizes="220px" loading="eager" />
+            </div>
+            <div class="over-hero-tile tile-3">
+              <Image src={thomPhoto} alt="" widths={[200, 300, 420]} sizes="220px" loading="eager" />
+            </div>
+            <div class="over-hero-tile tile-4">
+              <Image src={charlottePhoto} alt="" widths={[200, 300, 420]} sizes="220px" loading="eager" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <LogosTicker label="A few of our clients:" />
+
+      <section class="over-story">
+        <div class="over-story-inner">
+          <div class="over-story-text">
+            <EyebrowPill variant="rare">How it started</EyebrowPill>
+            <h2 class="over-story-title">
+              From one-man band to <em>collective.</em>
+            </h2>
+            <p>
+              Froseo is the digital child of our own Calvin. He started his career as a freelance SEO specialist and web designer more than 15 years ago.
+            </p>
+            <p>
+              After many years as a solo act, freelancing got too lonely (and too boring), so in 2021 he gathered a group of opinionated specialists to form a full-service collective. Froseo was born, and the rest is history.
+            </p>
+            <p>
+              Our team has an unhealthy amount of screen time, but also better things to do. Our graphic designer, Japan lover and black belt Rowan is in the dojo at least as often as behind his computer. Charlotte keeps her head cool with yoga and tai chi. And Calvin gets the frustration of 404 errors out of his system on the ice rink.
+            </p>
+          </div>
+          <aside class="over-story-quote">
+            <span class="over-story-quote-mark" aria-hidden="true">"</span>
+            <blockquote>In smallness lies greatness.</blockquote>
+            <footer class="over-story-quote-attr">
+              <Image
+                src={senNoRikyu}
+                alt="Portrait of Sen no Rikyū"
+                class="over-story-quote-img"
+                widths={[80, 120, 160]}
+                sizes="60px"
+                loading="lazy"
+              />
+              <cite>Sen no Rikyū<br /><span>tea master, 1522–1591</span></cite>
+            </footer>
+          </aside>
+        </div>
+      </section>
+
+      <section class="over-values">
+        <div class="over-values-inner">
+          <div class="over-values-head">
+            <EyebrowPill variant="highlight">What we stand for</EyebrowPill>
+            <h2 class="over-values-title">
+              Four things that show up in <em>every project.</em>
+            </h2>
+          </div>
+          <div class="over-values-grid">
+            {values.map((v, i) => (
+              <article class={`over-value-card value-${i}`}>
+                <span class="over-value-num">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="over-value-title">{v.title}</h3>
+                <p class="over-value-body">{v.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="over-team">
+        <div class="over-team-head">
+          <EyebrowPill variant="highlight">The team</EyebrowPill>
+          <h2 class="over-team-title">
+            The people behind <em>Froseo.</em>
+          </h2>
+          <p class="over-team-lead">
+            A small team, short lines and personal contact. You work directly with the person doing your work.
+          </p>
+        </div>
+        <div class="over-team-grid">
+          {team.map((m) => (
+            <article class={`over-team-card accent-${m.accent}`}>
+              <div class="over-team-portrait">
+                {m.photo ? (
+                  <Image
+                    src={m.photo}
+                    alt={m.name}
+                    class="over-team-photo"
+                    widths={[320, 480, 640, 800]}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span class="over-team-initial" aria-hidden="true">{m.name[0]}</span>
+                )}
+              </div>
+              <div class="over-team-meta">
+                <h3 class="over-team-name">{m.name}</h3>
+                <p class="over-team-role">{m.role}</p>
+                <p class="over-team-body">{m.body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <BetterCallCalvin
+        eyebrow="Let's talk"
+        titleLine1="Rather get to"
+        titleAccent="know us first?"
+        body={[
+          'Plan a free, no obligation call of 30 minutes. We look together at where you stand, what you want to achieve and whether we are the right team for you.',
+          'If we are not a fit, we say so honestly and point you in the right direction.',
+        ]}
+        primaryLabel="Plan an intro call ↗"
+        primaryHref="/en/contact/"
+        secondaryLabel="Send a message"
+        secondaryHref="/en/contact/"
+        rating="5/5"
+        reviewCount="Google reviews"
+      />
+
+    </article>
+  </main>
+  <FooterEN />
+</BaseLayout>
