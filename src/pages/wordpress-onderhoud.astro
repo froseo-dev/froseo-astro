@@ -217,7 +217,10 @@ const faqs = [
             <li>Premium plug-inlicenties t.w.v. €350+/jaar inbegrepen</li>
           </ul>
           <div class="lp-hero-actions">
-            <a class="btn-primary lp-hero-cta" href="#check">Gratis WordPress-check aanvragen ↗</a>
+            <a class="btn-primary lp-hero-cta" href="#check">
+              <span class="lp-cta-full">Gratis WordPress-check aanvragen ↗</span>
+              <span class="lp-cta-short">Gratis check ↗</span>
+            </a>
             <a class="btn-ghost lp-hero-secondary" href="#pakketten">Bekijk pakketten ↓</a>
           </div>
           <div class="lp-hero-reviews reviews-inline lp-hero-reviews-bottom">
@@ -265,9 +268,9 @@ const faqs = [
         naar de gratis check sturen (i.p.v. het 'Andere wensen?'-blok). */}
     <section class="lp-pkg-cta">
       <div class="lp-pkg-cta-inner">
-        <h2 class="lp-pkg-cta-title">Laat gratis de staat van je WordPress-site checken</h2>
+        <h2 class="lp-pkg-cta-title">Laat je WordPress-site gratis checken</h2>
         <p class="lp-pkg-cta-body">
-          Veel WordPress-websites lijken prima te werken, maar lopen achter met updates, beveiliging of technisch onderhoud. Met een gratis onderhoudscheck kijken we hoe jouw website ervoor staat en of structureel onderhoud verstandig is. Je krijgt eerlijk advies, ook als er weinig nodig is of een klein onderhoudspakket genoeg is.
+          Veel WordPress-sites werken ogenschijnlijk prima, maar lopen achter met updates en beveiliging. We checken gratis hoe jouw site ervoor staat en geven eerlijk advies, ook als er weinig nodig is.
         </p>
         <a class="btn-primary lp-pkg-cta-btn" href="#check">Gratis WordPress-check aanvragen ↗</a>
         <p class="lp-pkg-cta-note">Geen login nodig. Alleen je website-URL is genoeg.</p>
@@ -549,6 +552,12 @@ const faqs = [
     .lp-logo img { height: 24px; }
     .lp-header-inner { padding: 0.6rem 1rem; gap: 0.6rem; }
     .lp-header-cta { padding: 0.5rem 0.85rem; }
+    /* Hero-knoppen: korte label, minder zij-padding zodat beide op 1 regel passen. */
+    .lp-cta-full { display: none; }
+    .lp-cta-short { display: inline; }
+    .lp-hero-actions > a { padding-left: 0.5rem; padding-right: 0.5rem; }
+    /* Hero-titel iets kleiner zodat hij op 2 regels valt. */
+    .lp-hero-title { font-size: clamp(1.85rem, 6.5vw, 2.3rem); }
   }
 
   /* ============================================================
@@ -641,6 +650,8 @@ const faqs = [
   }
   /* Review-blok dat alleen op mobiel bovenin verschijnt (i.p.v. de pill). */
   .lp-hero-reviews-top { display: none; margin-bottom: 1.25rem; }
+  /* Korte knoplabel alleen op mobiel (zie media query). */
+  .lp-cta-short { display: none; }
   .lp-hero-media { display: flex; justify-content: center; }
   .lp-hero-img {
     width: 100%;
