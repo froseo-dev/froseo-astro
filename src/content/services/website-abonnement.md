@@ -2,12 +2,13 @@
 slug: website-abonnement
 title: Website abonnement
 shortTitle: Website abonnement
-heroTitle: Het website abonnement
-heroAccent: 'dat met je meegroeit.'
+heroTitle: Website abonnement
+heroAccent: 'zonder opstartkosten.'
 heroAccentBlock: true
 heroImage: ../../assets/hero/website-abonnement-hero.webp
 heroAlt: 'Website abonnement van Froseo: Club12 op desktop, Prime Performance op mobiel'
-metaTitle: 'Website abonnement voor een vaste lage prijs | Zonder opstartkosten'
+metaTitle: 'Website abonnement vanaf €89 per maand | Zonder opstartkosten'
+metaDescription: 'Laat een professionele website maken voor een vast maandbedrag. Vanaf €89 per maand, zonder opstartkosten en inclusief hosting, SSL, technisch beheer, kleine wijzigingen en SEO-rapportage.'
 heroEyebrow: '15+ jaar ervaring in webdesign'
 heroChecks:
   - 'Razendsnel: we streven naar 90+ Google PageSpeed'
@@ -32,9 +33,9 @@ bullets:
 showAboPackages: true
 hideShowcase: false
 pricingEyebrow: 'Pakketten'
-pricingTitle: 'Twee pakketten,'
-pricingTitleAccent: 'één framework.'
-pricingLead: 'Kies de tier die past bij waar je nu staat. Doorgroeien naar Online Plus kan op elk moment, zonder dat we de site opnieuw bouwen.'
+pricingTitle: 'Website abonnement'
+pricingTitleAccent: 'pakketten.'
+pricingLead: 'Kies het website abonnement dat past bij je bedrijf. Met een website laten maken op abonnement hoef je geen groot bedrag vooraf te investeren. Je betaalt een vast maandbedrag en krijgt een professionele website inclusief hosting, technisch beheer, SSL, kleine wijzigingen en maandelijkse rapportage. Doorgroeien van Online Start naar Online Plus kan op elk moment, zonder dat we de site opnieuw bouwen.'
 
 # TODO: vervangen door Semmy-quote zodra zijn site live staat
 testimonialId: bas-renovatie-totaal
@@ -52,8 +53,8 @@ infraBlock:
     href: '/contact/?onderwerp=website-abonnement'
 
 comparison:
-  title: 'Eenmalige website of een'
-  titleAccent: 'website abonnement?'
+  title: 'Website abonnement of eenmalig'
+  titleAccent: 'een website laten maken?'
   withoutLabel: 'Eenmalig project'
   withLabel: 'Website abonnement Froseo'
   items:
@@ -119,4 +120,30 @@ faqs:
     a: 'Nee, webshops, ledenomgevingen, klantportalen en databases vallen buiten het abonnement. Dat zijn andere bouwtrajecten met andere techniek en andere onderhoudslast. Voor een webshop verwijzen we vaak naar een Shopify-route of een maatwerktraject. Een ledenomgeving of klantportaal bouwen we op aanvraag als los project.'
   - q: Werken jullie ook voor ZZP en heel kleine bedrijven?
     a: 'Ja, voor veel ZZP''ers en éénpitters is Online Start de slimste manier om professioneel online te staan zonder grote startinvestering. We werken voor MKB met 2 tot 25 medewerkers én voor ZZP''ers met serieuze plannen. Voor bedrijven die meerdere diensten, locaties of landingspagina''s nodig hebben is Online Plus logischer.'
+  - q: Wat kost een website abonnement?
+    a: 'Een website abonnement bij Froseo start vanaf €89 per maand, exclusief btw. Daarvoor krijg je een professionele website inclusief hosting, SSL, technisch beheer, kleine wijzigingen en maandelijkse rapportage. Heb je meer pagina''s, meer support en uitgebreidere rapportage nodig, dan is Online Plus er vanaf €179 per maand.'
+  - q: Is een website abonnement geschikt voor zzp''ers?
+    a: 'Ja, juist voor veel zzp''ers is een website abonnement interessant. Je hoeft geen grote investering vooraf te doen en hebt toch een professionele website met hosting, onderhoud en support inbegrepen. Daardoor blijven je maandelijkse websitekosten voorspelbaar.'
+  - q: Kan ik ook een website laten maken zonder opstartkosten?
+    a: 'Ja. Met het website abonnement van Froseo betaal je geen opstartkosten. Je betaalt een vast bedrag per maand voor de bouw, de hosting, het technisch beheer en de ondersteuning van je website.'
+  - q: Zit SEO inbegrepen bij het website abonnement?
+    a: 'De technische SEO-basis zit inbegrepen: een snelle structuur, sitemap, metadata, schema en Search Console. Actieve SEO zoals zoekwoordonderzoek, nieuwe landingspagina''s, blogartikelen en linkbuilding valt buiten het abonnement en kun je los toevoegen via een SEO-traject.'
+  - q: Kan ik mijn bestaande website omzetten naar een website abonnement?
+    a: 'Vaak wel. We kijken eerst naar je huidige website, content, techniek en doelen. Soms bouwen we de site opnieuw op ons framework, soms nemen we vooral de belangrijkste pagina''s en structuur mee.'
+  - q: Wat is het verschil tussen een website huren en een website abonnement?
+    a: 'Bij een website abonnement betaal je maandelijks voor je website, hosting, beheer en support. Sommige mensen noemen dat ook een website huren, maar bij ons ligt de nadruk vooral op service, doorontwikkeling en voorspelbare maandelijkse kosten.'
 ---
+
+## Wat is een website abonnement?
+
+Een website abonnement is een manier om een professionele website te laten maken zonder grote investering vooraf. Je betaalt een vast bedrag per maand. Daarin zitten de bouw van de site, hosting, SSL, technisch beheer, kleine wijzigingen en maandelijkse rapportage. Zo hoef je niet zelf losse partijen te regelen voor ontwerp, hosting, onderhoud en support. Het zit allemaal in één maandbedrag.
+
+## Website laten maken op abonnement
+
+Wil je een professionele website, maar liever geen groot bedrag vooraf neerleggen? Dan is een website laten maken op abonnement een praktische oplossing. Je laat je site bouwen voor een vast bedrag per maand, inclusief hosting, SSL, technisch beheer en kleine aanpassingen.
+
+Voor zzp'ers en mkb-bedrijven is dat vaak overzichtelijker dan een eenmalig [webdesigntraject](/webdesign/). Je weet vooraf wat je per maand betaalt en je hoeft niet zelf losse partijen te regelen voor hosting, [onderhoud](/website-onderhoud/) of technische updates. Heb je al een site die vooral beter moet presteren, kijk dan naar [website optimalisatie](/website-optimalisatie/). Ben je zzp'er, dan sluit [een website laten maken voor zzp](/website-laten-maken-zzp/) net iets specifieker op jouw situatie aan.
+
+## Wat kost een website abonnement?
+
+Bij Froseo start een website abonnement vanaf €89 per maand, exclusief btw. Voor dat bedrag krijg je een professionele website op het Froseo-framework, inclusief hosting, SSL, de technische SEO-basis, maandelijkse positierapportage en 30 minuten wijzigingen per maand. Heb je meer pagina's, meer wijzigingstijd en uitgebreidere rapportage nodig, dan is er Online Plus vanaf €179 per maand. Wil je daarnaast structureel hoger in Google komen, dan combineer je het abonnement met een [SEO-traject](/seo/).

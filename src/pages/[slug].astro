@@ -64,7 +64,7 @@ const showcaseFeatured = featuredCaseEntry
 
 const heroLead = s.heroLead ?? s.description;
 const pageTitle = s.metaTitle ?? `${s.shortTitle ?? s.title} | Froseo`;
-const pageDesc = s.metaDescription ?? s.description;
+const pageDesc = interpolate(s.metaDescription ?? s.description);
 ---
 
 <BaseLayout title={pageTitle} description={pageDesc}>
@@ -272,11 +272,11 @@ const pageDesc = s.metaDescription ?? s.description;
       <!-- Met-vs-zonder comparison-blok (CRO-trigger) -->
       {s.comparison && (
         <Comparison
-          title={s.comparison.title}
-          titleAccent={s.comparison.titleAccent}
+          title={interpolate(s.comparison.title)}
+          titleAccent={interpolate(s.comparison.titleAccent)}
           withoutLabel={s.comparison.withoutLabel}
           withLabel={s.comparison.withLabel}
-          items={s.comparison.items}
+          items={s.comparison.items.map((it) => ({ without: interpolate(it.without), with: interpolate(it.with) }))}
         />
       )}
 
