@@ -22,6 +22,8 @@ import Testimonial from '@components/sections/Testimonial.astro';
 import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import { interpolate, review } from '@data/site-config';
+import { aboPackages } from '@data/abo-packages';
+import { maintenancePackages } from '@data/maintenance-packages';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -65,12 +67,43 @@ const showcaseFeatured = featuredCaseEntry
 const heroLead = s.heroLead ?? s.description;
 const pageTitle = s.metaTitle ?? `${s.shortTitle ?? s.title} | Froseo`;
 const pageDesc = interpolate(s.metaDescription ?? s.description);
+
+/* JSON-LD Service-schema (+ Offers uit het getoonde pakketset). FAQPage zit
+   al in de FAQ-component, LocalBusiness/Organization in BaseLayout. */
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://froseo.nl').toString();
+const offerPackages: any[] = s.showAboPackages
+  ? aboPackages
+  : s.showMaintenancePackages
+    ? maintenancePackages
+    : [];
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: s.shortTitle ?? s.title,
+  serviceType: s.shortTitle ?? s.title,
+  description: pageDesc,
+  url: canonical,
+  provider: { '@type': 'Organization', name: 'Froseo', url: 'https://froseo.nl/' },
+  areaServed: { '@type': 'Country', name: 'Nederland' },
+  ...(offerPackages.length > 0
+    ? {
+        offers: offerPackages.map((p) => ({
+          '@type': 'Offer',
+          name: p.name,
+          price: String(p.yearlyMonthlyPrice ?? Math.round((p.yearlyPrice ?? p.monthlyPrice * 12) / 12)),
+          priceCurrency: 'EUR',
+          url: `${canonical}#pakketten`,
+        })),
+      }
+    : {}),
+};
 ---
 
 <BaseLayout title={pageTitle} description={pageDesc}>
   <Topbar />
   <Nav />
   <main>
+    <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
     <article class="service-page">
       <!-- ============================================================
            Hero
