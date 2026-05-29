@@ -122,6 +122,24 @@ const pageDesc = interpolate(s.metaDescription ?? s.description);
       <!-- Logo carousel — proof / brand recognition direct na hero -->
       <LogosTicker />
 
+      {/* Donker introblok direct na de logo's (keyword-rijke intro hoog op de pagina). */}
+      {s.introBlock && (
+        <section class="service-infra">
+          <div class="service-infra-inner">
+            {s.introBlock.eyebrow && (
+              <EyebrowPill variant="highlight">{s.introBlock.eyebrow}</EyebrowPill>
+            )}
+            <h2 class="service-infra-title">
+              {s.introBlock.title}
+              {s.introBlock.titleAccent && <em>{s.introBlock.titleAccent}</em>}
+            </h2>
+            {s.introBlock.body.map((p) => (
+              <p class="service-infra-body">{interpolate(p)}</p>
+            ))}
+          </div>
+        </section>
+      )}
+
       <!-- ============================================================
            Onderhouds-pakketten (3 cards + custom-strip + maand/jaar toggle).
            Renderd alleen wanneer service.showMaintenancePackages = true.
@@ -370,7 +388,7 @@ const pageDesc = interpolate(s.metaDescription ?? s.description);
       {s.pillars && s.pillars.length > 0 && (
         <section class="service-pillars">
           <div class="service-pillars-head">
-            <EyebrowPill>Onder de motorkap</EyebrowPill>
+            <EyebrowPill>{s.pillarsEyebrow ?? 'Onder de motorkap'}</EyebrowPill>
             <h2 class="service-pillars-title">
               {s.pillarsTitle
                 ? <Fragment set:html={s.pillarsTitle} />

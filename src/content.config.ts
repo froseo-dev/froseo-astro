@@ -223,6 +223,17 @@ const services = defineCollection({
       })
       .optional(),
 
+    /** Donker introblok (zelfde stijl als infraBlock) dat direct na de
+        LogosTicker rendert. Voor een keyword-rijke intro hoog op de pagina. */
+    introBlock: z
+      .object({
+        eyebrow: z.string().optional(),
+        title: z.string(),
+        titleAccent: z.string().optional(),
+        body: z.array(z.string()),
+      })
+      .optional(),
+
     /** Pain-points grid: visuele "wat gaat er fout zonder dit"-sectie. */
     painPointsTitle: z.string().optional(),
     painPointsTitleAccent: z.string().optional(),
@@ -319,6 +330,8 @@ const services = defineCollection({
       .optional(),
     /** Optionele section-title boven het pillars-accordion. Default als ontbrekend. */
     pillarsTitle: z.string().optional(),
+    /** Optionele eyebrow boven het pillars-accordion. Default 'Onder de motorkap'. */
+    pillarsEyebrow: z.string().optional(),
     /** Service-specifieke FAQ */
     faqs: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
     /** Showcase-config: eyebrow, title en optioneel een uitgelichte case
