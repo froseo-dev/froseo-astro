@@ -552,9 +552,11 @@ const faqs = [
     .lp-logo img { height: 24px; }
     .lp-header-inner { padding: 0.6rem 1rem; gap: 0.6rem; }
     .lp-header-cta { padding: 0.5rem 0.85rem; }
-    /* Hero-knoppen: korte label, minder zij-padding zodat beide op 1 regel passen. */
-    .lp-cta-full { display: none; }
-    .lp-cta-short { display: inline; }
+    /* Hero-knoppen: korte label, minder zij-padding zodat beide op 1 regel passen.
+       Specifiek met .lp-hero-cta zodat dit de basisregel (.lp-cta-short) wint,
+       ongeacht de volgorde in het bestand. */
+    .lp-hero-cta .lp-cta-full { display: none; }
+    .lp-hero-cta .lp-cta-short { display: inline; }
     .lp-hero-actions > a { padding-left: 0.5rem; padding-right: 0.5rem; }
     /* Hero-titel iets kleiner zodat hij op 2 regels valt. */
     .lp-hero-title { font-size: clamp(1.85rem, 6.5vw, 2.3rem); }
