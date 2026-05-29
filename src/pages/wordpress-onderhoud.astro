@@ -197,7 +197,13 @@ const faqs = [
     <section class="lp-hero">
       <div class="lp-hero-inner">
         <div class="lp-hero-text">
-          <EyebrowPill>60+ WordPress-sites in beheer</EyebrowPill>
+          <div class="lp-hero-pill"><EyebrowPill>60+ WordPress-sites in beheer</EyebrowPill></div>
+          {/* Op mobiel tonen we hier het review-blok i.p.v. de pill (zie styles). */}
+          <div class="reviews-inline lp-hero-reviews-top">
+            <ReviewAvatars />
+            <div class="stars">★★★★★</div>
+            <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
+          </div>
           <h1 class="lp-hero-title">
             WordPress onderhoud <em>zonder kopzorgen.</em>
           </h1>
@@ -214,7 +220,7 @@ const faqs = [
             <a class="btn-primary lp-hero-cta" href="#check">Gratis WordPress-check aanvragen ↗</a>
             <a class="btn-ghost lp-hero-secondary" href="#pakketten">Bekijk pakketten ↓</a>
           </div>
-          <div class="lp-hero-reviews reviews-inline">
+          <div class="lp-hero-reviews reviews-inline lp-hero-reviews-bottom">
             <ReviewAvatars />
             <div class="stars">★★★★★</div>
             <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
@@ -251,8 +257,22 @@ const faqs = [
         titleAccent="WordPress-onderhoudspakketten."
         lead="Drie pakketten met heldere maandprijzen, speciaal voor WordPress-sites. Maandelijks opzegbaar of jaarlijks met één maand gratis. Tussen pakketten switchen kan altijd."
         ctaMode="leadform"
+        showCustom={false}
       />
     </div>
+
+    {/* Compacte CTA na de pakketten: bezoekers die nog twijfelen laagdrempelig
+        naar de gratis check sturen (i.p.v. het 'Andere wensen?'-blok). */}
+    <section class="lp-pkg-cta">
+      <div class="lp-pkg-cta-inner">
+        <h2 class="lp-pkg-cta-title">Laat gratis de staat van je WordPress-site checken</h2>
+        <p class="lp-pkg-cta-body">
+          Veel WordPress-websites lijken prima te werken, maar lopen achter met updates, beveiliging of technisch onderhoud. Met een gratis onderhoudscheck kijken we hoe jouw website ervoor staat en of structureel onderhoud verstandig is. Je krijgt eerlijk advies, ook als er weinig nodig is of een klein onderhoudspakket genoeg is.
+        </p>
+        <a class="btn-primary lp-pkg-cta-btn" href="#check">Gratis WordPress-check aanvragen ↗</a>
+        <p class="lp-pkg-cta-note">Geen login nodig. Alleen je website-URL is genoeg.</p>
+      </div>
+    </section>
 
     {/* Klant-quote tussen pakketten en de vergelijking. */}
     <Testimonial id="auke-club12" variant="card" />
@@ -525,6 +545,10 @@ const faqs = [
   }
   @media (max-width: 640px) {
     .lp-header-phone { display: none; }
+    /* Logo kleiner + minder breed zodat de 'Gratis check'-knop ruimte houdt. */
+    .lp-logo img { height: 24px; }
+    .lp-header-inner { padding: 0.6rem 1rem; gap: 0.6rem; }
+    .lp-header-cta { padding: 0.5rem 0.85rem; }
   }
 
   /* ============================================================
@@ -615,6 +639,8 @@ const faqs = [
     gap: 0.85rem;
     margin-bottom: 1.5rem;
   }
+  /* Review-blok dat alleen op mobiel bovenin verschijnt (i.p.v. de pill). */
+  .lp-hero-reviews-top { display: none; margin-bottom: 1.25rem; }
   .lp-hero-media { display: flex; justify-content: center; }
   .lp-hero-img {
     width: 100%;
@@ -625,12 +651,49 @@ const faqs = [
   @media (max-width: 900px) {
     .lp-hero-inner { grid-template-columns: 1fr; }
     /* Afbeelding onder de tekst op mobiel (geen order-flip meer). */
+    /* Pill weg, review-blok bovenin, onderste reviews weg = minder clutter. */
+    .lp-hero-pill { display: none; }
+    .lp-hero-reviews-top { display: flex; }
+    .lp-hero-reviews-bottom { display: none; }
+    /* Knoppen naast elkaar en even breed. */
+    .lp-hero-actions { flex-wrap: nowrap; gap: 0.6rem; }
+    .lp-hero-actions > a {
+      flex: 1 1 0;
+      justify-content: center;
+      text-align: center;
+      padding-left: 0.7rem;
+      padding-right: 0.7rem;
+    }
   }
 
   /* PainPoints-kop: breder + iets kleiner zodat 'Waar je tegenaan loopt
      zonder WordPress onderhoud.' netjes op ~2 regels valt i.p.v. te smal/groot. */
   #waarom :global(.pain-points-head) { max-width: 940px; }
   #waarom :global(.pain-points-title) { font-size: clamp(26px, 3vw, 38px); }
+
+  /* Compacte CTA na de pakketten (vervangt het 'Andere wensen?'-blok). */
+  .lp-pkg-cta {
+    padding: clamp(1.5rem, 3vw, 2.5rem) 1.5rem clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .lp-pkg-cta-inner {
+    max-width: 44rem;
+    margin: 0 auto;
+    text-align: center;
+    background: var(--surface-card, #fff);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 1rem;
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+  }
+  .lp-pkg-cta-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.35rem, 3vw, 1.9rem);
+    line-height: 1.2;
+    margin-bottom: 0.85rem;
+  }
+  .lp-pkg-cta-body { line-height: 1.6; color: var(--text-muted, #555); margin-bottom: 1.5rem; }
+  .lp-pkg-cta-note { margin-top: 0.75rem; font-size: 0.85rem; opacity: 0.65; }
 
   /* ============================================================
      Onderhoudscheck-sectie + formulier

@@ -154,10 +154,14 @@ const businessSchema = {
       ></iframe>
     </noscript>
     <slot />
-    <MobileCTA
-      label={lang === 'en' ? 'Request a free proposal' : undefined}
-      href={lang === 'en' ? '/en/contact/' : undefined}
-    />
+    {/* Mobiele sticky CTA sitewide, behalve op de contactpagina (NL + EN):
+        daar is de bezoeker al bij het formulier. */}
+    {!pathname.includes('/contact') && (
+      <MobileCTA
+        label={lang === 'en' ? 'Request a free proposal' : undefined}
+        href={lang === 'en' ? '/en/contact/' : undefined}
+      />
+    )}
     <PaletteSwitcher />
 
     {/* Attributie-capture voor CRM-leads: legt UTM-params, gclid, referrer en

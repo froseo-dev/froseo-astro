@@ -22,6 +22,9 @@ interface Props {
    *  'leadform': knop scrollt naar het #check-formulier op dezelfde pagina
    *  (gebruikt op de Ads-landingspagina, houdt de bezoeker op het pad). */
   ctaMode?: 'contact' | 'leadform';
+  /** Toon de "Andere wensen?"-custom-strip onder de cards. Op de Ads-LP uit
+   *  om de bezoeker in de conversieflow te houden. */
+  showCustom?: boolean;
 }
 
 const {
@@ -30,6 +33,7 @@ const {
   titleAccent = 'onderhoudspakketten.',
   lead = 'Drie pakketten met heldere prijzen. Maandelijks opzegbaar, of jaarlijks met één maand gratis. Doorgroeien tussen pakketten kan op elk moment.',
   ctaMode = 'contact',
+  showCustom = true,
 } = Astro.props;
 ---
 
@@ -120,13 +124,15 @@ const {
   </div>
 
   <!-- Custom-strip onder de drie cards -->
-  <div class="pricing-custom">
-    <div class="pricing-custom-text">
-      <h3 class="pricing-custom-title">{maintenanceCustom.title}</h3>
-      <p class="pricing-custom-body">{maintenanceCustom.body}</p>
+  {showCustom && (
+    <div class="pricing-custom">
+      <div class="pricing-custom-text">
+        <h3 class="pricing-custom-title">{maintenanceCustom.title}</h3>
+        <p class="pricing-custom-body">{maintenanceCustom.body}</p>
+      </div>
+      <a class="btn-ghost pricing-custom-cta" href={maintenanceCustom.ctaHref}>{maintenanceCustom.ctaLabel}</a>
     </div>
-    <a class="btn-ghost pricing-custom-cta" href={maintenanceCustom.ctaHref}>{maintenanceCustom.ctaLabel}</a>
-  </div>
+  )}
 </section>
 
 <script>
