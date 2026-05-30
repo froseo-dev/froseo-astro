@@ -1,19 +1,27 @@
 ---
 /**
- * SEO-landingspagina /website-laten-maken-zzp.
+ * SEO-landingspagina /website-laten-maken-zzp/.
  *
- * Doel: keyword-gerichte landing voor zzp/MKB-zoekopdrachten. Niet
- * gelinkt vanuit het hoofdmenu. Bestaat als custom Astro-page (niet via
- * de services-collection) zodat we vrij kunnen omgaan met de structuur,
- * o.a.:
+ * Focus: zzp-zoekintentie. MKB komt zijdelings voor maar is bewust geen
+ * hoofdpositionering. De pagina is uniek opgebouwd (custom Astro-page,
+ * niet via de services-collection) zodat we vrij blokken kunnen schikken
+ * en achtergrondkleuren kunnen afwisselen voor visueel ritme.
  *
- *   1. De "visuele h1" in de hero rendert als <div>. De échte <h1>
- *      met de doel-keyword zit lager op de pagina, in een eigen blok.
- *      Wens van Calvin op basis van de oude /website-laten-maken-zzp/
- *      die het SEO-mátig al goed deed.
- *   2. Het "Welke ZZP'ers"-blok rendert als accordion met álle items
- *      dicht (klik om te openen). Voorkomt dat de pagina onnodig
- *      uitdijt door 17 segment-paragrafen onder elkaar.
+ * Sectievolgorde (afwisselend licht/donker/teal):
+ *   1. Hero (cream)               - visuele "h1" als div
+ *   2. LogosTicker
+ *   3. Echte h1 + lead (cream)
+ *   4. Prijs/keuze - 3 cards      (cream-deep)
+ *   5. USPs - 4 cards             (cream)
+ *   6. Wanneer is het waard?      (donkerpaars + grid)
+ *   7. Showcase (cases)
+ *   8. Comparison "Zelf vs laten maken?"
+ *   9. CalvinNote
+ *  10. Segments - 4 grouped cards (cream)
+ *  11. Goedkoop vs klanten        (teal)
+ *  12. Vakman CTA                 (donker)
+ *  13. BetterCallCalvin
+ *  14. FAQ
  *
  * Pagina is bewust niet in het hoofdmenu opgenomen.
  */
@@ -29,19 +37,18 @@ import LogosTicker from '@components/sections/LogosTicker.astro';
 import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
 import CalvinNote from '@components/sections/CalvinNote.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import Comparison from '@components/sections/Comparison.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { review, pricing, contact } from '@data/site-config';
 import heroMockup from '@assets/hero/website-laten-maken-zzp-hero.webp';
 
-const pageTitle = 'Website laten maken voor ZZP en MKB | Froseo';
+const pageTitle = "Website laten maken als zzp'er | Vanaf €89/m | Froseo";
 const pageDesc =
-  `Betaalbare maatwerk WordPress websites voor ZZP'ers en MKB, of een all-inclusive abonnement vanaf ${pricing.abboFromInline}. Google Proof, lokaal vindbaar en volledig ontzorgd: design, hosting en onderhoud.`;
+  `Laat als zzp'er een professionele website maken die snel laadt, vertrouwen wekt en klaar is voor Google. Kies maatwerk of een all-in website abonnement vanaf ${pricing.abboFromInline}.`;
 
-/* Cases voor de showcase — handmatig geselecteerd zodat ze de
-   ZZP/MKB-context representeren (vakman, personal trainer, kleine
-   one-pager, etc.). Order is bewust: groot proof bovenaan. */
+/* Cases voor de showcase - handmatig geselecteerd. */
 const allCases = await getCollection('cases', ({ data }) => data.published !== false);
 const showcaseSlugs = [
   'renovatie-totaal',
@@ -55,145 +62,145 @@ const showcaseCases = showcaseSlugs
   .map((slug) => allCases.find((c) => c.data.slug === slug))
   .filter((c): c is NonNullable<typeof c> => Boolean(c));
 
-/* Vier USP-mini-cards die op de oude pagina onder de hero stonden.
-   Icons matchen de SectionIcon-set (outline-SVG, currentColor). */
+/* Drie prijs/keuze-routes. Abonnement bewust eerst (vaakst gekozen). */
+const priceOptions = [
+  {
+    name: 'Website abonnement',
+    forWhom: 'Geen investering vooraf, alles geregeld',
+    price: `Vanaf ${pricing.abboFromInline}`,
+    description: "Een professionele site voor een vast maandbedrag. Hosting, technisch beheer en kleine wijzigingen zitten erbij. Geen opstartkosten en maandelijks opzegbaar na drie maanden.",
+    cta: { label: 'Bekijk het abonnement', href: '/website-abonnement/' },
+    featured: true,
+  },
+  {
+    name: 'One-pager website',
+    forWhom: "Startende zzp'er, professioneel online",
+    price: 'Vanaf €499',
+    description: "Een strakke, snelle one-pager die professioneel overkomt zodra iemand je naam googelt. Modern design, gericht op conversie.",
+    cta: { label: 'Vraag een offerte aan', href: '/contact/?onderwerp=zzp-onepager' },
+  },
+  {
+    name: 'Maatwerk website',
+    forWhom: "Zzp'er met meerdere diensten of lokale ambitie",
+    price: 'Vanaf €1499',
+    description: "Maatwerk met aparte dienstenpagina's, sterke structuur en lokale SEO-basis. Klaar om mee te groeien naarmate je bedrijf groeit.",
+    cta: { label: 'Bekijk maatwerk webdesign', href: '/webdesign/' },
+  },
+];
+
+/* Wanneer is een zzp-website de investering waard? - korte checks. */
+const investmentWorth = [
+  'Klanten je eerst online checken voordat ze contact opnemen.',
+  'Je afhankelijk bent van aanvragen uit je regio.',
+  'Je niet alleen via-via gevonden wilt worden.',
+  'Je je diensten beter wilt uitleggen dan op social media past.',
+  'Je betrouwbaar wilt overkomen naast je concurrenten.',
+  'Je Google wilt gebruiken als structureel kanaal voor nieuwe klanten.',
+];
+
+/* USPs - vier korte cards. */
 const usps = [
   {
     icon: 'shieldCheck',
     title: 'Google Proof',
-    body: 'Elke website wordt Google Proof opgeleverd, ook klaar om lokaal gevonden te worden. Goede techniek, snelle pagina\'s en de juiste structuur zitten er vanaf de basis in.',
+    body: "Elke site wordt Google Proof opgeleverd, klaar om lokaal gevonden te worden. Goede techniek, snelle pagina's en de juiste structuur zitten er vanaf de basis in.",
   },
   {
     icon: 'locationPin',
     title: 'Lokaal vindbaar',
-    body: 'Als ZZP\'er richt je je vaak op de eigen regio. Wij zorgen dat je in jouw plaats en branche bovenaan in Google opduikt.',
+    body: "Als zzp'er richt je je vaak op je eigen regio. We zorgen dat je in jouw plaats en branche bovenaan in Google opduikt.",
   },
   {
     icon: 'paletteSwatch',
-    title: 'Huisstijl & design',
-    body: 'Jouw logo en huisstijl zijn een belangrijk onderdeel van je online identiteit. Hulp nodig met het ontwerp? Wij staan klaar.',
+    title: 'Huisstijl en design',
+    body: 'Je logo en huisstijl horen bij je online identiteit. Hulp nodig met het ontwerp? We denken graag mee.',
   },
   {
     icon: 'toolbox',
     title: 'Full-service',
-    body: 'Van webdesign tot onderhoud: wij nemen alles uit handen. Alleen een nieuwe website nodig? Ook prima.',
+    body: 'Van webdesign tot onderhoud: we nemen alles uit handen. Alleen een nieuwe website nodig? Ook prima.',
   },
 ];
 
-/* Branche-segmenten — accordion, alle items dicht-by-default. Behoudt
-   de SEO-keyword density van de oude pagina maar laat de pagina niet
-   onnodig uitdijen visueel. */
+/* Comparison: zelf maken vs laten maken. */
+const comparison = {
+  title: 'Zelf maken of je zzp-website',
+  titleAccent: 'laten maken?',
+  withoutLabel: 'Zelf maken',
+  withLabel: 'Door Froseo laten maken',
+  items: [
+    { without: 'Goedkoop starten', with: 'Vanaf dag één professioneel oogt' },
+    { without: 'Veel zelf uitzoeken en aanmodderen', with: 'Wij regelen het, jij houdt tijd over voor je werk' },
+    { without: 'Prima voor een simpele start', with: 'Betere basis voor SEO en conversie' },
+    { without: 'Vaak beperkt maatwerk', with: 'Flexibeler uit te breiden naarmate je groeit' },
+    { without: 'Kost vooral je eigen tijd', with: 'Kost geld, maar bespaart tijd en gedoe' },
+  ],
+};
+
+/* Branches: vier groepen i.p.v. 18 losse accordions. */
 const segments = [
   {
-    title: 'Dakdekkers',
-    body: 'Als dakdekker wil je vooral gevonden worden in Google wanneer iemand "lekkage dak" of "dakdekker [plaats]" zoekt. Wij bouwen conversiegerichte websites die snel laden, mobiel perfect werken en klaar zijn voor lokale SEO. Inclusief offerteformulieren en foto-secties om je vakwerk te tonen.',
+    title: 'Vakmensen',
+    branches: 'Dakdekkers, aannemers, loodgieters, schilders, stukadoors, installateurs, schoorsteenvegers, timmermannen, elektriciens, tuinmannen en hoveniers.',
+    body: "Snelle, mobiel-eerst sites met offerteformulieren, een klikbaar telefoonnummer en lokale SEO. Klanten zoeken vakmensen vaak met spoed en op de telefoon. Daar bouwen we op.",
   },
   {
-    title: 'Aannemers',
-    body: 'Een goede website voor aannemers draait om vertrouwen en duidelijkheid. We zorgen voor een professionele uitstraling, overzichtelijke dienstenpagina\'s en ruimte voor projecten met foto\'s. Zo zien bezoekers meteen wat je kan en waarom ze jou moeten bellen voor hun verbouwing of renovatie.',
+    title: 'Gezondheid en coaching',
+    branches: "Personal trainers, coaches, yogastudio's en (massage)therapeuten.",
+    body: 'Sites die rust uitstralen, je aanpak en aanbod helder tonen en bezoekers een laagdrempelige intake aanbieden. Vertrouwen wekken is hier het halve werk.',
   },
   {
-    title: 'Loodgieters',
-    body: 'Een loodgieter wordt vaak met spoed gezocht: lekkage, verstopping, geen warm water. Wij bouwen websites die snel laden, mobiel direct laten zien wat je doet, en met een klikbaar telefoonnummer en spoedservice-blok bovenaan. Klanten bellen sneller, jij krijgt meer aanvragen.',
+    title: 'Beauty en lifestyle',
+    branches: 'Kappers, nagelstylisten, tattoo artists en schoonheidsspecialisten.',
+    body: "Visuele sites die je werk laten spreken: strakke portfolio, reviews en een eenvoudige boekingsoptie. Klanten beslissen vaak binnen seconden op mobiel.",
   },
   {
-    title: 'Schilders',
-    body: 'Schilderwerk is visueel werk en dat moet je site laten zien. Wij maken websites met ruimte voor voor- en na-foto\'s, een overzichtelijke dienstenstructuur (binnenwerk, buitenwerk, behangwerk) en duidelijke offerte-CTA\'s. Lokale SEO erbij zodat klanten in jouw werkgebied je vinden.',
-  },
-  {
-    title: 'Installateurs',
-    body: 'Voor cv-ketels, warmtepompen of leidingwerk: een installateurswebsite moet vooral betrouwbaarheid uitstralen. We richten hem zo in dat bezoekers snel snappen wat je doet, in welk gebied je werkt en hoe ze contact opnemen.',
-  },
-  {
-    title: 'Stukadoors',
-    body: 'Mensen zoeken vaak een stukadoor op korte termijn. Daarom maken we overzichtelijke, snelle websites die jouw beschikbaarheid, werkgebied en specialisaties duidelijk tonen. Inclusief ruimte voor voor- en na-foto\'s, die werken conversieverhogend.',
-  },
-  {
-    title: 'Schoorsteenvegers',
-    body: 'Schoorsteenvegers worden vaak via mobiel gezocht. Wij zorgen dat je website razendsnel laadt, mobiel top scoort én makkelijk contact biedt. Denk aan een klikbaar telefoonnummer en duidelijke seizoensaanbiedingen voor meer aanvragen.',
-  },
-  {
-    title: 'Timmermannen',
-    body: 'Als timmerman wil je laten zien dat je maatwerk levert. Wij bouwen websites met sfeerfoto\'s, projectbeschrijvingen en klantreviews. Ideaal om vertrouwen te wekken én klanten te inspireren tot actie.',
-  },
-  {
-    title: 'Elektriciens',
-    body: 'Voor elektriciens is bereikbaarheid essentieel. Wij zorgen voor een website waarop je diensten, spoedservice en keurmerken direct in beeld zijn. Ook perfect ingericht voor lokale zoekopdrachten zoals "elektricien [plaats]".',
-  },
-  {
-    title: 'Tuinmannen en hoveniers',
-    body: 'Als tuinman of hovenier draait het om sfeer, betrouwbaarheid en duidelijkheid. Wij maken websites met foto\'s van afgeronde projecten, heldere diensten en een contactknop die opvalt. Potentiële klanten willen weten wat je doet, waar je werkt en hoe snel je beschikbaar bent: wij zorgen dat dat meteen zichtbaar is.',
-  },
-  {
-    title: 'Personal trainers',
-    body: 'Als personal trainer draait het om vertrouwen en resultaat. Wij maken websites die jouw expertise tonen met foto\'s, succesverhalen, reviews en pakketten. Zo overtuig je bezoekers om met jou te starten, nog vóór het eerste gesprek.',
-  },
-  {
-    title: 'Yogastudio\'s',
-    body: 'Rust en eenvoud, ook online. Wij bouwen yoga-sites met een heldere structuur, mobielvriendelijke lesroosters en inschrijfopties. Je stijl en sfeer staan centraal, zodat bezoekers meteen voelen of jouw studio bij hen past.',
-  },
-  {
-    title: 'Kappers',
-    body: 'Een goede kapperswebsite toont jouw stijl en maakt boeken eenvoudig. Wij zorgen voor een strak design, klikbare telefoon- of WhatsApp-knop, een prijslijst en een fotogalerij van recente kapsels. Klanten beslissen vaak binnen seconden, wij zorgen dat je eruit springt.',
-  },
-  {
-    title: 'Massagetherapeuten',
-    body: 'Je website moet rust geven, maar ook duidelijk zijn. Wij maken een warme uitstraling met overzicht van behandelingen, tarieven en een simpele contactoptie. Inclusief ruimte voor certificering, werkwijze en klantbeoordelingen.',
-  },
-  {
-    title: 'Nagelstylisten',
-    body: 'Mensen boeken op basis van jouw werk. Daarom bouwen we visuele websites met een strak portfolio, reviews en een laagdrempelig afsprakensysteem. Perfect zichtbaar op mobiel, waar de meeste klanten zoeken én boeken.',
-  },
-  {
-    title: 'Tattoo artists',
-    body: 'Een unieke stijl verdient een eigen podium. We ontwerpen stoere, visuele websites waar jouw werk centraal staat. Denk aan duidelijke portfolio\'s, boekingsformulieren en contact via DM of WhatsApp.',
-  },
-  {
-    title: 'Schoonheidsspecialisten',
-    body: 'Laat zien wat je kan. Met een website die jouw behandelingen, prijslijst en resultaten professioneel toont, trek je makkelijker nieuwe klanten aan. We zorgen voor een zachte uitstraling, snelle laadtijd en een duidelijke call-to-action.',
-  },
-  {
-    title: 'Coaches',
-    body: 'Voor life coaches, health coaches en business coaches: je website moet vertrouwen wekken. We zorgen voor een rustige, overtuigende uitstraling met ruimte voor jouw verhaal, aanbod en een laagdrempelige intake-optie.',
+    title: 'Creatief en dienstverlening',
+    branches: 'Fotografen, ontwerpers, consultants en kleine bureaus.',
+    body: "Sites met sterke beeldtaal, duidelijke dienstenpagina's en ruimte voor je verhaal en je werk. Past bij zzp'ers waar de eerste indruk telt.",
   },
 ];
 
 const faqs = [
   {
-    q: "Waarom is een website belangrijk als ZZP'er?",
-    a: "Als ZZP'er ben jij het gezicht van je bedrijf. Een goede website zorgt dat je professioneel overkomt en laat 24/7 zien wat je doet, ook als je op klus bent of met klanten werkt. Daarnaast word je beter gevonden in Google, wat essentieel is om nieuwe opdrachten binnen te halen zonder afhankelijk te zijn van mond-tot-mondreclame.",
+    q: "Wat kost een website laten maken als zzp'er?",
+    a: `Dat hangt af van wat je nodig hebt. Een one-pager begint rond de €499, een maatwerk-website vanaf €1499. Wil je geen investering vooraf, dan kun je kiezen voor het website abonnement vanaf ${pricing.abboFromInline}, inclusief hosting en onderhoud. In een vrijblijvend gesprek bespreken we welke optie het beste past en geven we vooraf een heldere prijs.`,
   },
   {
-    q: "Wat kost een website voor ZZP'ers?",
-    a: `Het hangt af van wat je nodig hebt. We bieden betaalbare maatwerk-websites op offerte (eenmalig), of een all-inclusive abonnement vanaf ${pricing.abboFromInline} inclusief hosting en onderhoud. In een gratis adviesgesprek lopen we de opties met je door en geven we vooraf een heldere prijs, zonder verrassingen achteraf.`,
+    q: "Kan ik als zzp'er ook een website abonnement nemen?",
+    a: `Ja, juist voor zzp'ers is dat vaak de slimste route. Geen grote investering vooraf, een vast bedrag per maand en hosting, onderhoud en kleine wijzigingen zitten erbij. Het abonnement start vanaf ${pricing.abboFromInline} en is maandelijks opzegbaar na drie maanden.`,
   },
   {
-    q: 'Ik heb al werk via-via. Heb ik dan wel een website nodig?',
-    a: "Ook als je nu genoeg werk hebt, is een website slim. Het vergroot je zichtbaarheid, geeft potentiële klanten vertrouwen en helpt je voorbereid te zijn op rustige periodes. Veel mensen kijken eerst online om te checken of iemand betrouwbaar is, een website met je werk, reviews en contactgegevens maakt het verschil.",
+    q: "Is een one-page website genoeg voor een zzp'er?",
+    a: 'Vaak wel. Als je vooral professioneel wilt overkomen wanneer iemand je naam googelt, of een aanvraag mogelijk wilt maken, dan is een goed gebouwde one-pager prima. Wil je op meerdere diensten of plaatsen lokaal gevonden worden, dan is een uitgebreidere site met aparte pagina\'s slimmer.',
+  },
+  {
+    q: "Kan mijn website later worden uitgebreid met SEO-pagina's?",
+    a: "Zeker. We bouwen flexibel: starten met een one-pager of compacte site kan, en later breiden we uit met dienst- of locatiepagina's zodra je lokaal beter gevonden wilt worden. Geen opnieuw beginnen, gewoon doorbouwen op dezelfde basis.",
+  },
+  {
+    q: "Maken jullie ook websites voor startende zzp'ers?",
+    a: "Ja. Veel startende zzp'ers kiezen voor het abonnement of een compacte one-pager: snel professioneel online zonder grote investering vooraf. We denken mee over wat je wel en nog niet nodig hebt.",
+  },
+  {
+    q: 'Is WordPress of Astro beter voor mijn zzp-website?',
+    a: 'Dat hangt af van wat je site moet doen. WordPress is fijn als je vaak zelf content wilt aanpassen en bloggen. Astro is razendsnel en ideaal voor sites die vooral moeten presteren in Google en op mobiel. We adviseren wat past bij jouw situatie en doelen.',
+  },
+  {
+    q: "Word ik goed gevonden in Google als zzp'er?",
+    a: 'Jazeker. We bouwen je site met lokale SEO als basis. Dat betekent dat je goed scoort op zoekopdrachten als "loodgieter Utrecht" of "personal trainer Haarlem". We zorgen voor een sterke technische basis, snelle laadtijd en koppeling met je Google Business-profiel.',
   },
   {
     q: 'Ik heb weinig tijd. Hoeveel moet ik zelf doen?',
-    a: 'We nemen het grootste deel voor je uit handen. Jij levert wat basisinformatie aan (diensten, logo en eventueel wat foto\'s), wij doen de rest: ontwerp, techniek, teksten en inrichting. Geen dagenlang puzzelen of zelf teksten schrijven.',
-  },
-  {
-    q: "Word ik goed gevonden in Google als ZZP'er?",
-    a: 'Jazeker. We bouwen je website met lokale SEO als basis. Dat betekent dat je goed scoort op zoekopdrachten zoals "loodgieter Utrecht" of "personal trainer Haarlem". Ook zorgen we voor een goede technische basis, snelle laadtijd en koppeling met je Google Business-profiel als je die hebt.',
-  },
-  {
-    q: 'Kan ik mijn diensten of projecten laten zien?',
-    a: 'Absoluut. We maken ruimte voor duidelijke dienstenpagina\'s en een portfolio waarin je projecten of afgeronde klussen kan tonen. Dit geeft potentiële klanten meteen een goed beeld van je werk en bouwt vertrouwen op. We kunnen ook klantbeoordelingen of voor-en-na foto\'s toevoegen voor extra overtuiging.',
+    a: "Je levert wat basisinformatie aan (diensten, logo, eventueel wat foto's), wij doen de rest: ontwerp, techniek, teksten en inrichting. Geen dagenlang puzzelen of zelf alles schrijven.",
   },
   {
     q: 'Regelen jullie ook hosting en e-mail?',
-    a: 'Ja, we regelen alles voor je: domeinnaam, snelle hosting en professionele e-mailadressen (zoals "info@jouwbedrijf.nl"). Je hoeft niet zelf uit te zoeken hoe dat werkt, wij zorgen dat alles soepel en veilig draait. Wil je je mail koppelen aan Gmail of Outlook? Ook dat regelen we.',
+    a: 'Ja. Domeinnaam, snelle hosting en professionele e-mailadressen (zoals info@jouwbedrijf.nl) regelen we. Wil je je mail koppelen aan Gmail of Outlook? Ook dat doen we voor je.',
   },
   {
-    q: 'Kan ik later makkelijk uitbreiden?',
-    a: 'Zeker. Je website groeit met je mee. Een extra dienst toevoegen, een blog starten, klantcases plaatsen of online afspraken laten boeken: uitbreiden kan altijd. We bouwen flexibel en toekomstgericht, zodat je nooit opnieuw hoeft te beginnen als je bedrijf zich ontwikkelt.',
-  },
-  {
-    q: 'Doen jullie ook aan SEO (zoekmachine-optimalisatie)?',
-    a: 'Jazeker. SEO is misschien wel onze grootste specialisatie. Je kan er daarom op rekenen dat al onze websites Google Proof zijn opgeleverd. Voor wie verder wil dan de basis: we hebben aparte SEO-pakketten op maat die aansluiten bij je website.',
+    q: 'Ik heb al werk via-via. Heb ik dan wel een website nodig?',
+    a: 'Ook dan is een site slim. Veel mensen kijken eerst online of iemand betrouwbaar overkomt voordat ze contact opnemen. Daarnaast helpt het je voorbereid te zijn op rustigere periodes.',
   },
 ];
 
@@ -205,24 +212,28 @@ const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent
   <Nav />
   <main>
     <article class="zzp-page">
+
       <!-- ============================================================
-           Hero. Visuele "h1" rendert als <div>; de échte <h1> volgt
-           lager op de pagina (zie .zzp-intro).
+           HERO - visuele "h1" als div, echte <h1> volgt lager.
            ============================================================ -->
       <section class="service-hero has-image">
         <div class="service-hero-inner">
           <div class="service-hero-text">
-            <EyebrowPill>Betaalbaar en done-for-you</EyebrowPill>
+            <EyebrowPill>Voor zzp'ers</EyebrowPill>
             <div class="service-hero-title">
-              Websites voor ZZP'ers <em>die gevonden willen worden.</em>
+              Een professionele zzp-website, <em>zonder gedoe.</em>
             </div>
+            <p class="service-hero-lead">
+              Snel online, vertrouwen wekkend en klaar om aanvragen op te leveren. Wij bouwen je website, jij blijft je werk doen.
+            </p>
             <ul class="service-hero-checks">
-              <li>Betaalbaar maatwerk of all-inclusive abonnement vanaf {pricing.abboFromShort}</li>
-              <li>Google Proof opgeleverd, lokaal vindbaar vanaf dag één</li>
-              <li>Volledig ontzorgd: design, hosting en onderhoud</li>
+              <li>Betaalbaar maatwerk of all-in <a href="/website-abonnement/">website abonnement</a> vanaf {pricing.abboFromShort}</li>
+              <li>Sterke structuur, snelle techniek en <a href="/lokale-seo/">lokale SEO</a>-basis</li>
+              <li>Wij regelen design, teksten, hosting en onderhoud</li>
             </ul>
             <div class="service-hero-actions">
-              <a class="btn-primary" href="/contact/?onderwerp=zzp-website">Bespreek je website ↗</a>
+              <a class="btn-primary" href="/contact/?onderwerp=zzp-website">Bespreek mijn zzp-website ↗</a>
+              <a class="btn-ghost" href="#cases">Bekijk voorbeelden ↓</a>
             </div>
             <div class="service-hero-reviews reviews-inline">
               <ReviewAvatars />
@@ -234,8 +245,8 @@ const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent
           <div class="service-hero-media">
             <Image
               src={heroMockup}
-              alt="Website laten maken voor ZZP door Froseo: Steunder op desktop, Prime Performance op mobiel"
-              title="Website laten maken voor ZZP door Froseo: Steunder op desktop, Prime Performance op mobiel"
+              alt="Website laten maken voor zzp'er door Froseo: Steunder op desktop, Prime Performance op mobiel"
+              title="Website laten maken voor zzp'er door Froseo: Steunder op desktop, Prime Performance op mobiel"
               class="service-hero-img"
               widths={[640, 960, 1280, 1600]}
               sizes="(max-width: 1024px) 100vw, 640px"
@@ -249,28 +260,50 @@ const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent
       <LogosTicker />
 
       <!-- ============================================================
-           Echte <h1> + lead + CTA. Bewust compact en lager op de pagina
-           geplaatst zodat de keyword-h1 niet bovenaan de DOM hoeft. Doel:
-           visueel ruimte geven aan de hero-claim, semantisch de h1
-           dragen voor het primaire SEO-keyword.
+           Echte <h1> + intro-lead (compact, lager op de pagina).
            ============================================================ -->
       <section class="zzp-intro">
         <div class="zzp-intro-inner">
-          <EyebrowPill variant="rare">Voor ZZP en MKB</EyebrowPill>
-          <h1 class="zzp-intro-h1">Website laten maken <em>ZZP.</em></h1>
+          <EyebrowPill variant="rare">Voor zzp'ers</EyebrowPill>
+          <h1 class="zzp-intro-h1">Website laten maken als <em>zzp'er</em></h1>
           <p class="zzp-intro-lead">
-            Betaalbare maatwerk WordPress-websites voor ZZP'ers en MKB-bedrijven, of
-            een all-inclusive abonnement vanaf {pricing.abboFromInline} inclusief hosting
-            en onderhoud. Welke route bij je past hangt af van wat je nodig hebt;
-            we kijken graag met je mee.
+            Je bent hier waarschijnlijk omdat je een site wilt die professioneel oogt, klanten oplevert en niet te veel gedoe geeft. We bouwen sites die daar precies op gericht zijn: snel, vindbaar en passend bij wat jij doet. Geen vage bureau-praat, wel een eerlijk gesprek over wat je echt nodig hebt.
           </p>
-          <a class="btn-primary" href="/contact/?onderwerp=zzp-website">Seintje geven ↗</a>
         </div>
       </section>
 
       <!-- ============================================================
-           4 korte USP-cards: Google Proof, Lokaal vindbaar, Huisstijl,
-           Full-service. Behoudt de structuur van de oude pagina.
+           PRIJS/KEUZE - drie kaarten (cream-deep achtergrond).
+           ============================================================ -->
+      <section class="zzp-price">
+        <div class="zzp-price-inner">
+          <div class="zzp-price-head">
+            <EyebrowPill>Drie routes</EyebrowPill>
+            <h2 class="zzp-price-title">Wat kost een website laten maken als <em>zzp'er?</em></h2>
+            <p class="zzp-price-lead">
+              Welke route slim is, hangt af van waar je staat. Wil je geen investering vooraf? Het abonnement. Wil je betaalbaar professioneel online voor een eerste indruk? Een one-pager. Wil je echt lokaal gevonden worden op meerdere diensten? Maatwerk.
+            </p>
+          </div>
+          <div class="zzp-price-grid">
+            {priceOptions.map((opt) => (
+              <article class={`zzp-price-card${opt.featured ? ' is-featured' : ''}`}>
+                {opt.featured && <span class="zzp-price-badge">Meest gekozen door zzp'ers</span>}
+                <h3 class="zzp-price-name">{opt.name}</h3>
+                <p class="zzp-price-for">{opt.forWhom}</p>
+                <div class="zzp-price-amount">{opt.price}</div>
+                <p class="zzp-price-desc">{opt.description}</p>
+                <a class={opt.featured ? 'btn-primary' : 'btn-ghost'} href={opt.cta.href}>{opt.cta.label} ↗</a>
+              </article>
+            ))}
+          </div>
+          <p class="zzp-price-note">
+            Twijfel je tussen de routes? Stuur een korte mail of <a href={waUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a>, dan kijken we vrijblijvend mee.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           USPs - vier korte cards.
            ============================================================ -->
       <section class="zzp-usps">
         <div class="zzp-usps-inner">
@@ -287,116 +320,113 @@ const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent
       </section>
 
       <!-- ============================================================
-           Visuele showcase — cases als proof, direct na de USP-blokjes.
-           Bewust hoger op de pagina dan de WordPress-specialist body
-           zodat de bezoeker snel concreet werk ziet voor de uitleg-tekst.
+           Wanneer is het de investering waard? - donker blok + grid.
            ============================================================ -->
-      <WebsitesShowcase
-        cases={showcaseCases}
-        eyebrow="Cases"
-        title="Een aantal blije"
-        titleAccent="ZZP'ers en MKB'ers."
-      />
-
-      <!-- ============================================================
-           Body-blok "Dé WordPress website specialist voor ZZP en MKB."
-           ============================================================ -->
-      <section class="zzp-body">
-        <div class="zzp-body-inner">
-          <h2 class="zzp-body-title">
-            Dé WordPress-website specialist voor <em>ZZP en MKB.</em>
-          </h2>
-          <p>
-            Een goede website is van groot belang voor veel ZZP'ers en MKB-ondernemers.
-            Een website is je digitale visitekaartje en de plek waar bezoekers besluiten
-            of ze met je in zee gaan. Een goede ZZP-website voldoet wat ons betreft aan
-            een paar dingen: een solide technische basis, een sterke lokale vindbaarheid,
-            een betrouwbare en herkenbare uitstraling, en een heldere boodschap. En het
-            liefst is hij ook betaalbaar, met lage terugkerende kosten.
+      <section class="zzp-worth">
+        <div class="zzp-worth-inner">
+          <EyebrowPill variant="highlight">Wanneer wel, wanneer niet</EyebrowPill>
+          <h2 class="zzp-worth-title">Wanneer is een zzp-website de <em>investering waard?</em></h2>
+          <ul class="zzp-worth-list">
+            {investmentWorth.map((item) => (
+              <li><span class="zzp-worth-check" aria-hidden="true">✓</span><span>{item}</span></li>
+            ))}
+          </ul>
+          <p class="zzp-worth-after">
+            Voor sommige zzp'ers is een digitaal visitekaartje al genoeg. Voor anderen is de website het belangrijkste verkoopkanaal. Daarom bouwen we niet één standaardpakket voor iedereen, maar kijken we naar wat jouw bedrijf nodig heeft.
           </p>
-          <p>
-            Omdat we veel voldoening halen uit het helpen van kleinere ondernemers,
-            hebben we speciale pakketten voor ZZP en MKB. Een goede en betaalbare
-            website staat daarbij centraal. Daarnaast richten we ons op volledige
-            digitale ontzorging: design, onderhoud, hosting en optimalisaties horen
-            allemaal bij onze full-service dienstverlening.
-          </p>
-          <p>
-            Klinkt dit interessant of wil je meer weten? Neem gerust contact op. Onze
-            webdesigners in Utrecht zitten voor je klaar.
-          </p>
-          <a class="btn-ghost zzp-body-cta" href="/contact/?onderwerp=zzp-website">
-            Neem contact op ↗
-          </a>
         </div>
       </section>
 
       <!-- ============================================================
-           Mid-page Calvin-balk met advies-CTA. Sluit aan op de toon
-           van de service-pagina's.
+           SHOWCASE - cases als proof.
+           ============================================================ -->
+      <div id="cases">
+        <WebsitesShowcase
+          cases={showcaseCases}
+          eyebrow="Voorbeelden"
+          title="Websites die we maakten voor"
+          titleAccent="zzp'ers en kleine bedrijven."
+        />
+      </div>
+
+      <!-- ============================================================
+           COMPARISON - zelf maken of laten maken.
+           ============================================================ -->
+      <Comparison
+        title={comparison.title}
+        titleAccent={comparison.titleAccent}
+        withoutLabel={comparison.withoutLabel}
+        withLabel={comparison.withLabel}
+        items={comparison.items}
+      />
+      <section class="zzp-compare-after">
+        <p>
+          Twijfel je? We denken eerlijk mee. Soms is zelf starten prima. Maar als je site klanten moet overtuigen of lokaal vindbaar moet worden, is professioneel laten maken meestal slimmer.
+        </p>
+      </section>
+
+      <!-- ============================================================
+           CALVIN NOTE
            ============================================================ -->
       <CalvinNote
-        message="Twijfel je of je een nieuwe website moet laten maken? Of welk type bij je past? Stuur even wat je hebt staan, dan kijken we mee en geven we eerlijk advies."
+        message="Twijfel je welke route past, of past het abonnement bij jouw situatie? Stuur even wat je hebt staan, dan kijken we mee en geven we eerlijk advies."
         ctaLabel="Vraag advies aan ↗"
         ctaHref="/contact/?onderwerp=zzp-website-advies"
       />
 
       <!-- ============================================================
-           Branche-accordion. Alle items starten dicht; klik om te
-           openen. Behoudt SEO-keyword-dichtheid van de oude pagina
-           zonder dat alles tegelijk in beeld staat.
+           SEGMENTS - vier gegroepeerde categorie-cards.
            ============================================================ -->
       <section class="zzp-segments">
         <div class="zzp-segments-inner">
           <div class="zzp-segments-head">
-            <EyebrowPill variant="rare">Branches</EyebrowPill>
-            <h2 class="zzp-segments-title">
-              Welke ZZP'ers kunnen bij ons een <em>website laten maken?</em>
-            </h2>
+            <EyebrowPill variant="rare">Voor welke zzp'ers</EyebrowPill>
+            <h2 class="zzp-segments-title">Voor welke zzp'ers maken we <em>websites?</em></h2>
             <p class="zzp-segments-lead">
-              In principe kan iedere ZZP'er of MKB'er een website laten maken: een
-              goede online basis is voor elke ondernemer onmisbaar. Hieronder een
-              greep uit de branches waarvoor we de afgelopen jaren websites hebben
-              gebouwd. Klik op een branche voor de details.
+              Eigenlijk voor elke zzp'er die professioneel online wil zijn. Een greep uit ons werk:
             </p>
           </div>
-          <div class="zzp-segments-list">
-            {segments.map((s, i) => (
-              <details class="zzp-segment-item">
-                <summary>
-                  <span class="zzp-segment-num">{String(i + 1).padStart(2, '0')}</span>
-                  {/* H3 zodat elke branche-naam in de document-outline staat;
-                      goed voor SEO keyword-targeting per branche. */}
-                  <h3 class="zzp-segment-title">{s.title}</h3>
-                  <span class="zzp-segment-ico" aria-hidden="true">+</span>
-                </summary>
-                <div class="zzp-segment-body">
-                  <p>{s.body}</p>
-                </div>
-              </details>
+          <div class="zzp-segments-grid">
+            {segments.map((s) => (
+              <article class="zzp-segment-card">
+                <h3 class="zzp-segment-title">{s.title}</h3>
+                <p class="zzp-segment-branches">{s.branches}</p>
+                <p class="zzp-segment-body">{s.body}</p>
+              </article>
             ))}
           </div>
+          <p class="zzp-segments-after">
+            Staat je vak hier niet bij? Geen probleem. Stuur even een berichtje, dan kijken we mee.
+            <a href="/portfolio/">Bekijk ook ons portfolio ↗</a>
+          </p>
         </div>
       </section>
 
       <!-- ============================================================
-           Tussen-CTA "Als vakman of vakvrouw" — kort en duidelijk.
+           Goedkoop vs klanten - teal band.
+           ============================================================ -->
+      <section class="zzp-cheap">
+        <div class="zzp-cheap-inner">
+          <EyebrowPill variant="highlight">Wat krijg je voor je geld?</EyebrowPill>
+          <h2 class="zzp-cheap-title">Goedkope zzp-website of een website die <em>klanten oplevert?</em></h2>
+          <p class="zzp-cheap-body">
+            Voor een paar honderd euro kun je ergens een site laten bouwen. Prima als je alleen een digitaal visitekaartje nodig hebt. Wil je professioneel overkomen, goed gevonden worden en later kunnen uitbreiden, dan is de basis belangrijker dan alleen de laagste prijs. Denk aan snelheid, mobiele ervaring, <a href="/lokale-seo/">lokale SEO</a>, duidelijke dienstenpagina's, goede teksten en <a href="/website-onderhoud/">structureel onderhoud</a>.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Vakman CTA - donker afsluitblok.
            ============================================================ -->
       <section class="zzp-vakman-cta">
         <div class="zzp-vakman-cta-inner">
-          <h2 class="zzp-vakman-cta-title">
-            Als vakman of vakvrouw door ons je <em>website laten maken?</em>
-          </h2>
+          <h2 class="zzp-vakman-cta-title">Als vakman of vakvrouw door ons je <em>website laten maken?</em></h2>
           <p class="zzp-vakman-cta-body">
-            Dakdekker, kapper, coach, personal trainer of iets daartussenin: we kijken
-            graag mee wat er voor jouw bedrijf past. Een mailtje of WhatsApp is genoeg
-            om te beginnen.
+            Dakdekker, kapper, coach, personal trainer of iets daartussenin: we kijken graag mee wat past bij jouw bedrijf. Een mailtje of WhatsApp is genoeg om te beginnen.
           </p>
           <div class="zzp-vakman-cta-actions">
             <a class="btn-primary" href="/contact/?onderwerp=zzp-website">Neem contact op ↗</a>
-            <a class="btn-ghost" href={waUrl} target="_blank" rel="noopener noreferrer">
-              Of via WhatsApp ↗
-            </a>
+            <a class="btn-ghost" href={waUrl} target="_blank" rel="noopener noreferrer">Of via WhatsApp ↗</a>
           </div>
         </div>
       </section>
@@ -416,10 +446,310 @@ const waUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent
 
     <FAQ
       eyebrow="Veelgestelde vragen"
-      titleLine1="Vragen over websites voor"
-      titleAccent="ZZP'ers."
+      titleLine1="Vragen over een website laten maken als"
+      titleAccent="zzp'er."
       items={faqs}
     />
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  /* ============================================================
+     Echte H1 + intro-lead - compact blok na de hero.
+     ============================================================ */
+  .zzp-intro { padding: clamp(2rem, 4vw, 3rem) var(--gutter, 1.5rem); }
+  .zzp-intro-inner {
+    max-width: 60rem;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .zzp-intro-h1 {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    line-height: 1.15;
+    margin: 0;
+  }
+  .zzp-intro-h1 em { color: var(--accent-primary); font-style: normal; }
+  .zzp-intro-lead {
+    line-height: 1.65;
+    color: var(--text-muted, #555);
+    max-width: 50rem;
+    margin: 0;
+  }
+
+  /* ============================================================
+     Prijs/keuze - drie kaarten op een dieper-cream vlak.
+     ============================================================ */
+  .zzp-price {
+    background: var(--surface-page-deep);
+    padding: clamp(3rem, 6vw, 5rem) var(--gutter, 1.5rem);
+  }
+  .zzp-price-inner { max-width: var(--container-max, 1200px); margin: 0 auto; }
+  .zzp-price-head {
+    text-align: center;
+    max-width: 56rem;
+    margin: 0 auto 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .zzp-price-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    line-height: 1.15;
+    margin: 0;
+  }
+  .zzp-price-title em { color: var(--accent-primary); font-style: normal; }
+  .zzp-price-lead { line-height: 1.6; color: var(--text-muted, #555); margin: 0; }
+  .zzp-price-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+  .zzp-price-card {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 1rem;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    position: relative;
+  }
+  .zzp-price-card.is-featured {
+    border-color: var(--accent-primary);
+    box-shadow: 0 12px 32px rgba(105, 1, 170, 0.18);
+  }
+  .zzp-price-badge {
+    position: absolute;
+    top: -0.7rem;
+    left: 1.25rem;
+    background: var(--accent-primary);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+  }
+  .zzp-price-name {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin: 0 0 0.25rem;
+  }
+  .zzp-price-for { font-size: 0.85rem; color: var(--text-muted, #666); margin: 0 0 1rem; }
+  .zzp-price-amount {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: var(--accent-primary);
+    margin-bottom: 1rem;
+  }
+  .zzp-price-desc { line-height: 1.55; flex-grow: 1; margin-bottom: 1.25rem; font-size: 0.95rem; }
+  .zzp-price-card .btn-primary,
+  .zzp-price-card .btn-ghost { align-self: flex-start; }
+  .zzp-price-note { text-align: center; margin-top: 1.75rem; font-size: 0.92rem; opacity: 0.75; }
+  .zzp-price-note a { color: var(--accent-primary); }
+  @media (max-width: 900px) {
+    .zzp-price-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================================
+     USPs - vier korte cards op cream achtergrond.
+     ============================================================ */
+  .zzp-usps { padding: clamp(2.5rem, 5vw, 4rem) var(--gutter, 1.5rem); }
+  .zzp-usps-inner { max-width: var(--container-max, 1200px); margin: 0 auto; }
+  .zzp-usps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  .zzp-usp-card {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+  .zzp-usp-icon { color: var(--accent-primary); margin-bottom: 0.75rem; }
+  .zzp-usp-title { font-family: var(--font-display, sans-serif); font-weight: 800; font-size: 1.1rem; margin: 0 0 0.5rem; }
+  .zzp-usp-body { line-height: 1.55; font-size: 0.92rem; }
+  @media (max-width: 1000px) { .zzp-usps-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .zzp-usps-grid { grid-template-columns: 1fr; } }
+
+  /* ============================================================
+     Wanneer is het waard? - donkerpaars + grid.
+     ============================================================ */
+  .zzp-worth {
+    background-color: var(--color-purple-strong, #3B006D);
+    background-image:
+      radial-gradient(ellipse at center, transparent 35%, var(--color-purple-strong, #3B006D) 90%),
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 60px),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 60px);
+    background-size: cover, 60px 60px, 60px 60px;
+    background-repeat: no-repeat, repeat, repeat;
+    color: #fff;
+    padding: clamp(3rem, 6vw, 5rem) var(--gutter, 1.5rem);
+  }
+  .zzp-worth-inner {
+    max-width: 50rem;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .zzp-worth-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    line-height: 1.15;
+    margin: 1rem 0 1.5rem;
+    color: #fff;
+  }
+  .zzp-worth-title em { color: var(--accent-highlight); font-style: normal; }
+  .zzp-worth-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 1.75rem;
+    max-width: 40rem;
+    text-align: left;
+    display: grid;
+    gap: 0.75rem;
+    width: 100%;
+  }
+  .zzp-worth-list li {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr;
+    gap: 0.6rem;
+    align-items: start;
+    line-height: 1.55;
+  }
+  .zzp-worth-check {
+    display: grid;
+    place-items: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    background: var(--accent-highlight);
+    color: var(--surface-dark, #1a0033);
+    border-radius: 50%;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+  .zzp-worth-after { opacity: 0.9; line-height: 1.6; max-width: 44rem; margin: 0 auto; }
+
+  /* ============================================================
+     Comparison-afsluiter (kort tekstje na de comparison-tabel).
+     ============================================================ */
+  .zzp-compare-after { padding: 0 var(--gutter, 1.5rem) clamp(2rem, 4vw, 3rem); text-align: center; }
+  .zzp-compare-after p {
+    max-width: 44rem;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: var(--text-muted, #555);
+  }
+
+  /* ============================================================
+     Segments - vier gegroepeerde cards op cream.
+     ============================================================ */
+  .zzp-segments { padding: clamp(2.5rem, 5vw, 4rem) var(--gutter, 1.5rem); }
+  .zzp-segments-inner { max-width: var(--container-max, 1200px); margin: 0 auto; }
+  .zzp-segments-head {
+    text-align: center;
+    max-width: 56rem;
+    margin: 0 auto 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .zzp-segments-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    line-height: 1.15;
+    margin: 0;
+  }
+  .zzp-segments-title em { color: var(--accent-primary); font-style: normal; }
+  .zzp-segments-lead { line-height: 1.6; color: var(--text-muted, #555); margin: 0; }
+  .zzp-segments-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+  .zzp-segment-card {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+  .zzp-segment-title { font-family: var(--font-display, sans-serif); font-weight: 800; font-size: 1.05rem; margin: 0 0 0.5rem; }
+  .zzp-segment-branches { font-size: 0.88rem; color: var(--text-muted, #666); margin: 0 0 0.75rem; line-height: 1.5; }
+  .zzp-segment-body { line-height: 1.55; font-size: 0.92rem; margin: 0; }
+  .zzp-segments-after { text-align: center; margin-top: 1.75rem; opacity: 0.8; font-size: 0.92rem; }
+  .zzp-segments-after a { color: var(--accent-primary); margin-left: 0.4rem; }
+  @media (max-width: 1000px) { .zzp-segments-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .zzp-segments-grid { grid-template-columns: 1fr; } }
+
+  /* ============================================================
+     Goedkoop vs klanten - teal band voor visueel ritme.
+     ============================================================ */
+  .zzp-cheap {
+    background: var(--color-teal, #00807d);
+    color: #fff;
+    padding: clamp(3rem, 6vw, 4.5rem) var(--gutter, 1.5rem);
+  }
+  .zzp-cheap-inner {
+    max-width: 50rem;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .zzp-cheap-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    line-height: 1.15;
+    margin: 0.5rem 0 0.5rem;
+    color: #fff;
+  }
+  .zzp-cheap-title em { color: var(--accent-highlight); font-style: normal; }
+  .zzp-cheap-body { line-height: 1.65; opacity: 0.95; margin: 0; }
+  .zzp-cheap-body a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ============================================================
+     Vakman CTA - donker afsluitblok.
+     ============================================================ */
+  .zzp-vakman-cta {
+    background: var(--surface-dark);
+    color: #fff;
+    padding: clamp(2.5rem, 5vw, 4rem) var(--gutter, 1.5rem);
+    text-align: center;
+  }
+  .zzp-vakman-cta-inner { max-width: 44rem; margin: 0 auto; }
+  .zzp-vakman-cta-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+    line-height: 1.15;
+    margin-bottom: 0.85rem;
+    color: #fff;
+  }
+  .zzp-vakman-cta-title em { color: var(--accent-highlight); font-style: normal; }
+  .zzp-vakman-cta-body { opacity: 0.9; line-height: 1.6; margin-bottom: 1.5rem; }
+  .zzp-vakman-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    justify-content: center;
+  }
+</style>
