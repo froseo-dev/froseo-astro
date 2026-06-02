@@ -36,7 +36,7 @@ proposalsLead: 'Lokale SEO werkt het beste met doorlopend beheer. Daarom werken 
 
 propositionPaths:
   - title: Lokaal Beheer
-    tag: '€399 per maand'
+    tag: '€299 per maand'
     body: 'Je profiel werkt zoals het hoort. Volledig beheer van je Google Business Profile zodat het actief, volledig en up-to-date blijft. Voor bedrijven die nu nog niets aan lokale SEO doen en de basis goed willen neerzetten.'
     checks:
       - Beheer en updates van je Google Business Profile
