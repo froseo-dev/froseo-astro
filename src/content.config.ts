@@ -182,6 +182,11 @@ const services = defineCollection({
     proposalsEyebrow: z.string().optional(),
     proposalsTitle: z.string().optional(),
     proposalsLead: z.string().optional(),
+    /** Render-stijl voor propositionPaths. 'paths' (default) = service-path-card
+        zoals /seo, /lokale-seo. 'package' = pricing-card-stijl met prominente
+        prijs en featured-card omhoog, zoals /webdesign, /website-laten-maken-utrecht
+        en /website-laten-maken-zzp gebruiken. */
+    proposalsLayout: z.enum(['paths', 'package']).default('paths').optional(),
 
     /** Wanneer true: rendert de PricingPackages-sectie (3 onderhouds-pakketten
         + custom-strip + maand/jaar toggle) met data uit
@@ -282,6 +287,16 @@ const services = defineCollection({
           body: z.string(),
           /** Korte sub-label, bv. 'Vanaf €89/m' of 'Op maat'. */
           tag: z.string().optional(),
+          /** Voor proposalsLayout: 'package' — toont 'Vanaf' label klein boven prijs. */
+          priceFrom: z.boolean().optional(),
+          /** Voor proposalsLayout: 'package' — het bedrag zonder valuta-prefix (499 of '89'). */
+          priceAmount: z.union([z.string(), z.number()]).optional(),
+          /** Voor proposalsLayout: 'package' — klein woord na bedrag, bv '/maand' of 'eenmalig'. */
+          pricePeriod: z.string().optional(),
+          /** Voor proposalsLayout: 'package' — kleine sub-tekst onder prijs. */
+          priceBilling: z.string().optional(),
+          /** Voor proposalsLayout: 'package' — optionele korte ondertitel onder name. */
+          tagline: z.string().optional(),
           /** 3-5 checklist-items om de routes vergelijkbaar te maken. */
           checks: z.array(z.string()).optional(),
           /** Highlight als primaire/aanbevolen route. */

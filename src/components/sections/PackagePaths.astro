@@ -1,0 +1,344 @@
+---
+/**
+ * PackagePaths — driekoloms propositie-blok dat de pricing-card visuele
+ * stijl hergebruikt, zonder de maand/jaar-toggle (want one-pager en
+ * maatwerk zijn geen abonnementen).
+ *
+ * Gebruikt op:
+ *   - /webdesign/ (via [slug].astro met propositionLayout: 'package')
+ *   - /website-laten-maken-utrecht/ (inline)
+ *   - /website-laten-maken-zzp/ (inline, vervangt oude zzp-pkg-card)
+ *
+ * Eén featured kaart (meestal de middelste = abonnement) komt iets
+ * omhoog en krijgt een donkere achtergrond + magenta drop-shadow,
+ * conform de pricing-card op /website-onderhoud/.
+ */
+
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+
+export interface PackagePathItem {
+  /** Hoofdtitel van het pakket, bv "Website-abonnement". */
+  name: string;
+  /** Optionele korte ondertitel, bv "Voor lokale ondernemers". */
+  tagline?: string;
+  /** Toont "Vanaf" klein boven de prijs. */
+  priceFrom?: boolean;
+  /** Het bedrag zonder valuta, bv 499 of "89". */
+  priceAmount: number | string;
+  /** Klein woord/zin na het bedrag, bv "/maand" of "eenmalig". */
+  pricePeriod?: string;
+  /** Sub-tekst onder de prijs, bv "geen verplichtingen". Klein lettertype. */
+  priceBilling?: string;
+  /** Beschrijvende paragraph onder de prijs. */
+  body?: string;
+  /** Bullet-list met USP's. */
+  checks: string[];
+  /** CTA-knop onderaan. */
+  cta: { label: string; href: string };
+  /** Markeert dit pakket als hoofdkeuze: donkere achtergrond + omhoog + shadow. */
+  featured?: boolean;
+  /** Tekst voor de "Meest gekozen"-pill bovenaan. Alleen rendered als featured. */
+  badge?: string;
+}
+
+interface Props {
+  /** Eyebrow boven de h2. Optional wanneer hideHead is gezet. */
+  eyebrow?: string;
+  /** Hoofd-h2 van de sectie. Mag inline HTML bevatten (bv `<em>…</em>`).
+      Wanneer titleAccent leeg is, wordt title gerendered via set:html.
+      Optional wanneer hideHead is gezet. */
+  title?: string;
+  /** Cursief accent-deel achter de title. Alleen gebruiken wanneer title
+      géén inline HTML bevat — anders krijg je dubbele accents. */
+  titleAccent?: string;
+  /** Optionele lead-paragraph onder de h2. */
+  lead?: string;
+  /** De drie (of meer) pakketten om te tonen. */
+  packages: PackagePathItem[];
+  /** Optionele id voor anchor-linking. */
+  id?: string;
+  /** Skip de eyebrow + h2 + lead. Voor pagina's die zelf al een header hebben
+      boven dit blok (bv /website-laten-maken-zzp). */
+  hideHead?: boolean;
+  /** Skip de buitenste section padding + cream achtergrond. Voor wanneer
+      het blok ingebed wordt in een parent-sectie (bv de donkere zzp-deal). */
+  bare?: boolean;
+}
+
+const { eyebrow, title, titleAccent, lead, packages, id, hideHead, bare } = Astro.props;
+---
+
+<section class={`pkg-paths${bare ? ' is-bare' : ''}`} id={id}>
+  {!hideHead && (
+    <div class="pkg-paths-head">
+      {eyebrow && <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>}
+      {title && (
+        <h2 class="pkg-paths-title">
+          {titleAccent
+            ? <>{title} <em>{titleAccent}</em></>
+            : <Fragment set:html={title} />}
+        </h2>
+      )}
+      {lead && <p class="pkg-paths-lead">{lead}</p>}
+    </div>
+  )}
+
+  <div class="pkg-paths-grid">
+    {packages.map((pkg) => (
+      <article class={`pkg-path-card${pkg.featured ? ' is-featured' : ''}`}>
+        {pkg.featured && pkg.badge && (
+          <span class="pkg-path-badge">{pkg.badge}</span>
+        )}
+        <header class="pkg-path-head">
+          <h3 class="pkg-path-name">{pkg.name}</h3>
+          {pkg.tagline && <p class="pkg-path-tagline">{pkg.tagline}</p>}
+          <div class="pkg-path-price">
+            {pkg.priceFrom && <span class="pkg-path-from">Vanaf</span>}
+            <div class="pkg-path-price-row">
+              <span class="pkg-path-prefix">€</span>
+              <span class="pkg-path-amount">{pkg.priceAmount}</span>
+              {pkg.pricePeriod && <span class="pkg-path-period">{pkg.pricePeriod}</span>}
+            </div>
+            {pkg.priceBilling && <p class="pkg-path-billing">{pkg.priceBilling}</p>}
+          </div>
+        </header>
+        <ul class="pkg-path-features">
+          {pkg.checks.map((c) => (
+            <li>
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <span>{c}</span>
+            </li>
+          ))}
+        </ul>
+        {pkg.body && <p class="pkg-path-body">{pkg.body}</p>}
+        <a
+          class={pkg.featured ? 'btn-primary pkg-path-cta' : 'btn-ghost pkg-path-cta'}
+          href={pkg.cta.href}
+        >
+          {pkg.cta.label} ↗
+        </a>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .pkg-paths {
+    padding: clamp(3rem, 6vw, 5rem) var(--gutter, 1.5rem);
+    background: var(--surface-page);
+  }
+  /* `bare` = ingebed in een andere sectie (bv de donkere zzp-deal).
+     Geen padding/background van zichzelf. Kaarten erven kleur uit de
+     parent en blijven cream tegen de donkere ondergrond goed leesbaar. */
+  .pkg-paths.is-bare { padding: 0; background: transparent; }
+  .pkg-paths-head {
+    max-width: var(--container-max, 1200px);
+    margin: 0 auto 2.5rem;
+    text-align: center;
+  }
+  .pkg-paths-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.4vw, 42px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 12px 0 8px;
+    color: var(--text-primary);
+  }
+  .pkg-paths-title em {
+    color: var(--accent-rare);
+    font-style: normal;
+  }
+  .pkg-paths-lead {
+    max-width: 640px;
+    margin: 0 auto;
+    color: var(--text-muted, #54506a);
+    font-size: 15.5px;
+    line-height: 1.55;
+  }
+
+  /* Grid — 3 cards naast elkaar, mid card uitstaand (translateY) zoals
+     op /website-onderhoud/. Items op stretch zodat heights match. */
+  .pkg-paths-grid {
+    max-width: var(--container-max, 1200px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+    padding-top: 18px; /* ruimte voor uitstekende featured-card */
+  }
+
+  /* Card — exacte pricing-card-look (cream, dikke border, drop-shadow). */
+  .pkg-path-card {
+    position: relative;
+    background: var(--surface-card, #fff);
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    padding: 30px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 5px 5px 0 var(--line-color);
+    color: var(--text-primary);
+  }
+  .pkg-path-card.is-featured {
+    background: var(--surface-dark);
+    color: var(--text-on-dark);
+    box-shadow: 6px 6px 0 var(--accent-rare);
+    transform: translateY(-12px);
+  }
+  .pkg-path-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent-highlight);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1.5px solid var(--text-primary);
+    white-space: nowrap;
+  }
+
+  .pkg-path-head { display: flex; flex-direction: column; gap: 6px; }
+  .pkg-path-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: inherit;
+  }
+  .pkg-path-tagline {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    opacity: 0.78;
+    color: inherit;
+  }
+  .pkg-path-price {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .pkg-path-from {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    color: inherit;
+  }
+  .pkg-path-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .pkg-path-prefix {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 2.6vw, 32px);
+    font-weight: 800;
+    color: var(--accent-rare);
+    align-self: flex-start;
+    margin-top: 6px;
+  }
+  .pkg-path-card.is-featured .pkg-path-prefix { color: var(--accent-highlight); }
+  .pkg-path-amount {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 4vw, 52px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--accent-rare);
+  }
+  .pkg-path-card.is-featured .pkg-path-amount { color: var(--accent-highlight); }
+  .pkg-path-period {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    opacity: 0.85;
+    color: inherit;
+    margin-left: 4px;
+  }
+  .pkg-path-billing {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    opacity: 0.6;
+    margin: 4px 0 0;
+    color: inherit;
+  }
+
+  /* Body-paragraph onder de prijs (optioneel). */
+  .pkg-path-body {
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 0;
+    color: inherit;
+    opacity: 0.92;
+  }
+
+  /* Features-list met check-icons. */
+  .pkg-path-features {
+    list-style: none;
+    padding: 16px 0 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px dashed currentColor;
+    flex-grow: 1;
+  }
+  .pkg-path-card.is-featured .pkg-path-features {
+    border-top-color: rgba(255, 255, 255, 0.22);
+  }
+  .pkg-path-features li {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 10px;
+    align-items: start;
+    font-size: 14px;
+    line-height: 1.45;
+    color: inherit;
+    opacity: 0.95;
+  }
+  .pkg-path-features .check-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--accent-rare);
+    color: #fff;
+    font-weight: 800;
+    font-size: 12px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .pkg-path-card.is-featured .pkg-path-features .check-icon {
+    background: var(--accent-highlight);
+    color: var(--text-primary);
+  }
+
+  .pkg-path-cta { align-self: flex-start; margin-top: auto; }
+
+  @media (max-width: 960px) {
+    .pkg-paths-grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
+      padding-top: 12px;
+    }
+    .pkg-path-card.is-featured { transform: none; }
+  }
+</style>

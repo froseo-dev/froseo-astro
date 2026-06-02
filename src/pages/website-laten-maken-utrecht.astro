@@ -38,6 +38,7 @@ import EyebrowPill from '@components/ui/EyebrowPill.astro';
 import ReviewAvatars from '@components/ui/ReviewAvatars.astro';
 import SectionIcon from '@components/ui/SectionIcon.astro';
 import LogosTicker from '@components/sections/LogosTicker.astro';
+import PackagePaths from '@components/sections/PackagePaths.astro';
 import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
 import BeforeAfter from '@components/sections/BeforeAfter.astro';
 import PainPoints from '@components/sections/PainPoints.astro';
@@ -262,63 +263,62 @@ const faqs = [
       <LogosTicker />
 
       {/* ============================================================
-           Twee routes HOOG op de pagina (zoals /webdesign): maatwerk of
-           abonnement. Mirror van het propositionPaths-blok maar inline
-           omdat deze pagina geen markdown-driven service is.
+           Drie routes HOOG op de pagina (zoals /webdesign en /zzp):
+           one-pager, abonnement of maatwerk. Pricing-card-stijl via
+           gedeelde <PackagePaths> component.
            ============================================================ */}
-      <section class="service-paths">
-        <div class="service-paths-head">
-          <EyebrowPill>Twee opties</EyebrowPill>
-          <h2 class="service-paths-title">
-            Abonnement of <em>maatwerk.</em>
-          </h2>
-          <p class="service-paths-lead">
-            Voor de meeste lokale ondernemers in Utrecht is het website-abonnement de
-            beste keuze: snel professioneel online, vaste maandprijs en zonder
-            technisch gedoe. Maatwerk is geschikt voor grotere trajecten of
-            specifieke wensen.
-          </p>
-        </div>
-        <div class="service-paths-grid count-2">
-          <article class="service-path-card is-featured">
-            <span class="service-path-badge">Populair</span>
-            <span class="service-path-tag">Vanaf {pricing.abboFromInline}</span>
-            <h3 class="service-path-title">Website-abonnement</h3>
-            <p class="service-path-body">
-              Voor Utrechtse ondernemers die snel en zonder gedoe professioneel
-              online willen staan. Je krijgt een sterke website met een vaste
-              maandprijs, duidelijke afspraken en ruimte voor kleine aanpassingen.
-            </p>
-            <ul class="service-path-checks">
-              <li><span class="check-icon" aria-hidden="true">✓</span><span>Snel live met een professionele website</span></li>
-              <li><span class="check-icon" aria-hidden="true">✓</span><span>Razendsnel: we streven naar 90+ Google PageSpeed</span></li>
-              <li><span class="check-icon" aria-hidden="true">✓</span><span>Sterke basis voor snelheid, vindbaarheid en conversie</span></li>
-              <li><span class="check-icon" aria-hidden="true">✓</span><span>Inclusief hosting, beheer en kleine wijzigingen</span></li>
-            </ul>
-            <a class="btn-primary service-path-cta" href="/website-abonnement/">
-              Bekijk website-abonnementen ↗
-            </a>
-          </article>
-          <article class="service-path-card">
-            <span class="service-path-tag">WordPress of Astro</span>
-            <h3 class="service-path-title">Maatwerk website</h3>
-            <p class="service-path-body">
-              Voor bedrijven die meer vrijheid nodig hebben in ontwerp, structuur of
-              functionaliteit. We denken mee over strategie, bouwen een uniek
-              ontwerp en richten de techniek in op wat jouw bedrijf nodig heeft.
-            </p>
-            <ul class="service-path-checks">
-              <li><span class="check-icon" aria-hidden="true">✓</span><span>Volledige vrijheid in design, structuur en CMS</span></li>
-              <li><span class="check-icon" aria-hidden="true">✓</span><span>Afgestemd op je merk en doelen</span></li>
-              <li><span class="check-icon" aria-hidden="true">✓</span><span>Sterke basis voor SEO, snelheid en conversie</span></li>
-              <li><span class="check-icon" aria-hidden="true">✓</span><span>Eén specialist voor strategie, ontwerp en bouw</span></li>
-            </ul>
-            <a class="btn-primary service-path-cta" href="/contact/?onderwerp=website-laten-maken-utrecht-maatwerk">
-              Plan een kennismaking ↗
-            </a>
-          </article>
-        </div>
-      </section>
+      <PackagePaths
+        eyebrow="Drie opties"
+        title='Drie routes voor jouw <em>Utrechtse website.</em>'
+        lead="Voor de meeste lokale ondernemers in Utrecht is het website-abonnement de beste keuze: snel professioneel online, vaste maandprijs en zonder technisch gedoe. Een one-pager of een maatwerk-traject kan ook, als dat beter past."
+        packages={[
+          {
+            name: 'Website-abonnement',
+            tagline: 'Compleet, vaste maandprijs.',
+            priceFrom: true,
+            priceAmount: 89,
+            pricePeriod: '/maand',
+            body: 'Voor Utrechtse ondernemers die snel en zonder gedoe professioneel online willen staan. Vaste maandprijs, duidelijke afspraken en ruimte voor kleine aanpassingen.',
+            checks: [
+              'Snel live met een professionele website',
+              'Razendsnel: we streven naar 90+ Google PageSpeed',
+              'Sterke basis voor snelheid, vindbaarheid en conversie',
+              'Inclusief hosting, beheer en kleine wijzigingen',
+            ],
+            cta: { label: 'Bekijk abonnementen', href: '/website-abonnement/' },
+            featured: true,
+            badge: 'Meest gekozen',
+          },
+          {
+            name: 'One-pager',
+            tagline: 'Compact, snel en professioneel.',
+            priceFrom: true,
+            priceAmount: 499,
+            body: 'Een strakke, snelle one-page site die professioneel overkomt zodra iemand je naam googelt. Modern design, gericht op conversie.',
+            checks: [
+              'Strakke, moderne one-page opzet',
+              'Vaak binnen 2 weken live',
+              'Geoptimaliseerd voor mobiel en conversie',
+              'Compact en doelgericht',
+            ],
+            cta: { label: 'Vraag offerte aan', href: '/contact/?onderwerp=website-laten-maken-utrecht-onepager' },
+          },
+          {
+            name: 'Maatwerk website',
+            tagline: 'Voor complexere websites.',
+            priceFrom: true,
+            priceAmount: 999,
+            body: 'Voor bedrijven die meer vrijheid nodig hebben in ontwerp, structuur of functionaliteit. We denken mee over strategie, bouwen een uniek ontwerp en richten de techniek in op wat jouw bedrijf nodig heeft.',
+            checks: [
+              'Volledige vrijheid in design, structuur en CMS',
+              'Afgestemd op je merk en doelen',
+              'Sterke basis voor SEO, snelheid en conversie',
+              'Eén specialist voor strategie, ontwerp en bouw',
+            ],
+            cta: { label: 'Plan een kennismaking', href: '/contact/?onderwerp=website-laten-maken-utrecht-maatwerk' },
+          },
+        ]}
+      />
 
       {/* ============================================================
            Cases — visueel sterk proof, direct na de routes.

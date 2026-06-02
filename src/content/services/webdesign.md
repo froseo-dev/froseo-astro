@@ -31,26 +31,46 @@ showcaseEyebrow: 'Recent werk'
 showcaseTitle: 'Websites die we'
 showcaseTitleAccent: 'lanceerden.'
 
-proposalsEyebrow: 'Twee opties'
-proposalsTitle: 'Abonnement of <em>maatwerk.</em>'
-proposalsLead: 'Voor de meeste lokale ondernemers is een website-abonnement de beste keuze: snel professioneel online, vaste maandprijs en zonder technisch gedoe. Maatwerk is geschikt voor grotere of specifieke trajecten.'
+proposalsEyebrow: 'Drie opties'
+proposalsTitle: 'Drie routes voor jouw <em>nieuwe website.</em>'
+proposalsLead: 'Voor de meeste ondernemers is het website-abonnement de slimste route: snel professioneel online, vaste maandprijs en zonder gedoe. Een one-pager of een maatwerk-traject kan ook, als dat beter past bij waar je nu staat.'
+proposalsLayout: 'package'
 
 propositionPaths:
   - title: Website-abonnement
-    tag: Vanaf {{abboFromInline}}
-    badge: 'Populair'
+    tagline: 'Compleet, vaste maandprijs.'
+    priceFrom: true
+    priceAmount: 89
+    pricePeriod: '/maand'
     body: 'Voor lokale ondernemers die snel en zonder gedoe professioneel online willen staan. Een sterke website met een vaste maandprijs, duidelijke afspraken en ruimte voor kleine aanpassingen.'
     checks:
       - Snel live met een professionele website
-      - 'Razendsnel: we streven naar 90+ Google PageSpeed.'
+      - 'Razendsnel: we streven naar 90+ Google PageSpeed'
       - Sterke basis voor snelheid, vindbaarheid en conversie
       - Inclusief hosting, beheer en kleine wijzigingen
     cta:
-      label: 'Bekijk website-abonnementen ↗'
+      label: 'Bekijk abonnementen'
       href: '/website-abonnement/'
     isFeatured: true
+    badge: 'Meest gekozen'
+  - title: One-pager
+    tagline: 'Compact, snel en professioneel.'
+    priceFrom: true
+    priceAmount: 499
+    body: 'Een strakke, snelle one-page site die professioneel overkomt zodra iemand je naam googelt. Modern design, gericht op conversie.'
+    checks:
+      - Strakke, moderne one-page opzet
+      - 'Vaak binnen 2 weken live'
+      - Geoptimaliseerd voor mobiel en conversie
+      - Compact en doelgericht
+    cta:
+      label: 'Vraag offerte aan'
+      href: '/contact/?onderwerp=webdesign-onepager'
+    isFeatured: false
   - title: Maatwerk website
-    tag: WordPress of Astro
+    tagline: 'Voor complexere websites.'
+    priceFrom: true
+    priceAmount: 999
     body: 'Voor bedrijven die meer vrijheid nodig hebben in ontwerp, structuur of functionaliteit. We denken mee over strategie, bouwen een uniek ontwerp en richten de techniek in op wat jouw bedrijf nodig heeft.'
     checks:
       - Volledige vrijheid in design, structuur en CMS
@@ -58,7 +78,7 @@ propositionPaths:
       - Sterke basis voor SEO, snelheid en conversie
       - Eén specialist voor strategie, ontwerp en bouw
     cta:
-      label: 'Plan een kennismaking ↗'
+      label: 'Plan een kennismaking'
       href: '/contact/?onderwerp=webdesign-maatwerk'
     isFeatured: false
 

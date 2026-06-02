@@ -13,6 +13,7 @@ import FAQ from '@components/sections/FAQ.astro';
 import PricingPackages from '@components/sections/PricingPackages.astro';
 import ContentPackages from '@components/sections/ContentPackages.astro';
 import AboPackages from '@components/sections/AboPackages.astro';
+import PackagePaths from '@components/sections/PackagePaths.astro';
 import PainPoints from '@components/sections/PainPoints.astro';
 import Comparison from '@components/sections/Comparison.astro';
 import StatsRibbon from '@components/sections/StatsRibbon.astro';
@@ -225,7 +226,28 @@ const serviceSchema = {
            Voor onderhoud-pagina's gebruiken we PricingPackages hierboven
            in plaats van propositionPaths.
            ============================================================ -->
-      {!s.showMaintenancePackages && !s.showContentPackages && !s.showAboPackages && s.propositionPaths && s.propositionPaths.length > 0 && (
+      {!s.showMaintenancePackages && !s.showContentPackages && !s.showAboPackages && s.propositionPaths && s.propositionPaths.length > 0 && s.proposalsLayout === 'package' && (
+        <PackagePaths
+          eyebrow={s.proposalsEyebrow ?? 'Drie opties'}
+          title={s.proposalsTitle ? interpolate(s.proposalsTitle) : 'Kies wat past bij <em>jouw situatie.</em>'}
+          lead={s.proposalsLead ? interpolate(s.proposalsLead) : undefined}
+          packages={s.propositionPaths.map((p) => ({
+            name: p.title,
+            tagline: p.tagline,
+            priceFrom: p.priceFrom,
+            priceAmount: p.priceAmount ?? '',
+            pricePeriod: p.pricePeriod,
+            priceBilling: p.priceBilling,
+            body: interpolate(p.body),
+            checks: (p.checks ?? []).map((c) => interpolate(c)),
+            cta: p.cta ?? { label: 'Plan kennismaking ↗', href: '/contact/' },
+            featured: p.isFeatured,
+            badge: p.badge,
+          }))}
+        />
+      )}
+
+      {!s.showMaintenancePackages && !s.showContentPackages && !s.showAboPackages && s.propositionPaths && s.propositionPaths.length > 0 && s.proposalsLayout !== 'package' && (
         <section class="service-paths">
           <div class="service-paths-head">
             <EyebrowPill>{s.proposalsEyebrow ?? 'Kies je route'}</EyebrowPill>

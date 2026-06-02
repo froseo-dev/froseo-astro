@@ -55,9 +55,8 @@ export const maintenancePackages: MaintenancePackage[] = [
       { label: 'Wekelijkse beveiligingsscan', primary: true },
       { label: 'Basis spambescherming', primary: true },
       { label: '24/7 monitoring van je uptime', primary: true },
-      { label: '€10/u korting op het Froseo-uurtarief', highlight: true, primary: true },
+      { label: 'Support via e-mail, telefoon en WhatsApp', primary: true },
       { label: 'Jaarlijkse Core Web Vitals check' },
-      { label: 'Support via e-mail' },
     ],
   },
   {

@@ -27,6 +27,7 @@ import EyebrowPill from '@components/ui/EyebrowPill.astro';
 import ReviewAvatars from '@components/ui/ReviewAvatars.astro';
 import SectionIcon from '@components/ui/SectionIcon.astro';
 import LogosTicker from '@components/sections/LogosTicker.astro';
+import PackagePaths from '@components/sections/PackagePaths.astro';
 import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
 import CalvinNote from '@components/sections/CalvinNote.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
@@ -56,10 +57,15 @@ const showcaseCases = showcaseSlugs
 
 /* Drie pakket-routes - opgebouwd in de stijl van de service-path-cards
    (tag-pill bovenin, body, check-lijst, button). Featured = POPULAIR. */
+/* Drie routes voor zzp'ers in vaste volgorde: abonnement (featured/eerst),
+   one-pager, maatwerk. Pricing-card stijl via <PackagePaths>. */
 const priceOptions = [
   {
-    name: 'Website abonnement',
-    tag: `Vanaf ${pricing.abboFromInline}`,
+    name: 'Website-abonnement',
+    tagline: 'Compleet, vaste maandprijs.',
+    priceFrom: true,
+    priceAmount: 89,
+    pricePeriod: '/maand',
     body: "Voor zzp'ers die snel en zonder gedoe professioneel online willen staan. Vaste maandprijs, duidelijke afspraken en ruimte voor kleine aanpassingen.",
     checks: [
       'Snel live met een professionele website',
@@ -67,33 +73,37 @@ const priceOptions = [
       'Sterke basis voor snelheid, vindbaarheid en conversie',
       'Inclusief hosting, beheer en kleine wijzigingen',
     ],
-    cta: { label: 'Bekijk het abonnement', href: '/website-abonnement/' },
+    cta: { label: 'Bekijk abonnementen', href: '/website-abonnement/' },
     featured: true,
-    badge: 'Populair',
+    badge: 'Meest gekozen',
   },
   {
     name: 'One-pager website',
-    tag: 'Vanaf €499',
+    tagline: 'Compact, snel en professioneel.',
+    priceFrom: true,
+    priceAmount: 499,
     body: 'Een strakke, snelle one-pager die professioneel overkomt zodra iemand je naam googelt. Modern design, gericht op conversie.',
     checks: [
       'Strakke, moderne one-page opzet',
       'Snel live: vaak binnen 2 weken',
       'Geoptimaliseerd voor mobiel en conversie',
-      'Eenmalige investering, je site is van jou',
+      'Compact en doelgericht',
     ],
     cta: { label: 'Vraag offerte aan', href: '/contact/?onderwerp=zzp-onepager' },
   },
   {
     name: 'Maatwerk website',
-    tag: 'Vanaf €999',
-    body: "Voor zzp'ers die meer pagina's, sterkere structuur en lokale SEO-basis nodig hebben. Klaar om mee te groeien naarmate je bedrijf groeit.",
+    tagline: 'Voor complexere websites.',
+    priceFrom: true,
+    priceAmount: 999,
+    body: "Voor zzp'ers die meer pagina's, sterkere structuur en lokale SEO-basis nodig hebben. Klaar om mee te groeien.",
     checks: [
       "Aparte dienst- en landingspagina's",
       'Sterke basis voor SEO, snelheid en conversie',
       'Volledige vrijheid in design en structuur',
       'Klaar voor uitbreiding naar SEO-traject',
     ],
-    cta: { label: 'Vraag offerte aan', href: '/contact/?onderwerp=zzp-maatwerk' },
+    cta: { label: 'Plan een kennismaking', href: '/contact/?onderwerp=zzp-maatwerk' },
   },
 ];
 
@@ -286,22 +296,8 @@ const faqs = [
             </p>
           </header>
 
-          <div class="zzp-pkg-grid">
-            {priceOptions.map((opt) => (
-              <article class={`zzp-pkg-card${opt.featured ? ' is-featured' : ''}`}>
-                {opt.featured && <span class="zzp-pkg-badge">{opt.badge}</span>}
-                <span class="zzp-pkg-tag">{opt.tag}</span>
-                <h2 class="zzp-pkg-title">{opt.name}</h2>
-                <p class="zzp-pkg-body">{opt.body}</p>
-                <ul class="zzp-pkg-checks">
-                  {opt.checks.map((c) => (
-                    <li><span class="zzp-pkg-check" aria-hidden="true">✓</span><span>{c}</span></li>
-                  ))}
-                </ul>
-                <a class={opt.featured ? 'btn-primary zzp-pkg-cta' : 'btn-ghost zzp-pkg-cta'} href={opt.cta.href}>{opt.cta.label} ↗</a>
-              </article>
-            ))}
-          </div>
+          <PackagePaths hideHead bare packages={priceOptions} />
+
 
           <div class="zzp-deal-note">
             <CalvinNote
@@ -481,105 +477,10 @@ const faqs = [
   .zzp-deal-title em { color: var(--accent-highlight); font-style: normal; }
   .zzp-deal-lead { line-height: 1.65; opacity: 0.88; margin: 0; max-width: 50rem; }
 
-  /* Pakket-cards - cream cards op donker, met POPULAIR badge + tag pill +
-     check-lijst, in de geest van service-path-card. */
-  .zzp-pkg-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    align-items: stretch;
-  }
-  .zzp-pkg-card {
-    background: var(--surface-page, #faf6f0);
-    border: var(--border, 1px solid #1a0033);
-    border-radius: var(--radius-lg, 14px);
-    padding: 2rem 1.75rem 1.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.4);
-    color: var(--text-primary, #1a1a1a);
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-  }
-  .zzp-pkg-card:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 9px 9px 0 rgba(0, 0, 0, 0.45);
-  }
-  .zzp-pkg-card.is-featured {
-    border-color: var(--accent-rare, #b6007b);
-    box-shadow: 6px 6px 0 var(--accent-rare, #b6007b);
-  }
-  .zzp-pkg-card.is-featured:hover { box-shadow: 9px 9px 0 var(--accent-rare, #b6007b); }
-  /* Diagonale POPULAIR-banner in de rechter-bovenhoek. */
-  .zzp-pkg-badge {
-    position: absolute;
-    top: 14px;
-    right: -38px;
-    transform: rotate(45deg);
-    background: var(--accent-rare, #b6007b);
-    color: #fff;
-    font-weight: 800;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-align: center;
-    width: 150px;
-    padding: 5px 0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  }
-  /* Tag-pill aan de top: 'Vanaf €89 per maand'. */
-  .zzp-pkg-tag {
-    align-self: flex-start;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-primary, #1a1a1a);
-    background: var(--accent-highlight, #f5c518);
-    border: 1.5px solid var(--text-primary, #1a1a1a);
-    padding: 4px 12px;
-    border-radius: 999px;
-  }
-  .zzp-pkg-title {
-    font-family: var(--font-display, sans-serif);
-    font-weight: 800;
-    font-size: 1.35rem;
-    line-height: 1.2;
-    margin: 0;
-    color: var(--text-primary, #1a1a1a);
-  }
-  .zzp-pkg-body { line-height: 1.55; font-size: 0.95rem; margin: 0; }
-  .zzp-pkg-checks {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 0.55rem;
-    flex-grow: 1;
-  }
-  .zzp-pkg-checks li {
-    display: grid;
-    grid-template-columns: 1.25rem 1fr;
-    gap: 0.5rem;
-    align-items: start;
-    line-height: 1.5;
-    font-size: 0.92rem;
-  }
-  .zzp-pkg-check {
-    color: var(--accent-rare, #b6007b);
-    font-weight: 800;
-    margin-top: 1px;
-  }
-  .zzp-pkg-cta { align-self: flex-start; margin-top: 0.25rem; }
+  /* Pakket-cards staan nu in <PackagePaths>; CSS daar in het component. */
 
   /* CalvinNote ingebed in dezelfde donkere sectie. */
   .zzp-deal-note { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
-
-  @media (max-width: 900px) {
-    .zzp-pkg-grid { grid-template-columns: 1fr; }
-  }
 
   /* ============================================================
      DONKER BLOK B - 'Wat we standaard regelen' + 'Wanneer is het waard?'
