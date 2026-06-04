@@ -37,9 +37,9 @@ introBlock:
   title: 'OpenAI brengt advertenties'
   titleAccent: 'naar ChatGPT.'
   body:
-    - 'OpenAI Ads is het advertentiesysteem van OpenAI, het bedrijf achter ChatGPT. Voor het eerst kunnen bedrijven adverteren in ChatGPT zelf. Niet als losse banner ergens op een website, maar als gelabelde advertentie onder het antwoord dat iemand net van de chatbot kreeg.'
-    - 'Die advertenties verschijnen alleen bij gebruikers op de gratis versie en het goedkoopste betaalde abonnement. Wie een duurder abonnement heeft, blijft ChatGPT zonder advertenties gebruiken. Het inrichten van campagnes gaat via de OpenAI Ads Manager, het eigen advertentieplatform van OpenAI.'
-    - 'Op deze pagina leggen we uit hoe het werkt, wat het verschil is met Google Ads en met SEO, en hoe je je merk er nu al op voorbereidt.'
+    - 'OpenAI Ads is het advertentiesysteem van OpenAI, de makers van ChatGPT. Voor het eerst kun je adverteren in ChatGPT zelf. Geen banner ergens op een website, maar een gelabelde advertentie pal onder het antwoord dat iemand net van de chatbot kreeg. Precies op het moment dat iemand ergens mee zit.'
+    - 'Niet iedereen krijgt ze te zien. De advertenties draaien alleen op de gratis versie en het goedkoopste betaalde abonnement. Betaal je voor een duurder pakket, dan blijft ChatGPT advertentievrij. Het opzetten van campagnes loopt via de OpenAI Ads Manager, het eigen advertentieplatform van OpenAI.'
+    - 'Wij zijn er vroeg bij, want dit gaat hard. Hieronder lees je hoe het werkt, waarin het verschilt van Google Ads en van SEO, en wat je nu al kunt regelen.'
 
 statsRibbon:
   - value: 'VS'
@@ -69,7 +69,7 @@ painPoints:
     body: 'Het bedrijf dat zich nu voorbereidt, staat klaar zodra adverteren in ChatGPT opengaat. Wie pas op dat moment begint, loopt meteen een achterstand op.'
   - icon: 'crosshairOff'
     title: Onzichtbaar voor de AI-modellen
-    body: 'Kent ChatGPT je merk niet, dan word je niet genoemd in de antwoorden. Die zichtbaarheid bouw je op met content en autoriteit, en dat kost tijd. Niet iets voor de laatste week.'
+    body: 'Vraagt iemand ChatGPT om een tip in jouw branche, dan noemt het de namen die het kent. Sta jij daar niet tussen, dan besta je in dat antwoord simpelweg niet. En aanwezig raken in die modellen gaat langzaam. Daar begin je niet de week voor de lancering mee.'
   - icon: 'blackbox'
     title: Een kanaal met nieuwe knoppen
     body: 'Targeting, biedingen en meting werken anders dan bij Google. Zonder iemand die het volgt en begrijpt, gooi je straks budget in een systeem dat je nog niet kent.'
@@ -83,7 +83,7 @@ comparison:
     - without: 'Je hoort pas van OpenAI Ads als iedereen er al mee bezig is'
       with: 'Wij volgen de uitrol op de voet en laten het weten zodra het in Nederland kan'
     - without: 'Je merk is online slecht zichtbaar voor AI, dus ChatGPT noemt je niet'
-      with: 'We werken nu al aan je vindbaarheid in AI, zodat je een betere uitgangspositie hebt'
+      with: 'We zorgen dat de modellen je merk al kennen voordat het kanaal opengaat'
     - without: 'Bij de start moet je nog uitzoeken hoe het platform werkt'
       with: 'Wij kennen de OpenAI Ads Manager en kunnen direct campagnes inrichten'
     - without: 'Je verdeelt je advertentiebudget op gevoel over kanalen'
@@ -92,7 +92,7 @@ comparison:
       with: 'We zorgen dat je site klaarstaat om bezoekers uit AI goed op te vangen'
 
 calvinNote:
-  message: 'Adverteren in ChatGPT kan in Nederland nog niet, je merk er klaar voor maken wel. Stuur even wat je nu online hebt staan, dan kijk ik waar je staat en wat een logische eerste stap is.'
+  message: 'Adverteren in ChatGPT kan hier nog niet. Je merk er klaar voor maken wel. Stuur even je site door, dan kijken we hoe goed AI je nu al kent en waar de eerste winst zit.'
   ctaLabel: 'Plan een kennismaking ↗'
   ctaHref: '/contact/?onderwerp=openai-ads'
 
@@ -101,10 +101,10 @@ approachEyebrow: 'Onze aanpak'
 approachTitle: 'Hoe wij je nu al'
 approachTitleAccent: 'voorbereiden.'
 approachSteps:
-  - title: 'We brengen je AI-zichtbaarheid in kaart'
-    body: 'Eerst kijken we hoe goed ChatGPT en andere AI-modellen jouw bedrijf nu al kennen. Word je genoemd als iemand zoekt naar jouw soort product of dienst? Dat is het vertrekpunt en meteen een eerlijke nulmeting.'
-  - title: 'We maken je merk en content sterker'
-    body: 'Adverteren werkt straks beter als je merk online een duidelijke plek heeft. We werken aan je content, je vindbaarheid en de informatie die AI-modellen over je oppikken. Dat levert nu al wat op in SEO en GEO.'
+  - title: 'We kijken of ChatGPT je al kent'
+    body: 'Eerst de nuchtere vraag: noemt ChatGPT jou al? We stellen het een paar vragen die jouw klanten ook zouden stellen en kijken of je naam valt. Geen mooimakerij, gewoon een eerlijke nulmeting om vanaf te starten.'
+  - title: 'We bouwen aan je positie'
+    body: 'Daarna werken we aan content en autoriteit, de signalen waar de modellen op afgaan. Dat is geen verloren tijd. Het tikt meteen door in je SEO en GEO, of je nu morgen adverteert of pas volgend jaar.'
   - title: 'We houden de uitrol naar Nederland in de gaten'
     body: 'Zodra adverteren in ChatGPT in Nederland mogelijk wordt, weet je het van ons. Geen maandenlange achterstand, maar klaarstaan op het moment dat het kanaal opengaat.'
   - title: 'We zetten campagnes op zodra het kan'
@@ -117,7 +117,7 @@ spotlights:
     image: ../../assets/hero/openai-ads-ad.webp
   - eyebrow: 'Naast adverteren'
     title: 'Word ook organisch genoemd in de antwoorden zelf'
-    body: 'Advertenties zijn betaalde zichtbaarheid. Daarnaast is er organische zichtbaarheid in AI: word je genoemd in het antwoord zelf wanneer iemand naar jouw type product of dienst vraagt? Die plek koop je niet, die bouw je op met sterke content en autoriteit. Wij noemen dat GEO, optimalisatie voor AI-zoekmachines. Samen met SEO zorgt dat ervoor dat je nu al meer aanwezig bent, en straks meer uit je advertenties haalt.'
+    body: 'Advertenties zijn de betaalde route. Daarnaast is er een gratis variant die minstens zo belangrijk is: genoemd worden in het antwoord zelf. Vraagt iemand ChatGPT naar een goede partij in jouw vak, dan wil je dat je naam valt. Dat plekje koop je niet, dat verdien je. Met goede content en een merk dat ergens voor staat. GEO heet dat, optimalisatie voor AI-zoekmachines. Wie daar nu al sterk staat, valt straks ook met advertenties meer op.'
     image: ../../assets/hero/seo-hero.webp
     link:
       label: Bekijk SEO en GEO
@@ -144,7 +144,7 @@ closeCta:
   titleLine1: 'Klaar voor het'
   titleAccent: 'volgende kanaal?'
   body:
-    - 'Adverteren in ChatGPT is er in Nederland nog niet, maar je kunt je er nu al op voorbereiden. We kijken samen hoe goed AI je merk kent en wat een logische eerste stap is.'
+    - 'Adverteren in ChatGPT kan in Nederland nog niet. Voorbereiden wel, en daar pluk je nu al de vruchten van. We kijken samen waar je staat en wat de eerste stap is.'
     - 'Plan een vrijblijvende kennismaking van 30 minuten. Past het nog niet bij jouw situatie, dan zeggen we dat eerlijk.'
   primaryLabel: 'Plan een kennismaking ↗'
   primaryHref: '/contact/?onderwerp=openai-ads'
@@ -167,7 +167,7 @@ faqs:
   - q: Zien al mijn klanten straks advertenties in ChatGPT?
     a: 'Nee. Advertenties verschijnen alleen bij gebruikers op de gratis versie en het goedkoopste betaalde abonnement. Wie een duurder abonnement heeft, gebruikt ChatGPT zonder advertenties. Je bereikt met OpenAI Ads dus een deel van de gebruikers, niet iedereen. Goed om mee te rekenen als je inschat wat het kanaal voor jou kan betekenen.'
   - q: Wat kan ik nu al doen om voorbereid te zijn?
-    a: 'Werk aan je zichtbaarheid in AI. Zorg dat ChatGPT en andere modellen je bedrijf kennen door sterke content, een heldere website en opbouw van autoriteit. Zorg ook dat je landingspagina''s in orde zijn, zodat bezoekers uit AI straks goed landen. Zo sta je klaar zodra adverteren in ChatGPT in Nederland mogelijk wordt, en profiteer je ondertussen al van betere SEO en GEO. Wil je weten waar je nu staat? Plan een vrijblijvende kennismaking.'
+    a: 'Begin bij het fundament. Een heldere website, content die klopt en autoriteit die je opbouwt: dat zijn de signalen waar de AI-modellen op letten. Zorg daarnaast dat je landingspagina''s klaarliggen voor bezoekers die straks uit een ChatGPT-antwoord komen. Het mooie is dat ditzelfde werk je nu al hogerop helpt in Google. Benieuwd waar je staat? Plan een vrijblijvende kennismaking.'
 ---
 
 ## Wanneer komt OpenAI Ads naar Nederland?
@@ -176,4 +176,4 @@ Adverteren in ChatGPT draait sinds begin 2026 in de Verenigde Staten en in een k
 
 Een harde datum is er niet, en daar doen we ook geen loze voorspelling over. Wat we wel doen, is de uitrol scherp volgen. Zodra adverteren in ChatGPT in Nederland mogelijk is, hoor je het van ons en kunnen we direct aan de slag in de OpenAI Ads Manager.
 
-Tot die tijd is er genoeg te doen. Je kunt nu al zorgen dat je merk zichtbaar is voor AI, dat je content klopt en dat je landingspagina's bezoekers uit ChatGPT goed opvangen. Die voorbereiding betaalt zich nu al uit in je gewone vindbaarheid, en geeft je een voorsprong zodra het kanaal opengaat.
+Tot die tijd zit je niet stil. Ruim je content op, zorg dat de modellen je oppikken en maak je landingspagina's klaar voor wie straks vanuit ChatGPT binnenstapt. Dat werk verdwijnt niet in een la tot de lancering. Het tikt nu al door in je vindbaarheid in Google. En zodra adverteren in ChatGPT opengaat, sta je vooraan in plaats van dat je nog moet beginnen.
