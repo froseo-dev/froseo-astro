@@ -50,9 +50,11 @@ propositionPaths:
     body: 'Je gaat stijgen in zichtbaarheid. Bovenop het beheer optimaliseren we je website lokaal en sturen we actief op rankings in Google Maps en lokale zoekresultaten. De meest gekozen optie voor groeiende bedrijven.'
     checks:
       - Alles uit Lokaal Beheer
-      - On-page optimalisatie voor lokale zoektermen
-      - Technische verbeteringen die Maps-rankings beïnvloeden
+      - Zoekwoordenanalyse en intentie-onderzoek
       - Concurrentieanalyse en strategische bijsturing
+      - Technische SEO-audit en optimalisatie
+      - On-page optimalisatie voor lokale zoektermen
+      - Basis-linkbuilding via lokale websites en citations
       - Uitgebreide maandrapportage met rankings en benchmarks
     isFeatured: true
   - title: Lokaal Pro
@@ -60,8 +62,8 @@ propositionPaths:
     body: 'Je pakt meerdere posities en wordt dominanter. Voor bedrijven die actief bovenaan willen staan en meerdere zoekwoorden of regio''s tegelijk willen claimen.'
     checks:
       - Alles uit Lokaal Groei
-      - Lichte linkbuilding en digital PR
-      - Citation building op relevante directories
+      - Autoriteitsopbouw via linkbuilding en digital PR
+      - Uitgebreide citations op landelijke en branche-relevante directories
       - Content-uitbreiding met extra lokale landingspagina''s
       - Strategische sessie per kwartaal
 
