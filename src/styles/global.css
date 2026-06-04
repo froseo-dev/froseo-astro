@@ -6813,6 +6813,11 @@ main { display: contents; }
 }
 .service-spotlight-img {
   width: 100%;
+  /* height:auto is nodig zodat aspect-ratio de hoogte bepaalt. Zonder deze
+     regel wint het height-attribuut dat Astro's <Image> op de <img> zet
+     (de bron-pixelhoogte), waardoor de afbeelding in een veel te hoge box
+     belandt en object-fit:cover 'm raar uitrekt/crop't. */
+  height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border: var(--border);
@@ -6830,6 +6835,67 @@ main { display: contents; }
 @media (max-width: 640px) {
   .service-spotlights { padding: 32px var(--gutter-mobile) 16px; gap: 36px; }
   .service-spotlight-img { box-shadow: 5px 5px 0 var(--accent-rare); }
+}
+
+/* ==========================================================================
+   Page-scoped sectie-banden (svc-bands) — brand-gekleurde banden voor
+   service-pagina's die anders te uniform cream zouden ogen (bv. /openai-ads).
+   Activeer met `pageClass: 'svc-bands'` in de service-frontmatter. Raakt
+   bewust geen gedeelde componenten; alles hangt onder .service-page.svc-bands.
+   Beide banden dragen hetzelfde grid-patroon als het introblok, voor cohesie.
+   ========================================================================== */
+
+/* Donkere band voor de pijlers-accordion — mirrort het introblok. De witte
+   accordion-cards komen er mooi op uit; alleen kop + pill flippen naar licht. */
+.service-page.svc-bands .service-pillars {
+  background-color: var(--surface-dark);
+  background-image: var(--bg-decoration-dark);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.service-page.svc-bands .service-pillars-title { color: var(--text-on-dark); }
+.service-page.svc-bands .service-pillars .eyebrow-pill {
+  background: var(--surface-card);
+  color: var(--text-primary);
+}
+
+/* Teal/groene band voor de onboarding-timeline, met hetzelfde grid-patroon
+   (witte rasterlijnen + subtiele vignette) zodat 'ie bij de donkere band past. */
+.service-page.svc-bands .onboarding-timeline {
+  background-color: var(--accent-teal);
+  background-image:
+    radial-gradient(ellipse at center, transparent 20%, var(--accent-teal-strong) 80%),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--text-on-accent) 8%, transparent) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--text-on-accent) 8%, transparent) 0 1px, transparent 1px 60px);
+  background-size: var(--backdrop-size);
+  background-repeat: var(--backdrop-repeat);
+  background-position: center, 0 0, 0 0;
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.service-page.svc-bands .onboarding-timeline-title,
+.service-page.svc-bands .onboarding-timeline-title em,
+.service-page.svc-bands .onboarding-timeline-step-title,
+.service-page.svc-bands .onboarding-timeline-step-body {
+  color: var(--text-on-accent);
+}
+.service-page.svc-bands .onboarding-timeline-step-body { opacity: 0.92; }
+/* Connector-lijn zichtbaar houden op het teal vlak. */
+.service-page.svc-bands .onboarding-timeline-step::before {
+  background: color-mix(in srgb, var(--text-on-accent) 55%, transparent);
+}
+/* Marker-offset subtiel donkerder teal i.p.v. het (nu onzichtbare) accent. */
+.service-page.svc-bands .onboarding-timeline-marker {
+  box-shadow: 4px 4px 0 var(--accent-teal-strong);
+}
+/* Eyebrow-pill in de timeline is accent-rare (= teal hier), dus onzichtbaar
+   op het teal vlak. Wit pil met teal tekst. */
+.service-page.svc-bands .onboarding-timeline .eyebrow-pill {
+  background: var(--surface-card);
+  color: var(--accent-teal-strong);
 }
 
 /* --- Pijlers accordion (deep-dive content, scannable houder) --- */

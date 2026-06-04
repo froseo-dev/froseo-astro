@@ -46,6 +46,7 @@ bullets:
   - Vaste maandprijs, maandelijks opzegbaar
 
 showMaintenancePackages: true
+showMaintenanceCheck: true
 hideShowcase: true
 testimonialId: auke-club12
 

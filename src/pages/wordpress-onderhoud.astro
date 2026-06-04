@@ -31,6 +31,7 @@ import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
 import PainPoints from '@components/sections/PainPoints.astro';
 import Comparison from '@components/sections/Comparison.astro';
 import PricingPackages from '@components/sections/PricingPackages.astro';
+import MaintenanceCheckCta from '@components/sections/MaintenanceCheckCta.astro';
 import Testimonial from '@components/sections/Testimonial.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import { Image } from 'astro:assets';
@@ -265,17 +266,10 @@ const faqs = [
     </div>
 
     {/* Compacte CTA na de pakketten: bezoekers die nog twijfelen laagdrempelig
-        naar de gratis check sturen (i.p.v. het 'Andere wensen?'-blok). */}
-    <section class="lp-pkg-cta">
-      <div class="lp-pkg-cta-inner">
-        <h2 class="lp-pkg-cta-title">Laat je WordPress-site gratis checken</h2>
-        <p class="lp-pkg-cta-body">
-          Veel WordPress-sites werken ogenschijnlijk prima, maar lopen achter met updates en beveiliging. We checken gratis hoe jouw site ervoor staat en geven eerlijk advies, ook als er weinig nodig is.
-        </p>
-        <a class="btn-primary lp-pkg-cta-btn" href="#check">Gratis WordPress-check aanvragen ↗</a>
-        <p class="lp-pkg-cta-note">Geen login nodig. Alleen je website-URL is genoeg.</p>
-      </div>
-    </section>
+        naar de gratis check sturen (i.p.v. het 'Andere wensen?'-blok).
+        Gedeelde component, in CalvinNote-stijl en consistent met de andere
+        onderhoud-pagina's. */}
+    <MaintenanceCheckCta />
 
     {/* Klant-quote tussen pakketten en de vergelijking. */}
     <Testimonial id="auke-club12" variant="card" />
@@ -683,30 +677,6 @@ const faqs = [
      zonder WordPress onderhoud.' netjes op ~2 regels valt i.p.v. te smal/groot. */
   #waarom :global(.pain-points-head) { max-width: 940px; }
   #waarom :global(.pain-points-title) { font-size: clamp(26px, 3vw, 38px); }
-
-  /* Compacte CTA na de pakketten (vervangt het 'Andere wensen?'-blok). */
-  .lp-pkg-cta {
-    padding: clamp(1.5rem, 3vw, 2.5rem) 1.5rem clamp(2.5rem, 5vw, 3.5rem);
-  }
-  .lp-pkg-cta-inner {
-    max-width: 44rem;
-    margin: 0 auto;
-    text-align: center;
-    background: var(--surface-card, #fff);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 1rem;
-    padding: clamp(1.75rem, 4vw, 2.5rem);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
-  }
-  .lp-pkg-cta-title {
-    font-family: var(--font-display, sans-serif);
-    font-weight: 800;
-    font-size: clamp(1.35rem, 3vw, 1.9rem);
-    line-height: 1.2;
-    margin-bottom: 0.85rem;
-  }
-  .lp-pkg-cta-body { line-height: 1.6; color: var(--text-muted, #555); margin-bottom: 1.5rem; }
-  .lp-pkg-cta-note { margin-top: 0.75rem; font-size: 0.85rem; opacity: 0.65; }
 
   /* ============================================================
      Onderhoudscheck-sectie + formulier

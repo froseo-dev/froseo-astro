@@ -20,6 +20,8 @@ import StatsRibbon from '@components/sections/StatsRibbon.astro';
 import CTABand from '@components/sections/CTABand.astro';
 import OnboardingTimeline from '@components/sections/OnboardingTimeline.astro';
 import Testimonial from '@components/sections/Testimonial.astro';
+import MaintenanceCheck from '@components/sections/MaintenanceCheck.astro';
+import MaintenanceCheckCta from '@components/sections/MaintenanceCheckCta.astro';
 import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import { interpolate, review } from '@data/site-config';
@@ -105,7 +107,7 @@ const serviceSchema = {
   <Nav />
   <main>
     <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
-    <article class="service-page">
+    <article class={`service-page ${s.pageClass ?? ''}`}>
       <!-- ============================================================
            Hero
            ============================================================ -->
@@ -184,8 +186,13 @@ const serviceSchema = {
           title={s.pricingTitle}
           titleAccent={s.pricingTitleAccent}
           lead={s.pricingLead}
+          showCustom={!s.showMaintenanceCheck}
         />
       )}
+
+      {/* Onderhoud-pagina's: CTA-kaart i.p.v. de "Andere wensen?"-custom-strip,
+          zacht doorsturen naar de gratis-check (#check) onderaan. */}
+      {s.showMaintenanceCheck && <MaintenanceCheckCta />}
 
       {s.showContentPackages && (
         <ContentPackages
@@ -400,7 +407,12 @@ const serviceSchema = {
            pagina wordt dan overgeslagen.
            ============================================================ -->
       {s.approachStyle === 'timeline' && s.approachSteps && s.approachSteps.length > 0 && (
-        <OnboardingTimeline items={s.approachSteps} />
+        <OnboardingTimeline
+          items={s.approachSteps}
+          eyebrow={s.approachEyebrow}
+          title={s.approachTitle}
+          titleAccent={s.approachTitleAccent}
+        />
       )}
 
       <!-- ============================================================
@@ -530,7 +542,18 @@ const serviceSchema = {
            hierboven is de single projecten-block. "Alle projecten ↗" CTA zit
            daar al in. Voorkomt duplicate projecten-content op één pagina.) -->
 
-      {s.calvinNote ? (
+      {s.showMaintenanceCheck ? (
+        <MaintenanceCheck formLocation={`${s.slug}-page`} />
+      ) : s.closeCta ? (
+        <BetterCallCalvin
+          eyebrow={s.closeCta.eyebrow ?? 'Een gesprek inplannen?'}
+          titleLine1={s.closeCta.titleLine1}
+          titleAccent={s.closeCta.titleAccent}
+          body={s.closeCta.body}
+          primaryLabel={s.closeCta.primaryLabel ?? 'Plan een kennismaking ↗'}
+          primaryHref={s.closeCta.primaryHref ?? '/contact/'}
+        />
+      ) : s.calvinNote ? (
         <BetterCallCalvin
           eyebrow="Advies aanvragen"
           titleLine1="Vraag vrijblijvend"

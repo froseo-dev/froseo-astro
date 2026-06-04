@@ -116,6 +116,11 @@ const services = defineCollection({
         ServicesGrid en mega-menu kunnen 'm wel gewoon tonen. */
     external: z.boolean().default(false),
 
+    /** Optionele extra class op het <article> van de detail-pagina. Voor
+        page-scoped styling (bv. afwisselende sectie-achtergronden) zonder de
+        gedeelde componenten te raken. Bv. 'svc-bands'. */
+    pageClass: z.string().optional(),
+
     /* === Velden voor service-detail pagina (/[slug]) ============= */
 
     /** Langere hero-lead (1-2 zinnen). Fallback naar `description`. */
@@ -176,6 +181,22 @@ const services = defineCollection({
         ctaHref: z.string().optional(),
       })
       .optional(),
+    /** Override voor de afsluitende BetterCallCalvin-CTA onderaan de pagina.
+        Standaard kiest het template tussen een "advies"-variant (wanneer
+        calvinNote gezet is) en een generieke "te bespreken"-variant. Met
+        closeCta forceer je eigen copy, zodat je een mid-page calvinNote kunt
+        gebruiken én toch een passende afsluiter houdt. */
+    closeCta: z
+      .object({
+        eyebrow: z.string().optional(),
+        titleLine1: z.string(),
+        titleAccent: z.string(),
+        body: z.array(z.string()),
+        primaryLabel: z.string().optional(),
+        primaryHref: z.string().optional(),
+      })
+      .optional(),
+
     /** Section-overrides voor het propositionPaths-blok. Wanneer leeg gebruikt
         het template defaults (eyebrow "Kies je route", title "Maatwerk of
         abonnement"). Bij pakketten of een ander narratief: zet hier eigen copy. */
@@ -207,6 +228,13 @@ const services = defineCollection({
     /** Wanneer true: verberg de WebsitesShowcase-sectie. Voor pagina's waar
         portfolio-cases minder relevant zijn (zoals onderhoud). */
     hideShowcase: z.boolean().default(false),
+
+    /** Wanneer true (onderhoud-pagina's): vervang de "Andere wensen?"-custom-
+        strip onder de pakketten door de MaintenanceCheckCta-kaart, en gebruik
+        het MaintenanceCheck-formulier als afsluiter i.p.v. de standaard
+        BetterCallCalvin. Voor /website-onderhoud en /wordpress-website-onderhoud,
+        zodat ze dezelfde gratis-check-flow krijgen als de Ads-landingspagina. */
+    showMaintenanceCheck: z.boolean().default(false),
 
     /** Positief "infrastructuur-blok" — donker centered tekstblok als
         alternatief voor pain-points. Voor pagina's waar je positief wil
@@ -324,6 +352,12 @@ const services = defineCollection({
         2x2 grid). 'timeline' = horizontale tijdslijn (gestapeld op mobiel),
         renderd dan ook hoger op de pagina i.p.v. onderaan. */
     approachStyle: z.enum(['cards', 'timeline']).default('cards'),
+    /** Optionele kop-overrides voor de timeline-variant van approachSteps.
+        Leeg = component-defaults ("Hoe begin je" / "Van aanmelden tot
+        maandrapport."). Voor pagina's waar dat onboarding-narratief niet past. */
+    approachEyebrow: z.string().optional(),
+    approachTitle: z.string().optional(),
+    approachTitleAccent: z.string().optional(),
 
     /** ID van een testimonial uit content/data/testimonials.json om
         tussen StatsRibbon en PainPoints te tonen. Voor proof-momenten

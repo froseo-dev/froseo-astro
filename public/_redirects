@@ -40,6 +40,9 @@
 # --- Privacy: common slug die externe sites/bookmarks gebruiken --
 /privacy/                    /privacybeleid/                    301
 
+# --- Oude root-tool-URL → nieuwe /tools/ structuur ---------------
+/tekens-tellen/              /tools/tekens-tellen/              301
+
 # --- Oude WordPress sitemap-URLs → nieuwe Astro sitemap ----------
 # Google's gecachte crawl-paden naar de nieuwe index.
 /sitemap_index.xml           /sitemap-index.xml                 301

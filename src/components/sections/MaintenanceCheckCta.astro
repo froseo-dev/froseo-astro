@@ -1,0 +1,108 @@
+---
+/**
+ * MaintenanceCheckCta — compacte "laat je site gratis checken"-kaart.
+ *
+ * Vervangt op de onderhoud-pagina's de "Andere wensen?"-custom-strip en
+ * stuurt zacht naar de gratis-check (anchor #check of /contact/). Bewust in
+ * dezelfde stijl als de CalvinNote-kaart: witte kaart met dikke rand en een
+ * harde magenta offset-schaduw op het patterned-cream vlak, zodat het visueel
+ * één geheel vormt met de rest van de pagina.
+ */
+
+import { Image } from 'astro:assets';
+import calvinPhoto from '@assets/team/calvin.webp';
+
+interface Props {
+  title?: string;
+  body?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  note?: string;
+}
+
+const {
+  title = 'Laat je WordPress-site gratis checken',
+  body = 'Veel WordPress-sites werken ogenschijnlijk prima, maar lopen achter met updates en beveiliging. We checken gratis hoe jouw site ervoor staat en geven eerlijk advies, ook als er weinig nodig is.',
+  ctaLabel = 'Gratis WordPress-check aanvragen ↗',
+  ctaHref = '#check',
+  note = 'Geen login nodig. Alleen je website-URL is genoeg.',
+} = Astro.props;
+---
+
+<section class="mc-cta">
+  <div class="mc-cta-card">
+    <div class="mc-cta-avatar">
+      <Image
+        src={calvinPhoto}
+        alt="Calvin van Froseo"
+        class="mc-cta-avatar-img"
+        widths={[80, 120, 160]}
+        sizes="80px"
+        loading="lazy"
+      />
+    </div>
+    <h2 class="mc-cta-title">{title}</h2>
+    <p class="mc-cta-body">{body}</p>
+    <a class="btn-primary mc-cta-btn" href={ctaHref}>{ctaLabel}</a>
+    {note && <p class="mc-cta-note">{note}</p>}
+  </div>
+</section>
+
+<style>
+  .mc-cta {
+    padding: clamp(1.5rem, 3vw, 2.5rem) var(--gutter) clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .mc-cta-card {
+    max-width: 46rem;
+    margin: 0 auto;
+    text-align: center;
+    background: var(--surface-card);
+    border: var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: 6px 6px 0 var(--accent-rare);
+    padding: clamp(1.85rem, 4vw, 2.75rem);
+  }
+  .mc-cta-avatar {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 1.1rem;
+    border-radius: 50%;
+    border: var(--border);
+    background: var(--accent-teal);
+    overflow: hidden;
+    position: relative;
+  }
+  .mc-cta-avatar-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+  }
+  .mc-cta-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    margin-bottom: 0.85rem;
+  }
+  .mc-cta-body {
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0 auto 1.5rem;
+    max-width: 34rem;
+  }
+  .mc-cta-note {
+    margin-top: 0.85rem;
+    font-size: 0.85rem;
+    opacity: 0.65;
+    color: var(--text-primary);
+  }
+  @media (max-width: 640px) {
+    .mc-cta { padding: var(--gutter-mobile); padding-bottom: 2.5rem; }
+    .mc-cta-card { box-shadow: 5px 5px 0 var(--accent-rare); }
+  }
+</style>

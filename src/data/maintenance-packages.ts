@@ -40,15 +40,15 @@ export interface MaintenancePackage {
 }
 
 /* Jaarprijzen zijn afgerond naar mooie hele maandbedragen bij jaarlijkse
-   facturatie (~1 maand gratis): €27/m, €36/m, €54/m. */
+   facturatie (~1 maand gratis): €19/m, €36/m, €54/m. */
 export const maintenancePackages: MaintenancePackage[] = [
   {
     slug: 'basic-care',
     name: 'Basic Care Package',
     shortName: 'Basic Care',
     tagline: 'Voor kleine websites en online visitekaartjes.',
-    monthlyPrice: 29,
-    yearlyPrice: 27 * 12, // €324/jaar = €27/m
+    monthlyPrice: 21,
+    yearlyPrice: 19 * 12, // €228/jaar = €19/m
     features: [
       { label: 'Maandelijkse updates met restore-point', primary: true },
       { label: 'Wekelijkse backups', primary: true },

@@ -1,0 +1,259 @@
+---
+/**
+ * MaintenanceCheck — "vraag je gratis WordPress-check aan"-sectie.
+ *
+ * Donkere 2-koloms sectie (uitleg links + formulier rechts) die naar het
+ * gedeelde /api/contact endpoint post. Zelfstandig: bevat z'n eigen submit-
+ * script. Oorspronkelijk inline op /wordpress-onderhoud; nu herbruikbaar op
+ * de andere onderhoud-pagina's (/website-onderhoud, /wordpress-website-onderhoud).
+ *
+ * `formLocation` onderscheidt de bron in de dataLayer (generate_lead event).
+ */
+
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface Props {
+  /** Bron-label voor het dataLayer generate_lead event. */
+  formLocation?: string;
+}
+
+const { formLocation = 'onderhoud' } = Astro.props;
+
+const checkItems = [
+  'Laadtijd en Core Web Vitals: hoe snel is je site echt? (via Google PageSpeed)',
+  'Veiligheid: draait alles netjes op HTTPS en staat je SSL goed?',
+  'Zichtbaar verouderde WordPress-versie of plug-ins.',
+  'Een heldere samenvatting in gewone taal, met concreet advies.',
+];
+---
+
+<section class="mc-check" id="check" data-mc-location={formLocation}>
+  <div class="mc-check-inner">
+    <div class="mc-check-intro">
+      <EyebrowPill variant="highlight">Gratis &amp; vrijblijvend</EyebrowPill>
+      <h2 class="mc-check-title">Vraag je gratis <em>WordPress-check</em> aan.</h2>
+      <p class="mc-check-lead">
+        We draaien een snelle gezondheidscheck op je site (vooral snelheid en beveiliging) op basis van je URL en sturen je in begrijpelijke taal terug wat opvalt. Geen login nodig en geen verkooppraatje: blijkt onderhoud nog niet nodig, dan zeggen we dat.
+      </p>
+      <ul class="mc-check-list">
+        {checkItems.map((c) => <li>{c}</li>)}
+      </ul>
+      <p class="mc-check-note">
+        De diepere intake (backups, plug-in-versies en instellingen achter je login) doen we pas wanneer je klant wordt. Voor deze check hebben we alleen je webadres nodig.
+      </p>
+    </div>
+
+    <div class="mc-form-wrap">
+      <form class="mc-form" method="POST" action="/api/contact" data-mc-form novalidate>
+        <div class="mc-form-title">Gratis WordPress-check aanvragen</div>
+
+        <label class="mc-field">
+          <span>Naam</span>
+          <input type="text" name="name" required autocomplete="name" />
+        </label>
+        <label class="mc-field">
+          <span>E-mailadres</span>
+          <input type="email" name="email" required autocomplete="email" placeholder="je@bedrijf.nl" />
+        </label>
+        <label class="mc-field">
+          <span>Je website-URL</span>
+          <input type="url" name="current_website" required placeholder="www.jouwbedrijf.nl" />
+        </label>
+        <label class="mc-field">
+          <span>Waar wil je hulp bij?</span>
+          <select name="hulpvraag">
+            <option value="">Kies een onderwerp</option>
+            <option value="WordPress onderhoud">WordPress onderhoud (algemeen)</option>
+            <option value="Updates en backups">Updates en backups</option>
+            <option value="Beveiliging">Beveiliging</option>
+            <option value="Trage website">Trage website</option>
+            <option value="Pakket aanvragen">Een pakket aanvragen</option>
+            <option value="Weet ik nog niet">Weet ik nog niet precies</option>
+          </select>
+        </label>
+        <label class="mc-field">
+          <span>Toelichting <em class="mc-optional">(optioneel)</em></span>
+          <textarea name="toelichting" rows="3" placeholder="Vertel kort wat er speelt of wat je wilt weten."></textarea>
+        </label>
+
+        {/* Hidden context-velden voor de gedeelde /api/contact endpoint. */}
+        <input type="hidden" name="form_source" value="onderhoud-check" />
+        <input type="hidden" name="onderwerp" value="WordPress onderhoudscheck" />
+        <input type="hidden" name="package" value="" />
+        <input type="hidden" name="message" value="Aanvraag gratis WordPress-check." data-mc-message />
+
+        {/* Honeypots (verborgen) + tijd-check. Server valideert beide. */}
+        <div class="form-honeypot" aria-hidden="true">
+          <label>Website (laat dit veld leeg)
+            <input type="text" name="website_url" tabindex="-1" autocomplete="off" />
+          </label>
+          <label>Onderwerp
+            <input type="text" name="subject" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+        <input type="hidden" name="form_started_at" value="" data-mc-started-at />
+
+        <button type="submit" class="btn-primary mc-form-submit">Vraag gratis check aan ↗</button>
+        <span class="mc-form-status" data-mc-status role="status" aria-live="polite">100% vrijblijvend, reactie meestal binnen één werkdag.</span>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mc-check {
+    scroll-margin-top: 80px;
+    padding: clamp(3rem, 6vw, 5rem) var(--gutter);
+    background: var(--surface-dark);
+    color: #fff;
+  }
+  .mc-check-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .mc-check-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    line-height: 1.1;
+    margin: 1rem 0 1rem;
+    color: #fff;
+  }
+  .mc-check-title em { color: var(--accent-highlight); font-style: normal; }
+  .mc-check-lead { font-size: 1.05rem; line-height: 1.6; opacity: 0.9; margin-bottom: 1.5rem; }
+  .mc-check-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+  .mc-check-list li {
+    position: relative;
+    padding-left: 1.9rem;
+    line-height: 1.45;
+    opacity: 0.95;
+  }
+  .mc-check-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    background: var(--accent-highlight);
+    border-radius: 2px;
+    transform: rotate(45deg);
+  }
+  .mc-check-note {
+    margin-top: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    opacity: 0.75;
+    border-left: 2px solid var(--accent-highlight);
+    padding-left: 0.85rem;
+  }
+
+  /* Formulier-card (licht, contrast op donkere sectie) */
+  .mc-form-wrap { position: relative; }
+  .mc-form {
+    background: #fff;
+    color: var(--text-primary);
+    border-radius: 1rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    display: grid;
+    gap: 1rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  }
+  .mc-form-title { font-weight: 800; font-size: 1.2rem; font-family: var(--font-display); }
+  .mc-field { display: grid; gap: 0.35rem; }
+  .mc-field > span { font-size: 0.9rem; font-weight: 600; }
+  .mc-optional { font-style: normal; font-weight: 400; opacity: 0.6; }
+  .mc-field input,
+  .mc-field select,
+  .mc-field textarea {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid #d8d2cb;
+    border-radius: 0.55rem;
+    font: inherit;
+    background: #fff;
+  }
+  .mc-field input:focus,
+  .mc-field select:focus,
+  .mc-field textarea:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(105, 1, 170, 0.15);
+  }
+  .mc-form-submit { width: 100%; margin-top: 0.25rem; }
+  .mc-form-status { font-size: 0.85rem; text-align: center; opacity: 0.7; }
+  .mc-form-status.is-success { color: var(--accent-teal); opacity: 1; font-weight: 600; }
+  .mc-form-status.is-error { color: #c0392b; opacity: 1; font-weight: 600; }
+  @media (max-width: 900px) {
+    .mc-check-inner { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  /* Self-contained submit-handler voor de gratis-check formulieren.
+     Synthetiseert een message uit de losse velden (endpoint vereist
+     message >= 10) en pusht een generate_lead event met de bron uit
+     data-mc-location. */
+  document.querySelectorAll<HTMLFormElement>('[data-mc-form]').forEach((form) => {
+    const section = form.closest<HTMLElement>('.mc-check');
+    const status = form.querySelector<HTMLElement>('[data-mc-status]');
+    const startedAt = form.querySelector<HTMLInputElement>('[data-mc-started-at]');
+    const messageField = form.querySelector<HTMLInputElement>('[data-mc-message]');
+    const location = section?.dataset.mcLocation ?? 'onderhoud';
+
+    if (startedAt) startedAt.value = String(Date.now());
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!status) return;
+
+      const submitBtn = form.querySelector<HTMLButtonElement>('.mc-form-submit');
+      submitBtn?.setAttribute('disabled', 'true');
+      status.textContent = 'Versturen…';
+      status.className = 'mc-form-status';
+
+      const data = new FormData(form);
+      const website = (data.get('current_website') ?? '').toString();
+      const vraag = (data.get('hulpvraag') ?? '').toString();
+      const toelichting = (data.get('toelichting') ?? '').toString();
+      const pkg = (data.get('package') ?? '').toString();
+
+      let msg = 'Aanvraag gratis WordPress-onderhoudscheck.';
+      if (vraag) msg += ` Hulpvraag: ${vraag}.`;
+      if (website) msg += ` Website: ${website}.`;
+      if (toelichting) msg += ` Toelichting: ${toelichting}`;
+      if (messageField) messageField.value = msg;
+      data.set('message', msg);
+
+      try {
+        const res = await fetch('/api/contact', { method: 'POST', body: data });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok && json.ok) {
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          (window as any).dataLayer.push({
+            event: 'generate_lead',
+            lead_type: pkg ? 'onderhoud-pakket' : 'onderhoud-check',
+            package: pkg || undefined,
+            form_location: location,
+          });
+          status.textContent = '✓ Verstuurd. We nemen snel contact op met je gratis check.';
+          status.className = 'mc-form-status is-success';
+          form.reset();
+          if (startedAt) startedAt.value = String(Date.now());
+        } else {
+          status.textContent = json.error ?? 'Versturen mislukt. Probeer het opnieuw of mail ons direct.';
+          status.className = 'mc-form-status is-error';
+        }
+      } catch {
+        status.textContent = 'Versturen mislukt. Probeer het opnieuw of mail ons direct.';
+        status.className = 'mc-form-status is-error';
+      } finally {
+        submitBtn?.removeAttribute('disabled');
+      }
+    });
+  });
+</script>
