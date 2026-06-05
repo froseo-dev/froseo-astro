@@ -15,6 +15,7 @@ import '@fontsource/jetbrains-mono/700.css';
 import '@styles/global.css';
 import PaletteSwitcher from '../components/dev/PaletteSwitcher.astro';
 import MobileCTA from '../components/layout/MobileCTA.astro';
+import ScanPopup from '../components/ScanPopup.astro';
 import { social, review as reviewData } from '@data/site-config';
 import { getAlternates, type Lang } from '@data/i18n';
 
@@ -163,6 +164,12 @@ const businessSchema = {
       />
     )}
     <PaletteSwitcher />
+
+    {/* Scan-aanvraag popup — sitewide. Trigger-logica (scroll/timer, session-cap,
+        path-exclusions /contact + /wordpress-onderhoud) zit ín het component zelf,
+        zodat we 'm hier zonder conditionals universeel kunnen mounten. De
+        test-pagina /test-scan-popup/ rendert deze met forceOpen=true. */}
+    <ScanPopup />
 
     {/* Attributie-capture voor CRM-leads: legt UTM-params, gclid, referrer en
         landingspagina vast en injecteert ze als verborgen velden in de

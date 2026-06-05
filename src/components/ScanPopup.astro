@@ -1,0 +1,559 @@
+---
+/**
+ * Site-brede scan-aanvraag popup.
+ *
+ * Trigger-logica (in inline script onderaan):
+ *  - Desktop: 50% scroll OF 35 sec, met minimum 15 sec op pagina
+ *  - Mobile:  60% scroll OF 45 sec, met minimum 15 sec op pagina
+ *  - Maximum 1× per sessie (localStorage flag)
+ *  - Excluded paths: /contact/ en /wordpress-onderhoud/
+ *
+ * Multistep form (4 stappen):
+ *  1. Scan-type kiezen (snelheid / seo / lokaal)
+ *  2. Velden (variërend per type): website + evt. bedrijf/adres + opt. 3 zoekwoorden
+ *  3. E-mail
+ *  4. Bedankt-scherm
+ *
+ * Submit POST → /api/scan-request → Brevo "Froseo Leads" lijst.
+ *
+ * Test-mode: voeg `?test-scan=1` toe aan URL om popup direct te openen,
+ *            session-flag te negeren en op sluiten te kunnen heropenen.
+ *
+ * Externe trigger: andere componenten openen de popup via
+ *   `window.openScanPopup()` of `<button data-trigger="scan-popup">`.
+ */
+
+interface Props {
+  /** Forceer popup direct open (voor de test-pagina). */
+  forceOpen?: boolean;
+}
+
+const { forceOpen = false } = Astro.props;
+---
+
+<div
+  class="scan-popup"
+  data-scan-popup
+  data-force-open={forceOpen ? 'true' : undefined}
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="scan-popup-title"
+>
+  <div class="scan-popup-backdrop" data-scan-close></div>
+  <div class="scan-popup-card">
+    <button type="button" class="scan-popup-close" data-scan-close aria-label="Sluiten">×</button>
+
+    {/* ────── STAP 1 — Scan-type(s) ────── */}
+    <div class="scan-step" data-step="1">
+      <span class="scan-eyebrow">Gratis &amp; vrijblijvend</span>
+      <h2 id="scan-popup-title" class="scan-title">Gratis websitecheck aanvragen</h2>
+      <p class="scan-lead">Kies wat we voor je mogen checken. Je ontvangt het rapport binnen 1 werkdag.</p>
+
+      <div class="scan-types" role="group" aria-label="Welke scans">
+        <label class="scan-type-card">
+          <input type="checkbox" name="scanType" value="snelheid" />
+          <div class="scan-type-body">
+            <strong>Snelheid &amp; techniek</strong>
+            <span>PageSpeed, Core Web Vitals en techniek-check op je homepage.</span>
+          </div>
+        </label>
+        <label class="scan-type-card">
+          <input type="checkbox" name="scanType" value="seo" />
+          <div class="scan-type-body">
+            <strong>SEO</strong>
+            <span>Posities in Google, zoekvolumes en organisch verkeer op je belangrijkste zoekwoorden.</span>
+          </div>
+        </label>
+        <label class="scan-type-card">
+          <input type="checkbox" name="scanType" value="lokaal" />
+          <div class="scan-type-body">
+            <strong>Lokale zichtbaarheid <span class="scan-type-meta">voor lokale ondernemers</span></strong>
+            <span>Google Maps, local pack en je Google Business Profile in jouw verzorgingsgebied.</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="scan-actions">
+        <button type="button" class="scan-btn scan-btn-primary" data-step-next>Volgende →</button>
+      </div>
+    </div>
+
+    {/* ────── STAP 2 — Velden ────── */}
+    <div class="scan-step" data-step="2" hidden>
+      <span class="scan-eyebrow">Je gegevens</span>
+      <h2 class="scan-title">Vertel ons over je site.</h2>
+
+      <div class="scan-field">
+        <label for="scan-website">Website</label>
+        <input type="url" id="scan-website" name="website" placeholder="https://jouwsite.nl" required />
+      </div>
+
+      {/* Lokaal-specifieke velden — alleen bedrijfsnaam, adres halen we zelf op via GBP */}
+      <div class="scan-lokaal-fields" hidden>
+        <div class="scan-field">
+          <label for="scan-bedrijf">Bedrijfsnaam</label>
+          <input type="text" id="scan-bedrijf" name="bedrijfsnaam" placeholder="Bijv. Bakkerij Jansen Utrecht" />
+        </div>
+      </div>
+
+      {/* Zoekwoord-velden bij SEO + Lokaal */}
+      <div class="scan-keyword-fields" hidden>
+        <div class="scan-field">
+          <label>Zoekwoorden <span class="scan-optional">(optioneel, anders kiezen wij relevante voor je)</span></label>
+          <input type="text" name="kw1" placeholder="Bijv. webdesign utrecht" />
+          <input type="text" name="kw2" placeholder="Bijv. dakdekker zeist" style="margin-top:6px" />
+          <input type="text" name="kw3" placeholder="Bijv. personal training amsterdam" style="margin-top:6px" />
+        </div>
+      </div>
+
+      <div class="scan-actions">
+        <button type="button" class="scan-btn scan-btn-secondary" data-step-prev>← Vorige</button>
+        <button type="button" class="scan-btn scan-btn-primary" data-step-next>Volgende →</button>
+      </div>
+    </div>
+
+    {/* ────── STAP 3 — E-mail ────── */}
+    <div class="scan-step" data-step="3" hidden>
+      <span class="scan-eyebrow">Bijna klaar</span>
+      <h2 class="scan-title">Waar mogen we het rapport sturen?</h2>
+      <p class="scan-lead">Binnen 1 werkdag ligt je persoonlijke rapport in je inbox.</p>
+
+      <div class="scan-field">
+        <label for="scan-email">E-mail</label>
+        <input type="email" id="scan-email" name="email" placeholder="jij@bedrijf.nl" required />
+      </div>
+
+      {/* Honeypot — verborgen voor mensen, bots vullen 't vaak in */}
+      <div aria-hidden="true" style="position:absolute;left:-9999px;">
+        <label>Website-URL: <input type="text" name="website_url_check" tabindex="-1" autocomplete="off" /></label>
+      </div>
+
+      <label class="scan-consent">
+        <input type="checkbox" name="optInMarketing" value="ja" />
+        <span>Ja, stuur mij de scan en praktische tips over websites, SEO en online vindbaarheid.</span>
+      </label>
+
+      <p class="scan-privacy">
+        Door verzenden ga je akkoord met ons <a href="/privacybeleid/" target="_blank" rel="noopener">privacybeleid</a>.
+      </p>
+
+      <div class="scan-error" data-scan-error hidden></div>
+
+      <div class="scan-actions">
+        <button type="button" class="scan-btn scan-btn-secondary" data-step-prev>← Vorige</button>
+        <button type="button" class="scan-btn scan-btn-primary" data-scan-submit>Verstuur aanvraag</button>
+      </div>
+    </div>
+
+    {/* ────── STAP 4 — Bedankt ────── */}
+    <div class="scan-step" data-step="4" hidden>
+      <div class="scan-success">✓</div>
+      <h2 class="scan-title">Top, we gaan er voor je induiken.</h2>
+      <p class="scan-lead">Binnen 1 werkdag krijg je een persoonlijk rapport in je inbox met concrete inzichten over je website.</p>
+      <div class="scan-actions">
+        <button type="button" class="scan-btn scan-btn-primary" data-scan-close>Sluiten</button>
+      </div>
+    </div>
+
+    {/* Progress dots */}
+    <div class="scan-progress" data-scan-progress>
+      <span class="dot active" data-progress="1"></span>
+      <span class="dot" data-progress="2"></span>
+      <span class="dot" data-progress="3"></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .scan-popup {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px;
+  }
+  .scan-popup[hidden] { display: none; }
+  .scan-popup-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(10, 10, 20, 0.55);
+    backdrop-filter: blur(2px);
+    animation: scan-fade-in 0.2s ease-out;
+  }
+  .scan-popup-card {
+    position: relative;
+    width: 100%; max-width: 480px;
+    background: var(--color-cream, #F6F2E8);
+    border: 2.5px solid #0A0A14;
+    border-radius: 20px;
+    box-shadow: 6px 6px 0 var(--color-magenta, #B6007B);
+    padding: 28px 28px 22px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    animation: scan-pop-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    color: #0A0A14;
+  }
+  @keyframes scan-fade-in { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes scan-pop-in {
+    from { opacity: 0; transform: scale(0.92) translateY(8px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .scan-popup-close {
+    position: absolute; top: 10px; right: 14px;
+    background: none; border: none; cursor: pointer;
+    font-size: 28px; line-height: 1; padding: 4px 8px;
+    color: #54506A; font-weight: 300;
+  }
+  .scan-popup-close:hover { color: #0A0A14; }
+
+  .scan-eyebrow {
+    display: inline-block;
+    background: #150030; color: #fff;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;
+  }
+  .scan-title {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-weight: 800; font-size: 22px; line-height: 1.2;
+    margin: 0 0 8px; color: #0A0A14;
+  }
+  .scan-lead { font-size: 13.5px; color: #54506A; margin: 0 0 18px; line-height: 1.5; }
+
+  .scan-types { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+  .scan-type-card {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 14px;
+    background: #fff;
+    border: 2px solid #EAE3D2; border-radius: 12px;
+    cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .scan-type-card:hover { border-color: #B6007B; }
+  .scan-type-card input[type="checkbox"],
+  .scan-type-card input[type="radio"] {
+    margin-top: 3px; cursor: pointer;
+    accent-color: #B6007B;
+    width: 16px; height: 16px; flex-shrink: 0;
+  }
+  .scan-type-card:has(input:checked) {
+    border-color: #B6007B;
+    box-shadow: 3px 3px 0 #B6007B;
+  }
+  .scan-type-body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .scan-type-body strong { font-size: 14px; font-weight: 700; color: #0A0A14; }
+  .scan-type-body span { font-size: 12.5px; color: #54506A; line-height: 1.4; }
+  .scan-type-meta { font-weight: 400; font-size: 11.5px; color: #9CA3AF; font-style: italic; }
+
+  .scan-field { display: flex; flex-direction: column; margin-bottom: 14px; }
+  .scan-field label { font-size: 12px; font-weight: 600; color: #0A0A14; margin-bottom: 6px; }
+  .scan-field input {
+    padding: 10px 12px; font-size: 14px; font-family: inherit;
+    background: #fff; border: 2px solid #EAE3D2; border-radius: 8px;
+    color: #0A0A14; transition: border-color 0.15s;
+  }
+  .scan-field input:focus { outline: none; border-color: #B6007B; }
+  .scan-optional { font-weight: 400; color: #9CA3AF; font-size: 11.5px; }
+
+  .scan-consent {
+    display: flex; align-items: flex-start; gap: 8px;
+    margin: 0 0 8px; padding: 0;
+    cursor: pointer;
+  }
+  .scan-consent input[type="checkbox"] {
+    margin-top: 2px; cursor: pointer;
+    accent-color: #B6007B;
+    width: 14px; height: 14px; flex-shrink: 0;
+  }
+  .scan-consent span { font-size: 11.5px; color: #54506A; line-height: 1.4; }
+  .scan-privacy { font-size: 11px; color: #9CA3AF; line-height: 1.4; margin: 6px 0 12px; }
+  .scan-privacy a { color: #6901AA; text-decoration: underline; }
+
+  .scan-error {
+    background: #FEE2E2; color: #991B1B;
+    border: 1.5px solid #FCA5A5; border-radius: 8px;
+    padding: 10px 12px; font-size: 12.5px; margin-bottom: 12px;
+  }
+
+  .scan-success {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: #16A34A; color: #fff;
+    font-size: 32px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px; box-shadow: 3px 3px 0 #0A0A14;
+  }
+
+  .scan-actions {
+    display: flex; gap: 8px; margin-top: 4px;
+  }
+  .scan-btn {
+    flex: 1;
+    padding: 12px 18px;
+    font-family: inherit; font-size: 14px; font-weight: 700;
+    border: 2px solid #0A0A14; border-radius: 10px;
+    cursor: pointer; transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .scan-btn-primary {
+    background: #00807d; color: #fff;
+    box-shadow: 3px 3px 0 #0A0A14;
+  }
+  .scan-btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #0A0A14; }
+  .scan-btn-primary:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 #0A0A14; }
+  .scan-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .scan-btn-secondary {
+    background: transparent; color: #0A0A14;
+    flex: 0 0 auto; padding: 12px 16px;
+  }
+  .scan-btn-secondary:hover { background: rgba(0,0,0,0.05); }
+
+  .scan-progress {
+    display: flex; justify-content: center; gap: 6px;
+    margin-top: 18px; padding-top: 14px;
+    border-top: 1px solid #EAE3D2;
+  }
+  .scan-progress .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #EAE3D2; transition: background 0.2s, width 0.2s;
+  }
+  .scan-progress .dot.active { background: #B6007B; width: 20px; border-radius: 4px; }
+
+  @media (max-width: 480px) {
+    .scan-popup { padding: 12px; }
+    .scan-popup-card { padding: 22px 20px 18px; border-radius: 16px; }
+    .scan-title { font-size: 20px; }
+  }
+</style>
+
+<script>
+  /* eslint-disable */
+  (() => {
+    const popup = document.querySelector<HTMLDivElement>('[data-scan-popup]');
+    if (!popup) return;
+
+    const SESSION_KEY = 'froseo_scan_popup_shown';
+    const EXCLUDE_PATHS = ['/contact', '/wordpress-onderhoud'];
+    const isTestMode = new URLSearchParams(location.search).has('test-scan')
+      || popup.dataset.forceOpen === 'true';
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+    /* Path-exclusion */
+    const path = location.pathname;
+    const isExcluded = EXCLUDE_PATHS.some((p) => path.startsWith(p));
+    if (isExcluded && !isTestMode) return;
+
+    /* ───── State ───── */
+    let currentStep = 1;
+    let scanTypes: string[] = [];
+    /* Min-time-on-popup anti-spam: bots klikken in milliseconden door alle
+       stappen, mensen niet. 5s tussen popup-open en submit is genoeg
+       om bots eruit te filteren zonder echte gebruikers te storen. */
+    let openedAt = 0;
+    const MIN_OPEN_MS = 5000;
+
+    /* ───── Show / hide ───── */
+    const open = () => {
+      popup.hidden = false;
+      document.body.style.overflow = 'hidden';
+      openedAt = Date.now();
+      if (!isTestMode) {
+        try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (e) {}
+      }
+    };
+    const close = () => {
+      popup.hidden = true;
+      document.body.style.overflow = '';
+      /* In test-mode mag de popup opnieuw geopend worden: reset state */
+      if (isTestMode) {
+        currentStep = 1;
+        scanTypes = [];
+        showStep(1);
+        const form = popup.querySelectorAll('input');
+        form.forEach((el) => {
+          if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+          else el.value = '';
+        });
+        updateConditionalFields();
+      }
+    };
+
+    /* Externe trigger */
+    (window as any).openScanPopup = open;
+
+    /* ───── Trigger-logica ───── */
+    if (isTestMode) {
+      open();
+    } else {
+      try {
+        if (sessionStorage.getItem(SESSION_KEY)) return;
+      } catch (e) {}
+
+      const startTime = Date.now();
+      const MIN_TIME = 15_000;
+      const TIMER_MS = isMobile ? 45_000 : 35_000;
+      const SCROLL_PCT = isMobile ? 60 : 50;
+      let fired = false;
+
+      const fireIfReady = () => {
+        if (fired) return;
+        if (Date.now() - startTime < MIN_TIME) return;
+        fired = true;
+        cleanup();
+        open();
+      };
+
+      const onScroll = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        if (max <= 0) return;
+        const pct = (window.scrollY / max) * 100;
+        if (pct >= SCROLL_PCT) fireIfReady();
+      };
+
+      const timer = setTimeout(fireIfReady, TIMER_MS);
+
+      const cleanup = () => {
+        clearTimeout(timer);
+        window.removeEventListener('scroll', onScroll);
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+
+    /* ───── Close-handlers ───── */
+    popup.querySelectorAll('[data-scan-close]').forEach((el) => {
+      el.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !popup.hidden) close();
+    });
+
+    /* External triggers (CTA-blokje, etc.) */
+    document.addEventListener('click', (e) => {
+      const t = (e.target as HTMLElement)?.closest?.('[data-trigger="scan-popup"]');
+      if (t) {
+        e.preventDefault();
+        open();
+      }
+    });
+
+    /* ───── Stappen-navigatie ───── */
+    const showStep = (n: number) => {
+      currentStep = n;
+      popup.querySelectorAll<HTMLDivElement>('[data-step]').forEach((el) => {
+        el.hidden = parseInt(el.dataset.step!) !== n;
+      });
+      popup.querySelectorAll<HTMLSpanElement>('[data-progress]').forEach((el) => {
+        el.classList.toggle('active', parseInt(el.dataset.progress!) <= Math.min(n, 3));
+      });
+      /* Progress wegstoppen op bedankt-scherm */
+      const progress = popup.querySelector<HTMLDivElement>('[data-scan-progress]');
+      if (progress) progress.style.display = n === 4 ? 'none' : '';
+    };
+
+    const updateConditionalFields = () => {
+      const lokaalFields = popup.querySelector<HTMLDivElement>('.scan-lokaal-fields');
+      const kwFields = popup.querySelector<HTMLDivElement>('.scan-keyword-fields');
+      const bedrijfInput = popup.querySelector<HTMLInputElement>('input[name="bedrijfsnaam"]');
+
+      const hasLokaal = scanTypes.includes('lokaal');
+      const hasSeo = scanTypes.includes('seo');
+
+      if (lokaalFields) lokaalFields.hidden = !hasLokaal;
+      /* Zoekwoorden tonen bij SEO of Lokaal */
+      if (kwFields) kwFields.hidden = !(hasSeo || hasLokaal);
+      /* Bij lokaal: bedrijfsnaam verplicht (adres halen we zelf via GBP) */
+      if (bedrijfInput) bedrijfInput.required = hasLokaal;
+    };
+
+    popup.querySelectorAll<HTMLInputElement>('input[name="scanType"]').forEach((el) => {
+      el.addEventListener('change', () => {
+        scanTypes = Array.from(popup.querySelectorAll<HTMLInputElement>('input[name="scanType"]:checked'))
+          .map((i) => i.value);
+        updateConditionalFields();
+      });
+    });
+
+    /* Next / Prev */
+    popup.querySelectorAll<HTMLButtonElement>('[data-step-next]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        /* Validatie per stap */
+        if (currentStep === 1) {
+          if (scanTypes.length === 0) {
+            alert('Kies minimaal één scan (combineren mag).');
+            return;
+          }
+        }
+        if (currentStep === 2) {
+          const website = popup.querySelector<HTMLInputElement>('input[name="website"]');
+          if (!website?.value) { alert('Vul je website in.'); website?.focus(); return; }
+          if (scanTypes.includes('lokaal')) {
+            const bedrijf = popup.querySelector<HTMLInputElement>('input[name="bedrijfsnaam"]');
+            if (!bedrijf?.value) { alert('Voor de lokale scan hebben we je bedrijfsnaam nodig.'); bedrijf?.focus(); return; }
+          }
+        }
+        showStep(currentStep + 1);
+      });
+    });
+    popup.querySelectorAll<HTMLButtonElement>('[data-step-prev]').forEach((btn) => {
+      btn.addEventListener('click', () => showStep(currentStep - 1));
+    });
+
+    /* ───── Submit ───── */
+    const submitBtn = popup.querySelector<HTMLButtonElement>('[data-scan-submit]');
+    const errorBox = popup.querySelector<HTMLDivElement>('[data-scan-error]');
+    submitBtn?.addEventListener('click', async () => {
+      const email = popup.querySelector<HTMLInputElement>('input[name="email"]');
+      if (!email?.value || !/.+@.+\..+/.test(email.value)) {
+        alert('Vul een geldig e-mailadres in.');
+        email?.focus();
+        return;
+      }
+
+      /* Min-time check: bots klikken in milliseconden door alle stappen, mensen niet. */
+      if (Date.now() - openedAt < MIN_OPEN_MS) {
+        if (errorBox) {
+          errorBox.textContent = 'Wacht even, je was wel erg snel. Probeer het zo opnieuw.';
+          errorBox.hidden = false;
+        }
+        return;
+      }
+
+      const honeypot = popup.querySelector<HTMLInputElement>('input[name="website_url_check"]');
+      const optIn = popup.querySelector<HTMLInputElement>('input[name="optInMarketing"]');
+      const get = (n: string) => popup.querySelector<HTMLInputElement>(`input[name="${n}"]`)?.value?.trim() || '';
+      const payload = {
+        scanTypes,
+        website: get('website'),
+        bedrijfsnaam: get('bedrijfsnaam'),
+        keywords: [get('kw1'), get('kw2'), get('kw3')].filter(Boolean),
+        email: email.value.trim(),
+        optInMarketing: !!optIn?.checked,
+        leadBron: location.pathname,
+        honeypot: honeypot?.value || '',
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Versturen...';
+      if (errorBox) errorBox.hidden = true;
+
+      try {
+        const res = await fetch('/api/scan-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error((await res.json()).error || 'Er ging iets mis');
+        /* DataLayer-event voor GTM-tracking */
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({ event: 'scan_request', scan_types: scanTypes.join(',') });
+        showStep(4);
+      } catch (err: any) {
+        if (errorBox) {
+          errorBox.textContent = err.message || 'Er ging iets mis. Probeer het opnieuw of mail ons direct op info@froseo.nl.';
+          errorBox.hidden = false;
+        }
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Verstuur aanvraag';
+      }
+    });
+  })();
+</script>

@@ -1,0 +1,53 @@
+---
+/**
+ * CTA-blokje voor de scan-popup. Variant op CalvinNote: zelfde visuele
+ * stijl (witte card, donkere border, magenta drop-shadow, avatar + quote
+ * + button), maar de button is een <button data-trigger="scan-popup">
+ * die de globale ScanPopup opent (i.p.v. een link naar /contact/).
+ *
+ * Bedoeld om in te zetten op tool-pagina's en service-pagina's waar je
+ * actief leads wil vangen die nét waarde uit de pagina hebben gekregen.
+ *
+ * Gebruik:
+ *   import ScanCTA from '@components/sections/ScanCTA.astro';
+ *   <ScanCTA />                                  ← default-tekst
+ *   <ScanCTA message="..." ctaLabel="..." />     ← per pagina te tweaken
+ */
+import { Image } from 'astro:assets';
+import calvinPhoto from '@assets/team/calvin.webp';
+
+interface Props {
+  /** De korte uitspraak. Default sluit aan op de scan-funnel. */
+  message?: string;
+  /** Naam + functie onder de quote. */
+  byline?: string;
+  /** Tekst op de button. */
+  ctaLabel?: string;
+}
+
+const {
+  message = 'Wil je weten hoe je website er online voor staat qua snelheid, SEO of lokale zichtbaarheid? Vraag een gratis scan aan en je krijgt binnen 1 werkdag een persoonlijk rapport in je inbox.',
+  byline = 'Calvin, Digital Specialist Froseo',
+  ctaLabel = 'Laat je site scannen ↗',
+} = Astro.props;
+---
+
+<aside class="calvin-note">
+  <div class="calvin-note-card">
+    <div class="calvin-note-avatar">
+      <Image
+        src={calvinPhoto}
+        alt="Calvin van Froseo"
+        class="calvin-note-avatar-img"
+        widths={[120, 200, 280]}
+        sizes="120px"
+        loading="lazy"
+      />
+    </div>
+    <div class="calvin-note-body">
+      <p class="calvin-note-quote">"{message}"</p>
+      <span class="calvin-note-byline">— {byline}</span>
+    </div>
+    <button type="button" class="btn-primary calvin-note-cta" data-trigger="scan-popup">{ctaLabel}</button>
+  </div>
+</aside>

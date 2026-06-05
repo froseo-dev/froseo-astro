@@ -1,0 +1,57 @@
+---
+/**
+ * Test-pagina voor de ScanPopup + ScanCTA componenten.
+ *
+ * - Popup opent direct (forceOpen prop) — geen scroll/timer-wachten
+ * - Reset-knop wist de session-flag zodat re-opening werkt
+ * - ScanCTA-blokje staat ook op de pagina zodat je de externe trigger
+ *   (knop opent popup) ook kunt testen
+ *
+ * NIET in productie zetten — `noindex` voor de zekerheid.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ScanCTA from '@components/sections/ScanCTA.astro';
+---
+
+<BaseLayout title="Test Scan Popup" noindex={true}>
+  <main style="max-width:780px;margin:0 auto;padding:80px 24px;">
+    <h1 style="font-family:'Outfit',sans-serif;font-weight:800;margin:0 0 12px;">Test: Scan Popup + CTA</h1>
+    <p style="color:#54506A;margin:0 0 24px;">
+      Deze pagina forceert de popup direct te openen, ongeacht scroll/timer of session-flag.
+      Op productie-pagina's verschijnt 'ie pas na 50% scroll OF 35 sec (desktop) /
+      60% scroll OF 45 sec (mobile), met minimum 15 sec en max 1× per sessie.
+    </p>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px;">
+      <button
+        type="button"
+        onclick="window.openScanPopup && window.openScanPopup()"
+        style="padding:10px 16px;background:#0A0A14;color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;"
+      >Open popup opnieuw</button>
+
+      <button
+        type="button"
+        onclick="sessionStorage.removeItem('froseo_scan_popup_shown'); location.reload();"
+        style="padding:10px 16px;background:#fff;color:#0A0A14;border:2px solid #0A0A14;border-radius:8px;font-weight:600;cursor:pointer;"
+      >Reset session-flag + reload</button>
+    </div>
+
+    <h2 style="font-family:'Outfit',sans-serif;font-weight:800;font-size:18px;margin:32px 0 12px;">CTA-blokje (klik knop = popup opent):</h2>
+    <ScanCTA />
+
+    <h2 style="font-family:'Outfit',sans-serif;font-weight:800;font-size:18px;margin:32px 0 12px;">Met aangepaste tekst:</h2>
+    <ScanCTA
+      message="Benieuwd of jouw site in Google Maps wordt gevonden in Utrecht? Vraag een gratis lokale scan aan."
+      ctaLabel="Vraag de lokale scan aan ↗"
+    />
+  </main>
+
+  {/* Open popup direct bij load (negeert session-flag op deze pagina) */}
+  <script>
+    sessionStorage.removeItem('froseo_scan_popup_shown');
+    window.addEventListener('load', () => {
+      const fn = (window as any).openScanPopup;
+      if (typeof fn === 'function') fn();
+    });
+  </script>
+</BaseLayout>
