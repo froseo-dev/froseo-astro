@@ -31,8 +31,6 @@ interface ScanPayload {
   bedrijfsnaam?: string;
   keywords?: string[];
   email?: string;
-  /** True als gebruiker checkbox heeft aangevinkt voor marketing-mails. */
-  optInMarketing?: boolean;
   leadBron?: string;
   honeypot?: string;
 }
@@ -97,10 +95,10 @@ export const onRequestPost = async ({ request, env }: RequestContext) => {
 
   /* Tags — comma-separated string opslaan in het TAG-attribuut.
      `scan-<type>` voor elk gekozen type, plus `lead-scan` + `bron-<pagina>`.
-     Bij opt-in voor marketing-mails: extra `opt-in-marketing` tag. */
+     Alle scan-aanvragers gaan in de marketing-flow (impliciete consent door
+     verzenden, disclaimer staat onder de submit-knop). */
   const bronSlug = pathToTag(payload.leadBron || '/');
   const tagList = ['lead-scan', ...scanTypes.map((t) => `scan-${t}`), `bron-${bronSlug}`];
-  if (payload.optInMarketing) tagList.push('opt-in-marketing');
 
   /* Zoekwoorden samenvoegen — Brevo-attributes zijn text, dus comma-separated. */
   const keywords = Array.isArray(payload.keywords)
@@ -113,10 +111,9 @@ export const onRequestPost = async ({ request, env }: RequestContext) => {
     WEBSITE: website,
     LEAD_BRON: payload.leadBron || '/',
     TAG: tagList.join(','),
-    /* OPT_IN attribuut is een bestaande boolean in Brevo — gebruiken we voor
-       marketing-toestemming. Bij false sturen we 'm ook expliciet door zodat
-       een eerdere opt-in-status niet onbedoeld blijft staan na een update. */
-    OPT_IN: !!payload.optInMarketing,
+    /* Iedereen die de scan aanvraagt komt in de marketing-flow (impliciete
+       consent door verzenden + disclaimer onder de submit-knop). */
+    OPT_IN: true,
   };
   if (keywords.length) attributes.SCAN_KEYWORDS = keywords.join(', ');
   if (payload.bedrijfsnaam) attributes.BEDRIJFSNAAM = String(payload.bedrijfsnaam).trim();

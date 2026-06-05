@@ -129,13 +129,8 @@ const { forceOpen = false } = Astro.props;
         <label>Website-URL: <input type="text" name="website_url_check" tabindex="-1" autocomplete="off" /></label>
       </div>
 
-      <label class="scan-consent">
-        <input type="checkbox" name="optInMarketing" value="ja" />
-        <span>Ja, stuur mij de scan en praktische tips over websites, SEO en online vindbaarheid.</span>
-      </label>
-
       <p class="scan-privacy">
-        Door verzenden ga je akkoord met ons <a href="/privacybeleid/" target="_blank" rel="noopener">privacybeleid</a>.
+        Door verzenden ontvang je de scan en af en toe een follow-up. Zie ons <a href="/privacybeleid/" target="_blank" rel="noopener">privacybeleid</a>.
       </p>
 
       <div class="scan-error" data-scan-error hidden></div>
@@ -255,18 +250,7 @@ const { forceOpen = false } = Astro.props;
   .scan-field input:focus { outline: none; border-color: #B6007B; }
   .scan-optional { font-weight: 400; color: #9CA3AF; font-size: 11.5px; }
 
-  .scan-consent {
-    display: flex; align-items: flex-start; gap: 8px;
-    margin: 0 0 8px; padding: 0;
-    cursor: pointer;
-  }
-  .scan-consent input[type="checkbox"] {
-    margin-top: 2px; cursor: pointer;
-    accent-color: #B6007B;
-    width: 14px; height: 14px; flex-shrink: 0;
-  }
-  .scan-consent span { font-size: 11.5px; color: #54506A; line-height: 1.4; }
-  .scan-privacy { font-size: 11px; color: #9CA3AF; line-height: 1.4; margin: 6px 0 12px; }
+  .scan-privacy { font-size: 11px; color: #9CA3AF; line-height: 1.4; margin: 8px 0 12px; }
   .scan-privacy a { color: #6901AA; text-decoration: underline; }
 
   .scan-error {
@@ -518,7 +502,6 @@ const { forceOpen = false } = Astro.props;
       }
 
       const honeypot = popup.querySelector<HTMLInputElement>('input[name="website_url_check"]');
-      const optIn = popup.querySelector<HTMLInputElement>('input[name="optInMarketing"]');
       const get = (n: string) => popup.querySelector<HTMLInputElement>(`input[name="${n}"]`)?.value?.trim() || '';
       const payload = {
         scanTypes,
@@ -526,7 +509,6 @@ const { forceOpen = false } = Astro.props;
         bedrijfsnaam: get('bedrijfsnaam'),
         keywords: [get('kw1'), get('kw2'), get('kw3')].filter(Boolean),
         email: email.value.trim(),
-        optInMarketing: !!optIn?.checked,
         leadBron: location.pathname,
         honeypot: honeypot?.value || '',
       };
