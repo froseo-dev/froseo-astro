@@ -53,7 +53,14 @@ const {
 </aside>
 
 <style>
-  /* Op tool-pagina's sluit dit blok aan op de tool erboven; bovenrand
-     mag dichter tegen de tool aan dan de standaard CalvinNote-spacing. */
-  .calvin-note.scan-cta { padding-top: 16px; padding-bottom: 32px; }
+  /* Op tool-pagina's compenseert dit voor de 96px top-padding van
+     .tool-body-wrap waarin het blok zit, en de margin-top:0 van de
+     eerste .tool-page-section eronder (eerstchild-regel). Negative
+     margin-top brengt 'm dichter op de tool, royale bottom geeft
+     ademruimte tot de uitleg eronder. */
+  .calvin-note.scan-cta {
+    padding-top: 0;
+    padding-bottom: 64px;
+    margin-top: -48px;
+  }
 </style>

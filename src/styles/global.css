@@ -9030,6 +9030,10 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   margin: 0;
 }
 .opt-waarom-cta { align-self: flex-start; margin-top: 12px; }
+/* EyebrowPill is display:inline-flex, maar de container is flex-column
+   met default align-items:stretch — daardoor stretchte de pill tot
+   volle breedte. Hier afdwingen dat 'ie binnen z'n eigen inhoud blijft. */
+.opt-waarom .eyebrow-pill { align-self: flex-start; }
 @media (max-width: 640px) {
   .opt-waarom { padding: 48px var(--gutter-mobile) 56px; }
 }
