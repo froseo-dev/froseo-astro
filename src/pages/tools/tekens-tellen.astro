@@ -13,6 +13,7 @@ import Footer from '@components/layout/Footer.astro';
 import EyebrowPill from '@components/ui/EyebrowPill.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import ScanCTA from '@components/sections/ScanCTA.astro';
 import CounterTool from '@components/tools/CounterTool.astro';
 import { getOtherTools } from '@data/tools';
 import screenshot from '@assets/tools/tekens-tellen.jpg';
@@ -78,6 +79,7 @@ const faqItems = [
 
       <div class="tool-body-wrap">
         <div class="tool-page-body">
+          <ScanCTA />
           <section class="tool-page-section">
             <h2>Wat is een <em>tekens tellen tool</em>?</h2>
             <p>

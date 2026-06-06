@@ -188,6 +188,12 @@ export const onRequestPost = async ({ request, env }: RequestContext) => {
     /* Iedereen die de scan aanvraagt komt in de marketing-flow (impliciete
        consent door verzenden + disclaimer onder de submit-knop). */
     OPT_IN: true,
+    /* Boolean attributes per scan-type voor segmentatie in Brevo's UI:
+       Calvin kan zo eenvoudig segmenten maken op "SCAN_SNELHEID = true"
+       i.p.v. te moeten filteren op een comma-separated string. */
+    SCAN_SNELHEID: scanTypes.includes('snelheid'),
+    SCAN_SEO: scanTypes.includes('seo'),
+    SCAN_LOKAAL: scanTypes.includes('lokaal'),
   };
   if (keywords.length) attributes.SCAN_KEYWORDS = keywords.join(', ');
   if (payload.bedrijfsnaam) attributes.BEDRIJFSNAAM = String(payload.bedrijfsnaam).trim();
