@@ -4,15 +4,20 @@ interface Props {
   variant?: 'default' | 'highlight' | 'rare' | 'primary' | 'light' | 'teal';
   star?: string;
   onDark?: boolean;
+  /** Render-tag override. Default 'div'. Zet op 'h1' wanneer een pill een
+      SEO-relevante H1 moet dragen (zie homepage cases-strip), of 'h2'
+      voor visueel-pill-getstylde subsection-koppen. */
+  as?: 'div' | 'h1' | 'h2' | 'h3' | 'span' | 'p';
 }
 
-const { variant = 'default', star = '★', onDark = false } = Astro.props;
+const { variant = 'default', star = '★', onDark = false, as = 'div' } = Astro.props;
 const classes = ['eyebrow-pill', variant !== 'default' && variant, onDark && 'on-dark']
   .filter(Boolean)
   .join(' ');
+const Tag = as;
 ---
 
-<div class={classes}>
+<Tag class={classes}>
   {star && <span class="star">{star}</span>}
   <slot />
-</div>
+</Tag>

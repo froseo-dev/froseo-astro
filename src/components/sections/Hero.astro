@@ -30,6 +30,11 @@ interface Props {
   /** Optional override for the hero mockup. Defaults to Calvin's composed Froseo mockup. */
   mockup?: ImageMetadata;
   mockupAlt?: string;
+  /** Tag voor de hero-title. Default 'h1'. Op de homepage zetten we 'm op
+      'p' zodat de pill boven de cases (CasesStrip eyebrowAs='h1') de
+      enige H1 van de pagina is — SEO-truc om de keyword-rich pill als
+      primaire heading te laten gelden. */
+  titleAs?: 'h1' | 'p' | 'span' | 'div';
 }
 
 const {
@@ -53,17 +58,19 @@ const {
   resultMeta = 'Renovatie Totaal',
   mockup = froseoMockup,
   mockupAlt = 'Froseo — voorbeeld website mockup',
+  titleAs = 'h1',
 } = Astro.props;
+const TitleTag = titleAs;
 ---
 
 <div class="hero-wrap">
   <section class="hero">
     <div class="hero-left">
       <EyebrowPill>{eyebrow}</EyebrowPill>
-      <h1 class="hero-title">
+      <TitleTag class="hero-title">
         {titleLine1}<br />
         {titleLine2} <span class="accent">{accent}</span>
-      </h1>
+      </TitleTag>
       {subtitle && <p class="hero-subtitle">{subtitle}</p>}
       {bullets && bullets.length > 0 ? (
         <ul class="hero-bullets">

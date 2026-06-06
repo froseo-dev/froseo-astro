@@ -31,9 +31,14 @@ import basAvatar from '@assets/testimonials/bas-bertrams.webp';
 <Topbar />
 <Nav />
 <main>
-  <Hero />
+  {/* H1-truc: hero-title is 'p' i.p.v. h1, en de eyebrow-pill boven de
+      cases krijgt h1-tag met keyword-rich tekst "Webdesign, SEO &
+      marketing Utrecht". Zelfde visuele layout, andere semantiek. */}
+  <Hero titleAs="p" />
   <LogosTicker />
   <CasesStrip
+    eyebrow="Webdesign, SEO & marketing Utrecht"
+    eyebrowAs="h1"
     pickSlugs={[
       'club12',
       'renovatie-totaal',

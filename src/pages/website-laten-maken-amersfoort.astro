@@ -1,0 +1,513 @@
+---
+/**
+ * SEO-landingspagina /website-laten-maken-amersfoort.
+ *
+ * Primaire keywords: "website laten maken Amersfoort", "webdesign Amersfoort".
+ *
+ * Twee gevestigde klanten staan centraal:
+ *  - Club12 (personal trainer uit Amersfoort) — featured in hero-mockup
+ *    en showcase, plus de testimonial.
+ *  - Studio Contenido (zat in Amersfoort toen ze klant werden, nu Utrecht)
+ *    — mobile in hero-mockup en before/after-slider.
+ *
+ * Hero-image is composed via scripts/build-hero-combos.mjs (Club12 desktop
+ * × Studio Contenido mobile). De broken custom-intro is verwijderd; de
+ * Club12-introductie verloopt nu via de hero-mockup, de showcase en de
+ * testimonial. Layout volgt /website-laten-maken-utrecht zodat de bekende
+ * `.utrecht-page`-classes uit global.css direct werken.
+ *
+ * Schema: Service met areaServed=Amersfoort.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import ReviewAvatars from '@components/ui/ReviewAvatars.astro';
+import SectionIcon from '@components/ui/SectionIcon.astro';
+import LogosTicker from '@components/sections/LogosTicker.astro';
+import PackagePaths from '@components/sections/PackagePaths.astro';
+import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
+import BeforeAfter from '@components/sections/BeforeAfter.astro';
+import PainPoints from '@components/sections/PainPoints.astro';
+import CalvinNote from '@components/sections/CalvinNote.astro';
+import Testimonial from '@components/sections/Testimonial.astro';
+import LocalAgency from '@components/sections/LocalAgency.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { review, pricing } from '@data/site-config';
+import heroMockup from '@assets/hero/website-laten-maken-amersfoort-hero.webp';
+import studioContenidoBefore from '@assets/before-after/studio-contenido-before.webp';
+import studioContenidoAfter from '@assets/before-after/studio-contenido-after.webp';
+import froseoLogoWit from '@assets/brand/froseo-logo-wit.webp';
+
+const pageTitle = 'Website laten maken Amersfoort | Webdesign Amersfoort | Froseo';
+const pageDesc =
+  `Website laten maken in Amersfoort: maatwerk WordPress of Astro, of een website abonnement vanaf ${pricing.abboFromInline}. Webdesign vanuit Utrecht voor Amersfoortse ondernemers. Werk gedaan voor Club12 en Studio Contenido.`;
+
+const allCases = await getCollection('cases', ({ data }) => data.published !== false);
+const showcaseSlugs = [
+  'club12',
+  'studio-contenido',
+  'renovatie-totaal',
+  'independent-artists-agency',
+  'tatanka',
+  'rex-the-agency',
+];
+const showcaseCases = showcaseSlugs
+  .map((slug) => allCases.find((c) => c.data.slug === slug))
+  .filter((c): c is NonNullable<typeof c> => Boolean(c));
+
+const usps = [
+  {
+    icon: 'locationPin',
+    title: 'Eén persoon van briefing tot livegang',
+    body: 'De ontwerper, bouwer en aanspreekpunt zijn dezelfde persoon. Geen account, geen projectmanager, geen vertaling tussen jou en het werk. Dat houdt het tempo erin en de communicatie helder.',
+  },
+  {
+    icon: 'searchGlass',
+    title: 'Vindbaarheid zit erin gebakken',
+    body: 'Structuur, schemas, snelheid en interne links zitten al in het werk voor de site live gaat. Geen losse SEO-aanbieding achteraf. Webdesign en SEO horen bij elkaar.',
+  },
+  {
+    icon: 'paletteSwatch',
+    title: 'Ontwerp dat bij je bedrijf past',
+    body: 'Een schoonheidssalon heeft een andere visuele taal nodig dan een aannemer. We stemmen kleur, typografie en tone of voice af op wat jij doet, niet op wat er toevallig in een template paste.',
+  },
+  {
+    icon: 'toolbox',
+    title: 'Hosting, beheer en SEO bij dezelfde club',
+    body: 'Alles loopt via één team. Eén nummer als er iets hapert, eén factuur en geen verwijs-spel tussen drie leveranciers. Voor ondernemers die genoeg aan hun hoofd hebben.',
+  },
+];
+
+const segments = [
+  {
+    title: 'Personal trainers en sportscholen in Amersfoort',
+    body: 'Voor zelfstandige personal trainers, sportscholen en yoga-studio\'s in Amersfoort en Vathorst bouwen we sites waar lesroosters kloppen, de intake soepel werkt en de site mobiel snel laadt. Club12 is daar een goed voorbeeld van: een eigen merk, een eigen toon en een site die nieuwe klanten over de streep trekt.',
+  },
+  {
+    title: 'Designstudio\'s, fotografen en creatieven in Amersfoort',
+    body: 'Voor creatieve bureaus en fotografen in Amersfoort is de site het portfolio. We bouwen sterke beeldgalerijen, snelle laadtijden voor zware beelden en navigatie die de aandacht niet steelt van het werk dat je laat zien. Bij Studio Contenido, destijds nog in Amersfoort, zagen we hoe een gerichte opfrisbeurt het merk weer op niveau brengt.',
+  },
+  {
+    title: 'Horeca in de Amersfoortse binnenstad',
+    body: 'Voor een cafe rond de Hof, een lunchroom op de Krommestraat of een B&B in Hoogland telt sfeer en het gemak waarmee iemand een tafel boekt vanaf zijn telefoon. We bouwen mobiel eerst, met reserveer-knoppen die opvallen en fotografie die smaak laat zien.',
+  },
+  {
+    title: 'Bouw, dak en installatie in Amersfoort',
+    body: 'Aannemers, dakdekkers en installateurs uit Liendert, Kruiskamp en Soesterkwartier hebben twee dingen nodig: een portfolio dat vertrouwen wekt en een bel-knop die in een groot lettertype op je telefoon staat. We bouwen heldere projectgalerijen en korte offerteformulieren die geen drie schermen lang zijn.',
+  },
+  {
+    title: 'Zorg, fysio en welzijn in Amersfoort',
+    body: 'Bij een tandarts in Schuilenburg, een fysio in Vathorst of een schoonheidssalon rond de Stadsring draait een site om rust en vertrouwen. Geen overprikkelde startpagina, wel duidelijke behandelingen, online intake en lokale signalen voor termen als "fysio Amersfoort" of "tandarts Vathorst".',
+  },
+  {
+    title: 'Makelaardij, notariaat en advocatuur in Amersfoort',
+    body: 'Voor zakelijke dienstverleners in Amersfoort gaat het om vertrouwen en specifieke vindbaarheid. We bouwen dienstpagina\'s die het verschil tussen erfrecht, ondernemingsrecht of letselschade scherp neerzetten, en richten ze in op concrete zoekvragen als "advocaat Amersfoort centrum" of "makelaar Vathorst".',
+  },
+  {
+    title: 'Webshops en speciaalzaken in de Langestraat en op de Hof',
+    body: 'Voor winkels in de Amersfoortse binnenstad bouwen we sites die rustig en betrouwbaar aanvoelen. Vaak hoeft er geen volledige webshop, wel een sterke productenpagina met openingstijden en een nette afspraak-knop.',
+  },
+  {
+    title: 'Consultants en zakelijke dienstverleners in Amersfoort',
+    body: 'Voor freelance specialisten en kleine bureaus in Amersfoort werkt een site het beste als hij precies laat zien voor wie je werkt en wat je hen hebt opgeleverd. We bouwen dienstpagina\'s die specifiek genoeg zijn om voor concrete zoekvragen vindbaar te worden, plus een rustige cases-sectie.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Wat kost een website laten maken in Amersfoort?',
+    a: `Voor de meeste lokale ondernemers is het website abonnement de beste route: vanaf ${pricing.abboFromInline}. Een complete site inclusief hosting, technisch beheer en kleine wijzigingen, zonder dat je in een keer drie- tot vijfduizend euro neerlegt. Maatwerk loopt doorgaans tussen 1.500 en 6.000 euro, afhankelijk van omvang en functionaliteit. Bij een vrijblijvende kennismaking maken we een concrete inschatting voor jouw situatie.`,
+  },
+  {
+    q: 'Doen jullie ook webdesign Amersfoort als losse opdracht?',
+    a: 'Ja, voor wie alleen een nieuw ontwerp wil zonder vast pakket eromheen kan dat. We leveren dan het visuele ontwerp en bouwen het uit, en je kunt hosting en beheer zelf regelen of via ons laten lopen. Bij webdesign kijken we standaard ook naar techniek, snelheid, SEO-basis en de manier waarop bezoekers naar contact worden gestuurd. Mooi ontwerp alleen is niet genoeg.',
+  },
+  {
+    q: 'Bouwen jullie ook WordPress-websites?',
+    a: 'Ja, WordPress is voor veel ondernemers het beste platform. Je kunt zelf pagina\'s aanpassen, blogs publiceren en met plug-ins functionaliteit toevoegen zonder dat je per kleine wijziging je bureau hoeft te bellen. We bouwen schoon, zonder zware page-builders, en met aandacht voor snelheid en SEO vanaf de eerste regel code.',
+  },
+  {
+    q: 'Hebben jullie een kantoor in Amersfoort?',
+    a: 'Ons kantoor zit in Utrecht aan het Leidseveer, twee minuten lopen vanaf Utrecht Centraal. Met de trein zitten we in zeventien minuten in Amersfoort, dus voor een werksessie of een briefing rijden we makkelijk binnen. Liever bij jou op de zaak afspreken? Geen probleem.',
+  },
+  {
+    q: 'Waarom een Utrechts bureau voor een site in Amersfoort?',
+    a: 'We werken al jaren voor klanten uit de regio. Club12 is een personal trainer uit Amersfoort die we van begin af aan begeleiden, Studio Contenido zat in Amersfoort toen ze met ons begonnen. De korte rijafstand maakt dat je een lokaal bureau hebt zonder dat we vastzitten aan een specifieke gemeente. Voor ons telt dat de lijnen kort zijn en de samenwerking soepel loopt.',
+  },
+  {
+    q: 'WordPress of Astro: wat past bij mijn site?',
+    a: 'Hangt af van wie er na de oplevering aan de site werkt. Wil je zelf blogs publiceren, pagina\'s aanpassen of regelmatig content wisselen? Dan ligt WordPress voor de hand. Hoeft de site na livegang vooral te draaien zonder dat je er veel aan zit, en wil je topscores op snelheid? Dan kiezen we Astro. We zijn niet aan een platform gekoppeld. Tijdens de kennismaking vragen we vooral hoe jij straks zelf met je site wilt omgaan.',
+  },
+  {
+    q: 'Hoe snel staat een nieuwe site live?',
+    a: 'Een one-pager of abonnement-site is vaak binnen twee weken live, omdat we vertrekken vanuit een doordachte basis. Voor maatwerk reken je op vier tot zes weken. Veel hangt af van hoe snel jij teksten, beeldmateriaal en feedback aanlevert. Heb je een harde deadline (een opening, een lancering of een aflopende oude site), zeg dat tijdens de kennismaking. Dan kijken we of het haalbaar is voor we ja zeggen.',
+  },
+  {
+    q: 'Schrijven en fotograferen jullie ook?',
+    a: 'Allebei kan. We schrijven copy in onze eigen stijl wanneer je dat wilt, en werken samen met fotografen die we al jaren kennen. Heb je liever een huisfotograaf of een tekstschrijver waar je al mee werkt? Geen probleem, dan denken we mee waar het zin heeft en sturen we bij waar nodig.',
+  },
+  {
+    q: 'Doen jullie ook SEO en zoekmachine optimalisatie?',
+    a: 'Ja. Bij elke site die we bouwen zit de SEO-basis goed: technische opbouw, schema-markup, interne linking en metadata. Voor doorlopende zoekmachine optimalisatie werken we met aparte SEO-trajecten bovenop het website-werk. Tijdens een kennismaking lopen we door wat realistisch is voor jouw concurrentie.',
+  },
+  {
+    q: 'Heeft het zin om mijn huidige site op te frissen?',
+    a: 'Vaak wel. Als de techniek nog meekan is een gerichte opknapbeurt sneller en goedkoper dan een complete rebuild. Daar hebben we een aparte pagina voor met modulaire pakketten, zie /website-opfrissen. Twijfel je tussen opfrissen of vervangen? Stuur de URL en we kijken er een halfuur naar en mailen terug wat we zouden adviseren.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  {/* Service-schema met areaServed=Amersfoort. */}
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Webdesign en website laten maken Amersfoort',
+    serviceType: 'Web Design',
+    provider: { '@id': 'https://froseo.nl/#agency' },
+    areaServed: { '@type': 'City', name: 'Amersfoort' },
+    url: 'https://froseo.nl/website-laten-maken-amersfoort/',
+  })} />
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="utrecht-page">
+      <section class="service-hero has-image">
+        <div class="service-hero-inner">
+          <div class="service-hero-text">
+            <EyebrowPill>Webdesign Amersfoort · vanaf {pricing.abboFromShort}</EyebrowPill>
+            <h1 class="service-hero-title">
+              Website laten maken in <em>Amersfoort.</em>
+            </h1>
+            <ul class="service-hero-checks">
+              <li>Webdesign voor Amersfoortse ondernemers, MKB en ZZP</li>
+              <li>Slim opgebouwd voor snelheid, vindbaarheid en aanvragen</li>
+              <li>Eén aanspreekpunt van briefing tot livegang</li>
+              <li>Nieuw: website abonnement vanaf {pricing.abboFromShort}</li>
+            </ul>
+            <div class="service-hero-actions">
+              <a class="btn-primary" href="/website-abonnement/">
+                Bekijk website abonnementen ↗
+              </a>
+              <a class="btn-ghost" href="/contact/?onderwerp=website-laten-maken-amersfoort">
+                Plan een kennismaking ↗
+              </a>
+            </div>
+            <div class="service-hero-reviews reviews-inline">
+              <ReviewAvatars />
+              <div class="stars">★★★★★</div>
+              <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
+            </div>
+          </div>
+
+          <div class="service-hero-media">
+            <Image
+              src={heroMockup}
+              alt="Webdesign Amersfoort door Froseo: Club12 op desktop, Studio Contenido op mobiel"
+              title="Webdesign Amersfoort door Froseo: Club12 op desktop, Studio Contenido op mobiel"
+              class="service-hero-img"
+              widths={[640, 960, 1280, 1600]}
+              sizes="(max-width: 1024px) 100vw, 640px"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+      </section>
+
+      <LogosTicker />
+
+      <PackagePaths
+        eyebrow="Drie opties"
+        title='Drie routes voor je nieuwe <em>website in Amersfoort.</em>'
+        lead="Voor de meeste Amersfoortse ondernemers is het website abonnement de zachtste landing. Snel professioneel online, vaste maandprijs en zonder dat je in een keer een groot bedrag neerlegt. Een one-pager of maatwerk werkt voor wie iets specifieks nodig heeft."
+        packages={[
+          {
+            name: 'Website abonnement',
+            tagline: 'Compleet, vaste maandprijs.',
+            priceFrom: true,
+            priceAmount: 89,
+            pricePeriod: '/maand',
+            body: 'Voor ondernemers die snel online willen staan zonder grote eenmalige investering. Hosting, beheer en kleine aanpassingen zitten erbij.',
+            checks: [
+              'Snel live met een professionele website',
+              'Razendsnel: we streven naar 90+ Google PageSpeed',
+              'Sterke basis voor snelheid, vindbaarheid en conversie',
+              'Inclusief hosting, beheer en kleine wijzigingen',
+            ],
+            cta: { label: 'Bekijk abonnementen', href: '/website-abonnement/' },
+            featured: true,
+            badge: 'Meest gekozen',
+          },
+          {
+            name: 'One-pager',
+            tagline: 'Compact, snel en professioneel.',
+            priceFrom: true,
+            priceAmount: 499,
+            body: 'Een strakke one-page site die professioneel oogt zodra iemand je naam Googelt. Modern, gericht op conversie en in twee weken live.',
+            checks: [
+              'Strakke, moderne one-page opzet',
+              'Vaak binnen 2 weken live',
+              'Geoptimaliseerd voor mobiel en conversie',
+              'Compact en doelgericht',
+            ],
+            cta: { label: 'Vraag offerte aan', href: '/contact/?onderwerp=website-laten-maken-amersfoort-onepager' },
+          },
+          {
+            name: 'Maatwerk website',
+            tagline: 'Voor complexere websites.',
+            priceFrom: true,
+            priceAmount: 999,
+            body: 'Voor bedrijven met specifieke wensen aan ontwerp, structuur of functionaliteit. We denken mee, bouwen een uniek ontwerp en richten de techniek in op wat jouw bedrijf nodig heeft.',
+            checks: [
+              'Volledige vrijheid in design, structuur en CMS',
+              'Afgestemd op je merk en doelen',
+              'Sterke basis voor SEO, snelheid en conversie',
+              'Eén specialist voor strategie, ontwerp en bouw',
+            ],
+            cta: { label: 'Plan een kennismaking', href: '/contact/?onderwerp=website-laten-maken-amersfoort-maatwerk' },
+          },
+        ]}
+      />
+
+      <WebsitesShowcase
+        cases={showcaseCases}
+        eyebrow="Webdesign uit de regio"
+        title="Sites die we voor klanten"
+        titleAccent="rond Amersfoort maakten."
+      />
+
+      <Testimonial id="auke-club12-optimalisatie" variant="card" />
+
+      <LocalAgency
+        eyebrow="Webdesign vanuit Utrecht · voor Amersfoort"
+        titleLine1="Webdesign vanuit het hart"
+        titleAccent="van het land."
+        lead={[
+          'We werken vanuit Utrecht voor Amersfoortse ondernemers door de hele regio: Vathorst, Schothorst, Liendert, Hoogland, Kruiskamp en het centrum rond de Lieve Vrouwetoren. Met Amersfoort hebben we sterke banden. Club12 begeleiden we al jaren in hun digitale groei en Studio Contenido was klant toen ze nog in Amersfoort gevestigd waren.',
+          'De korte rij vanuit het Leidseveer maakt dat we voor een briefing of werksessie zo bij je op de zaak zitten. De Amersfoortse bedrijven die we kennen lopen breed: aannemers, personal trainers, dienstverleners, horeca en creatieve bureaus. Wat ze gemeen hebben is praktisch. Ze willen een site die aanvragen oplevert zonder dat ze er zelf veel tijd aan kwijt zijn.',
+        ]}
+        usps={[
+          {
+            title: 'Eén aanspreekpunt',
+            body: 'Mail, ontwerp en bouw lopen via dezelfde persoon. Geen accountmanagers tussen jou en het werk en geen vertraging door tussenoverleg.',
+          },
+          {
+            title: 'Korte rij, korte lijnen',
+            body: 'Vanuit Utrecht zitten we in zeventien minuten bij je op de zaak. Voor een briefing op locatie of een werksessie rijden we even langs.',
+          },
+          {
+            title: 'Alles onder een dak',
+            body: 'Techniek, design en de SEO-basis doen we zelf. Niemand verwijst je door zodra er iets in de structuur of de vindbaarheid moet veranderen.',
+          },
+        ]}
+        ctaLabel="Plan een kennismaking ↗"
+        ctaHref="/contact/?onderwerp=website-laten-maken-amersfoort"
+      />
+
+      <section class="utrecht-usps">
+        <Image
+          src={froseoLogoWit}
+          alt=""
+          class="utrecht-usps-watermark"
+          aria-hidden="true"
+          widths={[800, 1200, 1600]}
+          sizes="(max-width: 1024px) 90vw, 1200px"
+          loading="lazy"
+        />
+        <div class="utrecht-usps-inner">
+          <div class="utrecht-usps-head">
+            <EyebrowPill>Wat je krijgt</EyebrowPill>
+            <h2 class="utrecht-usps-title">
+              Wat webdesign in Amersfoort bij ons <em>concreet inhoudt.</em>
+            </h2>
+            <p class="utrecht-usps-lead">
+              Vier dingen die we voor elke Amersfoortse klant standaard meeleveren,
+              of het nu maatwerk is of een traject via het abonnement.
+            </p>
+          </div>
+          <div class="utrecht-usps-grid">
+            {usps.map((u) => (
+              <article class="utrecht-usp-card">
+                <SectionIcon name={u.icon} class="utrecht-usp-icon" size={44} />
+                <h3 class="utrecht-usp-title">{u.title}</h3>
+                <p class="utrecht-usp-body">{u.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="utrecht-ba">
+        <div class="utrecht-ba-inner">
+          <div class="utrecht-ba-head">
+            <EyebrowPill variant="rare">Niet altijd compleet opnieuw</EyebrowPill>
+            <h2 class="utrecht-ba-title">
+              Soms is opfrissen <em>genoeg.</em>
+            </h2>
+            <p class="utrecht-ba-lead">
+              Studio Contenido, toen nog gevestigd in Amersfoort, had een site
+              die op zichzelf nog draaide. Wat ontbrak was de visuele aansluiting
+              op het merk dat ze inmiddels waren geworden. Geen complete rebuild
+              dus, wel een gerichte opknapbeurt op ontwerp en structuur. Schuif
+              de slider om te zien wat dat oplevert voor een Amersfoortse site.
+            </p>
+          </div>
+          <BeforeAfter
+            before={studioContenidoBefore}
+            after={studioContenidoAfter}
+            beforeAlt="Studio Contenido, oud-Amersfoortse klant, site voor de opfrisbeurt"
+            afterAlt="Studio Contenido, oud-Amersfoortse klant, site na de opfrisbeurt"
+          />
+          <div class="utrecht-ba-cta">
+            <a class="btn-ghost" href="/website-opfrissen/">Bekijk opfris-trajecten ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <PainPoints
+        eyebrow="Wat we vaak tegenkomen"
+        title="Vijf dingen die we bij Amersfoortse"
+        titleAccent="sites vaak terugzien."
+        lead="Wanneer een Amersfoortse klant ons benadert is er meestal een specifieke aanleiding. Iets dat al een tijdje stoort, of een knop die niet meer kan worden omgezet. Dit zijn de patronen die we het vaakst zien."
+        items={[
+          {
+            icon: 'blackbox',
+            title: 'Dezelfde template als drie buurtgenoten',
+            body: 'Dezelfde page-builder-blokken, fonts en stockfoto\'s als bij een paar andere zaken in de buurt. Bezoekers herkennen dat onbewust en haken sneller af.',
+          },
+          {
+            icon: 'autopilot',
+            title: 'Drie schakels tussen jou en de bouwer',
+            body: 'Je mailt de account, die mailt de PM, die mailt de developer. Twee weken later is er een halve oplossing die niet meer raakt wat je oorspronkelijk vroeg.',
+          },
+          {
+            icon: 'chartDown',
+            title: 'Mobiel onbruikbaar',
+            body: 'Zeven van de tien bezoekers komt via een telefoon. Toch zien we sites waar de cookiebar het halve scherm vult, knoppen ergens diep onderaan staan en alles trager laadt dan op een desktop.',
+          },
+          {
+            icon: 'eyeScatter',
+            title: 'Onzichtbaar in het Amersfoortse map-pack',
+            body: 'Iemand zoekt op "fysio Vathorst" of "tandarts Schothorst" en jij staat er niet bij. Vaak ligt het aan een onvolledig Google Business Profile of een gebrek aan recente reviews.',
+          },
+          {
+            icon: 'archiveStack',
+            title: 'Niemand kijkt meer onder de motorkap',
+            body: 'Plug-ins lopen acht updates achter, het thema is met de hand uit elkaar gepleisterd en de laatste back-up is van een half jaar geleden. Het werkt totdat het ineens niet meer werkt.',
+          },
+        ]}
+      />
+
+      <CalvinNote
+        message="Niet zeker welke route past, of überhaupt of je een nieuwe site nodig hebt? Stuur me je huidige URL, dan kijk ik er een half uur naar en mail ik terug wat ik zou doen. Eerlijk en zonder verplichting."
+        ctaLabel="Stuur mij je URL ↗"
+        ctaHref="/contact/?onderwerp=website-amersfoort-advies"
+      />
+
+      <section class="zzp-segments">
+        <div class="zzp-segments-inner">
+          <div class="zzp-segments-head">
+            <EyebrowPill variant="rare">Voor wie we werken in Amersfoort</EyebrowPill>
+            <h2 class="zzp-segments-title">
+              Welke Amersfoortse ondernemers <em>een website laten maken?</em>
+            </h2>
+            <p class="zzp-segments-lead">
+              Een greep uit de branches waarvoor we sites bouwen in Amersfoort
+              en omliggende kernen. Klik op een branche voor de details.
+            </p>
+          </div>
+          <div class="zzp-segments-list">
+            {segments.map((s, i) => (
+              <details class="zzp-segment-item">
+                <summary>
+                  <span class="zzp-segment-num">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 class="zzp-segment-title">{s.title}</h3>
+                  <span class="zzp-segment-ico" aria-hidden="true">+</span>
+                </summary>
+                <div class="zzp-segment-body">
+                  <p>{s.body}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Google Maps van Amersfoort als lokaal signaal vlak voor de eind-CTA.
+          Geen API-key nodig (legacy q-based embed). */}
+      <section class="amf-map">
+        <div class="amf-map-inner">
+          <div class="amf-map-head">
+            <EyebrowPill variant="rare">Werkgebied</EyebrowPill>
+            <h2 class="amf-map-title">
+              Webdesign voor Amersfoort en omstreken.
+            </h2>
+            <p class="amf-map-lead">
+              We werken voor klanten in heel Amersfoort: het centrum, Vathorst,
+              Schothorst, Liendert, Kruiskamp, Hoogland en Soesterkwartier. Plus
+              de omliggende plaatsen zoals Leusden, Hoevelaken en Nijkerk.
+            </p>
+          </div>
+          <div class="amf-map-frame">
+            <iframe
+              title="Werkgebied Amersfoort"
+              src="https://www.google.com/maps?q=Amersfoort&t=&z=12&ie=UTF8&iwloc=B&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+
+      <BetterCallCalvin
+        eyebrow="Klaar voor een eerste gesprek?"
+        titleLine1="Website laten maken in Amersfoort."
+        titleAccent="Hoe nu verder?"
+        body={[
+          'Plan een korte kennismaking in. We lopen samen door wat je nu hebt, wat het moet gaan doen en wat we als eerste zouden aanpakken.',
+          'Je krijgt een eerste richting mee, een ruwe planning en een eerlijke inschatting van wat het ongeveer gaat kosten. Past het, dan maken we een offerte. Past het niet, dan hoor je dat ook gewoon.',
+        ]}
+        primaryLabel="Plan een kennismaking ↗"
+        primaryHref="/contact/?onderwerp=website-laten-maken-amersfoort"
+      />
+    </article>
+
+    <FAQ
+      eyebrow="Wat Amersfoortse ondernemers ons vooraf vragen"
+      titleLine1="Vragen over webdesign"
+      titleAccent="in Amersfoort."
+      items={faqs}
+    />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .amf-map { padding: 96px 24px; background: var(--color-cream, #F6F2E8); }
+  .amf-map-inner { max-width: 1100px; margin: 0 auto; }
+  .amf-map-head { text-align: center; max-width: 720px; margin: 0 auto 32px; }
+  .amf-map-title {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-weight: 800; font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.1; margin: 16px 0 12px; color: #0A0A14;
+  }
+  .amf-map-lead { font-size: 16px; line-height: 1.55; color: #54506A; margin: 0; }
+  .amf-map-frame {
+    border-radius: 20px; overflow: hidden;
+    border: 2.5px solid #0A0A14;
+    box-shadow: 6px 6px 0 var(--color-magenta, #B6007B);
+    aspect-ratio: 16 / 9;
+  }
+  .amf-map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+  @media (max-width: 720px) {
+    .amf-map { padding: 56px 16px; }
+    .amf-map-frame { aspect-ratio: 4 / 3; }
+  }
+</style>

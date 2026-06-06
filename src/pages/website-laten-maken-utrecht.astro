@@ -209,6 +209,16 @@ const faqs = [
 ---
 
 <BaseLayout title={pageTitle} description={pageDesc}>
+  {/* Service-schema met areaServed=Utrecht naast de sitewide LocalBusiness. */}
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Website laten maken Utrecht',
+    serviceType: 'Web Design',
+    provider: { '@id': 'https://froseo.nl/#agency' },
+    areaServed: { '@type': 'City', name: 'Utrecht' },
+    url: 'https://froseo.nl/website-laten-maken-utrecht/',
+  })} />
   <Topbar />
   <Nav />
   <main>

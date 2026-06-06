@@ -1,0 +1,423 @@
+---
+/**
+ * SEO-landingspagina /website-optimalisatie-utrecht.
+ *
+ * Hoofd-keyword: "website optimalisatie Utrecht".
+ * Longtails: "website optimaliseren Utrecht", "website verbeteren Utrecht",
+ * "website snelheid Utrecht", "conversie optimalisatie Utrecht",
+ * "Core Web Vitals Utrecht".
+ *
+ * Compositie: zelfde structuur als /website-optimalisatie (zodat .opt-*
+ * classes uit global.css direct werken), maar 100% nieuwe copy gericht
+ * op Utrechtse MKB-context. Niet één zin letterlijk gekopieerd uit de
+ * generieke pagina — zoals afgesproken met Calvin.
+ *
+ * Schema: eigen Service-blok met areaServed=Utrecht naast de sitewide
+ * LocalBusiness, geen duplicate Agency-entry.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Topbar from '@components/layout/Topbar.astro';
+import Nav from '@components/layout/Nav.astro';
+import Footer from '@components/layout/Footer.astro';
+import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import ReviewAvatars from '@components/ui/ReviewAvatars.astro';
+import SectionIcon from '@components/ui/SectionIcon.astro';
+import LogosTicker from '@components/sections/LogosTicker.astro';
+import BeforeAfter from '@components/sections/BeforeAfter.astro';
+import CalvinNote from '@components/sections/CalvinNote.astro';
+import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
+import OnboardingTimeline from '@components/sections/OnboardingTimeline.astro';
+import Testimonial from '@components/sections/Testimonial.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { review } from '@data/site-config';
+import heroMockup from '@assets/hero/website-optimalisatie-utrecht-hero.webp';
+import froseoLogoWit from '@assets/brand/froseo-logo-wit.webp';
+import studioContenidoBefore from '@assets/before-after/studio-contenido-before.webp';
+import studioContenidoAfter from '@assets/before-after/studio-contenido-after.webp';
+import renovatieTotaalHero from '@assets/cases/renovatie-totaal/hero.webp';
+
+const pageTitle = 'Website optimalisatie Utrecht | Website optimaliseren | Froseo';
+const pageDesc =
+  'Website optimaliseren in Utrecht: sneller laden, meer aanvragen en betere posities. Website optimalisatie en zoekmachine optimalisatie onder een dak. Doorlopend traject vanuit ons kantoor aan het Leidseveer.';
+
+const allCases = await getCollection('cases', ({ data }) => data.published !== false);
+const showcaseSlugs = [
+  'renovatie-totaal',
+  'studio-contenido',
+  'club12',
+  'independent-artists-agency',
+  'tatanka',
+  'theo-mackaay',
+];
+const showcaseCases = showcaseSlugs
+  .map((slug) => allCases.find((c) => c.data.slug === slug))
+  .filter((c): c is NonNullable<typeof c> => Boolean(c));
+
+const usps = [
+  {
+    icon: 'chartUp',
+    title: 'Snellere pagina\'s en betere Core Web Vitals',
+    body: 'Zware afbeeldingen, slechte caching en vergeten plug-ins zijn vaak de grootste rem. We meten waar de echte vertraging zit en pakken alleen wat het laadprofiel ook daadwerkelijk verbetert.',
+  },
+  {
+    icon: 'target',
+    title: 'Conversie op je belangrijkste pagina',
+    body: 'De homepage trekt veel bezoek, maar de actie zit op de dienstpagina of het contactformulier. We brengen in beeld waar bezoekers afhaken en sleutelen aan de plek waar het rendement het hoogst is.',
+  },
+  {
+    icon: 'searchGlass',
+    title: 'Zoekmachine optimalisatie die meedraait',
+    body: 'Bij website optimaliseren hoort zoekmachine optimalisatie. Technische SEO, content die zoekintentie raakt en interne links die je sterke pagina\'s versterken. Niet als losse aanbieding achteraf.',
+  },
+  {
+    icon: 'paletteSwatch',
+    title: 'Frisser zonder rebuild',
+    body: 'Vaak hoeft je site niet opnieuw gebouwd. Een gerichte ronde op typografie, witruimte en CTA-blokken haalt de site al naar 2026-niveau zonder dat je duizenden euro\'s aan een nieuwe site kwijt bent.',
+  },
+];
+
+const pillars = [
+  {
+    title: 'Techniek onder de motorkap',
+    body: 'Caching, image-compressie en het opschonen van plug-ins voor WordPress-sites. Daar zit vaak de grootste rem, omdat er door de jaren heen plug-ins zijn gestapeld die niemand meer kent.',
+  },
+  {
+    title: 'Mobiele bruikbaarheid',
+    body: 'Zeven van de tien bezoekers komt via een telefoon. We checken of knoppen raak te tappen zijn, of cookiebars geen halve scherm vullen en of formulieren binnen drie velden ingevuld zijn.',
+  },
+  {
+    title: 'Conversie en gedrag',
+    body: 'Met Microsoft Clarity en GA4 in de hand zien we waar bezoekers haperen. Vaak gaat het om een twijfelmoment bovenaan de dienstpagina dat we met copy of layout kunnen wegnemen.',
+  },
+  {
+    title: 'Content en zoekintentie',
+    body: 'Heeft je dienstpagina een titel die past bij de zoekvraag van je klant? Vaak niet. We herschrijven koppen en intro\'s zodat Google sneller snapt waar de pagina over gaat, zonder dat het gekunsteld wordt.',
+  },
+  {
+    title: 'Zoekmachine optimalisatie en lokale signalen',
+    body: 'Naast techniek pakken we ook de SEO-kant mee. Google Business Profile, recente reviews en NAP-consistentie voor lokale dienstverleners. Dat versterkt de map-pack positie waar veel zoekers eerst kijken.',
+  },
+];
+
+const approachSteps = [
+  {
+    title: 'Audit en nul-meting',
+    body: 'We meten je huidige site af aan landelijke benchmarks en aan wat we van directe concurrenten zien. Daarna weten we precies welke achterstand we eerst moeten dichten.',
+  },
+  {
+    title: 'Plan op haalbare winst',
+    body: 'Niet alles in een keer. We kiezen drie verbeterpunten met hoge impact en laag risico, en zetten die als eerste live. Liefst binnen de eerste twee weken een meetbare snelheidswinst.',
+  },
+  {
+    title: 'Doorvoeren in kleine ingrepen',
+    body: 'Per wijziging meten we het effect. Werkt iets niet, dan draaien we het terug zonder dat je site er last van heeft. Zo bouwen we resultaat zonder dat je in onzekerheid zit.',
+  },
+  {
+    title: 'Bijsturen op patronen',
+    body: 'Elke maand kijken we wat er beweegt in de cijfers en in jouw concurrentie. Welke ronde komt volgende maand, en waarom. Geen vast lijstje dat we afwerken, wel een doorlopend gesprek.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Wat is website optimalisatie in Utrecht precies?',
+    a: 'Website optimalisatie is het structureel verbeteren van een bestaande site op de punten waar nog winst te halen valt. Snelheid, gebruiksgemak, conversie, content en zoekmachine optimalisatie. Het is geen eenmalige aktie, maar een doorlopend proces. Voor Utrechtse ondernemers werken we vanuit ons kantoor aan het Leidseveer, kort op de bal. We meten, sleutelen en meten opnieuw. Voor de meeste sites zit er meer in dan eigenaren denken.',
+  },
+  {
+    q: 'Werken jullie alleen voor bedrijven uit Utrecht?',
+    a: 'Voor klanten door heel Nederland, maar Utrecht is onze thuisbasis en daar komt het meeste werk vandaan. Voor lokale ondernemers zijn de lijnen extra kort. Een werksessie op kantoor in Lombok, een korte auditmeeting op de Maliebaan, of we komen bij jou op de zaak langs. Voor de rest van het land werkt het meeste online en dat loopt voor optimalisatie prima.',
+  },
+  {
+    q: 'Wat kost website optimaliseren?',
+    a: 'Een eenmalige audit kost meestal tussen 499 en 899 euro, afhankelijk van de omvang van je site. Een doorlopend traject zit gemiddeld tussen 399 en 1.200 euro per maand, weer afhankelijk van hoeveel uren we per maand maken en hoeveel parallelle pijlers we oppakken. Bij een vrijblijvende kennismaking maken we een eerlijke inschatting voor jouw situatie.',
+  },
+  {
+    q: 'Wat is het verschil tussen website optimalisatie en zoekmachine optimalisatie?',
+    a: 'Zoekmachine optimalisatie is een onderdeel van website optimalisatie. Bij website optimaliseren kijken we naar de hele site: snelheid, gebruiksgemak, conversie, content en techniek. Zoekmachine optimalisatie richt zich specifiek op hoger komen in Google. Bij ons lopen die twee samen, omdat een snelle en goed gestructureerde site ook beter rankt. Wil je alleen SEO en geen bredere optimalisatie? Dan past /seo beter.',
+  },
+  {
+    q: 'Hoe snel zie ik resultaat van website optimaliseren?',
+    a: 'Snelheidswinst zie je vaak al in de eerste week. Een verkeerd gecachte WordPress-site gaat soms van een laadtijd van vier seconden naar onder de seconde. Conversie- en SEO-verbeteringen vragen meer tijd. Drie tot zes maanden voordat je betrouwbare trendlijnen kunt aflezen. Geen tovenarij, wel een patroon dat richting geeft.',
+  },
+  {
+    q: 'Mijn site staat op een ander platform dan WordPress. Kunnen jullie nog wat?',
+    a: 'Voor doorlopende trajecten zijn we sterkst in WordPress. Voor Webflow, Shopify of Squarespace kunnen we een audit doen en losse verbeterrondes draaien, maar de modulaire aanpak waar we het meeste rendement uit halen is op WordPress gebouwd. Stuur je URL, dan kijken we mee of het zin heeft.',
+  },
+  {
+    q: 'Verliezen we onze Google-posities tijdens optimalisatie?',
+    a: 'Daar zijn we juist heel voorzichtig in. URL-structuur blijft hetzelfde tenzij er een dwingende reden is om iets te veranderen. SEO-relevante wijzigingen doen we met een vast proces. Meten voor, doorvoeren, meten na. Bij grotere ingrepen zetten we redirects op zodat oude link-waarde niet wegvalt. Doel is vooruit, niet achteruit.',
+  },
+  {
+    q: 'Wat is het verschil tussen optimaliseren en een nieuwe site bouwen?',
+    a: 'Bij optimaliseren ga je verder met wat er al staat. We pakken alleen aan wat het meeste rendement oplevert. Bij een rebuild leg je alles plat en begin je opnieuw, met alle bouwkosten van dien. Voor de meeste sites zit er meer rendement in optimalisatie dan in een rebuild. Past optimalisatie niet, dan zeggen we dat ook gewoon en bespreken we de andere route.',
+  },
+  {
+    q: 'Hoeveel weken zit ik vast als ik bij jullie start?',
+    a: 'Geen jaarcontract. Per maand opzegbaar nadat een eerste auditperiode is afgerond. Geen vendor-lock-in op accounts. Je Google Search Console, Analytics en Tag Manager blijven van jou, en eventuele content die we maken hoort bij jouw bedrijf. Past het na drie maanden niet, dan stoppen we zonder gedoe.',
+  },
+  {
+    q: 'Kunnen jullie ook A/B-tests draaien op mijn site?',
+    a: 'Bij genoeg verkeer wel. Voor sites onder de pakweg duizend bezoekers per maand werken A/B-tests slecht omdat je nooit een statistisch betrouwbare uitslag krijgt. Dan kiezen we voor beredeneerde verbeteringen op basis van Clarity-data en analytics. Boven dat verkeersniveau zetten we wel tests op koppen, knoppen en formuliervolgordes.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDesc}>
+  {/* Service-schema met areaServed=Utrecht. Apart blok i.p.v. duplicate
+      LocalBusiness, zie BaseLayout voor de sitewide agency-schema. */}
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Website optimalisatie Utrecht',
+    serviceType: 'Website Optimization',
+    provider: { '@id': 'https://froseo.nl/#agency' },
+    areaServed: { '@type': 'City', name: 'Utrecht' },
+    url: 'https://froseo.nl/website-optimalisatie-utrecht/',
+  })} />
+  <Topbar />
+  <Nav />
+  <main>
+    <article class="opt-page">
+      <section class="service-hero has-image">
+        <div class="service-hero-inner">
+          <div class="service-hero-text">
+            <EyebrowPill>Website optimaliseren · MKB &amp; ZZP</EyebrowPill>
+            <h1 class="service-hero-title">
+              Website optimalisatie in <em>Utrecht.</em>
+            </h1>
+            <ul class="service-hero-checks">
+              <li>Snellere pagina's en betere Core Web Vitals</li>
+              <li>Meer bezoekers die ook echt klant worden</li>
+              <li>Website optimalisatie en zoekmachine optimalisatie onder een dak</li>
+              <li>Doorlopend traject zonder jaarcontract</li>
+            </ul>
+            <div class="service-hero-actions">
+              <a class="btn-primary" href="/contact/?onderwerp=website-optimalisatie-utrecht">
+                Vraag een Utrechtse website-audit aan ↗
+              </a>
+            </div>
+            <div class="service-hero-reviews reviews-inline">
+              <ReviewAvatars />
+              <div class="stars">★★★★★</div>
+              <span><strong>{review.ratingDisplay}</strong> · Google reviews</span>
+            </div>
+          </div>
+
+          <div class="service-hero-media">
+            <Image
+              src={heroMockup}
+              alt="Website optimalisatie Utrecht door Froseo: Renovatie Totaal op desktop, Independent Artists Agency op mobiel"
+              title="Website optimalisatie Utrecht door Froseo"
+              class="service-hero-img"
+              widths={[640, 960, 1280, 1600]}
+              sizes="(max-width: 1024px) 100vw, 640px"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+      </section>
+
+      <LogosTicker />
+
+      <section class="opt-ba">
+        <div class="opt-ba-inner">
+          <div class="opt-ba-head">
+            <EyebrowPill variant="rare">Voor en na</EyebrowPill>
+            <h2 class="opt-ba-title">
+              Wat website optimaliseren in <em>Utrecht oplevert.</em>
+            </h2>
+            <p class="opt-ba-lead">
+              Studio Contenido, een Utrechtse klant met wortels in Amersfoort.
+              Hun site werkte op zich, maar paste niet meer bij waar het merk
+              stond. Schuif de slider om te zien wat een gerichte ronde website
+              optimalisatie daarmee doet.
+            </p>
+          </div>
+          <BeforeAfter
+            before={studioContenidoBefore}
+            after={studioContenidoAfter}
+            beforeAlt="Studio Contenido voor de optimalisatieronde door Froseo"
+            afterAlt="Studio Contenido na de optimalisatieronde door Froseo"
+          />
+          <div class="opt-ba-cta">
+            <a class="btn-ghost" href="/cases/">Bekijk meer cases ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="opt-usps">
+        <div class="opt-usps-inner">
+          <div class="opt-usps-head">
+            <EyebrowPill>Waar Utrechtse sites de meeste winst halen</EyebrowPill>
+            <h2 class="opt-usps-title">
+              Dit pakken we aan bij <em>website optimalisatie in Utrecht.</em>
+            </h2>
+          </div>
+          <div class="opt-usps-grid">
+            {usps.map((u) => (
+              <article class="opt-usp-card">
+                <SectionIcon name={u.icon} class="opt-usp-icon" size={44} />
+                <h3 class="opt-usp-title">{u.title}</h3>
+                <p class="opt-usp-body">{u.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="opt-waarom">
+        <div class="opt-waarom-inner">
+          <EyebrowPill variant="primary">Waarom website optimaliseren in Utrecht</EyebrowPill>
+          <h2 class="opt-waarom-title">
+            Verkeer dat niets oplevert is <em>verspild geld.</em>
+          </h2>
+          <p>
+            Veel Utrechtse ondernemers betalen voor advertenties, SEO of een
+            nieuwe website en zien het verkeer wel binnenkomen. Maar daarna
+            gebeurt er weinig. Bezoekers haken af, formulieren blijven leeg en
+            de cijfers in Analytics laten een patroon zien dat niemand goed leest.
+          </p>
+          <p>
+            Website optimalisatie is precies dat patroon ontleden en stap voor
+            stap bijsturen. Niet een grote ingreep, wel slimme verbeteringen op
+            basis van wat we werkelijk zien gebeuren. Veel sites die we in
+            Utrecht tegenkomen zijn gebouwd tussen 2018 en 2022 op WordPress-thema's
+            die toen modern leken. Inmiddels is de techniek verder en zijn de
+            verwachtingen van bezoekers veranderd. Een gerichte ronde website
+            optimaliseren haalt je site terug naar wat anno 2026 nodig is,
+            zonder dat je de hele bouw opnieuw hoeft te doen.
+          </p>
+          <a class="btn-ghost opt-waarom-cta" href="/contact/?onderwerp=website-optimalisatie-utrecht">
+            Plan een kennismaking ↗
+          </a>
+        </div>
+      </section>
+
+      <section class="opt-cro">
+        <div class="opt-cro-inner">
+          <div class="opt-cro-text">
+            <EyebrowPill variant="rare">Datagedreven werken</EyebrowPill>
+            <h2 class="opt-cro-title">
+              We sleutelen pas wanneer we <em>zien wat er gebeurt.</em>
+            </h2>
+            <p class="opt-cro-body">
+              Voor we iets aanraken zetten we Microsoft Clarity en GA4 op orde,
+              en koppelen we Search Console aan je site. Pas wanneer we zien hoe
+              bezoekers daadwerkelijk door je pagina's lopen, bepalen we wat
+              als eerste verandert. Geen werk op basis van aannames.
+            </p>
+            <p class="opt-cro-body">
+              Voor Renovatie Totaal, een Utrechtse renovatie-specialist, hebben
+              we deze aanpak een paar maanden gedraaid. Resultaat: 180 procent
+              meer organisch verkeer en meerdere posities in de top-3 op
+              renovatie-zoektermen. Niet door een grote ingreep, wel door
+              consequent maandelijks bijsturen op zowel website optimalisatie
+              als zoekmachine optimalisatie.
+            </p>
+            <ul class="opt-cro-list">
+              <li>Heatmaps en sessie-recordings van echte bezoekers</li>
+              <li>Conversie-tracking op aanvragen, niet alleen kliks</li>
+              <li>Lokale rankings per zoekwoord in beeld</li>
+              <li>Maandelijks rapport zonder dashboards-dumpen</li>
+            </ul>
+          </div>
+          <div class="opt-cro-media">
+            <Image
+              src={renovatieTotaalHero}
+              alt="Renovatie Totaal, een Utrechtse renovatie-specialist met +180% verkeer na optimalisatie"
+              class="opt-cro-img"
+              widths={[640, 960, 1280]}
+              sizes="(max-width: 1024px) 100vw, 540px"
+              loading="lazy"
+            />
+            <div class="opt-cro-badge">
+              <span class="opt-cro-badge-stat">+180%</span>
+              <span class="opt-cro-badge-label">verkeer · Renovatie Totaal</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Testimonial id="auke-club12-optimalisatie" variant="card" />
+
+      <CalvinNote
+        message="Stuur ons je URL, dan kijk ik er een half uur naar en mail ik terug wat ik in jouw situatie als eerste zou aanpakken. Vrijblijvend, geen pakket dat je per se moet afnemen."
+        ctaLabel="Stuur mij je URL ↗"
+        ctaHref="/contact/?onderwerp=website-optimalisatie-utrecht-advies"
+      />
+
+      <section class="opt-pillars">
+        <Image
+          src={froseoLogoWit}
+          alt=""
+          class="opt-pillars-watermark"
+          aria-hidden="true"
+          widths={[800, 1200, 1600]}
+          sizes="(max-width: 1024px) 90vw, 1200px"
+          loading="lazy"
+        />
+        <div class="opt-pillars-inner">
+          <div class="opt-pillars-head">
+            <EyebrowPill onDark>Vijf pijlers</EyebrowPill>
+            <h2 class="opt-pillars-title">
+              De vijf pijlers van <em>website optimalisatie in Utrecht.</em>
+            </h2>
+            <p class="opt-pillars-lead">
+              Vijf onderdelen die elke maand op de planning staan, in wisselende
+              intensiteit. Welke we als eerste oppakken hangt af van waar jouw
+              Utrechtse site het meest blijft liggen.
+            </p>
+          </div>
+          <div class="opt-pillars-grid">
+            {pillars.map((p, i) => (
+              <article class="opt-pillar-card">
+                <div class="opt-pillar-num">{String(i + 1).padStart(2, '0')}</div>
+                <h3 class="opt-pillar-title">{p.title}</h3>
+                <p class="opt-pillar-body">{p.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <OnboardingTimeline
+        eyebrow="Hoe wij werken"
+        title="Website optimalisatie in Utrecht,"
+        titleAccent="maand voor maand."
+        items={approachSteps}
+      />
+
+      <WebsitesShowcase
+        cases={showcaseCases}
+        eyebrow="Utrechtse cases"
+        title="Utrechtse sites die we al"
+        titleAccent="hebben aangescherpt."
+      />
+
+      <BetterCallCalvin
+        eyebrow="Klaar voor de eerste audit?"
+        titleLine1="Website optimaliseren in Utrecht."
+        titleAccent="Hoe nu verder?"
+        body={[
+          'Plan een auditgesprek van een halfuur in. We lopen jouw site door en geven je een paar concrete punten waar je zelf mee aan de slag kunt.',
+          'Past een traject niet, dan hoor je dat. Wat we tijdens de audit zien krijg je sowieso terug, ook als we niet verder samenwerken.',
+        ]}
+        primaryLabel="Plan een auditgesprek ↗"
+        primaryHref="/contact/?onderwerp=website-optimalisatie-utrecht-audit"
+      />
+    </article>
+
+    <FAQ
+      eyebrow="Veelgestelde vragen"
+      titleLine1="Vragen over website optimalisatie"
+      titleAccent="in Utrecht."
+      items={faqs}
+    />
+  </main>
+  <Footer />
+</BaseLayout>

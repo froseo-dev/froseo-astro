@@ -126,6 +126,8 @@ const COMBOS = [
   { page: 'website-laten-maken-zzp',     desktop: 'steunder',                   mobile: 'prime-performance',         out: 'website-laten-maken-zzp-hero' },
   { page: 'wordpress-website-onderhoud', desktop: 'millstreet',                 mobile: 'steunder',                  out: 'wordpress-website-onderhoud-hero' },
   { page: 'maarssen',                    desktop: 'theo-mackaay',               mobile: 'steunder',                  out: 'maarssen-hero' },
+  { page: 'website-laten-maken-amersfoort', desktop: 'club12',                  mobile: 'studio-contenido',          out: 'website-laten-maken-amersfoort-hero' },
+  { page: 'website-optimalisatie-utrecht',  desktop: 'renovatie-totaal',        mobile: 'independent-artists-agency', out: 'website-optimalisatie-utrecht-hero' },
 ];
 
 console.log(`Scanning mock-up template for screen-areas…`);

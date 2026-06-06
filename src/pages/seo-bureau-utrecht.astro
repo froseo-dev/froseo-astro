@@ -157,6 +157,19 @@ const faqs = [
 ---
 
 <BaseLayout title={pageTitle} description={pageDesc}>
+  {/* Service-schema met areaServed=Utrecht naast de sitewide LocalBusiness.
+      Apart Service-blok i.p.v. duplicate LocalBusiness, zodat Google de
+      lokale dienst-context oppakt zonder twee LocalBusiness-entries met
+      verschillende namen voor hetzelfde bedrijf te zien. */}
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'SEO bureau Utrecht',
+    serviceType: 'Search Engine Optimization',
+    provider: { '@id': 'https://froseo.nl/#agency' },
+    areaServed: { '@type': 'City', name: 'Utrecht' },
+    url: 'https://froseo.nl/seo-bureau-utrecht/',
+  })} />
   <Topbar />
   <Nav />
   <main>

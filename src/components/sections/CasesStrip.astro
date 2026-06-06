@@ -25,6 +25,10 @@ interface Props {
   cardHref?: string;
   /** Render de case-kaarten zonder link (doorgegeven aan CasesRow). */
   linkless?: boolean;
+  /** Tag voor de eyebrow-pill. Default 'div'. Op de homepage zetten we
+      'm op 'h1' zodat de keyword-rich pill ("Webdesign, SEO & marketing
+      Utrecht") als primaire H1 van de pagina geldt. */
+  eyebrowAs?: 'div' | 'h1' | 'h2' | 'span' | 'p';
 }
 
 const {
@@ -41,6 +45,7 @@ const {
   portfolioHref = '/portfolio/',
   cardHref,
   linkless = false,
+  eyebrowAs = 'div',
 } = Astro.props;
 
 const all = await getCollection('cases', ({ data }) => data.published !== false);
@@ -54,7 +59,7 @@ const cases = pickSlugs
 
 <section class="cases-strip" id="cases">
   <div class="cases-strip-head">
-    <EyebrowPill variant="rare">{eyebrow}</EyebrowPill>
+    <EyebrowPill variant="rare" as={eyebrowAs}>{eyebrow}</EyebrowPill>
     <h2 class="cases-strip-title">
       {titleLine1}<br />{titleLead} <em>{titleAccent}</em>
     </h2>

@@ -8,11 +8,13 @@
  *  - Maximum 1× per sessie (localStorage flag)
  *  - Excluded paths: /contact/ en /wordpress-onderhoud/
  *
- * Multistep form (4 stappen):
- *  1. Scan-type kiezen (snelheid / seo / lokaal)
- *  2. Velden (variërend per type): website + evt. bedrijf/adres + opt. 3 zoekwoorden
- *  3. E-mail
- *  4. Bedankt-scherm
+ * Multistep form (max 5 stappen — stap 3 wordt overgeslagen als alleen
+ * snelheid gekozen):
+ *  1. URL invullen
+ *  2. Scan-type(s) kiezen (snelheid / seo / lokaal, multi-select)
+ *  3. Conditionele details: bedrijfsnaam bij lokaal, 3 zoekwoorden bij seo/lokaal
+ *  4. E-mailadres
+ *  5. Bedankt-scherm
  *
  * Submit POST → /api/scan-request → Brevo "Froseo Leads" lijst.
  *
@@ -44,11 +46,27 @@ const { forceOpen = false } = Astro.props;
   <div class="scan-popup-card">
     <button type="button" class="scan-popup-close" data-scan-close aria-label="Sluiten">×</button>
 
-    {/* ────── STAP 1 — Scan-type(s) ────── */}
+    {/* ────── STAP 1 — URL ────── */}
     <div class="scan-step" data-step="1">
       <span class="scan-eyebrow">Gratis &amp; vrijblijvend</span>
-      <h2 id="scan-popup-title" class="scan-title">Gratis websitecheck aanvragen</h2>
-      <p class="scan-lead">Kies wat we voor je mogen checken. Je ontvangt het rapport binnen 1 werkdag.</p>
+      <h2 id="scan-popup-title" class="scan-title">Gratis website analyse</h2>
+      <p class="scan-lead">Wij checken jouw website gratis op snelheid, techniek en vindbaarheid. Begin met je URL.</p>
+
+      <div class="scan-field">
+        <label for="scan-website">Website</label>
+        <input type="url" id="scan-website" name="website" placeholder="https://jouwsite.nl" required />
+      </div>
+
+      <div class="scan-actions">
+        <button type="button" class="scan-btn scan-btn-primary" data-step-next>Volgende →</button>
+      </div>
+    </div>
+
+    {/* ────── STAP 2 — Scan-type(s) ────── */}
+    <div class="scan-step" data-step="2" hidden>
+      <span class="scan-eyebrow">Wat checken we</span>
+      <h2 class="scan-title">Kies wat we mogen analyseren.</h2>
+      <p class="scan-lead">Combineren mag. Hoe meer je aanvinkt, hoe completer het rapport.</p>
 
       <div class="scan-types" role="group" aria-label="Welke scans">
         <label class="scan-type-card">
@@ -75,19 +93,15 @@ const { forceOpen = false } = Astro.props;
       </div>
 
       <div class="scan-actions">
+        <button type="button" class="scan-btn scan-btn-secondary" data-step-prev>← Vorige</button>
         <button type="button" class="scan-btn scan-btn-primary" data-step-next>Volgende →</button>
       </div>
     </div>
 
-    {/* ────── STAP 2 — Velden ────── */}
-    <div class="scan-step" data-step="2" hidden>
-      <span class="scan-eyebrow">Je gegevens</span>
-      <h2 class="scan-title">Vertel ons over je site.</h2>
-
-      <div class="scan-field">
-        <label for="scan-website">Website</label>
-        <input type="url" id="scan-website" name="website" placeholder="https://jouwsite.nl" required />
-      </div>
+    {/* ────── STAP 3 — Conditionele details (skipped als alleen snelheid) ────── */}
+    <div class="scan-step" data-step="3" hidden>
+      <span class="scan-eyebrow">Even iets specifieks</span>
+      <h2 class="scan-title">Een paar details.</h2>
 
       {/* Lokaal-specifieke velden — alleen bedrijfsnaam, adres halen we zelf op via GBP */}
       <div class="scan-lokaal-fields" hidden>
@@ -113,8 +127,8 @@ const { forceOpen = false } = Astro.props;
       </div>
     </div>
 
-    {/* ────── STAP 3 — E-mail ────── */}
-    <div class="scan-step" data-step="3" hidden>
+    {/* ────── STAP 4 — E-mail ────── */}
+    <div class="scan-step" data-step="4" hidden>
       <span class="scan-eyebrow">Bijna klaar</span>
       <h2 class="scan-title">Waar mogen we het rapport sturen?</h2>
       <p class="scan-lead">Binnen 1 werkdag ligt je persoonlijke rapport in je inbox.</p>
@@ -141,8 +155,8 @@ const { forceOpen = false } = Astro.props;
       </div>
     </div>
 
-    {/* ────── STAP 4 — Bedankt ────── */}
-    <div class="scan-step" data-step="4" hidden>
+    {/* ────── STAP 5 — Bedankt ────── */}
+    <div class="scan-step" data-step="5" hidden>
       <div class="scan-success">✓</div>
       <h2 class="scan-title">Top, we gaan er voor je induiken.</h2>
       <p class="scan-lead">Binnen 1 werkdag krijg je een persoonlijk rapport in je inbox met concrete inzichten over je website.</p>
@@ -151,11 +165,12 @@ const { forceOpen = false } = Astro.props;
       </div>
     </div>
 
-    {/* Progress dots */}
+    {/* Progress dots — 4 voortgangs-stappen (laatste is bedankt-scherm). */}
     <div class="scan-progress" data-scan-progress>
       <span class="dot active" data-progress="1"></span>
       <span class="dot" data-progress="2"></span>
       <span class="dot" data-progress="3"></span>
+      <span class="dot" data-progress="4"></span>
     </div>
   </div>
 </div>
@@ -426,12 +441,18 @@ const { forceOpen = false } = Astro.props;
         el.hidden = parseInt(el.dataset.step!) !== n;
       });
       popup.querySelectorAll<HTMLSpanElement>('[data-progress]').forEach((el) => {
-        el.classList.toggle('active', parseInt(el.dataset.progress!) <= Math.min(n, 3));
+        el.classList.toggle('active', parseInt(el.dataset.progress!) <= Math.min(n, 4));
       });
-      /* Progress wegstoppen op bedankt-scherm */
+      /* Progress wegstoppen op bedankt-scherm (stap 5). */
       const progress = popup.querySelector<HTMLDivElement>('[data-scan-progress]');
-      if (progress) progress.style.display = n === 4 ? 'none' : '';
+      if (progress) progress.style.display = n === 5 ? 'none' : '';
     };
+
+    /* Stap 3 (extra details) is alleen relevant bij SEO of lokale scan;
+       bij alleen snelheid slaan we 'm over. Bepaalt zowel next- als
+       prev-target zodat het skippen aan beide kanten klopt. */
+    const stepNeedsDetails = () =>
+      scanTypes.includes('seo') || scanTypes.includes('lokaal');
 
     const updateConditionalFields = () => {
       const lokaalFields = popup.querySelector<HTMLDivElement>('.scan-lokaal-fields');
@@ -456,29 +477,45 @@ const { forceOpen = false } = Astro.props;
       });
     });
 
-    /* Next / Prev */
+    /* Next / Prev — handelt ook het overslaan van stap 3 af wanneer er
+       alleen een snelheidsscan is gekozen (geen bedrijfsnaam/kw nodig). */
     popup.querySelectorAll<HTMLButtonElement>('[data-step-next]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        /* Validatie per stap */
+        /* Stap 1: URL valideren. */
         if (currentStep === 1) {
+          const website = popup.querySelector<HTMLInputElement>('input[name="website"]');
+          if (!website?.value) { alert('Vul je website in.'); website?.focus(); return; }
+          showStep(2);
+          return;
+        }
+        /* Stap 2: minimaal één scan-type. Daarna skip naar stap 4 als
+           alleen snelheid is gekozen. */
+        if (currentStep === 2) {
           if (scanTypes.length === 0) {
             alert('Kies minimaal één scan (combineren mag).');
             return;
           }
+          showStep(stepNeedsDetails() ? 3 : 4);
+          return;
         }
-        if (currentStep === 2) {
-          const website = popup.querySelector<HTMLInputElement>('input[name="website"]');
-          if (!website?.value) { alert('Vul je website in.'); website?.focus(); return; }
+        /* Stap 3: bedrijfsnaam verplicht bij lokaal. */
+        if (currentStep === 3) {
           if (scanTypes.includes('lokaal')) {
             const bedrijf = popup.querySelector<HTMLInputElement>('input[name="bedrijfsnaam"]');
             if (!bedrijf?.value) { alert('Voor de lokale scan hebben we je bedrijfsnaam nodig.'); bedrijf?.focus(); return; }
           }
+          showStep(4);
+          return;
         }
         showStep(currentStep + 1);
       });
     });
     popup.querySelectorAll<HTMLButtonElement>('[data-step-prev]').forEach((btn) => {
-      btn.addEventListener('click', () => showStep(currentStep - 1));
+      btn.addEventListener('click', () => {
+        /* Vanaf stap 4 terug: skip stap 3 als die niet relevant was. */
+        if (currentStep === 4 && !stepNeedsDetails()) { showStep(2); return; }
+        showStep(currentStep - 1);
+      });
     });
 
     /* ───── Submit ───── */
@@ -527,7 +564,7 @@ const { forceOpen = false } = Astro.props;
         /* DataLayer-event voor GTM-tracking */
         (window as any).dataLayer = (window as any).dataLayer || [];
         (window as any).dataLayer.push({ event: 'scan_request', scan_types: scanTypes.join(',') });
-        showStep(4);
+        showStep(5);
       } catch (err: any) {
         if (errorBox) {
           errorBox.textContent = err.message || 'Er ging iets mis. Probeer het opnieuw of mail ons direct op info@froseo.nl.';
