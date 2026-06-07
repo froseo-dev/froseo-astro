@@ -441,13 +441,13 @@ const faqs = [
       </div>
 
       <!-- ============================================================
-           5. Waar moet een goede zzp-website aan voldoen - 5 icoon-cards.
-           Koopgids-blok: niet wat WIJ doen, maar waar een goede zzp-site
-           aan voldoet.
+           5. Waar moet een goede zzp-website aan voldoen - 2-koloms
+           intro + checklist. Breekt het cards-ritme: titel + alinea
+           links, vijf concrete punten rechts met checkmark.
            ============================================================ -->
       <section class="zzp-checks">
         <div class="zzp-checks-inner">
-          <header class="zzp-checks-head">
+          <div class="zzp-checks-left">
             <EyebrowPill variant="rare">Kwaliteits-checks</EyebrowPill>
             <h2 class="zzp-checks-title">
               Waar moet een goede <em>zzp-website</em> aan voldoen?
@@ -457,16 +457,23 @@ const faqs = [
               jaar weer moet worden vervangen en een site die je bedrijf
               jarenlang draagt.
             </p>
-          </header>
-          <div class="zzp-checks-grid">
-            {qualityChecks.map((c) => (
-              <article class="zzp-checks-card">
-                <SectionIcon name={c.icon} class="zzp-checks-icon" size={40} />
-                <h3 class="zzp-checks-card-title">{c.title}</h3>
-                <p class="zzp-checks-card-body">{c.body}</p>
-              </article>
-            ))}
+            <p class="zzp-checks-lead">
+              Wij zorgen dat deze vijf punten al kloppen voor de site live gaat.
+              Geen losse SEO-aanbieding achteraf, geen extra fixes na drie
+              maanden. Wel een sterke basis vanaf dag een.
+            </p>
           </div>
+          <ul class="zzp-checks-list">
+            {qualityChecks.map((c) => (
+              <li>
+                <span class="zzp-checks-mark" aria-hidden="true">✓</span>
+                <div>
+                  <strong>{c.title}</strong>
+                  <span>{c.body}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -526,12 +533,14 @@ const faqs = [
       </section>
 
       <!-- ============================================================
-           9. One-pager of complete zzp-website? - 4-koloms keuzehulp.
+           9. Keuzehulp - teal-bg met pattern. 2x2 grid i.p.v. 4x1
+           zodat de cards ademruimte krijgen en de sectie visueel
+           breekt met de cream-secties errond.
            ============================================================ -->
       <section class="zzp-choose">
         <div class="zzp-choose-inner">
           <header class="zzp-choose-head">
-            <EyebrowPill variant="rare">Keuzehulp</EyebrowPill>
+            <EyebrowPill variant="rare" onDark>Keuzehulp</EyebrowPill>
             <h2 class="zzp-choose-title">
               One-pager of <em>complete zzp-website?</em>
             </h2>
@@ -762,18 +771,23 @@ const faqs = [
   .zzp-worth-cta { display: flex; justify-content: center; }
 
   /* ============================================================
-     KWALITEITS-CHECKS - 5 icoon-cards.
+     KWALITEITS-CHECKS - 2-koloms layout. Titel + alinea links,
+     vijf checkmark-items rechts. Breekt het cards-ritme van de
+     andere secties.
      ============================================================ */
-  .zzp-checks { padding: clamp(3rem, 5vw, 4.5rem) var(--gutter, 1.5rem); }
-  .zzp-checks-inner { max-width: var(--container-max, 1200px); margin: 0 auto; }
-  .zzp-checks-head {
-    text-align: center;
-    max-width: 56rem;
-    margin: 0 auto 2.5rem;
+  .zzp-checks { padding: clamp(3.5rem, 6vw, 5.5rem) var(--gutter, 1.5rem); }
+  .zzp-checks-inner {
+    max-width: var(--container-max, 1200px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .zzp-checks-left {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.85rem;
+    gap: 1.1rem;
   }
   .zzp-checks-title {
     font-family: var(--font-display, sans-serif);
@@ -782,33 +796,52 @@ const faqs = [
     line-height: 1.15;
     letter-spacing: -0.01em;
     margin: 0;
-  }
-  .zzp-checks-title em { color: var(--accent-rare, #b6007b); font-style: normal; }
-  .zzp-checks-lead { line-height: 1.6; color: var(--text-muted, #555); margin: 0; }
-  .zzp-checks-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1.1rem;
-  }
-  .zzp-checks-card {
-    background: var(--surface-card, #fff);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: var(--radius-lg, 14px);
-    padding: 1.4rem 1.2rem;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.06);
-  }
-  .zzp-checks-icon { color: var(--accent-rare, #b6007b); margin-bottom: 0.6rem; }
-  .zzp-checks-card-title {
-    font-family: var(--font-display, sans-serif);
-    font-weight: 800;
-    font-size: 1rem;
-    margin: 0 0 0.4rem;
     color: var(--text-primary, #1a1a1a);
   }
-  .zzp-checks-card-body { line-height: 1.5; font-size: 0.88rem; margin: 0; color: var(--text-primary, #1a1a1a); }
-  @media (max-width: 1100px) { .zzp-checks-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 700px)  { .zzp-checks-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 460px)  { .zzp-checks-grid { grid-template-columns: 1fr; } }
+  .zzp-checks-title em { color: var(--accent-rare, #b6007b); font-style: normal; }
+  .zzp-checks-lead { line-height: 1.65; color: var(--text-muted, #555); margin: 0; }
+  .zzp-checks-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1.1rem;
+  }
+  .zzp-checks-list li {
+    display: grid;
+    grid-template-columns: 1.75rem 1fr;
+    gap: 0.85rem;
+    align-items: start;
+  }
+  .zzp-checks-mark {
+    width: 1.75rem; height: 1.75rem;
+    border-radius: 999px;
+    background: var(--accent-rare, #b6007b);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+  .zzp-checks-list strong {
+    display: block;
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--text-primary, #1a1a1a);
+    margin-bottom: 0.25rem;
+  }
+  .zzp-checks-list span:not(.zzp-checks-mark) {
+    display: block;
+    font-size: 0.93rem;
+    line-height: 1.55;
+    color: var(--text-muted, #555);
+  }
+  @media (max-width: 860px) {
+    .zzp-checks-inner { grid-template-columns: 1fr; }
+  }
 
   /* ============================================================
      Comparison-afsluiter.
@@ -827,14 +860,26 @@ const faqs = [
   .zzp-compare-after-inner a { color: var(--accent-rare, #b6007b); text-decoration: underline; text-underline-offset: 3px; }
 
   /* ============================================================
-     KEUZEHULP - 4 cards: one-pager / compacte site / maatwerk / abbo.
+     KEUZEHULP - teal-bg met subtle pattern. 2x2 grid voor
+     ademruimte; afwijkende achtergrond zodat het visueel breekt
+     met de cream-secties errond.
      ============================================================ */
-  .zzp-choose { padding: clamp(3rem, 5vw, 4.5rem) var(--gutter, 1.5rem); background: var(--surface-page, #faf6f0); }
-  .zzp-choose-inner { max-width: var(--container-max, 1200px); margin: 0 auto; }
+  .zzp-choose {
+    padding: clamp(3.5rem, 6vw, 5.5rem) var(--gutter, 1.5rem);
+    background-color: var(--color-teal, #00807d);
+    background-image:
+      radial-gradient(ellipse at top right, rgba(255, 255, 255, 0.10), transparent 60%),
+      radial-gradient(ellipse at bottom left, rgba(0, 0, 0, 0.18), transparent 55%),
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+    color: #fff;
+  }
+  .zzp-choose-inner { max-width: 1000px; margin: 0 auto; }
   .zzp-choose-head {
     text-align: center;
     max-width: 56rem;
-    margin: 0 auto 2.5rem;
+    margin: 0 auto 2.75rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -847,27 +892,28 @@ const faqs = [
     line-height: 1.15;
     letter-spacing: -0.01em;
     margin: 0;
+    color: #fff;
   }
-  .zzp-choose-title em { color: var(--accent-rare, #b6007b); font-style: normal; }
-  .zzp-choose-lead { line-height: 1.6; color: var(--text-muted, #555); margin: 0; }
+  .zzp-choose-title em { color: var(--color-teal-soft, #6EE3DE); font-style: normal; }
+  .zzp-choose-lead { line-height: 1.6; color: rgba(255, 255, 255, 0.88); margin: 0; }
   .zzp-choose-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
   .zzp-choose-card {
     background: var(--surface-card, #fff);
     border: 1px solid rgba(0, 0, 0, 0.08);
-    border-top: 4px solid var(--accent-rare, #b6007b);
+    border-top: 4px solid var(--color-teal-strong, #006461);
     border-radius: var(--radius-lg, 14px);
-    padding: 1.4rem;
+    padding: 1.6rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.55rem;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.06);
+    gap: 0.6rem;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.18);
     transition: transform 0.18s ease, box-shadow 0.18s ease;
   }
-  .zzp-choose-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.08); }
+  .zzp-choose-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.22); }
   .zzp-choose-card-title {
     font-family: var(--font-display, sans-serif);
     font-weight: 800;
@@ -880,11 +926,10 @@ const faqs = [
     font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--accent-rare, #b6007b);
+    color: var(--color-teal-strong, #006461);
   }
   .zzp-choose-card-body { line-height: 1.55; font-size: 0.92rem; color: var(--text-primary, #1a1a1a); margin: 0; }
-  @media (max-width: 1000px) { .zzp-choose-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 540px)  { .zzp-choose-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 720px) { .zzp-choose-grid { grid-template-columns: 1fr; } }
 
   /* ============================================================
      BRANCHES (ongewijzigd) - 4 cards op cream met accent-stripe.
