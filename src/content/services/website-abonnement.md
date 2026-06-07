@@ -37,28 +37,47 @@ pricingTitle: 'Website abonnement'
 pricingTitleAccent: 'pakketten.'
 pricingLead: 'Kies het website abonnement dat past bij je bedrijf. Online Start is bedoeld voor zzp''ers en kleinere mkb-bedrijven die snel professioneel online willen. Online Plus is geschikt voor bedrijven die meer pagina''s, meer wijzigingstijd en uitgebreidere rapportage nodig hebben.'
 
-# TODO: vervangen door Semmy-quote zodra zijn site live staat
-testimonialId: bas-renovatie-totaal
+# TODO: vervangen door Semmy-quote (Prime Performance, Online Plus) zodra zijn site live staat.
+# Tot die tijd Auke (Club 12): zijn quote over hands-off beheer past op de abonnementsbelofte.
+testimonialId: auke-club12
 
 introBlock:
   eyebrow: 'Website abonnement'
-  title: 'Een complete website voor'
-  titleAccent: 'een vast bedrag per maand.'
+  title: 'Wat is een'
+  titleAccent: 'website abonnement?'
   body:
-    - 'Laat een professionele website bouwen voor een vast bedrag per maand. Inclusief hosting, technisch beheer, SSL, kleine wijzigingen en maandelijkse rapportage.'
-    - 'Ideaal voor zzp''ers en mkb-bedrijven die professioneel online willen zonder grote investering vooraf.'
+    - 'Een website abonnement is een professionele website die je afneemt voor een vast bedrag per maand, zonder grote investering vooraf. De bouw, hosting, SSL, technisch beheer, kleine wijzigingen en maandelijkse rapportage zitten allemaal in dat ene maandbedrag.'
+    - 'Je regelt dus geen losse partijen voor ontwerp, hosting en onderhoud. Eén abonnement, één aanspreekpunt en een bedrag dat je elke maand ziet aankomen. Bij Froseo start dat vanaf {{abboFromInline}}, maandelijks opzegbaar na drie maanden.'
 
-infraBlock:
-  eyebrow: 'Waarom dit werkt voor MKB'
-  title: 'Een website is geen project,'
-  titleAccent: 'het is infrastructuur.'
-  body:
-    - 'Net als je telefoonabonnement, je boekhouder of je verzekering: het moet werken, blijven werken en niet ineens veel geld kosten als er iets stuk gaat. De meeste websites worden één keer gebouwd en daarna aan hun lot overgelaten. Met een abonnement gaat dat anders.'
-    - 'Voor één vast bedrag per maand bouwen we de site, hosten we hem, houden we hem snel en passen we kleine dingen aan. Geen offerte voor een telefoonnummerwijziging, geen factuur uit het niets. Je weet wat het kost en wij weten waar we aan toe zijn.'
-  cta:
-    prefix: 'Klinkt als wat je zoekt?'
-    label: 'Vraag een vrijblijvend voorstel ↗'
-    href: '/contact/?onderwerp=website-abonnement'
+includedBlock:
+  eyebrow: 'All-in'
+  title: 'Wat zit er'
+  titleAccent: 'inbegrepen?'
+  intro: 'De pakketten verschillen in omvang, maar de basis is voor allebei hetzelfde: een werkende site waar je niet naar om hoeft te kijken.'
+  groups:
+    - title: 'Hosting, e-mail en SSL'
+      icon: 'shieldCheck'
+      body: 'Je site draait op snelle hosting, met SSL en e-mail inbegrepen. Niets zelf installeren, niets los verlengen, geen aparte factuur van een hostingpartij.'
+    - title: 'Beheer en kleine wijzigingen'
+      icon: 'toolbox'
+      body: 'Updates, beveiliging en kleine aanpassingen lopen door. Een prijs bijwerken of een telefoonnummer wijzigen hoort er gewoon bij, zonder offerte vooraf.'
+    - title: 'Technische SEO en rapportage'
+      icon: 'chartUp'
+      body: 'De technische SEO-basis staat op orde en je posities komen maandelijks in je inbox. Zo zie je zwart-op-wit wat je site doet in Google.'
+  note: 'Deze basis zit in beide pakketten; het verschil zit in het aantal pagina''s, de wijzigingstijd en de rapportage. Wil je daarnaast actief stijgen in Google met content en zoekwoorden? Dat doen we los via een <a href="/seo/">SEO-traject</a>.'
+
+audienceFit:
+  eyebrow: 'Voor wie'
+  title: 'Voor wie is een website abonnement'
+  titleAccent: 'geschikt?'
+  lead:
+    - 'Een abonnement werkt het best als je vooral professioneel online wilt staan zonder zelf met techniek, hosting en updates bezig te zijn. Je krijgt een verzorgde site die meegroeit, voor een vast bedrag per maand vanaf {{abboFromInline}}.'
+    - 'Start je als zelfstandige? Bekijk dan ook hoe we een <a href="/website-laten-maken-zzp/">website laten maken voor zzp''ers</a> aanpakken.'
+  items:
+    - 'Zzp''ers en starters die professioneel online willen zonder investering vooraf'
+    - 'Lokale ondernemers en dienstverleners die in hun regio gevonden willen worden'
+    - 'Klein mkb dat een verzorgde site wil zonder zelf hosting en updates te regelen'
+    - 'Ondernemers die voorspelbare maandlasten prettiger vinden dan een groot bedrag ineens'
 
 comparison:
   title: 'Website abonnement of eenmalig'
@@ -78,6 +97,7 @@ comparison:
       with: 'Jaarlijks een refresh van het design op het Froseo-framework'
     - without: 'Contact afhankelijk van de planning van de bouwer'
       with: 'Vast aanspreekpunt, direct contact via mail of telefoon'
+  footnote: 'Liever een eenmalig project met volledig eigendom van je site? Bekijk <a href="/webdesign/">maatwerk webdesign</a>.'
 
 approachStyle: timeline
 approachSteps:
@@ -91,34 +111,14 @@ approachSteps:
     body: 'Vanaf live: hosting, updates, beveiliging, kleine wijzigingen en maandrapportage. Zien we kansen in je rapportage of merken we iets op? Dan trekken we aan de bel. Jij kan je werk doen, wij houden de site scherp.'
 
 usps:
-  - title: Geen verrassingen op je factuur
-    body: 'Wat in het pakket zit, leveren we elke maand, voor elke klant. Geen offerte voor een telefoonnummerwijziging, geen factuur uit het niets, geen discussie over de scope achteraf. Wil je iets groters? Dan stemmen we dat vooraf af, met een gunstig tarief voor pakketklanten.'
   - title: 15 jaar WordPress-ervaring, toegepast op moderne techniek
     body: 'We bouwden eerst alleen in WordPress. Sinds een paar jaar ook in Astro, omdat dat sneller is en beter aansluit op de techniek van vandaag. Het abonnement draait op Astro, met alle WordPress-lessen van 60+ sites in het ontwerp verwerkt.'
   - title: Snelheid die we waarmaken
     body: 'We streven naar 90+ op Google PageSpeed, op mobiel én desktop. We claimen geen 100/100, want dat hangt te veel af van externe scripts (Analytics, pixels, embeds, video). 90+ over de hele site is wel realistisch én meetbaar. Daar werken we naartoe en daar houden we het.'
-  - title: Doorgroei zonder rebuild
-    body: 'Begin met Online Start, schaal door naar Online Plus zodra je meer pagina''s of meer support nodig hebt. We breiden uit op dezelfde site, je verliest geen content, ranking of beheerhistorie. Veel klanten beginnen klein en groeien mee.'
   - title: We denken mee, ook na livegang
     body: 'Een website is geen project dat we afleveren en vergeten. Zien we iets in je rapportage, valt ons iets op in je niche of komt er een vraag voorbij die meer mensen zullen hebben? Dan trekken we aan de bel. Geen verplichte strategiesessies, wel betrokkenheid.'
   - title: Direct contact, geen tussenlagen
     body: 'Geen accountmanager, geen ticketsysteem, geen wachtmuziek. Je werkt direct met de mensen die je site bouwen en beheren. Mail, telefoon of WhatsApp. Online Plus krijgt voorrang bij drukke periodes.'
-
-pillarsEyebrow: 'Goed om te weten'
-pillarsTitle: 'Meer over het <em>website abonnement.</em>'
-pillars:
-  - title: 'Wat is een website abonnement?'
-    body: 'Een website abonnement is een manier om een professionele website te laten maken zonder grote investering vooraf. Je betaalt een vast bedrag per maand. Daarin zitten de bouw van de site, hosting, SSL, technisch beheer, kleine wijzigingen en maandelijkse rapportage. Zo hoef je niet zelf losse partijen te regelen voor ontwerp, hosting, onderhoud en support.'
-  - title: 'Website laten maken op abonnement'
-    body: 'Wil je een professionele website, maar liever geen groot bedrag vooraf neerleggen? Met een website laten maken op abonnement betaal je een vast bedrag per maand, inclusief hosting, SSL, technisch beheer en kleine aanpassingen. Voor zzp''ers en mkb-bedrijven is dat vaak overzichtelijker dan een eenmalig webdesigntraject.'
-    link:
-      label: 'Liever volledig eigendom? Bekijk maatwerk webdesign'
-      href: '/webdesign/'
-  - title: 'Wat kost een website abonnement?'
-    body: 'Bij Froseo start een website abonnement vanaf €89 per maand, exclusief btw. Voor dat bedrag krijg je een professionele website op het Froseo-framework, inclusief hosting, SSL, de technische SEO-basis, maandelijkse positierapportage en 30 minuten wijzigingen per maand. Heb je meer pagina''s en uitgebreidere rapportage nodig, dan is er Online Plus vanaf €179 per maand.'
-    link:
-      label: 'Structureel hoger in Google? Bekijk SEO'
-      href: '/seo/'
 
 calvinNote:
   message: 'Twijfel je tussen Online Start of Plus, of past het abonnement überhaupt bij je situatie? Stuur me een bericht met je huidige site of een korte omschrijving van wat je zoekt. Ik bel of mail binnen één werkdag terug.'
@@ -126,8 +126,10 @@ calvinNote:
   ctaHref: '/contact/?onderwerp=website-abonnement-advies'
 
 faqs:
+  - q: Wat kost een website abonnement?
+    a: 'Bij Froseo start een website abonnement vanaf {{abboFromInline}}, exclusief btw. Daarvoor krijg je een professionele website op het Froseo-framework, inclusief hosting, SSL, de technische SEO-basis, maandelijkse positierapportage en 30 minuten wijzigingen per maand. Heb je meer pagina''s en uitgebreidere rapportage nodig, dan is er Online Plus vanaf {{abboPlusInline}}. Geen setup fee, maandelijks opzegbaar na drie maanden.'
   - q: Waarom een abonnement in plaats van een eenmalige website?
-    a: 'Bij een eenmalige website betaal je vooraf veel en moet je het onderhoud daarna zelf regelen. Met een abonnement spreid je de kosten, blijft de techniek up-to-date en is er elke maand iemand verantwoordelijk voor de site. Voor wie geen grote maatwerkfunctionaliteit nodig heeft, is dit vrijwel altijd slimmer.'
+    a: 'Bij een eenmalige website betaal je vooraf veel en moet je het onderhoud daarna zelf regelen. Met een abonnement spreid je de kosten, blijft de techniek up-to-date en is er elke maand iemand verantwoordelijk voor de site. Heb je geen grote maatwerkfunctionaliteit nodig, dan dekt een abonnement de lading: je spreidt de kosten en de techniek blijft bijgehouden.'
   - q: Wat zit er níet in het abonnement?
     a: 'Het abonnement is gericht op het bouwen en bijhouden van je website. Actieve SEO-content, blogartikelen, zoekwoordonderzoek op maat, Google Business Profile-optimalisatie, linkbuilding, Google of Meta Ads, CRM-koppelingen, webshops, ledenomgevingen en maatwerkfunctionaliteit vallen erbuiten. Deze diensten leveren we los, op aanvraag of in een apart pakket. Stuur een bericht voor een prijsindicatie.'
   - q: Wat als ik wil stoppen met het abonnement?
@@ -142,10 +144,8 @@ faqs:
     a: 'Inbegrepen wijzigingstijd (30 min bij Start, 2 uur bij Plus) is voor kleine aanpassingen die we elke maand makkelijk verzetten. Vervalt aan het einde van de maand, niet opspaarbaar. Voor grotere uitbreidingen of nieuwe pagina''s rekenen we ons normale uurtarief, met €10/uur korting voor pakketklanten. Of we maken er een aparte opdracht van als het echt om groter werk gaat.'
   - q: Bouwen jullie ook webshops of ledenomgevingen onder het abonnement?
     a: 'Nee, webshops, ledenomgevingen, klantportalen en databases vallen buiten het abonnement. Dat zijn andere bouwtrajecten met andere techniek en andere onderhoudslast. Voor een webshop verwijzen we vaak naar een Shopify-route of een maatwerktraject. Een ledenomgeving of klantportaal bouwen we op aanvraag als los project.'
-  - q: Werken jullie ook voor ZZP en heel kleine bedrijven?
-    a: 'Ja, voor veel ZZP''ers en éénpitters is Online Start de slimste manier om professioneel online te staan zonder grote startinvestering. We werken voor MKB met 2 tot 25 medewerkers én voor ZZP''ers met serieuze plannen. Voor bedrijven die meerdere diensten, locaties of landingspagina''s nodig hebben is Online Plus logischer.'
-  - q: Is een website abonnement geschikt voor zzp''ers?
-    a: 'Ja, juist voor veel zzp''ers is een website abonnement interessant. Je hoeft geen grote investering vooraf te doen en hebt toch een professionele website met hosting, onderhoud en support inbegrepen. Daardoor blijven je maandelijkse websitekosten voorspelbaar.'
+  - q: Is een website abonnement geschikt voor zzp''ers en kleine bedrijven?
+    a: 'Ja, juist voor zzp''ers en éénpitters is Online Start een logische manier om professioneel online te staan zonder grote investering vooraf. Je hebt toch een professionele website met hosting, onderhoud en support inbegrepen, en je maandelijkse websitekosten blijven voorspelbaar. We werken daarnaast voor mkb met 2 tot 25 medewerkers. Heb je meerdere diensten, locaties of landingspagina''s nodig, dan is Online Plus logischer.'
   - q: Kan ik ook een website laten maken zonder opstartkosten?
     a: 'Ja. Met het website abonnement van Froseo betaal je geen opstartkosten. Je betaalt een vast bedrag per maand voor de bouw, de hosting, het technisch beheer en de ondersteuning van je website.'
   - q: Zit SEO inbegrepen bij het website abonnement?
@@ -153,5 +153,5 @@ faqs:
   - q: Kan ik mijn bestaande website omzetten naar een website abonnement?
     a: 'Vaak wel. We kijken eerst naar je huidige website, content, techniek en doelen. Soms bouwen we de site opnieuw op ons framework, soms nemen we vooral de belangrijkste pagina''s en structuur mee.'
   - q: Wat is het verschil tussen een website huren en een website abonnement?
-    a: 'Bij een website abonnement betaal je maandelijks voor je website, hosting, beheer en support. Sommige mensen noemen dat ook een website huren, maar bij ons ligt de nadruk vooral op service, doorontwikkeling en voorspelbare maandelijkse kosten.'
+    a: 'Bij een website abonnement betaal je maandelijks voor je website, hosting, beheer en support. De term website huren wordt ook voor dit model gebruikt, maar bij ons ligt de nadruk vooral op service, doorontwikkeling en voorspelbare maandelijkse kosten.'
 ---

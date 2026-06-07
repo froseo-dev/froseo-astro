@@ -4,6 +4,7 @@ import Topbar from '@components/layout/Topbar.astro';
 import Nav from '@components/layout/Nav.astro';
 import Footer from '@components/layout/Footer.astro';
 import EyebrowPill from '@components/ui/EyebrowPill.astro';
+import SectionIcon from '@components/ui/SectionIcon.astro';
 import ReviewAvatars from '@components/ui/ReviewAvatars.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
 import LogosTicker from '@components/sections/LogosTicker.astro';
@@ -212,6 +213,35 @@ const serviceSchema = {
         />
       )}
 
+      {/* "Wat zit er inbegrepen?" — open, complementair aan de pakketkaarten
+          (themed groepen i.p.v. feature-checklist). Direct na de cards zodat
+          het de keuze ondersteunt op het beslismoment. */}
+      {s.includedBlock && (
+        <section class="included">
+          <div class="included-head">
+            {s.includedBlock.eyebrow && <EyebrowPill>{s.includedBlock.eyebrow}</EyebrowPill>}
+            <h2 class="included-title">
+              {s.includedBlock.title} {s.includedBlock.titleAccent && <em>{s.includedBlock.titleAccent}</em>}
+            </h2>
+            {s.includedBlock.intro && <p class="included-intro">{interpolate(s.includedBlock.intro)}</p>}
+          </div>
+          <div class="included-grid">
+            {s.includedBlock.groups.map((g) => (
+              <article class="included-card">
+                {g.icon && (
+                  <span class="included-card-icon" aria-hidden="true">
+                    <SectionIcon name={g.icon} size={26} />
+                  </span>
+                )}
+                <h3 class="included-card-title">{g.title}</h3>
+                <p class="included-card-body">{interpolate(g.body)}</p>
+              </article>
+            ))}
+          </div>
+          {s.includedBlock.note && <p class="included-note" set:html={interpolate(s.includedBlock.note)} />}
+        </section>
+      )}
+
       <!-- ============================================================
            Stats-ribbon — 4 credibility-cijfers. Rustig proof-strookje
            tussen pakketten en pain-points.
@@ -339,6 +369,38 @@ const serviceSchema = {
         </section>
       )}
 
+      {/* "Voor wie is dit geschikt?" — donker links/rechts-blok (OverFroseo-stijl):
+          kop + begeleidende alinea links, checks rechts. */}
+      {s.audienceFit && (
+        <section class="audience-fit">
+          <div class="audience-fit-inner">
+            <div class="audience-fit-head">
+              {s.audienceFit.eyebrow && (
+                <EyebrowPill variant="highlight" star="◆">{s.audienceFit.eyebrow}</EyebrowPill>
+              )}
+              <h2 class="audience-fit-title">
+                {s.audienceFit.title} {s.audienceFit.titleAccent && <em>{s.audienceFit.titleAccent}</em>}
+              </h2>
+            </div>
+            <div class="audience-fit-body">
+              <div class="audience-fit-lead">
+                {s.audienceFit.lead.map((p) => (
+                  <p set:html={interpolate(p)} />
+                ))}
+              </div>
+              <ul class="audience-fit-checks">
+                {s.audienceFit.items.map((it) => (
+                  <li>
+                    <span class="audience-check-icon" aria-hidden="true">✓</span>
+                    <span class="audience-check-text">{it}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
       <!-- Pain-points grid (negatieve framing, visuele urgency) -->
       {s.painPoints && s.painPoints.length > 0 && (
         <PainPoints
@@ -357,6 +419,7 @@ const serviceSchema = {
           withoutLabel={s.comparison.withoutLabel}
           withLabel={s.comparison.withLabel}
           items={s.comparison.items.map((it) => ({ without: interpolate(it.without), with: interpolate(it.with) }))}
+          footnote={s.comparison.footnote ? interpolate(s.comparison.footnote) : undefined}
         />
       )}
 

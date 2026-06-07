@@ -101,7 +101,7 @@ Dat maakt een site niet alleen trager, maar ook kwetsbaarder en lastiger te onde
 
 Techniek gaat niet alleen over snelheid. Een website moet ook gewoon betrouwbaar aanvoelen en goed blijven werken. Denk aan een geldig SSL-certificaat, regelmatige updates, back-ups, formulieren die daadwerkelijk aankomen en geen foutmeldingen op belangrijke pagina's.
 
-Dit klinkt misschien minder spannend dan laadsnelheid, maar juist dit soort dingen bepalen of een website professioneel overkomt. Een snelle site met een kapot formulier blijft gewoon een slechte website.
+Dit klinkt misschien minder spannend dan laadsnelheid, maar juist dit soort dingen bepalen of een website professioneel overkomt. Een snelle site met een kapot formulier blijft gewoon een slechte website. Wil je dit niet zelf bijhouden? Dan loopt het bij een [website abonnement](/website-abonnement/) automatisch mee: hosting, SSL, updates en kleine wijzigingen zitten in een vast maandbedrag.
 
 Techniek hoeft dus niet meteen een groot of ingewikkeld traject te zijn. Vaak zit de eerste winst gewoon in slimmer opschonen, comprimeren, testen en de grootste remmers aanpakken.
 

@@ -104,7 +104,10 @@ approachSteps:
 pillarsTitle: 'Wat website onderhoud precies <em>inhoudt.</em>'
 pillars:
   - title: WordPress, plug-in en thema updates
-    body: 'WordPress brengt regelmatig updates uit van core, plug-ins en thema''s. Veel daarvan bevatten beveiligingsupdates die kwetsbaarheden dichten. Verouderde plug-ins zijn de belangrijkste oorzaak van hacks. Wij voeren updates handmatig en gecontroleerd uit, met een restore-point vooraf zodat we direct kunnen terugrollen als een update onverwacht iets breekt. Geen automatische bulk-updates op de achtergrond zonder controle.'
+    body: 'WordPress brengt regelmatig updates uit van core, plug-ins en thema''s. Veel daarvan bevatten beveiligingsupdates die kwetsbaarheden dichten. Verouderde plug-ins zijn de belangrijkste oorzaak van hacks. Wij voeren updates handmatig en gecontroleerd uit, met een restore-point vooraf zodat we direct kunnen terugrollen als een update onverwacht iets breekt. Geen automatische bulk-updates op de achtergrond zonder controle. Dit pakket is voor sites die elders gebouwd zijn; wil je bouw én beheer in één, dan loopt dat via het abonnement.'
+    link:
+      label: 'Bouw én beheer in één? Bekijk het website abonnement'
+      href: /website-abonnement/
   - title: Backups en restore-mogelijkheid
     body: 'Een goede backup is je redding bij een crash, hack of menselijke fout. Wij maken regelmatig backups van je site en database, slaan ze veilig off-site op, en kunnen ze in geval van nood snel terugzetten. Frequentie verschilt per pakket: wekelijks (Basic Care) tot dagelijks (Standard en Pro Care). Pro Care krijgt 30 dagen retentie zodat je verder terug kunt in de tijd.'
   - title: Beveiliging en detectie van kwetsbaarheden

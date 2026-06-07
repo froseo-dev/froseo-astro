@@ -267,6 +267,45 @@ const services = defineCollection({
       })
       .optional(),
 
+    /** "Voor wie is dit geschikt?" — donker links/rechts-blok in de OverFroseo-
+        stijl: kop + begeleidende alinea's links, checks rechts. Geen accordion,
+        geen tegenover-kolom (dat dubbelt met het comparison-blok). De lead-
+        alinea's ondersteunen inline HTML voor een contextuele interne link.
+        Voor /website-abonnement. */
+    audienceFit: z
+      .object({
+        eyebrow: z.string().optional(),
+        title: z.string(),
+        titleAccent: z.string().optional(),
+        /** Begeleidende alinea's links (inline HTML toegestaan voor links). */
+        lead: z.array(z.string()),
+        /** Checks rechts: voor wie het abonnement geschikt is. */
+        items: z.array(z.string()),
+      })
+      .optional(),
+
+    /** "Wat zit er inbegrepen?" — open, complementair aan de pakketkaarten.
+        3 themed groepen (techniek / beheer / vindbaarheid) i.p.v. een
+        feature-checklist, zodat het de cards niet dubbelt. */
+    includedBlock: z
+      .object({
+        eyebrow: z.string().optional(),
+        title: z.string(),
+        titleAccent: z.string().optional(),
+        intro: z.string().optional(),
+        groups: z.array(
+          z.object({
+            title: z.string(),
+            body: z.string(),
+            /** Naam van een SectionIcon (bv. 'shieldCheck', 'toolbox', 'chartUp'). */
+            icon: z.string().optional(),
+          }),
+        ),
+        /** Voetnoot onder de kaarten. Inline HTML toegestaan (set:html). */
+        note: z.string().optional(),
+      })
+      .optional(),
+
     /** Pain-points grid: visuele "wat gaat er fout zonder dit"-sectie. */
     painPointsTitle: z.string().optional(),
     painPointsTitleAccent: z.string().optional(),
@@ -303,6 +342,9 @@ const services = defineCollection({
             with: z.string(),
           }),
         ),
+        /** Optionele voetnoot onder de tabel. Inline HTML toegestaan (set:html),
+            bv. een contextuele link naar maatwerk webdesign. */
+        footnote: z.string().optional(),
       })
       .optional(),
 

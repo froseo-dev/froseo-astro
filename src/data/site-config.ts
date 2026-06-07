@@ -21,6 +21,10 @@ export const pricing = {
       vergelijking maandelijks vs jaarlijks op de pricing-pagina. */
   abboMonthlyAmount: '€99',
   abboMonthlyShort: '€99/m',
+  /** "Vanaf"-prijs Online Plus (jaarlijkse betaling). Spiegelt
+      abo-packages.ts (online-plus.yearlyMonthlyPrice). */
+  abboPlusFromAmount: '€179',
+  abboPlusInline: '€179 per maand',
   /** B2B-context: prijzen excl. btw. Eenmalig melden op pricing-cards
       is voldoende; niet bij elke hero-mention noemen. */
   vatNote: 'excl. btw',
@@ -122,6 +126,7 @@ const tokens: Record<string, string> = {
   abboFromAmount: pricing.abboFromAmount,
   abboFromInline: pricing.abboFromInline,
   abboFromShort: pricing.abboFromShort,
+  abboPlusInline: pricing.abboPlusInline,
   email: contact.email,
   phoneDisplay: contact.phoneDisplay,
   reviewRating: review.ratingDisplay,

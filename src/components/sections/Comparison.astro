@@ -18,6 +18,8 @@ interface Props {
   withoutLabel: string;
   withLabel: string;
   items: ComparisonItem[];
+  /** Optionele voetnoot onder de tabel (inline HTML toegestaan). */
+  footnote?: string;
 }
 
 const {
@@ -27,6 +29,7 @@ const {
   withoutLabel,
   withLabel,
   items,
+  footnote,
 } = Astro.props;
 ---
 
@@ -67,4 +70,5 @@ const {
       </ul>
     </div>
   </div>
+  {footnote && <p class="comparison-footnote" set:html={footnote} />}
 </section>

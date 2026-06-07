@@ -35,7 +35,7 @@ Eigenaar Semmy van Gelderen wilde voor Prime Performance een moderne, strakke si
 
 ## Onze aanpak
 
-Een Astro-website binnen het Online Plus pakket. Astro is licht en snel, dus paid traffic landt op een pagina die meteen reageert. Daarnaast een rij integraties zodat alle tooling die Semmy gebruikt netjes samenwerkt met de site.
+Een Astro-website binnen het Online Plus [website abonnement](/website-abonnement/). Astro is licht en snel, dus paid traffic landt op een pagina die meteen reageert. Daarnaast een rij integraties zodat alle tooling die Semmy gebruikt netjes samenwerkt met de site.
 
 - Maatwerk Astro-build die binnen seconden laadt, ook bij zware paid-campagnes
 - Volledig op nieuwe huisstijl (kleur, typografie, beeldstijl) afgestemd
