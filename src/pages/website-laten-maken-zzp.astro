@@ -48,7 +48,6 @@ import CalvinNote from '@components/sections/CalvinNote.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
 import Comparison from '@components/sections/Comparison.astro';
 import Testimonial from '@components/sections/Testimonial.astro';
-import Approach from '@components/sections/Approach.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
@@ -144,6 +143,32 @@ const priceOptions = [
       'Klaar voor uitbreiding naar SEO-traject',
     ],
     cta: { label: 'Plan een kennismaking', href: '/contact/?onderwerp=zzp-maatwerk' },
+  },
+];
+
+/* === Proces-stappen: van eerste mail tot live zzp-site. Horizontaal
+   in een 4-koloms grid in een donker blok zodat het visueel breekt
+   met de 2-col Kwaliteits-checks eronder. */
+const procesSteps = [
+  {
+    num: '01',
+    title: 'Kennismaken',
+    body: 'Een mailtje, een WhatsApp of een gesprek van een halfuur. Je vertelt wat je doet en wat je site moet opleveren. Wij stellen de vragen waar je zelf nog niet aan dacht.',
+  },
+  {
+    num: '02',
+    title: 'Voorstel met heldere prijs',
+    body: 'Binnen een paar dagen een voorstel met scope, planning en prijs. Per onderdeel uitgesplitst zodat je weet waar je voor betaalt. Geen verrassingen achteraf.',
+  },
+  {
+    num: '03',
+    title: 'Bouwen en afstemmen',
+    body: 'Wij bouwen, jij geeft tussentijds feedback. Een one-pager of abonnement-site staat vaak binnen twee weken in concept. Maatwerk neemt vier tot zes weken.',
+  },
+  {
+    num: '04',
+    title: 'Live en doorgroeien',
+    body: "Na livegang stopt het niet. Hosting, technisch beheer en kleine wijzigingen lopen door. Later uitbreiden met extra pagina's of een SEO-traject kan altijd.",
   },
 ];
 
@@ -443,44 +468,37 @@ const faqs = [
       </div>
 
       <!-- ============================================================
-           4b. Zo verloopt een traject - 4 stappen in horizontaal
-           timeline-blok (Approach met watermark). Dekt 'hoe werkt
-           het'-zoekintentie en neemt koopangst weg ('wat gebeurt
-           er nadat ik contact opneem').
+           4b. Zo verloopt een traject - centered header bovenaan,
+           4 stappen in horizontale grid eronder. Bewust ANDERE
+           layout dan de 2-col Kwaliteits-checks eronder, zodat
+           ze niet visueel op elkaar lijken.
            ============================================================ -->
-      <Approach
-        eyebrow="Zo werkt een traject"
-        titleLine1="Van eerste mail tot"
-        titleAccent="live zzp-website."
-        titleLine3=""
-        desc1="Geen wekenlange discovery, geen vage offertes. We bespreken kort wat je nodig hebt, sturen een heldere prijs en gaan dan bouwen. Korte lijnen, één aanspreekpunt en duidelijke stappen."
-        desc2="De meeste zzp-sites in het abonnement of als one-pager zijn binnen twee tot vier weken live. Maatwerk vraagt meer tijd, maar je weet vooraf wat je krijgt en wanneer."
-        ctaLabel="Plan een kennismaking ↗"
-        ctaHref="/contact/?onderwerp=zzp-website"
-        steps={[
-          {
-            num: '01',
-            title: 'Kennismaken',
-            description: 'Een mailtje, een WhatsApp of een gesprek van een halfuur. Je vertelt wat je doet en wat je site moet opleveren. Wij stellen vragen waar je zelf nog niet aan dacht.',
-          },
-          {
-            num: '02',
-            title: 'Voorstel met heldere prijs',
-            description: 'Binnen een paar dagen krijg je een voorstel met scope, planning en prijs. Per onderdeel uitgesplitst, zodat je weet waar je voor betaalt. Geen verrassingen achteraf.',
-          },
-          {
-            num: '03',
-            title: 'Bouwen en afstemmen',
-            description: 'Wij bouwen, jij geeft tussentijds feedback. Een one-pager of abonnement-site staat vaak binnen twee weken in concept. Maatwerk neemt vier tot zes weken in beslag.',
-          },
-          {
-            num: '04',
-            title: 'Live en doorgroeien',
-            description: 'Na livegang stopt het niet. Hosting, technisch beheer en kleine wijzigingen lopen door. Je kunt later uitbreiden met extra pagina\'s of een SEO-traject als je site moet meegroeien.',
-          },
-        ]}
-        watermark={true}
-      />
+      <section class="zzp-proces">
+        <header class="zzp-proces-head">
+          <EyebrowPill variant="highlight">Zo werkt een traject</EyebrowPill>
+          <h2 class="zzp-proces-title">
+            Van eerste mail tot <em>live zzp-website.</em>
+          </h2>
+          <p class="zzp-proces-lead">
+            Geen wekenlange discovery, geen vage offertes. We bespreken kort
+            wat je nodig hebt, sturen een heldere prijs en gaan bouwen. Een
+            one-pager of abonnement-site staat vaak binnen twee tot vier
+            weken live.
+          </p>
+        </header>
+        <div class="zzp-proces-grid">
+          {procesSteps.map((s) => (
+            <article class="zzp-proces-card">
+              <div class="zzp-proces-num">{s.num}</div>
+              <h3 class="zzp-proces-card-title">{s.title}</h3>
+              <p class="zzp-proces-card-body">{s.body}</p>
+            </article>
+          ))}
+        </div>
+        <div class="zzp-proces-cta">
+          <a class="btn-primary" href="/contact/?onderwerp=zzp-website">Plan een kennismaking ↗</a>
+        </div>
+      </section>
 
       <!-- ============================================================
            5. Waar moet een goede zzp-website aan voldoen - 2-koloms
@@ -730,6 +748,73 @@ const faqs = [
   .zzp-link-light { color: var(--accent-highlight, #f5c518); text-decoration: underline; text-underline-offset: 3px; }
   .zzp-link-light:hover { text-decoration-thickness: 2px; }
   .zzp-deal-note { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+
+  /* ============================================================
+     PROCES - donker, centered header, 4 stappen horizontaal.
+     Bewust ANDERE layout dan de Kwaliteits-checks eronder
+     (2-col) zodat ze niet op elkaar lijken.
+     ============================================================ */
+  .zzp-proces {
+    background: var(--surface-dark);
+    background-image: var(--bg-decoration-dark);
+    background-size: var(--backdrop-size);
+    background-repeat: var(--backdrop-repeat);
+    color: var(--text-on-dark, #fff);
+    padding: clamp(3.5rem, 6vw, 5.5rem) var(--gutter, 1.5rem);
+  }
+  .zzp-proces-head {
+    text-align: center;
+    max-width: 56rem;
+    margin: 0 auto 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .zzp-proces-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: #fff;
+  }
+  .zzp-proces-title em { color: var(--accent-highlight); font-style: normal; }
+  .zzp-proces-lead { line-height: 1.65; opacity: 0.88; margin: 0; max-width: 46rem; }
+  .zzp-proces-grid {
+    max-width: var(--container-max, 1200px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+  .zzp-proces-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-lg, 14px);
+    padding: 1.5rem 1.4rem 1.6rem;
+    backdrop-filter: blur(2px);
+  }
+  .zzp-proces-num {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--accent-highlight);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.02em;
+  }
+  .zzp-proces-card-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: 1.05rem;
+    margin: 0 0 0.5rem;
+    color: #fff;
+  }
+  .zzp-proces-card-body { line-height: 1.55; font-size: 0.9rem; margin: 0; color: rgba(255, 255, 255, 0.85); }
+  .zzp-proces-cta { display: flex; justify-content: center; margin-top: clamp(2rem, 4vw, 3rem); }
+  @media (max-width: 1000px) { .zzp-proces-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px)  { .zzp-proces-grid { grid-template-columns: 1fr; } }
 
   /* ============================================================
      KWALITEITS-CHECKS - 2-koloms layout. Titel + alinea links,
