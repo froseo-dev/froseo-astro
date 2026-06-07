@@ -47,6 +47,8 @@ import WebsitesShowcase from '@components/sections/WebsitesShowcase.astro';
 import CalvinNote from '@components/sections/CalvinNote.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
 import Comparison from '@components/sections/Comparison.astro';
+import Testimonial from '@components/sections/Testimonial.astro';
+import Approach from '@components/sections/Approach.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
@@ -391,7 +393,9 @@ const faqs = [
           <div class="zzp-why-grid">
             {whyFroseo.map((u) => (
               <article class="zzp-why-card">
-                <SectionIcon name={u.icon} class="zzp-why-icon" size={44} />
+                <div class="zzp-why-icon-wrap">
+                  <SectionIcon name={u.icon} class="zzp-why-icon" size={28} />
+                </div>
                 <h3 class="zzp-why-card-title">{u.title}</h3>
                 <p class="zzp-why-card-body">{u.body}</p>
               </article>
@@ -399,6 +403,13 @@ const faqs = [
           </div>
         </div>
       </section>
+
+      <!-- ============================================================
+           3b. Testimonial - echte zzp-klant (Auke, Club12) vlak voor
+           de pakketten. Trust-boost op het moment dat de bezoeker
+           naar de prijzen kijkt.
+           ============================================================ -->
+      <Testimonial id="auke-club12" variant="card" />
 
       <!-- ============================================================
            3. Donker blok A - h2 + 3 pakketten + CalvinNote.
@@ -439,6 +450,46 @@ const faqs = [
           titleAccent="en kleine bedrijven."
         />
       </div>
+
+      <!-- ============================================================
+           4b. Zo verloopt een traject - 4 stappen in horizontaal
+           timeline-blok (Approach met watermark). Dekt 'hoe werkt
+           het'-zoekintentie en neemt koopangst weg ('wat gebeurt
+           er nadat ik contact opneem').
+           ============================================================ -->
+      <Approach
+        eyebrow="Zo werkt een traject"
+        titleLine1="Van eerste mail tot"
+        titleAccent="live zzp-website."
+        titleLine3=""
+        desc1="Geen wekenlange discovery, geen vage offertes. We bespreken kort wat je nodig hebt, sturen een heldere prijs en gaan dan bouwen. Korte lijnen, één aanspreekpunt en duidelijke stappen."
+        desc2="De meeste zzp-sites in het abonnement of als one-pager zijn binnen twee tot vier weken live. Maatwerk vraagt meer tijd, maar je weet vooraf wat je krijgt en wanneer."
+        ctaLabel="Plan een kennismaking ↗"
+        ctaHref="/contact/?onderwerp=zzp-website"
+        steps={[
+          {
+            num: '01',
+            title: 'Kennismaken',
+            description: 'Een mailtje, een WhatsApp of een gesprek van een halfuur. Je vertelt wat je doet en wat je site moet opleveren. Wij stellen vragen waar je zelf nog niet aan dacht.',
+          },
+          {
+            num: '02',
+            title: 'Voorstel met heldere prijs',
+            description: 'Binnen een paar dagen krijg je een voorstel met scope, planning en prijs. Per onderdeel uitgesplitst, zodat je weet waar je voor betaalt. Geen verrassingen achteraf.',
+          },
+          {
+            num: '03',
+            title: 'Bouwen en afstemmen',
+            description: 'Wij bouwen, jij geeft tussentijds feedback. Een one-pager of abonnement-site staat vaak binnen twee weken in concept. Maatwerk neemt vier tot zes weken in beslag.',
+          },
+          {
+            num: '04',
+            title: 'Live en doorgroeien',
+            description: 'Na livegang stopt het niet. Hosting, technisch beheer en kleine wijzigingen lopen door. Je kunt later uitbreiden met extra pagina\'s of een SEO-traject als je site moet meegroeien.',
+          },
+        ]}
+        watermark={true}
+      />
 
       <!-- ============================================================
            5. Waar moet een goede zzp-website aan voldoen - 2-koloms
@@ -658,12 +709,26 @@ const faqs = [
     background: var(--surface-card, #fff);
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: var(--radius-lg, 14px);
-    padding: 1.75rem 1.5rem 1.6rem;
+    padding: 1.85rem 1.5rem 1.7rem;
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.06);
     transition: transform 0.18s ease, box-shadow 0.18s ease;
   }
   .zzp-why-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.08); }
-  .zzp-why-icon { color: var(--accent-rare, #b6007b); margin-bottom: 1.15rem; display: block; }
+  /* Icon in een magenta-tinted cirkel zodat 'ie visueel pop't.
+     Wrapper-element omdat SectionIcon zelf een SVG is en achtergrond
+     op SVG met currentColor minder mooi rendert. */
+  .zzp-why-icon-wrap {
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 999px;
+    background: rgba(182, 0, 123, 0.10);
+    color: var(--accent-rare, #b6007b);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.4rem;
+  }
+  .zzp-why-icon { display: block; }
   .zzp-why-card-title {
     font-family: var(--font-display, sans-serif);
     font-weight: 800;
