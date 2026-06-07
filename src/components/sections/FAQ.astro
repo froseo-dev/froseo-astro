@@ -3,7 +3,14 @@ import { getCollection } from 'astro:content';
 import EyebrowPill from '../ui/EyebrowPill.astro';
 import { interpolate } from '@data/site-config';
 
-interface FaqItem { q: string; a: string; }
+interface FaqItem {
+  q: string;
+  a: string;
+  /** Optionele follow-up link onder het antwoord. Bedoeld voor FAQ-items
+      die een verwijzing naar een dieper-uitleg-pagina willen tonen
+      zonder dat de URL in de antwoord-tekst zelf hoeft te staan. */
+  link?: { href: string; label: string };
+}
 
 interface Props {
   eyebrow?: string;
@@ -75,7 +82,14 @@ const faqSchema = {
                     <h3 class="faq-item-question">{interpolate(item.q)}</h3>
                     <span class="ico">+</span>
                   </summary>
-                  <div class="answer">{interpolate(item.a)}</div>
+                  <div class="answer">
+                    {interpolate(item.a)}
+                    {item.link && (
+                      <p class="faq-item-link">
+                        <a href={item.link.href}>{item.link.label}</a>
+                      </p>
+                    )}
+                  </div>
                 </details>
               ))}
             </div>
@@ -85,3 +99,16 @@ const faqSchema = {
     })()}
   </div>
 </section>
+
+<style>
+  /* Optionele follow-up link onder een FAQ-antwoord (zie de zzp-pagina). */
+  .faq-item-link { margin: 0.75rem 0 0; }
+  .faq-item-link a {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--accent-rare, #b6007b);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .faq-item-link a:hover { text-decoration-thickness: 2px; }
+</style>
