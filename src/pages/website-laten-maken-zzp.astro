@@ -218,30 +218,9 @@ const comparison = {
   ],
 };
 
-/* === Vier-koloms keuzehulp: welke vorm past bij welke situatie?
-   Geen rauwe markdown-tabel maar vier gestylede cards in een grid. */
-const choiceCards = [
-  {
-    title: 'One-pager',
-    fit: 'Starters · netwerkverkeer · eenvoudige diensten',
-    body: 'Snel online en professioneel zodra iemand je naam intikt. Genoeg als je vooral van warm verkeer leeft.',
-  },
-  {
-    title: 'Compacte website',
-    fit: 'Meerdere diensten · meer uitleg nodig',
-    body: "Een paar pagina's voor diensten, werkwijze en contact. Voldoende ademruimte om je verhaal te vertellen.",
-  },
-  {
-    title: 'Maatwerk',
-    fit: 'Lokale SEO · meerdere landingspagina\'s · groei via Google',
-    body: 'Bouwen op vindbaarheid. Per dienst of regio een eigen landingspagina, ingericht om in Google te groeien.',
-  },
-  {
-    title: 'Abonnement',
-    fit: 'Geen investering vooraf · alles geregeld per maand',
-    body: 'Hosting, onderhoud en kleine wijzigingen in een vast maandbedrag. Geen losse facturen, geen verrassingen.',
-  },
-];
+/* Keuzehulp-content is direct in de JSX gerendered (zie de browser-
+   mockup-sectie), omdat elke optie een eigen visuele mockup-variant
+   heeft die niet uit een loop is op te bouwen. */
 
 /* === Branche-segments met UITGESCHREVEN ALINEA's (terug van weggeweest).
    Vier categorieen, per categorie een echte alinea + branche-lijstje. */
@@ -249,24 +228,28 @@ const segments = [
   {
     title: 'Vakmensen',
     accent: 'var(--accent-rare, #b6007b)',
+    icon: 'toolbox',
     body: "Werk je als dakdekker, loodgieter of installateur, dan word je gevonden als het ergens misgaat. Iemand zoekt op \"lekkage dak\" of \"dakdekker [plaats]\" en pakt de telefoon. Mobiel-eerst, een klikbaar telefoonnummer, een kort offerteformulier en een fotosectie voor je vakwerk. Lokale SEO-basis vanaf dag één.",
     branches: 'Aannemers, schilders, stukadoors, elektriciens, hoveniers, timmermannen, schoorsteenvegers en tuinmannen.',
   },
   {
     title: 'Gezondheid en coaching',
     accent: 'var(--color-teal, #00807d)',
+    icon: 'shieldCheck',
     body: 'Je verkoopt een aanpak, geen product. Die moet rust en vertrouwen uitstralen. Methode helder, aanbod overzichtelijk en een laagdrempelige intake. Vertrouwen wekken is hier het halve werk.',
     branches: "Personal trainers, coaches, yogastudio's en (massage)therapeuten.",
   },
   {
     title: 'Beauty en lifestyle',
     accent: 'var(--accent-primary, #6901aa)',
+    icon: 'paletteSwatch',
     body: 'Hier beslist iemand binnen seconden, vaak op de telefoon. Strakke portfolio, echte reviews en een boekingsoptie zonder drempel. Snel op mobiel, met visuals die je werk laten spreken.',
     branches: 'Kappers, nagelstylisten, tattoo artists en schoonheidsspecialisten.',
   },
   {
     title: 'Creatief en dienstverlening',
     accent: 'var(--accent-highlight, #f5c518)',
+    icon: 'searchGlass',
     body: "De eerste indruk is je hele pitch. Sterke beeldtaal, duidelijke dienstenpagina's en ruimte voor je verhaal. Flexibel uitbreidbaar met cases of een blog als je site moet meegroeien.",
     branches: 'Fotografen, ontwerpers, consultants en kleine bureaus.',
   },
@@ -522,6 +505,14 @@ const faqs = [
               Geen losse SEO-aanbieding achteraf, geen extra fixes na drie
               maanden. Wel een sterke basis vanaf dag een.
             </p>
+            {/* Visueel callout-blok zodat de linker-kolom niet alleen tekst is. */}
+            <div class="zzp-checks-stat">
+              <div class="zzp-checks-stat-num">5/5</div>
+              <div class="zzp-checks-stat-body">
+                <strong>Google reviews van zzp-klanten.</strong>
+                <span>Tientallen zzp-sites opgeleverd, van vakmensen tot coaches en fotografen.</span>
+              </div>
+            </div>
           </div>
           <ul class="zzp-checks-list">
             {qualityChecks.map((c) => (
@@ -557,9 +548,13 @@ const faqs = [
       </section>
 
       <!-- ============================================================
-           9. Keuzehulp - teal-bg met pattern. 2x2 grid i.p.v. 4x1
-           zodat de cards ademruimte krijgen en de sectie visueel
-           breekt met de cream-secties errond.
+           9. Keuzehulp - teal-bg met pattern. Vier mini browser-
+           mockups (pure CSS) i.p.v. nog een cards-grid. Elke
+           mockup laat visueel zien wat dat type site is:
+             - One-pager: 1 lange pagina, blokken eronder
+             - Compacte: pagina-tabs in de nav, beperkt content
+             - Maatwerk: meer pagina-tabs, 2-koloms content
+             - Abonnement: 1 pagina + "€89/m"-sticker rechtsboven
            ============================================================ -->
       <section class="zzp-choose">
         <div class="zzp-choose-inner">
@@ -569,18 +564,100 @@ const faqs = [
               One-pager of <em>complete zzp-website?</em>
             </h2>
             <p class="zzp-choose-lead">
-              Vier vormen, vier verschillende type zzp'ers. Welke past bij waar
+              Vier vormen, in een oogopslag het verschil. Welke past bij waar
               jij nu staat?
             </p>
           </header>
           <div class="zzp-choose-grid">
-            {choiceCards.map((c) => (
-              <article class="zzp-choose-card">
-                <h3 class="zzp-choose-card-title">{c.title}</h3>
-                <div class="zzp-choose-card-fit">{c.fit}</div>
-                <p class="zzp-choose-card-body">{c.body}</p>
-              </article>
-            ))}
+            {/* One-pager: 1 hero + 3 secties, 1 lange pagina. */}
+            <article class="zzp-choose-item">
+              <div class="zzp-mock zzp-mock--onepager">
+                <div class="zzp-mock-bar">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="zzp-mock-body">
+                  <div class="zzp-mock-block zzp-mock-block--hero"></div>
+                  <div class="zzp-mock-block zzp-mock-block--row"></div>
+                  <div class="zzp-mock-block zzp-mock-block--row"></div>
+                  <div class="zzp-mock-block zzp-mock-block--cta"></div>
+                </div>
+              </div>
+              <h3 class="zzp-choose-card-title">One-pager</h3>
+              <div class="zzp-choose-card-fit">Starters · netwerkverkeer</div>
+              <p class="zzp-choose-card-body">
+                Snel online en professioneel zodra iemand je naam intikt.
+                Genoeg als je vooral van warm verkeer leeft.
+              </p>
+            </article>
+
+            {/* Compacte website: nav met 3 tabs + paginacontent. */}
+            <article class="zzp-choose-item">
+              <div class="zzp-mock zzp-mock--compact">
+                <div class="zzp-mock-bar">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="zzp-mock-body">
+                  <div class="zzp-mock-nav">
+                    <span></span><span></span><span></span>
+                  </div>
+                  <div class="zzp-mock-block zzp-mock-block--hero"></div>
+                  <div class="zzp-mock-block zzp-mock-block--row"></div>
+                </div>
+              </div>
+              <h3 class="zzp-choose-card-title">Compacte website</h3>
+              <div class="zzp-choose-card-fit">Meerdere diensten</div>
+              <p class="zzp-choose-card-body">
+                Een paar pagina's voor diensten, werkwijze en contact.
+                Voldoende ademruimte om je verhaal te vertellen.
+              </p>
+            </article>
+
+            {/* Maatwerk: meer tabs + 2-koloms content (rijker). */}
+            <article class="zzp-choose-item">
+              <div class="zzp-mock zzp-mock--maatwerk">
+                <div class="zzp-mock-bar">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="zzp-mock-body">
+                  <div class="zzp-mock-nav">
+                    <span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <div class="zzp-mock-block zzp-mock-block--hero"></div>
+                  <div class="zzp-mock-cols">
+                    <div class="zzp-mock-block"></div>
+                    <div class="zzp-mock-block"></div>
+                    <div class="zzp-mock-block"></div>
+                  </div>
+                </div>
+              </div>
+              <h3 class="zzp-choose-card-title">Maatwerk</h3>
+              <div class="zzp-choose-card-fit">Lokale SEO · groei via Google</div>
+              <p class="zzp-choose-card-body">
+                Bouwen op vindbaarheid. Per dienst of regio een eigen
+                landingspagina, ingericht om in Google te groeien.
+              </p>
+            </article>
+
+            {/* Abonnement: 1 pagina + sticker "€89/m" rechtsboven. */}
+            <article class="zzp-choose-item">
+              <div class="zzp-mock zzp-mock--abbo">
+                <div class="zzp-mock-bar">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="zzp-mock-body">
+                  <div class="zzp-mock-block zzp-mock-block--hero"></div>
+                  <div class="zzp-mock-block zzp-mock-block--row"></div>
+                  <div class="zzp-mock-block zzp-mock-block--row"></div>
+                </div>
+                <div class="zzp-mock-badge">€89<span>/m</span></div>
+              </div>
+              <h3 class="zzp-choose-card-title">Abonnement</h3>
+              <div class="zzp-choose-card-fit">Geen investering vooraf</div>
+              <p class="zzp-choose-card-body">
+                Hosting, onderhoud en kleine wijzigingen in een vast
+                maandbedrag. Geen losse facturen, geen verrassingen.
+              </p>
+            </article>
           </div>
         </div>
       </section>
@@ -602,6 +679,9 @@ const faqs = [
           <div class="zzp-segments-grid">
             {segments.map((s) => (
               <article class="zzp-segment-card" style={`--seg-accent: ${s.accent}`}>
+                <div class="zzp-segment-icon-wrap">
+                  <SectionIcon name={s.icon} class="zzp-segment-icon" size={26} />
+                </div>
                 <h3>{s.title}</h3>
                 <p class="zzp-segment-body">{s.body}</p>
                 <p class="zzp-segment-branches"><strong>Bijvoorbeeld:</strong> {s.branches}</p>
@@ -885,6 +965,42 @@ const faqs = [
     line-height: 1.55;
     color: var(--text-muted, #555);
   }
+  /* Visueel stat-blok onder de linkse tekst zodat de kolom niet zo
+     leeg aanvoelt. */
+  .zzp-checks-stat {
+    margin-top: 0.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-left: 4px solid var(--accent-rare, #b6007b);
+    border-radius: var(--radius-lg, 14px);
+    padding: 1rem 1.2rem;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.06);
+  }
+  .zzp-checks-stat-num {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--accent-rare, #b6007b);
+    line-height: 1;
+  }
+  .zzp-checks-stat-body strong {
+    display: block;
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--text-primary, #1a1a1a);
+    margin-bottom: 0.2rem;
+  }
+  .zzp-checks-stat-body span {
+    display: block;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-muted, #555);
+  }
   @media (max-width: 860px) {
     .zzp-checks-inner { grid-template-columns: 1fr; }
   }
@@ -940,42 +1056,149 @@ const faqs = [
     margin: 0;
     color: #fff;
   }
-  .zzp-choose-title em { color: var(--color-teal-soft, #6EE3DE); font-style: normal; }
+  /* Geel accent op teal-bg = hoge contrast. Teal-soft op teal was te
+     low-contrast ('groen op groen'). */
+  .zzp-choose-title em { color: var(--accent-highlight, #f5c518); font-style: normal; }
   .zzp-choose-lead { line-height: 1.6; color: rgba(255, 255, 255, 0.88); margin: 0; }
   .zzp-choose-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
   }
-  .zzp-choose-card {
-    background: var(--surface-card, #fff);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-top: 4px solid var(--color-teal-strong, #006461);
-    border-radius: var(--radius-lg, 14px);
-    padding: 1.6rem 1.5rem;
+  .zzp-choose-item {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
-    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.18);
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    gap: 0.75rem;
+    color: #fff;
   }
-  .zzp-choose-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.22); }
   .zzp-choose-card-title {
     font-family: var(--font-display, sans-serif);
     font-weight: 800;
     font-size: 1.1rem;
-    margin: 0;
-    color: var(--text-primary, #1a1a1a);
+    margin: 0.5rem 0 0;
+    color: #fff;
   }
   .zzp-choose-card-fit {
     font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-teal-strong, #006461);
+    letter-spacing: 0.06em;
+    color: var(--accent-highlight, #f5c518);
+    font-weight: 600;
   }
-  .zzp-choose-card-body { line-height: 1.55; font-size: 0.92rem; color: var(--text-primary, #1a1a1a); margin: 0; }
-  @media (max-width: 720px) { .zzp-choose-grid { grid-template-columns: 1fr; } }
+  .zzp-choose-card-body { line-height: 1.55; font-size: 0.88rem; color: rgba(255, 255, 255, 0.88); margin: 0; }
+
+  /* ============================================================
+     MINI BROWSER-MOCKUPS - pure CSS, geen images. Geeft elke
+     keuze-optie een eigen visuele 'preview' zodat je in een
+     oogopslag het verschil ziet (1 lange pagina vs nav met tabs
+     vs rijke architectuur vs sticker-badge).
+     ============================================================ */
+  .zzp-mock {
+    aspect-ratio: 16 / 11;
+    background: #14002a;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .zzp-choose-item:hover .zzp-mock {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  }
+  .zzp-mock-bar {
+    height: 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 8px;
+    flex-shrink: 0;
+  }
+  .zzp-mock-bar span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+  }
+  .zzp-mock-bar span:nth-child(1) { background: rgba(255, 92, 92, 0.55); }
+  .zzp-mock-bar span:nth-child(2) { background: rgba(255, 189, 68, 0.55); }
+  .zzp-mock-bar span:nth-child(3) { background: rgba(110, 227, 222, 0.55); }
+  .zzp-mock-body {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .zzp-mock-block {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 3px;
+  }
+  .zzp-mock-block--hero { height: 30%; background: rgba(245, 197, 24, 0.35); }
+  .zzp-mock-block--row { height: 14px; }
+  .zzp-mock-block--cta {
+    height: 14px;
+    width: 50%;
+    background: var(--accent-rare, #b6007b);
+    margin-top: 2px;
+  }
+  /* Nav-strip met page-tabs (compact + maatwerk) */
+  .zzp-mock-nav {
+    display: flex;
+    gap: 4px;
+    height: 8px;
+  }
+  .zzp-mock-nav span {
+    flex: 0 0 18%;
+    background: rgba(245, 197, 24, 0.5);
+    border-radius: 2px;
+  }
+  .zzp-mock-nav span:first-child {
+    background: var(--accent-highlight, #f5c518);
+    flex: 0 0 22%;
+  }
+  /* Twee-koloms content blokken (maatwerk) */
+  .zzp-mock-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+    flex: 1;
+  }
+  .zzp-mock-cols .zzp-mock-block { height: 100%; }
+  /* Abonnement: corner sticker met prijs */
+  .zzp-mock-badge {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    background: var(--accent-highlight, #f5c518);
+    color: #1a0033;
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: 0.95rem;
+    padding: 0.35rem 0.55rem;
+    border-radius: 6px;
+    transform: rotate(8deg);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.25);
+    line-height: 1;
+  }
+  .zzp-mock-badge span {
+    font-size: 0.65rem;
+    font-weight: 600;
+    opacity: 0.75;
+  }
+  @media (max-width: 1000px) {
+    .zzp-choose-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .zzp-choose-grid { grid-template-columns: 1fr; }
+  }
 
   /* ============================================================
      BRANCHES (ongewijzigd) - 4 cards op cream met accent-stripe.
@@ -1020,8 +1243,22 @@ const faqs = [
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.06);
     transition: transform 0.18s ease, box-shadow 0.18s ease;
   }
-  .zzp-segment-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.08); }
+  .zzp-segment-card:hover { transform: translate(-3px, -3px); box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.10); }
   .zzp-segment-card > * { margin: 0; padding: 0; text-indent: 0; }
+  /* Icon in een cirkel met de seg-accent kleur. Geeft elke branche-card
+     een eigen visueel karakter en breekt de monotonie van plain-text-cards. */
+  .zzp-segment-icon-wrap {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--seg-accent) 14%, transparent);
+    color: var(--seg-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.85rem;
+  }
+  .zzp-segment-icon { display: block; }
   .zzp-segment-card h3 {
     font-family: var(--font-display, sans-serif);
     font-weight: 800;
