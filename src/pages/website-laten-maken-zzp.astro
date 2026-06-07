@@ -19,16 +19,19 @@
  *   1. Hero (h1)
  *   2. LogosTicker
  *   3. Waarom Froseo (4 icoon-cards)
- *   4. Donker blok A: 3 pakketten + CalvinNote
- *   5. Wat kost een website laten maken als zzp'er (prijs-cards + uitleg)
- *   6. Showcase + twee uitgelichte mini-cases
- *   7. Donker blok B: Wat we standaard regelen + Wanneer waard
- *   8. Waar moet een goede zzp-website aan voldoen (5 icoon-cards)
- *   9. Comparison: zelf maken of laten maken
- *  10. One-pager of complete zzp-website (4-koloms vergelijking)
- *  11. Branches met uitgeschreven alinea's
- *  12. BetterCallCalvin
- *  13. FAQ
+ *   4. Donker blok: 3 pakketten + CalvinNote
+ *   5. Showcase
+ *   6. Waar moet een goede zzp-website aan voldoen (5 icoon-cards)
+ *   7. Donker blok: Wanneer is het de investering waard?
+ *   8. Comparison: zelf maken of laten maken
+ *   9. One-pager of complete zzp-website (4-koloms keuzehulp)
+ *  10. Branches met uitgeschreven alinea's
+ *  11. BetterCallCalvin
+ *  12. FAQ
+ *
+ * Eerder waren er drie secties die dubbel-op zaten met andere blokken
+ * (Wat-kost-cards = pakketten, Twee-uitgelichte-cases = showcase,
+ * Wat-we-regelen = Waarom Froseo). Die zijn verwijderd.
  */
 
 import BaseLayout from '@layouts/BaseLayout.astro';
@@ -139,68 +142,6 @@ const priceOptions = [
       'Klaar voor uitbreiding naar SEO-traject',
     ],
     cta: { label: 'Plan een kennismaking', href: '/contact/?onderwerp=zzp-maatwerk' },
-  },
-];
-
-/* === Kost-blok: drie compacte prijs-kaarten met korte tagline.
-   Niet exact gelijk aan de pakketten erboven, hier draait het om
-   "wat kost het" als koopgids-context, niet om de productverkoop. */
-const costCards = [
-  {
-    label: 'Website-abonnement',
-    price: 'vanaf €89/maand',
-    body: 'Geen investering vooraf. Hosting, technisch beheer en kleine wijzigingen zitten in het maandbedrag.',
-  },
-  {
-    label: 'One-pager',
-    price: 'vanaf €499',
-    body: 'Compact en snel. Professioneel zodra iemand je naam googelt of een netwerkcontact je opzoekt.',
-  },
-  {
-    label: 'Maatwerk-website',
-    price: "vanaf €999",
-    body: "Meerdere pagina's, sterkere structuur en een lokale SEO-basis om op te groeien.",
-  },
-];
-
-/* === Uitgelichte mini-cases bij de showcase. Twee zzp-relevante
-   voorbeelden met 1-2 zinnen context. */
-const featuredCases = [
-  {
-    name: 'Steunder',
-    role: 'One-pager voor warm en netwerkverkeer',
-    body: "Strakke one-pager die vertrouwen moest wekken bij netwerk- en warm verkeer. Ideaal voor zzp'ers die geen grote site nodig hebben.",
-  },
-  {
-    name: 'Prime Performance',
-    role: 'Astro-site voor een health-coach',
-    body: "Snelle Astro-site binnen Online Plus voor een health-coach. Focus op snelheid en een heldere mobiele ervaring zodat een proefles snel te boeken is.",
-  },
-];
-
-/* === Wat we standaard regelen bij elke zzp-site. Claim over Google
-   in lokaal-card is bewust subtiel ("we leggen een sterke lokale
-   SEO-basis"), geen rang-belofte. */
-const usps = [
-  {
-    icon: 'shieldCheck',
-    title: 'Google Proof opgeleverd',
-    body: "Elke zzp-site wordt Google Proof opgeleverd, klaar om lokaal gevonden te worden. Goede techniek, snelle pagina's en de juiste structuur zitten er vanaf de basis in.",
-  },
-  {
-    icon: 'locationPin',
-    title: 'Lokale SEO-basis',
-    body: "Als zzp'er werk je vaak in je eigen regio. We leggen een sterke lokale SEO-basis zodat je in jouw regio en branche beter gevonden wordt.",
-  },
-  {
-    icon: 'paletteSwatch',
-    title: 'Huisstijl en design',
-    body: 'Je logo en huisstijl horen bij je online identiteit. Hulp nodig met het ontwerp? We denken graag mee.',
-  },
-  {
-    icon: 'toolbox',
-    title: 'Full-service onderhoud',
-    body: 'Bedrijfsmail, hosting, technisch beheer en website onderhoud regelen we vanaf één plek. Jij blijft je werk doen, wij houden je site scherp.',
   },
 ];
 
@@ -488,51 +429,7 @@ const faqs = [
       </section>
 
       <!-- ============================================================
-           4. Wat kost een zzp-website? - prijs-cards + uitleg.
-           Koopgids-blok dat de pakket-sectie inhoudelijk verdiept.
-           ============================================================ -->
-      <section class="zzp-cost">
-        <div class="zzp-cost-inner">
-          <header class="zzp-cost-head">
-            <EyebrowPill variant="rare">Prijzen op een rij</EyebrowPill>
-            <h2 class="zzp-cost-title">
-              Wat kost een website laten maken als <em>zzp'er?</em>
-            </h2>
-            <p class="zzp-cost-lead">
-              Een eerlijk antwoord: dat hangt af van wat je site moet doen. Maar
-              je hoeft niet in het ongewisse te blijven. Hieronder de drie
-              prijspunten zoals we ze in de praktijk hanteren.
-            </p>
-          </header>
-
-          <div class="zzp-cost-grid">
-            {costCards.map((c) => (
-              <article class="zzp-cost-card">
-                <div class="zzp-cost-label">{c.label}</div>
-                <div class="zzp-cost-price">{c.price}</div>
-                <p class="zzp-cost-body">{c.body}</p>
-              </article>
-            ))}
-          </div>
-
-          <div class="zzp-cost-after">
-            <p>
-              Prijzen verschillen om logische redenen. Het aantal pagina's, of
-              je teksten zelf aanlevert of niet, hoe snel de site moet laden,
-              welke functionaliteit erbij hoort en hoe het <a href="/website-onderhoud/">website onderhoud</a> achteraf
-              wordt ingericht. In een vrijblijvend gesprek krijg je vooraf een
-              heldere prijs, zonder verrassingen achteraf.
-            </p>
-            <div class="zzp-cost-cta">
-              <a class="btn-primary" href="/contact/?onderwerp=zzp-website-advies">Vraag een prijsindicatie aan ↗</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================================
-           5. CASES (showcase) - direct gevolgd door twee uitgelichte
-           zzp-mini-cases voor extra context.
+           4. CASES (showcase).
            ============================================================ -->
       <div id="cases">
         <WebsitesShowcase
@@ -543,72 +440,10 @@ const faqs = [
         />
       </div>
 
-      <section class="zzp-featured">
-        <div class="zzp-featured-inner">
-          <header class="zzp-featured-head">
-            <EyebrowPill variant="rare">Twee uitgelichte zzp-sites</EyebrowPill>
-          </header>
-          <div class="zzp-featured-grid">
-            {featuredCases.map((c) => (
-              <article class="zzp-featured-card">
-                <div class="zzp-featured-name">{c.name}</div>
-                <div class="zzp-featured-role">{c.role}</div>
-                <p class="zzp-featured-body">{c.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <!-- ============================================================
-           6. Donker blok B - 'Wat we standaard regelen' (4 cards) +
-           'Wanneer is het de investering waard?' (checks).
-           ============================================================ -->
-      <section class="zzp-care">
-        <div class="zzp-care-inner">
-          <header class="zzp-care-head">
-            <EyebrowPill variant="highlight">Wat we regelen</EyebrowPill>
-            <h2 class="zzp-care-title">
-              Wat we voor zzp'ers <em>standaard regelen.</em>
-            </h2>
-          </header>
-          <div class="zzp-care-grid">
-            {usps.map((u) => (
-              <article class="zzp-care-card">
-                <SectionIcon name={u.icon} class="zzp-care-icon" size={44} />
-                <h3 class="zzp-care-card-title">{u.title}</h3>
-                <p class="zzp-care-card-body">{u.body}</p>
-              </article>
-            ))}
-          </div>
-
-          <div class="zzp-care-divider"></div>
-
-          <header class="zzp-care-sub">
-            <EyebrowPill variant="rare">Wanneer wel, wanneer niet</EyebrowPill>
-            <h2 class="zzp-care-sub-title">
-              Wanneer is een zzp-website de <em>investering waard?</em>
-            </h2>
-          </header>
-          <ul class="zzp-care-list">
-            {investmentWorth.map((item, i) => (
-              <li>
-                <span class="zzp-care-num">{String(i + 1).padStart(2, '0')}</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-          <p class="zzp-care-after">
-            Voor sommige zzp'ers is een digitaal visitekaartje al genoeg. Voor anderen is de website het belangrijkste verkoopkanaal. Daarom bouwen we niet één standaardpakket voor iedereen, maar kijken we naar wat jouw bedrijf nodig heeft.
-          </p>
-          <div class="zzp-care-cta">
-            <a class="btn-primary" href="/contact/?onderwerp=zzp-website-advies">Plan een vrijblijvend gesprek ↗</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================================
-           7. Waar moet een goede zzp-website aan voldoen - 5 icoon-cards.
+           5. Waar moet een goede zzp-website aan voldoen - 5 icoon-cards.
+           Koopgids-blok: niet wat WIJ doen, maar waar een goede zzp-site
+           aan voldoet.
            ============================================================ -->
       <section class="zzp-checks">
         <div class="zzp-checks-inner">
@@ -636,7 +471,43 @@ const faqs = [
       </section>
 
       <!-- ============================================================
-           8. COMPARISON: zelf maken of laten maken.
+           6. Wanneer is een zzp-website de investering waard?
+           Donker contrast-blok met genummerde lijst. Eerder zat dit
+           als sub-blok onder 'Wat we standaard regelen', maar dat
+           overlapte met 'Waarom Froseo'. Nu standalone zodat het
+           koopvraag-karakter helder is.
+           ============================================================ -->
+      <section class="zzp-worth">
+        <div class="zzp-worth-inner">
+          <header class="zzp-worth-head">
+            <EyebrowPill variant="highlight">Wanneer wel, wanneer niet</EyebrowPill>
+            <h2 class="zzp-worth-title">
+              Wanneer is een zzp-website de <em>investering waard?</em>
+            </h2>
+            <p class="zzp-worth-lead">
+              Niet elke zzp'er heeft hetzelfde nodig. Zes situaties waarin een
+              professionele site zich vrijwel altijd terugverdient.
+            </p>
+          </header>
+          <ul class="zzp-worth-list">
+            {investmentWorth.map((item, i) => (
+              <li>
+                <span class="zzp-worth-num">{String(i + 1).padStart(2, '0')}</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="zzp-worth-after">
+            Voor sommige zzp'ers is een digitaal visitekaartje al genoeg. Voor anderen is de website het belangrijkste verkoopkanaal. Daarom bouwen we niet één standaardpakket voor iedereen, maar kijken we naar wat jouw bedrijf nodig heeft.
+          </p>
+          <div class="zzp-worth-cta">
+            <a class="btn-primary" href="/contact/?onderwerp=zzp-website-advies">Plan een vrijblijvend gesprek ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           7. COMPARISON: zelf maken of laten maken.
            ============================================================ -->
       <Comparison
         title={comparison.title}
@@ -778,20 +649,20 @@ const faqs = [
     background: var(--surface-card, #fff);
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: var(--radius-lg, 14px);
-    padding: 1.5rem;
+    padding: 1.75rem 1.5rem 1.6rem;
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.06);
     transition: transform 0.18s ease, box-shadow 0.18s ease;
   }
   .zzp-why-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.08); }
-  .zzp-why-icon { color: var(--accent-rare, #b6007b); margin-bottom: 0.6rem; }
+  .zzp-why-icon { color: var(--accent-rare, #b6007b); margin-bottom: 1.15rem; display: block; }
   .zzp-why-card-title {
     font-family: var(--font-display, sans-serif);
     font-weight: 800;
     font-size: 1.05rem;
-    margin: 0 0 0.4rem;
+    margin: 0 0 0.7rem;
     color: var(--text-primary, #1a1a1a);
   }
-  .zzp-why-card-body { line-height: 1.55; font-size: 0.92rem; margin: 0; color: var(--text-primary, #1a1a1a); }
+  .zzp-why-card-body { line-height: 1.6; font-size: 0.92rem; margin: 0; color: var(--text-primary, #1a1a1a); }
   @media (max-width: 1000px) { .zzp-why-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 540px)  { .zzp-why-grid { grid-template-columns: 1fr; } }
 
@@ -832,99 +703,11 @@ const faqs = [
   .zzp-deal-note { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
 
   /* ============================================================
-     KOST-blok - cream met drie compacte prijs-cards.
+     WANNEER WAARD - donker contrast-blok, genummerde lijst.
+     Standalone i.p.v. sub-blok onder 'Wat we standaard regelen'
+     (die sectie is verwijderd wegens overlap met Waarom Froseo).
      ============================================================ */
-  .zzp-cost { padding: clamp(3rem, 5vw, 4.5rem) var(--gutter, 1.5rem); }
-  .zzp-cost-inner { max-width: var(--container-max, 1100px); margin: 0 auto; }
-  .zzp-cost-head {
-    text-align: center;
-    max-width: 56rem;
-    margin: 0 auto 2.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.85rem;
-  }
-  .zzp-cost-title {
-    font-family: var(--font-display, sans-serif);
-    font-weight: 800;
-    font-size: clamp(1.9rem, 3.5vw, 2.7rem);
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    margin: 0;
-  }
-  .zzp-cost-title em { color: var(--accent-rare, #b6007b); font-style: normal; }
-  .zzp-cost-lead { line-height: 1.6; color: var(--text-muted, #555); margin: 0; }
-  .zzp-cost-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-    margin-bottom: 2rem;
-  }
-  .zzp-cost-card {
-    background: var(--surface-card, #fff);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: var(--radius-lg, 14px);
-    padding: 1.5rem 1.4rem;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.06);
-  }
-  .zzp-cost-label {
-    font-family: var(--font-display, sans-serif);
-    font-weight: 800;
-    font-size: 1rem;
-    color: var(--text-primary, #1a1a1a);
-  }
-  .zzp-cost-price {
-    font-family: var(--font-display, sans-serif);
-    font-weight: 800;
-    font-size: 1.3rem;
-    color: var(--accent-rare, #b6007b);
-    margin: 0.25rem 0 0.65rem;
-  }
-  .zzp-cost-body { font-size: 0.92rem; line-height: 1.55; color: var(--text-primary, #1a1a1a); margin: 0; }
-  .zzp-cost-after {
-    max-width: 48rem;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .zzp-cost-after p { line-height: 1.65; color: var(--text-muted, #555); margin: 0 0 1.25rem; }
-  .zzp-cost-after a { color: var(--accent-rare, #b6007b); text-decoration: underline; text-underline-offset: 3px; }
-  .zzp-cost-cta { display: flex; justify-content: center; }
-  @media (max-width: 900px) { .zzp-cost-grid { grid-template-columns: 1fr; } }
-
-  /* ============================================================
-     FEATURED mini-cases na de showcase.
-     ============================================================ */
-  .zzp-featured { padding: 0 var(--gutter, 1.5rem) clamp(3rem, 5vw, 4.5rem); }
-  .zzp-featured-inner { max-width: var(--container-max, 1100px); margin: 0 auto; }
-  .zzp-featured-head { text-align: center; margin-bottom: 1.5rem; }
-  .zzp-featured-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-  }
-  .zzp-featured-card {
-    background: var(--surface-card, #fff);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-left: 4px solid var(--accent-rare, #b6007b);
-    border-radius: var(--radius-lg, 14px);
-    padding: 1.25rem 1.4rem;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.06);
-  }
-  .zzp-featured-name {
-    font-family: var(--font-display, sans-serif);
-    font-weight: 800;
-    font-size: 1.1rem;
-    color: var(--text-primary, #1a1a1a);
-  }
-  .zzp-featured-role { font-size: 0.85rem; color: var(--text-muted, #555); margin-bottom: 0.5rem; }
-  .zzp-featured-body { line-height: 1.55; font-size: 0.95rem; color: var(--text-primary, #1a1a1a); margin: 0; }
-  @media (max-width: 700px) { .zzp-featured-grid { grid-template-columns: 1fr; } }
-
-  /* ============================================================
-     DONKER BLOK B (ongewijzigd) - 'Wat we standaard regelen'.
-     ============================================================ */
-  .zzp-care {
+  .zzp-worth {
     background: var(--surface-dark);
     background-image: var(--bg-decoration-dark);
     background-size: var(--backdrop-size);
@@ -932,19 +715,17 @@ const faqs = [
     color: var(--text-on-dark, #fff);
     padding: clamp(3.5rem, 6vw, 5.5rem) var(--gutter, 1.5rem);
   }
-  .zzp-care-inner { max-width: var(--container-max, 1200px); margin: 0 auto; }
-  .zzp-care-head,
-  .zzp-care-sub {
+  .zzp-worth-inner { max-width: var(--container-max, 900px); margin: 0 auto; }
+  .zzp-worth-head {
     text-align: center;
     max-width: 56rem;
-    margin: 0 auto 2.5rem;
+    margin: 0 auto 2.25rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.85rem;
   }
-  .zzp-care-title,
-  .zzp-care-sub-title {
+  .zzp-worth-title {
     font-family: var(--font-display, sans-serif);
     font-weight: 800;
     font-size: clamp(1.9rem, 3.6vw, 2.7rem);
@@ -953,57 +734,32 @@ const faqs = [
     margin: 0;
     color: #fff;
   }
-  .zzp-care-title em { color: var(--accent-highlight); font-style: normal; }
-  .zzp-care-sub-title em { color: var(--accent-rare, #b6007b); font-style: normal; }
-  .zzp-care-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
-  }
-  .zzp-care-card {
-    background: var(--surface-page, #faf6f0);
-    border: var(--border, 1px solid #1a0033);
-    border-radius: var(--radius-lg, 14px);
-    padding: 1.5rem;
-    color: var(--text-primary, #1a1a1a);
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-  }
-  .zzp-care-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.4); }
-  .zzp-care-icon { color: var(--accent-rare, #b6007b); margin-bottom: 0.75rem; }
-  .zzp-care-card-title { font-family: var(--font-display, sans-serif); font-weight: 800; font-size: 1.05rem; margin: 0 0 0.5rem; color: var(--text-primary, #1a1a1a); }
-  .zzp-care-card-body { line-height: 1.55; font-size: 0.92rem; margin: 0; }
-  .zzp-care-divider {
-    width: 60px; height: 1px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: clamp(3rem, 5vw, 4rem) auto;
-  }
-  .zzp-care-list {
+  .zzp-worth-title em { color: var(--accent-rare, #b6007b); font-style: normal; }
+  .zzp-worth-lead { line-height: 1.65; opacity: 0.85; margin: 0; max-width: 44rem; }
+  .zzp-worth-list {
     list-style: none; padding: 0;
-    margin: 0 auto 1.5rem;
+    margin: 0 auto 1.75rem;
     max-width: 44rem;
     display: grid;
     gap: 0.85rem;
     width: 100%;
   }
-  .zzp-care-list li {
+  .zzp-worth-list li {
     display: grid;
     grid-template-columns: 3rem 1fr;
     gap: 0.85rem;
     align-items: start;
     line-height: 1.55;
   }
-  .zzp-care-num {
+  .zzp-worth-num {
     font-family: var(--font-display, sans-serif);
     font-weight: 800;
     font-size: 1.1rem;
     color: var(--accent-highlight);
     letter-spacing: 0.02em;
   }
-  .zzp-care-after { text-align: center; line-height: 1.65; opacity: 0.85; max-width: 44rem; margin: 0 auto 1.75rem; }
-  .zzp-care-cta { display: flex; justify-content: center; }
-  @media (max-width: 1000px) { .zzp-care-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 540px)  { .zzp-care-grid { grid-template-columns: 1fr; } }
+  .zzp-worth-after { text-align: center; line-height: 1.65; opacity: 0.85; max-width: 44rem; margin: 0 auto 1.75rem; }
+  .zzp-worth-cta { display: flex; justify-content: center; }
 
   /* ============================================================
      KWALITEITS-CHECKS - 5 icoon-cards.
