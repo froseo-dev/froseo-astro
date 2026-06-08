@@ -44,9 +44,9 @@ import studioContenidoBefore from '@assets/before-after/studio-contenido-before.
 import studioContenidoAfter from '@assets/before-after/studio-contenido-after.webp';
 import froseoLogoWit from '@assets/brand/froseo-logo-wit.webp';
 
-const pageTitle = 'Website laten maken Amersfoort | Webdesign Amersfoort | Froseo';
+const pageTitle = 'Website laten maken Amersfoort | Webdesign + SEO | Froseo';
 const pageDesc =
-  `Website laten maken in Amersfoort: maatwerk WordPress of Astro, of een website abonnement vanaf ${pricing.abboFromInline}. Webdesign vanuit Utrecht voor Amersfoortse ondernemers. Werk gedaan voor Club12 en Studio Contenido.`;
+  `Website laten maken in Amersfoort? Froseo bouwt snelle websites voor zzp'ers en MKB. Kies voor maatwerk, one-pager of website abonnement vanaf ${pricing.abboFromShort}.`;
 
 const allCases = await getCollection('cases', ({ data }) => data.published !== false);
 const showcaseSlugs = [
@@ -69,8 +69,8 @@ const usps = [
   },
   {
     icon: 'searchGlass',
-    title: 'Vindbaarheid zit erin gebakken',
-    body: 'Structuur, schemas, snelheid en interne links zitten al in het werk voor de site live gaat. Geen losse SEO-aanbieding achteraf. Webdesign en SEO horen bij elkaar.',
+    title: 'SEO-basis zit erin gebakken',
+    body: 'Structuur, schemas, snelheid en interne links zitten al in het werk voor de site live gaat. Wil je daarna actief verder met SEO, dan doen we dat in een apart traject. De basis is hoe dan ook op orde.',
   },
   {
     icon: 'paletteSwatch',
@@ -125,12 +125,12 @@ const faqs = [
     a: `Voor de meeste lokale ondernemers is het website abonnement de beste route: vanaf ${pricing.abboFromInline}. Een complete site inclusief hosting, technisch beheer en kleine wijzigingen, zonder dat je in een keer drie- tot vijfduizend euro neerlegt. Maatwerk loopt doorgaans tussen 1.500 en 6.000 euro, afhankelijk van omvang en functionaliteit. Bij een vrijblijvende kennismaking maken we een concrete inschatting voor jouw situatie.`,
   },
   {
-    q: 'Doen jullie ook webdesign Amersfoort als losse opdracht?',
-    a: 'Ja, voor wie alleen een nieuw ontwerp wil zonder vast pakket eromheen kan dat. We leveren dan het visuele ontwerp en bouwen het uit, en je kunt hosting en beheer zelf regelen of via ons laten lopen. Bij webdesign kijken we standaard ook naar techniek, snelheid, SEO-basis en de manier waarop bezoekers naar contact worden gestuurd. Mooi ontwerp alleen is niet genoeg.',
+    q: 'Doen jullie ook losse webdesign-opdrachten in Amersfoort?',
+    a: 'Ja, voor wie alleen een nieuw ontwerp wil zonder vast pakket eromheen kan dat. We leveren het visuele ontwerp en bouwen het uit, en je kunt hosting en beheer zelf regelen of via ons laten lopen. Bij webdesign in Amersfoort kijken we standaard ook naar techniek, snelheid, SEO-basis en de manier waarop bezoekers naar contact worden gestuurd. Mooi ontwerp alleen is niet genoeg.',
   },
   {
-    q: 'Bouwen jullie ook WordPress-websites?',
-    a: 'Ja, WordPress is voor veel ondernemers het beste platform. Je kunt zelf pagina\'s aanpassen, blogs publiceren en met plug-ins functionaliteit toevoegen zonder dat je per kleine wijziging je bureau hoeft te bellen. We bouwen schoon, zonder zware page-builders, en met aandacht voor snelheid en SEO vanaf de eerste regel code.',
+    q: 'Bouwen jullie ook een WordPress website laten maken Amersfoort?',
+    a: "Ja, WordPress is voor veel Amersfoortse ondernemers het beste platform. Je kunt zelf pagina's aanpassen, blogs publiceren en met plug-ins functionaliteit toevoegen zonder dat je per kleine wijziging je bureau hoeft te bellen. We bouwen schoon, zonder zware page-builders, en met aandacht voor snelheid en SEO vanaf de eerste regel code.",
   },
   {
     q: 'Hebben jullie een kantoor in Amersfoort?',
@@ -158,7 +158,23 @@ const faqs = [
   },
   {
     q: 'Heeft het zin om mijn huidige site op te frissen?',
-    a: 'Vaak wel. Als de techniek nog meekan is een gerichte opknapbeurt sneller en goedkoper dan een complete rebuild. Daar hebben we een aparte pagina voor met modulaire pakketten, zie /website-opfrissen. Twijfel je tussen opfrissen of vervangen? Stuur de URL en we kijken er een halfuur naar en mailen terug wat we zouden adviseren.',
+    a: 'Vaak wel. Als de techniek nog meekan is een gerichte opknapbeurt sneller en goedkoper dan een complete rebuild. Daar hebben we een aparte pagina voor met modulaire pakketten. Twijfel je tussen opfrissen of vervangen? Stuur de URL en we kijken er een halfuur naar en mailen terug wat we zouden adviseren.',
+    link: { href: '/website-opfrissen/', label: 'Bekijk website opfrissen ↗' },
+  },
+  /* === Nieuwe longtail-FAQs voor SEO. */
+  {
+    q: 'Is een lokale webdesigner uit Amersfoort beter?',
+    a: 'Niet per se. Lokaal werken zorgt vooral voor kortere lijnen, snel kunnen langskomen en het herkennen van de markt waar jij in zit. Dat tweede regelen we vanuit ons kantoor in Utrecht ook: we werken al jaren voor Amersfoortse klanten en zijn in zeventien minuten bij je op de zaak. Belangrijker dan locatie: een bureau dat je daadwerkelijk te spreken krijgt, dat snapt wat een lokale dienstverlener nodig heeft en dat de techniek beheerst.',
+  },
+  {
+    q: 'Kan ik mijn bestaande website laten vernieuwen?',
+    a: 'Ja, dat doen we regelmatig voor Amersfoortse klanten. Soms is een complete rebuild slim, soms volstaat een gerichte opfrisbeurt op ontwerp en techniek. Studio Contenido is daar een goed voorbeeld van: hun site werkte nog, maar paste niet meer bij het merk. We hebben gericht opgefrist zonder alles overhoop te halen. Stuur je URL, dan kijken we mee en geven we eerlijk advies.',
+    link: { href: '/website-opfrissen/', label: 'Bekijk website opfrissen ↗' },
+  },
+  {
+    q: "Maken jullie ook websites voor zzp'ers in Amersfoort?",
+    a: "Ja. Voor zzp'ers in Amersfoort en omgeving werkt vaak een one-pager of het website abonnement het best. Snel professioneel online zonder grote investering vooraf, en met ruimte om later uit te breiden als je werk binnenstroomt. Op onze zzp-pagina staat dieper uitgelegd wat we voor zelfstandigen doen.",
+    link: { href: '/website-laten-maken-zzp/', label: 'Bekijk website laten maken zzp ↗' },
   },
 ];
 ---
@@ -209,8 +225,8 @@ const faqs = [
           <div class="service-hero-media">
             <Image
               src={heroMockup}
-              alt="Webdesign Amersfoort door Froseo: Club12 op desktop, Studio Contenido op mobiel"
-              title="Webdesign Amersfoort door Froseo: Club12 op desktop, Studio Contenido op mobiel"
+              alt="Website laten maken in Amersfoort door Froseo: Club12 op desktop, Studio Contenido op mobiel"
+              title="Website laten maken in Amersfoort door Froseo: Club12 op desktop, Studio Contenido op mobiel"
               class="service-hero-img"
               widths={[640, 960, 1280, 1600]}
               sizes="(max-width: 1024px) 100vw, 640px"
@@ -225,7 +241,7 @@ const faqs = [
 
       <PackagePaths
         eyebrow="Drie opties"
-        title='Drie routes voor je nieuwe <em>website in Amersfoort.</em>'
+        title='Website laten maken in Amersfoort: <em>3 mogelijkheden.</em>'
         lead="Voor de meeste Amersfoortse ondernemers is het website abonnement de zachtste landing. Snel professioneel online, vaste maandprijs en zonder dat je in een keer een groot bedrag neerlegt. Een one-pager of maatwerk werkt voor wie iets specifieks nodig heeft."
         packages={[
           {
@@ -276,6 +292,20 @@ const faqs = [
         ]}
       />
 
+      {/* Compacte SEO-intro tussen pakketten en showcase. Eén kolom,
+          geen kaarten. Werkt natuurlijk de hoofd-zoekvarianten in
+          plus de lokale wijken. */}
+      <section class="amf-intro">
+        <div class="amf-intro-inner">
+          <p>
+            Een <strong>website laten maken in Amersfoort</strong> betekent voor ons: een site die mobiel snel laadt, in Google goed gevonden wordt en bezoekers daadwerkelijk over de streep trekt. We bouwen voor ondernemers in heel Amersfoort, van Vathorst en Schothorst tot Hoogland, Liendert en het centrum rond de Lieve Vrouwetoren.
+          </p>
+          <p>
+            Drie routes werken voor de meeste Amersfoortse ondernemers. Een <a href="/webdesign/">maatwerk website</a> met een WordPress website als CMS waar je zelf content kunt aanpassen, een Astro-site die topscores op snelheid haalt, of een <a href="/website-abonnement/">website abonnement</a> vanaf {pricing.abboFromInline} waarin hosting en beheer meelopen. Bij webdesign in Amersfoort kijken we standaard ook naar lokale signalen, zodat je dienstpagina's ranken op concrete zoekvragen uit jouw wijk of branche.
+          </p>
+        </div>
+      </section>
+
       <WebsitesShowcase
         cases={showcaseCases}
         eyebrow="Webdesign uit de regio"
@@ -325,7 +355,7 @@ const faqs = [
           <div class="utrecht-usps-head">
             <EyebrowPill>Wat je krijgt</EyebrowPill>
             <h2 class="utrecht-usps-title">
-              Wat webdesign in Amersfoort bij ons <em>concreet inhoudt.</em>
+              Wat een professionele website laten maken in Amersfoort <em>bij ons inhoudt.</em>
             </h2>
             <p class="utrecht-usps-lead">
               Vier dingen die we voor elke Amersfoortse klant standaard meeleveren,
@@ -406,21 +436,22 @@ const faqs = [
       />
 
       <CalvinNote
-        message="Niet zeker welke route past, of überhaupt of je een nieuwe site nodig hebt? Stuur me je huidige URL, dan kijk ik er een half uur naar en mail ik terug wat ik zou doen. Eerlijk en zonder verplichting."
-        ctaLabel="Stuur mij je URL ↗"
-        ctaHref="/contact/?onderwerp=website-amersfoort-advies"
+        message="Heb je plannen voor een nieuwe website? Stuur je wensen door of plan een kennismaking. Dan kijken we samen wat we voor je kunnen doen en of we een match zijn."
+        ctaLabel="Plan een kennismaking ↗"
+        ctaHref="/contact/?onderwerp=website-laten-maken-amersfoort"
       />
 
       <section class="zzp-segments">
         <div class="zzp-segments-inner">
           <div class="zzp-segments-head">
-            <EyebrowPill variant="rare">Voor wie we werken in Amersfoort</EyebrowPill>
+            <EyebrowPill variant="rare">Voor wie</EyebrowPill>
             <h2 class="zzp-segments-title">
-              Welke Amersfoortse ondernemers <em>een website laten maken?</em>
+              Voor wie maken we <em>websites in Amersfoort?</em>
             </h2>
             <p class="zzp-segments-lead">
-              Een greep uit de branches waarvoor we sites bouwen in Amersfoort
-              en omliggende kernen. Klik op een branche voor de details.
+              Van zzp'ers en lokale dienstverleners tot MKB-bedrijven. Een greep
+              uit de branches waarvoor we sites bouwen in Amersfoort en
+              omliggende kernen. Klik op een branche voor de details.
             </p>
           </div>
           <div class="zzp-segments-list">
@@ -447,12 +478,16 @@ const faqs = [
           <div class="amf-map-head">
             <EyebrowPill variant="rare">Werkgebied</EyebrowPill>
             <h2 class="amf-map-title">
-              Webdesign voor Amersfoort en omstreken.
+              Website laten maken in Amersfoort en omstreken.
             </h2>
             <p class="amf-map-lead">
-              We werken voor klanten in heel Amersfoort: het centrum, Vathorst,
-              Schothorst, Liendert, Kruiskamp, Hoogland en Soesterkwartier. Plus
-              de omliggende plaatsen zoals Leusden, Hoevelaken en Nijkerk.
+              We werken voor klanten in heel Amersfoort (centrum, Vathorst,
+              Schothorst, Liendert, Kruiskamp, Hoogland, Soesterkwartier) en de
+              omliggende plaatsen Leusden, Hoevelaken, Nijkerk en Soest. Voor
+              lokale dienstverleners maakt het verschil dat de site snel laadt,
+              dat dienstpagina's specifiek genoeg zijn om op buurtniveau te
+              ranken en dat de <a href="/lokale-seo/">lokale SEO-basis</a> vanaf
+              dag een klopt.
             </p>
           </div>
           <div class="amf-map-frame">
@@ -490,6 +525,24 @@ const faqs = [
 </BaseLayout>
 
 <style>
+  /* SEO-intro: compacte tekst-sectie tussen pakketten en showcase.
+     Bewust GEEN cards: single column, lopende paragrafen met links. */
+  .amf-intro { padding: clamp(2.5rem, 4vw, 3.5rem) 24px; }
+  .amf-intro-inner { max-width: 760px; margin: 0 auto; }
+  .amf-intro-inner p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-primary, #1a1a1a);
+    margin: 0 0 1rem;
+  }
+  .amf-intro-inner p:last-child { margin-bottom: 0; }
+  .amf-intro-inner a {
+    color: var(--accent-rare, #b6007b);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .amf-intro-inner strong { font-weight: 700; color: var(--text-primary, #1a1a1a); }
+
   .amf-map { padding: 96px 24px; background: var(--color-cream, #F6F2E8); }
   .amf-map-inner { max-width: 1100px; margin: 0 auto; }
   .amf-map-head { text-align: center; max-width: 720px; margin: 0 auto 32px; }
