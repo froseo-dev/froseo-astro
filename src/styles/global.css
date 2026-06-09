@@ -536,12 +536,16 @@ main { display: contents; }
   transform: rotate(180deg);
 }
 .nav-drawer .nav-drawer-mega {
-  padding: 4px 0 12px 14px;
+  /* Lichte indent zonder zware border. De magenta border-left voelde
+     visueel los van de rest van het drawer-menu; nu een rustige indent
+     met een zachte achtergrond zodat de open dropdown bij het menu hoort. */
+  padding: 10px 14px 14px;
+  margin: 4px 18px 8px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  border-left: 2px solid var(--border-color);
-  margin-left: 22px;
+  gap: 16px;
+  background: var(--surface-page-soft);
+  border-radius: 12px;
 }
 .nav-drawer .nav-drawer-mega-col {
   text-align: left;
@@ -553,8 +557,8 @@ main { display: contents; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent-primary);
-  margin: 0 0 4px;
-  padding: 0 8px;
+  margin: 0 0 6px;
+  padding: 0 10px;
 }
 .nav-drawer .nav-drawer-mega-col ul {
   list-style: none;
@@ -568,7 +572,7 @@ main { display: contents; }
 .nav-drawer .nav-drawer-mega-col li { list-style: none; }
 .nav-drawer .nav-drawer-mega-col a {
   display: block;
-  padding: 8px 12px;
+  padding: 8px 10px;
   font-family: var(--font-display);
   font-size: 16px;
   font-weight: 600;
@@ -578,14 +582,14 @@ main { display: contents; }
   border-radius: 8px;
 }
 .nav-drawer .nav-drawer-mega-col a:hover {
-  background: var(--surface-page-soft);
+  background: var(--surface-card);
   color: var(--accent-primary);
 }
 .nav-drawer .nav-drawer-mega-foot {
   display: inline-block;
-  margin: 6px 0 0 8px;
+  margin: 4px 0 0 10px;
   padding: 8px 14px;
-  background: var(--surface-page-soft);
+  background: var(--surface-card);
   border: 1px solid var(--border-color);
   border-radius: 999px;
   font-family: var(--font-display);
@@ -656,7 +660,10 @@ main { display: contents; }
   padding: 96px var(--gutter-mobile) 48px;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* Safe-center: centreert bij weinig content, valt terug op flex-start
+     bij content > viewport. Voorkomt dat de top van het menu onbereikbaar
+     wordt na het opklappen van een dropdown. */
+  justify-content: safe center;
   overflow-y: auto;
 }
 .nav-drawer[data-menu-drawer='open'] { display: flex; }
