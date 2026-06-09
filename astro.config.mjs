@@ -11,9 +11,11 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     sitemap({
-      /* Ads-landingspagina's uit de sitemap houden: ze staan op noindex
-         en mogen niet met de organische onderhoudspagina's concurreren. */
-      filter: (page) => !page.includes('/wordpress-onderhoud/'),
+      /* Ads-landingspagina's en de Peter Zijlstra-demo uit de sitemap
+         houden: die staan op noindex en horen niet in de organische index. */
+      filter: (page) =>
+        !page.includes('/wordpress-onderhoud/') &&
+        !page.includes('/peter-zijlstra'),
     }),
   ],
   image: {

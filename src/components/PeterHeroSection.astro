@@ -1,0 +1,77 @@
+---
+// Eén hero-section voor de Peter Zijlstra-demo. Styling komt uit
+// src/styles/peter-hero.css (geen <style> hier, zodat classes globaal matchen).
+//
+// Laag-opbouw (volle breedte, NIET in het smalle content-blok) zodat de
+// kleurwash naadloos over de hele hero loopt i.p.v. een afgebroken band:
+//   bgname (achter) -> foto -> overlay/wash -> inner (nav + tekst, gecentreerd)
+interface Props {
+  variant: "groen" | "blauw" | "duo";
+  label?: string;
+  vars?: Record<string, string>;
+}
+const { variant, label, vars } = Astro.props;
+const logo = "/peter-zijlstra/logo.png";
+const photo = "/peter-zijlstra/peter-groot.webp";
+const styleStr = vars
+  ? Object.entries(vars).map(([k, v]) => `${k}:${v}`).join(";")
+  : undefined;
+---
+
+<section class={`hero hero--${variant}`} style={styleStr}>
+
+  <div class="hero__bgname" aria-hidden="true">Peter Zijlstra</div>
+
+  <div class="hero__figure">
+    <img class="hero__photo" src={photo} alt="Peter Zijlstra" />
+  </div>
+
+  <div class="hero__overlay" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+
+    <nav class="hero__nav">
+      <a class="hero__logo" href="#" aria-label="Peter Zijlstra">
+        <img src={logo} alt="Peter Zijlstra" />
+      </a>
+      <ul class="hero__menu">
+        <li><a href="#">Over mij</a></li>
+        <li><a href="#">Coach</a></li>
+        <li><a href="#">Testimonials</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero__badge">
+      <div class="hero__avatars" aria-hidden="true">
+        <span class="a1"></span>
+        <span class="a2"></span>
+        <span class="a3"></span>
+        <span class="count">10+</span>
+      </div>
+      <div class="hero__badge-text">10+ ondernemers<br />begeleid</div>
+    </div>
+
+    <h1 class="hero__headline">
+      <span>Ondernemen,</span>
+      <span>zonder jezelf</span>
+      <span>kwijt te raken.</span>
+    </h1>
+
+    <div class="hero__cta-block">
+      <button class="hero__cta">
+        Plan een gratis call
+        <span class="hero__cta-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </span>
+      </button>
+      <p class="hero__copy">Als ondernemer neem je jezelf overal mee naartoe. Je kracht, je twijfels, je patronen. Peter helpt je onderzoeken wat er onder de oppervlakte speelt, zodat je weer keuzes maakt die kloppen.</p>
+    </div>
+
+    {label && <span class="hero__tag">{label}</span>}
+
+  </div>
+</section>

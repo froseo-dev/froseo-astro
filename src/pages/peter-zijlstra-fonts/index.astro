@@ -1,0 +1,79 @@
+---
+// Vergelijk-pagina: optie 1 (groen) met verschillende grafische Google Fonts.
+// Scroll om de varianten te zien; label staat bovenin elke hero.
+import "../../styles/peter-hero.css";
+import PeterHeroSection from "../../components/PeterHeroSection.astro";
+
+const archivoLink =
+  "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700;125,800;125,900&display=swap";
+
+const opties = [
+  {
+    label: "1 · Syne (kop + naam)",
+    vars: { "--font-head": "'Syne'", "--head-weight": "700", "--head-tracking": "-0.02em", "--head-size": "clamp(40px,6vw,92px)", "--name-weight": "800", "--name-tracking": "-0.02em" },
+  },
+  {
+    label: "2 · Unbounded (kop + naam)",
+    vars: { "--font-head": "'Unbounded'", "--head-weight": "700", "--head-tracking": "-0.02em", "--head-size": "clamp(34px,5.2vw,80px)", "--name-weight": "700", "--name-tracking": "-0.02em" },
+  },
+  {
+    label: "3 · Archivo Expanded (kop + naam)",
+    vars: { "--font-head": "'Archivo'", "--head-stretch": "125%", "--head-weight": "800", "--head-tracking": "-0.02em", "--head-size": "clamp(40px,6vw,92px)", "--name-stretch": "125%", "--name-weight": "800", "--name-tracking": "-0.02em" },
+  },
+  {
+    label: "4 · MIX — Archivo Expanded naam + Sora kop",
+    vars: { "--font-head": "'Sora'", "--head-weight": "800", "--font-name": "'Archivo'", "--name-stretch": "125%", "--name-weight": "900", "--name-tracking": "-0.02em" },
+  },
+  {
+    label: "5 · MIX — Syne naam + Sora kop",
+    vars: { "--font-head": "'Sora'", "--head-weight": "800", "--font-name": "'Syne'", "--name-weight": "800", "--name-tracking": "-0.02em" },
+  },
+  {
+    label: "6 · MIX — Unbounded naam + Sora kop",
+    vars: { "--font-head": "'Sora'", "--head-weight": "800", "--font-name": "'Unbounded'", "--name-weight": "700", "--name-tracking": "-0.03em" },
+  },
+];
+---
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Peter Zijlstra — font-vergelijk (optie 1)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Sora:wght@500;600;700;800&family=Syne:wght@600;700;800&family=Unbounded:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link href={archivoLink} rel="stylesheet" />
+  <style>
+    .fontlabel {
+      position: absolute;
+      top: 86px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 40;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: rgba(12,20,16,0.62);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #fff;
+      font: 600 13px/1 'Inter', sans-serif;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .fontwrap { position: relative; }
+  </style>
+</head>
+<body>
+  {opties.map((o) => (
+    <div class="fontwrap">
+      <span class="fontlabel">{o.label}</span>
+      <PeterHeroSection variant="groen" vars={o.vars} />
+    </div>
+  ))}
+</body>
+</html>

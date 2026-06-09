@@ -1,0 +1,19 @@
+---
+// Demo-switch tussen de 3 hero-opties.
+interface Props {
+  active?: "optie1" | "optie2" | "optie3" | "optie4";
+}
+const { active } = Astro.props;
+const opties = [
+  { id: "optie1", href: "/peter-zijlstra-optie1/", label: "Optie 1" },
+  { id: "optie2", href: "/peter-zijlstra-optie2/", label: "Optie 2" },
+  { id: "optie3", href: "/peter-zijlstra-optie3/", label: "Optie 3" },
+  { id: "optie4", href: "/peter-zijlstra-optie4/", label: "Optie 4" },
+];
+---
+
+<nav class="peter-switcher" aria-label="Kies hero-variant">
+  {opties.map((o) => (
+    <a href={o.href} class={o.id === active ? "is-active" : ""}>{o.label}</a>
+  ))}
+</nav>

@@ -1,0 +1,361 @@
+/* ============================================================
+   Peter Zijlstra — hero demo (standalone, los van Froseo-site)
+   Gedeeld door /peter-zijlstra/ en de optie-URL's.
+
+   SCHALEN OP GROTE SCHERMEN
+   Elke maat is een clamp() met als referentie 1920px (1080p):
+     - <= 1920px : exact de afgestemde waarde (1080p blijft perfect).
+     - > 1920px  : groeit lineair mee met de viewport-breedte
+       (vw-term = waarde/19.2), tot een plafond (~1.4x) voor 4K.
+   Op 1440p (2560px) is alles dus ~1.33x: een exacte zoom van 1080p.
+   Voor maten met een vloeiend mobiel bereik gebruiken we
+   max(min(originele-vw, cap), groei-vw) zodat <=1920px 1:1 blijft.
+
+   Laag-opbouw op .hero (volle breedte):
+     ::before glow (1) < bgname (2) < foto (3) < wash (4) < inner (5)
+   ============================================================ */
+
+:root {
+  /* palet uit kleuren.txt */
+  --blue-900: #2D54B3;
+  --blue-500: #4178FF;
+  --green-700: #1B9968;
+  --green-500: #28DF99;
+  --green-900: #157a52;
+  --sand: #E4DFDA;
+  --white: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #0b0f0d;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- HERO BASIS (volle-breedte stacking-root) ---------- */
+.hero {
+  --content: clamp(1600px, 83.333vw, 2240px);
+  --pad: clamp(24px, 3.3333vw, 90px);
+
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  color: var(--ink, #0c241a);
+  background: var(--bg);
+}
+
+/* zachte glow linksonder, volle breedte */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(110% 70% at 14% 102%, var(--radial) 0%, transparent 52%);
+  pointer-events: none;
+}
+
+/* ---------- GROTE NAAM ACHTER PETER (z2) ---------- */
+.hero__bgname {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  font-family: var(--font-name, var(--font-head, 'Inter')), system-ui, sans-serif;
+  font-size: clamp(96px, max(min(18vw, 300px), 15.625vw), 420px);
+  font-weight: var(--name-weight, 800);
+  font-stretch: var(--name-stretch, normal);
+  letter-spacing: var(--name-tracking, -0.04em);
+  white-space: nowrap;
+  color: var(--name);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ---------- FOTO (z3) ---------- */
+.hero__figure {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(460px, max(min(58vw, 920px), 47.917vw), 1288px);
+  height: 96%;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.hero__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+/* ---------- UNIFICERENDE WASH (z4, volle breedte, OVER de foto) ---------- */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: var(--wash);
+}
+
+/* ---------- CONTENT-LAAG (z5, gecentreerd op --content) ---------- */
+.hero__inner {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: var(--content);
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: 0 var(--pad);
+}
+
+/* ---------- NAV ---------- */
+.hero__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(30px, 1.5625vw, 42px) 0;
+}
+.hero__logo img { height: clamp(40px, 2.0833vw, 56px); width: auto; display: block; }
+.hero__menu { display: flex; gap: clamp(24px, 2.0833vw, 56px); list-style: none; }
+.hero__menu a {
+  text-decoration: none;
+  color: var(--ink, #0c241a);
+  font-family: var(--font-ui, 'Inter'), system-ui, sans-serif;
+  font-size: clamp(15px, 0.78125vw, 21px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: opacity 0.2s ease;
+}
+.hero__menu a:hover { opacity: 0.6; }
+
+/* ---------- BADGE RECHTSBOVEN ---------- */
+.hero__badge {
+  position: absolute;
+  top: clamp(120px, 6.25vw, 168px);
+  right: var(--pad);
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 0.7292vw, 20px);
+}
+.hero__avatars { display: flex; align-items: center; }
+.hero__avatars span {
+  width: clamp(40px, 2.0833vw, 56px); height: clamp(40px, 2.0833vw, 56px); border-radius: 50%;
+  border: clamp(2.5px, 0.13vw, 3.5px) solid var(--white);
+  margin-left: clamp(-17px, -0.625vw, -12px);
+  display: flex; align-items: center; justify-content: center;
+}
+.hero__avatars span:first-child { margin-left: 0; }
+.hero__avatars .a1 { background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); }
+.hero__avatars .a2 { background: linear-gradient(135deg, var(--accent-2), var(--accent-1)); }
+.hero__avatars .a3 { background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); opacity: 0.85; }
+.hero__avatars .count {
+  background: #0c241a; color: var(--white);
+  font-size: clamp(11px, 0.5729vw, 15px); font-weight: 700;
+}
+.hero__badge-text {
+  font-family: var(--font-ui, 'Inter'), system-ui, sans-serif;
+  font-size: clamp(14px, 0.7292vw, 20px); font-weight: 600; line-height: 1.3;
+  color: var(--ink, #0c241a);
+}
+
+/* ---------- HEADLINE LINKSONDER ---------- */
+.hero__headline {
+  position: absolute;
+  bottom: clamp(56px, 2.9167vw, 78px);
+  left: var(--pad);
+  max-width: min(60vw, clamp(760px, 39.583vw, 1064px));
+  font-family: var(--font-head, 'Inter'), system-ui, sans-serif;
+  font-size: var(--head-size, clamp(44px, max(min(6.6vw, 104px), 5.4167vw), 146px));
+  font-weight: var(--head-weight, 800);
+  font-stretch: var(--head-stretch, normal);
+  line-height: var(--head-lh, 0.96);
+  letter-spacing: var(--head-tracking, -0.03em);
+  color: var(--white);
+  text-shadow: 0 2px 36px rgba(8,30,20,0.28);
+}
+.hero__headline span { display: block; }
+
+/* ---------- CTA RECHTSONDER ---------- */
+.hero__cta-block {
+  position: absolute;
+  bottom: clamp(56px, 2.9167vw, 78px);
+  right: var(--pad);
+  width: clamp(340px, 17.708vw, 476px);
+  text-align: left;
+}
+.hero__cta {
+  display: inline-flex; align-items: center; gap: clamp(14px, 0.7292vw, 20px);
+  background: var(--white); color: #0c241a;
+  border: none; border-radius: 999px;
+  padding: clamp(11px, 0.5729vw, 16px) clamp(11px, 0.5729vw, 16px) clamp(11px, 0.5729vw, 16px) clamp(28px, 1.4583vw, 39px);
+  font-family: var(--font-ui, 'Inter'), system-ui, sans-serif;
+  font-size: clamp(16px, 0.8333vw, 22px); font-weight: 600; cursor: pointer;
+  margin-bottom: clamp(18px, 0.9375vw, 25px);
+  box-shadow: 0 12px 32px rgba(8,30,20,0.20);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.hero__cta:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(8,30,20,0.26); }
+.hero__cta:active { transform: translateY(0); }
+.hero__cta-icon {
+  width: clamp(42px, 2.1875vw, 59px); height: clamp(42px, 2.1875vw, 59px); border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.hero__cta-icon svg { width: clamp(18px, 0.9375vw, 25px); height: clamp(18px, 0.9375vw, 25px); stroke: var(--white); }
+.hero__copy {
+  font-family: var(--font-ui, 'Inter'), system-ui, sans-serif;
+  font-size: clamp(14.5px, 0.7552vw, 20px); line-height: 1.55;
+  color: rgba(255,255,255,0.92);
+  max-width: 34ch;
+  margin-top: clamp(2px, 0.1vw, 4px);
+}
+
+/* ---------- vertical variant-label (alleen op de overzichtspagina) ---------- */
+.hero__tag {
+  position: absolute;
+  top: 50%; left: var(--pad);
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: left center;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(11px, 0.5729vw, 15px); font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  pointer-events: none;
+}
+
+/* ============================================================
+   VARIANT 1 — GROEN  (licht -> donker groen, Unbounded-naam + Sora-kop)
+   ============================================================ */
+.hero--groen {
+  --ink: #0c241a;
+  --font-head: 'Sora';
+  --font-ui: 'Inter';
+  --font-name: 'Unbounded';
+  --head-weight: 800;
+  --head-tracking: -0.03em;
+  --head-lh: 0.96;
+  --name-weight: 700;
+  --name-tracking: -0.03em;
+  --bg: linear-gradient(180deg, #f7f5f1 0%, #e8f4ee 26%, #59cda0 58%, #28b07a 80%, var(--green-700) 100%);
+  --radial: rgba(40,223,153,0.5);
+  --name: rgba(15,110,75,0.34);
+  --wash: linear-gradient(180deg,
+    transparent 0%, transparent 40%,
+    rgba(40,176,122,0.28) 60%,
+    rgba(27,153,104,0.72) 82%,
+    rgba(19,112,76,0.96) 100%);
+  --accent-1: var(--green-500);
+  --accent-2: var(--green-700);
+}
+
+/* ============================================================
+   VARIANT 2 — BLAUW  (licht -> merk-blauw)
+   ============================================================ */
+.hero--blauw {
+  --ink: #0a1a33;
+  --font-head: 'Space Grotesk';
+  --font-ui: 'Inter';
+  --head-weight: 700;
+  --head-tracking: -0.03em;
+  --head-lh: 0.94;
+  --bg: linear-gradient(180deg, #f6f4f1 0%, #e7ecf6 26%, #7ba2f1 58%, #436fde 80%, var(--blue-900) 100%);
+  --radial: rgba(65,120,255,0.42);
+  --name: rgba(33,66,150,0.34);
+  --wash: linear-gradient(180deg,
+    transparent 0%, transparent 40%,
+    rgba(65,120,255,0.26) 60%,
+    rgba(45,84,179,0.72) 82%,
+    rgba(31,58,131,0.96) 100%);
+  --accent-1: var(--blue-500);
+  --accent-2: var(--blue-900);
+}
+
+/* ============================================================
+   VARIANT 3 — NEUTRAAL -> DONKERGROEN  (warme premium, serif kop)
+   ============================================================ */
+.hero--duo {
+  --ink: #14241c;
+  --font-head: 'Fraunces';
+  --font-ui: 'Inter';
+  --head-weight: 600;
+  --head-tracking: -0.012em;
+  --head-lh: 0.96;
+  --bg: linear-gradient(180deg, var(--sand) 0%, #dfe7df 24%, #6fcca2 56%, #2ba778 80%, var(--green-700) 100%);
+  --radial: rgba(40,223,153,0.4);
+  --name: rgba(15,100,68,0.32);
+  --wash: linear-gradient(180deg,
+    transparent 0%, transparent 42%,
+    rgba(54,180,128,0.28) 62%,
+    rgba(27,153,104,0.72) 82%,
+    rgba(19,112,76,0.96) 100%);
+  --accent-1: var(--green-500);
+  --accent-2: var(--green-700);
+}
+
+/* ---------- ENTRANCE ANIMATIE ---------- */
+.hero__nav, .hero__badge, .hero__headline, .hero__cta-block, .hero__figure {
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.hero__nav { animation-delay: 0.05s; }
+.hero__figure { animation-delay: 0.1s; }
+.hero__badge { animation-delay: 0.25s; }
+.hero__headline { animation-delay: 0.3s; }
+.hero__cta-block { animation-delay: 0.4s; }
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.hero__figure { animation-name: riseFigure; }
+@keyframes riseFigure { from { opacity: 0; transform: translate(-50%, 24px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@media (prefers-reduced-motion: reduce) {
+  .hero__nav, .hero__badge, .hero__headline, .hero__cta-block, .hero__figure { animation: none; }
+}
+
+/* ---------- SWITCH-BALK (alleen voor deze demo) ---------- */
+.peter-switcher {
+  position: fixed;
+  left: 50%; bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex; gap: 4px;
+  padding: 5px;
+  border-radius: 999px;
+  background: rgba(12,20,16,0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+.peter-switcher a {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,0.72);
+  text-decoration: none;
+  transition: background 0.18s ease, color 0.18s ease;
+  white-space: nowrap;
+}
+.peter-switcher a:hover { color: #fff; }
+.peter-switcher a.is-active { background: #fff; color: #0c241a; }
+
+/* ---------- RESPONSIVE (kleiner dan 1080p) ---------- */
+@media (max-width: 1100px) {
+  .hero__figure { width: clamp(380px, 62vw, 640px); height: 86%; }
+  .hero__headline { bottom: 220px; }
+  .hero__cta-block { left: var(--pad); right: var(--pad); width: auto; bottom: 44px; }
+  .hero__badge { top: 96px; }
+  .hero__tag { display: none; }
+}
+@media (max-width: 620px) {
+  .hero__menu { display: none; }
+  .hero__badge { top: 88px; gap: 10px; }
+  .hero__badge-text { font-size: 12px; }
+  .hero__avatars span { width: 32px; height: 32px; }
+  .hero__figure { width: clamp(300px, 88vw, 480px); height: 72%; }
+  .hero__headline { bottom: 210px; }
+  .peter-switcher { bottom: auto; top: 76px; }
+}

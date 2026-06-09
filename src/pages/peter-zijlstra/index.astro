@@ -1,0 +1,14 @@
+---
+// Overzicht: 3 hero-varianten onder elkaar om te vergelijken.
+// Losse URL's: /peter-zijlstra-optie1/ /-optie2/ /-optie3/
+import PeterDemoLayout from "../../layouts/PeterDemoLayout.astro";
+import PeterHeroSection from "../../components/PeterHeroSection.astro";
+import PeterSwitcher from "../../components/PeterSwitcher.astro";
+---
+
+<PeterDemoLayout title="Peter Zijlstra — hero-demo (overzicht)">
+  <PeterHeroSection variant="groen" label="Groen · Inter" />
+  <PeterHeroSection variant="blauw" label="Blauw · Space Grotesk" />
+  <PeterHeroSection variant="duo" label="Brand-duo · Fraunces" />
+  <PeterSwitcher />
+</PeterDemoLayout>
