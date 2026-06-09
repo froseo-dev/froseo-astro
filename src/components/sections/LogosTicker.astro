@@ -29,7 +29,15 @@ const loop = [...logos, ...logos];
     <div class="logos-label"><span class="star">★</span> {label}</div>
     <div class="logos-strip-wrap">
       <div class="logos-strip">
-        {loop.map((logo) => <Image src={logo.src} alt={logo.name} loading="lazy" />)}
+        {loop.map((logo) => (
+          <Image
+            src={logo.src}
+            alt={logo.name}
+            widths={[200, 400]}
+            sizes="(max-width: 720px) 180px, 220px"
+            loading="lazy"
+          />
+        ))}
       </div>
     </div>
   </div>

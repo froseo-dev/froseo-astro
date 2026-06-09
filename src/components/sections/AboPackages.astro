@@ -11,7 +11,7 @@
  */
 
 import EyebrowPill from '../ui/EyebrowPill.astro';
-import { aboPackages, aboTerms } from '@data/abo-packages';
+import { aboPackages } from '@data/abo-packages';
 import { pricing as sitePricing } from '@data/site-config';
 
 interface Props {
@@ -80,12 +80,4 @@ const {
     ))}
   </div>
 
-  <ul class="abo-terms-strip" aria-label="Voorwaarden">
-    {aboTerms.map((t) => (
-      <li>
-        <span class="abo-terms-icon" aria-hidden="true">✓</span>
-        <span>{t}</span>
-      </li>
-    ))}
-  </ul>
 </section>

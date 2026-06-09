@@ -1,0 +1,140 @@
+---
+/**
+ * Framework-uitleg-sectie voor /website-abonnement.
+ *
+ * Korte uitleg waarom we kiezen voor Astro als basis van het Froseo-
+ * framework, met een interactieve before/after-slider die PageSpeed-
+ * resultaten van WordPress vs Astro naast elkaar zet.
+ *
+ * Gerenderd vanuit src/pages/[slug].astro alleen op het abonnement-
+ * detail, vlak na de pakketten-sectie. Vervangt de oude aboTerms-
+ * strip die te zwak was als USP.
+ */
+
+import EyebrowPill from '../ui/EyebrowPill.astro';
+import BeforeAfter from './BeforeAfter.astro';
+import wordpressPrestaties from '@assets/website-abonnement/wordpress-prestaties.png';
+import astroPrestaties from '@assets/website-abonnement/astro-prestaties.png';
+---
+
+<section class="framework-block">
+  <div class="framework-block-inner">
+    <header class="framework-block-head">
+      <EyebrowPill variant="highlight">Het framework</EyebrowPill>
+      <h2 class="framework-block-title">
+        Onze website abonnementen draaien op een <em>modern framework.</em>
+      </h2>
+    </header>
+
+    <div class="framework-block-grid">
+      <div class="framework-block-text">
+        <p>
+          WordPress is de ervaren veteraan van het web. Degelijk en
+          betrouwbaar, vooral wanneer je een uitgebreid CMS nodig hebt.
+          Echter is het afhankelijk van plug-ins, vraagt het veel
+          onderhoud en is het zwaarder en logger dan je wilt.
+        </p>
+        <p>
+          Daarom kiezen wij voor de nieuwe sterspeler van het team: Astro.
+          Razendsnel, lichtgewicht, veiliger, ongeëvenaarde SEO-prestaties
+          en toekomstbestendig.
+        </p>
+        <ul class="framework-block-list">
+          <li>
+            <strong>Before:</strong>
+            <span>WordPress met plug-ins, updates en extra gewicht.</span>
+          </li>
+          <li>
+            <strong>After:</strong>
+            <span>Astro met snelheid, schone code en een ijzersterke technische basis.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="framework-block-media">
+        <BeforeAfter
+          before={wordpressPrestaties}
+          after={astroPrestaties}
+          beforeAlt="PageSpeed-resultaat van een geoptimaliseerde WordPress-website"
+          afterAlt="PageSpeed-resultaat van een geoptimaliseerde Astro-website"
+          beforeLabel="WordPress"
+          afterLabel="Astro"
+          aspect="4 / 3"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .framework-block {
+    padding: clamp(3.5rem, 6vw, 5.5rem) var(--gutter, 1.5rem);
+    background: var(--surface-page, #faf6f0);
+  }
+  .framework-block-inner {
+    max-width: var(--container-max, 1200px);
+    margin: 0 auto;
+  }
+  .framework-block-head {
+    text-align: center;
+    max-width: 56rem;
+    margin: 0 auto 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .framework-block-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.9rem, 3.5vw, 2.7rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--text-primary, #1a1a1a);
+  }
+  .framework-block-title em {
+    color: var(--accent-rare, #b6007b);
+    font-style: normal;
+  }
+  .framework-block-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+  }
+  .framework-block-text p {
+    line-height: 1.7;
+    font-size: 1rem;
+    color: var(--text-primary, #1a1a1a);
+    margin: 0 0 1rem;
+  }
+  .framework-block-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .framework-block-list li {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.6rem;
+    align-items: baseline;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-primary, #1a1a1a);
+  }
+  .framework-block-list strong {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    color: var(--accent-rare, #b6007b);
+  }
+  @media (max-width: 900px) {
+    .framework-block-grid { grid-template-columns: 1fr; }
+  }
+</style>

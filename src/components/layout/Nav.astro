@@ -85,7 +85,14 @@ const workItems: DropdownItem[] = [
 
 <nav class="nav">
   <a class="logo" href="/" aria-label="Froseo home">
-    <Image src={logoWhite} alt="Froseo" class="logo-img" loading="eager" />
+    <Image
+      src={logoWhite}
+      alt="Froseo"
+      class="logo-img"
+      widths={[300, 600, 900]}
+      sizes="(max-width: 720px) 220px, 280px"
+      loading="eager"
+    />
   </a>
 
   <div class="nav-links">

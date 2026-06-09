@@ -14,6 +14,7 @@ import FAQ from '@components/sections/FAQ.astro';
 import PricingPackages from '@components/sections/PricingPackages.astro';
 import ContentPackages from '@components/sections/ContentPackages.astro';
 import AboPackages from '@components/sections/AboPackages.astro';
+import FrameworkBlock from '@components/sections/FrameworkBlock.astro';
 import PackagePaths from '@components/sections/PackagePaths.astro';
 import PainPoints from '@components/sections/PainPoints.astro';
 import Comparison from '@components/sections/Comparison.astro';
@@ -212,6 +213,11 @@ const serviceSchema = {
           lead={s.pricingLead}
         />
       )}
+
+      {/* Framework-uitleg + WordPress-vs-Astro before/after-slider.
+          Alleen op /website-abonnement zinvol; vervangt de oude
+          aboTerms-strip die te zwak was als USP. */}
+      {s.slug === 'website-abonnement' && <FrameworkBlock />}
 
       {/* "Wat zit er inbegrepen?" — open, complementair aan de pakketkaarten
           (themed groepen i.p.v. feature-checklist). Direct na de cards zodat
