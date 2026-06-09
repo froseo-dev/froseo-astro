@@ -40,7 +40,7 @@ propositionPaths:
   - title: Website-abonnement
     tagline: 'Compleet, vaste maandprijs.'
     priceFrom: true
-    priceAmount: 89
+    priceAmount: 69
     pricePeriod: '/maand'
     body: 'Voor lokale ondernemers die snel en zonder gedoe professioneel online willen staan. Een sterke website met een vaste maandprijs, duidelijke afspraken en ruimte voor kleine aanpassingen.'
     checks:

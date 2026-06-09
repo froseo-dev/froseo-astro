@@ -9,22 +9,26 @@
  */
 
 export const pricing = {
-  /** Instapprijs bij jaarlijkse betaling — communiceren we als de "vanaf"-prijs. */
-  abboFromAmount: '€89',
+  /** Instapprijs Online Start, een vaste maandprijs (geen jaarkorting meer).
+      Bij maandcontract komt er een setup fee van €199 bij; bij jaarcontract
+      vervalt die. Communiceren we overal als de "vanaf"-prijs. */
+  abboFromAmount: '€69',
   /** Periode-suffix, gebruik los van het bedrag voor flexibele typografie. */
   abboFromUnit: 'maand',
-  /** Combinatie voor inline-tekst, bv. "Vanaf €89 per maand". */
-  abboFromInline: '€89 per maand',
-  /** Korte variant voor pills / labels, bv. "vanaf €89/m". */
-  abboFromShort: '€89/m',
-  /** Maandelijkse prijs voor wie liever per maand betaalt. Voor de
-      vergelijking maandelijks vs jaarlijks op de pricing-pagina. */
-  abboMonthlyAmount: '€99',
-  abboMonthlyShort: '€99/m',
-  /** "Vanaf"-prijs Online Plus (jaarlijkse betaling). Spiegelt
-      abo-packages.ts (online-plus.yearlyMonthlyPrice). */
-  abboPlusFromAmount: '€179',
-  abboPlusInline: '€179 per maand',
+  /** Combinatie voor inline-tekst, bv. "Vanaf €69 per maand". */
+  abboFromInline: '€69 per maand',
+  /** Korte variant voor pills / labels, bv. "vanaf €69/m". */
+  abboFromShort: '€69/m',
+  /** Backwards-compat aliassen: er is nu één maandprijs, geen jaar/maand-
+      split meer. Beide tokens verwijzen naar dezelfde €69. */
+  abboMonthlyAmount: '€69',
+  abboMonthlyShort: '€69/m',
+  /** "Vanaf"-prijs Online Plus, vaste maandprijs. Spiegelt
+      abo-packages.ts (online-plus.monthlyPrice). */
+  abboPlusFromAmount: '€149',
+  abboPlusInline: '€149 per maand',
+  /** Setup fee bij maandcontract op Online Start. Vervalt bij jaarcontract. */
+  abboStartSetupFee: '€199',
   /** B2B-context: prijzen excl. btw. Eenmalig melden op pricing-cards
       is voldoende; niet bij elke hero-mention noemen. */
   vatNote: 'excl. btw',
@@ -126,7 +130,10 @@ const tokens: Record<string, string> = {
   abboFromAmount: pricing.abboFromAmount,
   abboFromInline: pricing.abboFromInline,
   abboFromShort: pricing.abboFromShort,
+  abboPlusFromAmount: pricing.abboPlusFromAmount,
   abboPlusInline: pricing.abboPlusInline,
+  abboStartSetupFee: pricing.abboStartSetupFee,
+  vatNote: pricing.vatNote,
   email: contact.email,
   phoneDisplay: contact.phoneDisplay,
   reviewRating: review.ratingDisplay,

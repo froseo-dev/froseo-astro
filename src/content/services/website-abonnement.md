@@ -3,16 +3,16 @@ slug: website-abonnement
 title: Website abonnement
 shortTitle: Website abonnement
 heroTitle: Website abonnement
-heroAccent: 'zonder opstartkosten.'
+heroAccent: 'voor een vast maandbedrag.'
 heroAccentBlock: true
 heroImage: ../../assets/hero/website-abonnement-hero.webp
 heroAlt: 'Website abonnement van Froseo: Club12 op desktop, Prime Performance op mobiel'
-metaTitle: 'Website abonnement vanaf €89 per maand | Zonder opstartkosten'
-metaDescription: 'Laat een professionele website maken voor een vast maandbedrag. Vanaf €89 per maand, zonder opstartkosten en inclusief hosting, SSL, technisch beheer, kleine wijzigingen en SEO-rapportage.'
+metaTitle: 'Website abonnement vanaf €69 per maand | Froseo'
+metaDescription: 'Laat een professionele website maken voor een vast maandbedrag. Vanaf €69 per maand, inclusief hosting, SSL, technisch beheer, kleine wijzigingen en SEO-rapportage. Bij een jaarcontract geen setup fee.'
 heroEyebrow: '15+ jaar ervaring in webdesign'
 heroChecks:
   - 'Razendsnel: we streven naar 90+ Google PageSpeed'
-  - Geen setup fee, vaste maandprijs vanaf {{abboFromInline}}
+  - Vaste maandprijs vanaf {{abboFromInline}} ({{vatNote}})
   - Hosting, technisch beheer en kleine wijzigingen inbegrepen
   - Maandelijkse SEO-ranking in je inbox
 heroPrimaryCta:
@@ -20,15 +20,15 @@ heroPrimaryCta:
   href: '#pakketten'
 
 eyebrow: 'Website abonnement'
-description: 'Een professionele website met vaste maandprijs. Geen setup fee, geen lange contracten. Twee pakketten vanaf {{abboFromInline}}: Online Start voor MKB en ZZP, Online Plus voor groeiende bedrijven. Inclusief hosting, technisch beheer en kleine wijzigingen.'
+description: 'Een professionele website met vaste maandprijs. Twee pakketten vanaf {{abboFromInline}}: Online Start voor MKB en ZZP, Online Plus voor groeiende bedrijven. Bij een jaarcontract betaal je geen setup fee. Inclusief hosting, technisch beheer en kleine wijzigingen.'
 icon: '◆'
 shadow: dark
 order: 2
 bullets:
-  - Vaste maandprijs, geen setup fee
+  - Vaste maandprijs, geen setup fee bij jaarcontract
   - Inclusief hosting, e-mail en beheer
   - Snelheid, technische SEO en aanvragen
-  - Maandelijks opzegbaar na 3 maanden
+  - Maandelijks opzegbaar bij maandcontract
 
 showAboPackages: true
 hideShowcase: false
@@ -42,12 +42,12 @@ pricingLead: 'Kies het website abonnement dat past bij je bedrijf. Online Start 
 testimonialId: auke-club12
 
 introBlock:
-  eyebrow: 'Website abonnement'
-  title: 'Wat is een'
-  titleAccent: 'website abonnement?'
+  eyebrow: 'Het abonnement'
+  title: 'Wat houdt een website abonnement'
+  titleAccent: 'bij Froseo in?'
   body:
-    - 'Een website abonnement is een professionele website die je afneemt voor een vast bedrag per maand, zonder grote investering vooraf. De bouw, hosting, SSL, technisch beheer, kleine wijzigingen en maandelijkse rapportage zitten allemaal in dat ene maandbedrag.'
-    - 'Je regelt dus geen losse partijen voor ontwerp, hosting en onderhoud. Eén abonnement, één aanspreekpunt en een bedrag dat je elke maand ziet aankomen. Bij Froseo start dat vanaf {{abboFromInline}}, maandelijks opzegbaar na drie maanden.'
+    - 'Vanaf {{abboFromInline}} ({{vatNote}}) staat je site live op het Froseo-framework, draait hij snel en blijft hij up-to-date. Hosting, SSL, technisch beheer, kleine wijzigingen en maandelijkse positierapportage zitten erbij. Eén factuur, één aanspreekpunt, één voorspelbaar maandbedrag.'
+    - 'Wij bouwen je site, optimaliseren de techniek en houden hem scherp. Jij hoeft niet meer met hosting, plug-in-updates of SSL te schuiven. Maandelijks opzegbaar bij een maandcontract; bij een jaarcontract betaal je geen setup fee.'
 
 includedBlock:
   eyebrow: 'All-in'
@@ -71,7 +71,7 @@ audienceFit:
   title: 'Voor wie is een website abonnement'
   titleAccent: 'geschikt?'
   lead:
-    - 'Een abonnement werkt het best als je vooral professioneel online wilt staan zonder zelf met techniek, hosting en updates bezig te zijn. Je krijgt een verzorgde site die meegroeit, voor een vast bedrag per maand vanaf {{abboFromInline}}.'
+    - 'Een abonnement werkt het best als je vooral professioneel online wilt staan zonder zelf met techniek, hosting en updates bezig te zijn. Je krijgt een verzorgde site die meegroeit, voor een vast bedrag per maand vanaf {{abboFromInline}} ({{vatNote}}).'
     - 'Start je als zelfstandige? Bekijk dan ook hoe we een <a href="/website-laten-maken-zzp/">website laten maken voor zzp''ers</a> aanpakken.'
   items:
     - 'Zzp''ers en starters die professioneel online willen zonder investering vooraf'
@@ -86,7 +86,7 @@ comparison:
   withLabel: 'Website abonnement Froseo'
   items:
     - without: 'Eenmalige investering vooraf'
-      with: 'Geen setup fee, vaste maandprijs vanaf {{abboFromInline}}'
+      with: 'Vaste maandprijs vanaf {{abboFromInline}}, geen setup fee bij jaarcontract'
     - without: 'Hosting, beheer en updates zelf regelen'
       with: 'Hosting, e-mail, SSL en technisch beheer inbegrepen'
     - without: 'Wijzigingen via een nieuwe opdracht of offerte'
@@ -104,7 +104,7 @@ approachSteps:
   - title: Kennismaking
     body: 'Een gesprek van 30 minuten. Wat doe je, wat heb je nu staan en wat wil je bereiken? We denken vooraf mee over wat het meeste oplevert voor jouw situatie. Vrijblijvend, geen pitchdeck.'
   - title: Pakket en intake
-    body: 'Online Start of Online Plus. Daarna een korte intake: huisstijl, content, domein, e-mail. Heb je nog geen teksten of beelden klaar? Geen probleem, we werken vanaf een doordachte basis en helpen je met de invulling. Drie maanden minimum, geen setup fee.'
+    body: 'Online Start of Online Plus, en daarna een korte intake: huisstijl, content, domein, e-mail. Heb je nog geen teksten of beelden klaar? Geen probleem, we werken vanaf een doordachte basis en helpen je met de invulling. Kies je voor een maandcontract, dan ben je maandelijks opzegbaar. Bij een jaarcontract vervalt de setup fee.'
   - title: Bouw en live
     body: 'We bouwen op het Froseo-framework met jouw huisstijl en content. Live binnen twee tot vier weken, afhankelijk van hoe snel content rond is.'
   - title: Doorlopend beheer
@@ -127,13 +127,13 @@ calvinNote:
 
 faqs:
   - q: Wat kost een website abonnement?
-    a: 'Bij Froseo start een website abonnement vanaf {{abboFromInline}}, exclusief btw. Daarvoor krijg je een professionele website op het Froseo-framework, inclusief hosting, SSL, de technische SEO-basis, maandelijkse positierapportage en 30 minuten wijzigingen per maand. Heb je meer pagina''s en uitgebreidere rapportage nodig, dan is er Online Plus vanaf {{abboPlusInline}}. Geen setup fee, maandelijks opzegbaar na drie maanden.'
+    a: 'Online Start kost {{abboFromInline}} ({{vatNote}}). Daarvoor krijg je een professionele website op het Froseo-framework, inclusief hosting, SSL, de technische SEO-basis, maandelijkse positierapportage en 30 minuten wijzigingen per maand. Heb je meer pagina''s en uitgebreidere rapportage nodig, dan is er Online Plus voor {{abboPlusInline}} ({{vatNote}}). Bij een jaarcontract betaal je geen setup fee; bij een maandcontract komt er een eenmalige setup fee van {{abboStartSetupFee}} bij. Maandcontracten zijn maandelijks opzegbaar.'
   - q: Waarom een abonnement in plaats van een eenmalige website?
     a: 'Bij een eenmalige website betaal je vooraf veel en moet je het onderhoud daarna zelf regelen. Met een abonnement spreid je de kosten, blijft de techniek up-to-date en is er elke maand iemand verantwoordelijk voor de site. Heb je geen grote maatwerkfunctionaliteit nodig, dan dekt een abonnement de lading: je spreidt de kosten en de techniek blijft bijgehouden.'
   - q: Wat zit er níet in het abonnement?
     a: 'Het abonnement is gericht op het bouwen en bijhouden van je website. Actieve SEO-content, blogartikelen, zoekwoordonderzoek op maat, Google Business Profile-optimalisatie, linkbuilding, Google of Meta Ads, CRM-koppelingen, webshops, ledenomgevingen en maatwerkfunctionaliteit vallen erbuiten. Deze diensten leveren we los, op aanvraag of in een apart pakket. Stuur een bericht voor een prijsindicatie.'
   - q: Wat als ik wil stoppen met het abonnement?
-    a: 'Na de eerste drie maanden ben je maandelijks opzegbaar. Het abonnement draait op het Froseo-framework. Stop je, dan stoppen ook de hosting en het beheer. Je domein blijft van jou, net als je Google-koppelingen (Analytics, Search Console, Business Profile). Wil je een site die volledig in jouw eigendom is, inclusief teksten en design? Dan past een maatwerktraject beter. Andere prijs, andere afspraken, geen abonnement.'
+    a: 'Bij een maandcontract ben je maandelijks opzegbaar, geen minimale looptijd. Bij een jaarcontract loopt het abonnement een jaar, daarna kun je maandelijks stoppen. Het abonnement draait op het Froseo-framework. Stop je, dan stoppen ook de hosting en het beheer. Je domein blijft van jou, net als je Google-koppelingen (Analytics, Search Console, Business Profile). Wil je een site die volledig in jouw eigendom is, inclusief teksten en design? Dan past een maatwerktraject beter.'
   - q: Hoe snel staat mijn website live?
     a: 'Doorgaans binnen twee tot vier weken na akkoord. Het tempo hangt vooral af van hoe snel content (tekst, beelden, logo) compleet is. We werken vanaf een doordacht framework, dus we hoeven niet vanaf nul te beginnen. Bij Online Plus met meer pagina''s kan het iets langer duren.'
   - q: Hoeveel inspraak heb ik op het ontwerp en de inhoud?
@@ -147,7 +147,7 @@ faqs:
   - q: Is een website abonnement geschikt voor zzp''ers en kleine bedrijven?
     a: 'Ja, juist voor zzp''ers en éénpitters is Online Start een logische manier om professioneel online te staan zonder grote investering vooraf. Je hebt toch een professionele website met hosting, onderhoud en support inbegrepen, en je maandelijkse websitekosten blijven voorspelbaar. We werken daarnaast voor mkb met 2 tot 25 medewerkers. Heb je meerdere diensten, locaties of landingspagina''s nodig, dan is Online Plus logischer.'
   - q: Kan ik ook een website laten maken zonder opstartkosten?
-    a: 'Ja. Met het website abonnement van Froseo betaal je geen opstartkosten. Je betaalt een vast bedrag per maand voor de bouw, de hosting, het technisch beheer en de ondersteuning van je website.'
+    a: 'Ja. Bij een jaarcontract op het website abonnement betaal je geen setup fee. Je betaalt alleen het vaste maandbedrag voor de bouw, de hosting, het technisch beheer en de ondersteuning van je website. Kies je voor een maandcontract op Online Start, dan komt er een eenmalige setup fee van {{abboStartSetupFee}} bij.'
   - q: Zit SEO inbegrepen bij het website abonnement?
     a: 'De technische SEO-basis zit inbegrepen: een snelle structuur, sitemap, metadata, schema en Search Console. Actieve SEO zoals zoekwoordonderzoek, nieuwe landingspagina''s, blogartikelen en linkbuilding valt buiten het abonnement en kun je los toevoegen via een SEO-traject.'
   - q: Kan ik mijn bestaande website omzetten naar een website abonnement?

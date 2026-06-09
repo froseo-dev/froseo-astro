@@ -1,10 +1,11 @@
 ---
 /**
  * Website-abonnement-pakketten-sectie voor /website-abonnement.
- * Twee cards naast elkaar (Online Start + Online Plus) met
- * maand/jaar-toggle. Hergebruikt .pricing-card classes uit global.css
- * voor visuele consistentie met /website-onderhoud, met eigen
- * .abo-grid (2-koloms) en .abo-terms-strip onder de cards.
+ * Twee cards naast elkaar (Online Start + Online Plus). Eén vaste
+ * maandprijs per pakket; geen maand/jaar-toggle meer.
+ *
+ * Setup-fee verschil bij Online Start staat als sub-line onder de
+ * prijs ("Geen setup fee bij jaarcontract, €199 bij maandcontract").
  *
  * Data komt uit src/data/abo-packages.ts (single source of truth).
  */
@@ -35,15 +36,6 @@ const {
       {title} <em>{titleAccent}</em>
     </h2>
     <p class="pricing-lead">{lead}</p>
-
-    <div class="pricing-toggle" role="tablist" aria-label="Betalingsfrequentie">
-      <button type="button" class="pricing-toggle-btn" data-frequency="monthly" role="tab" aria-selected="false">
-        Per maand
-      </button>
-      <button type="button" class="pricing-toggle-btn is-active" data-frequency="yearly" role="tab" aria-selected="true">
-        Per jaar <span class="pricing-toggle-badge">10% korting</span>
-      </button>
-    </div>
   </div>
 
   <div class="pricing-grid abo-grid">
@@ -55,18 +47,15 @@ const {
           <p class="pricing-card-tagline">{pkg.tagline}</p>
           <div class="pricing-card-price">
             <span class="pricing-amount-prefix">€</span>
-            <span
-              class="pricing-amount"
-              data-monthly={pkg.monthlyPrice}
-              data-yearly-effective={pkg.yearlyMonthlyPrice}
-            >
-              {pkg.yearlyMonthlyPrice}
-            </span>
+            <span class="pricing-amount">{pkg.monthlyPrice}</span>
             <span class="pricing-period">/maand</span>
           </div>
           <p class="pricing-billing">
-            <span data-frequency-label="monthly" hidden>Maandelijks · {sitePricing.vatNote}</span>
-            <span data-frequency-label="yearly">Jaarlijks · €{pkg.yearlyTotal}/jaar · {sitePricing.vatNote}</span>
+            {pkg.setupFeeMonthlyContract && pkg.setupFeeMonthlyContract > 0 ? (
+              <span>Geen setup fee bij jaarcontract · €{pkg.setupFeeMonthlyContract} setup bij maandcontract · {sitePricing.vatNote}</span>
+            ) : (
+              <span>Geen setup fee · {sitePricing.vatNote}</span>
+            )}
           </p>
           <p class="pricing-card-for">{pkg.forWhom}</p>
         </header>
@@ -100,31 +89,3 @@ const {
     ))}
   </ul>
 </section>
-
-<script>
-  const root = document.querySelector<HTMLElement>('.abo-packages');
-  if (root) {
-    const toggleBtns = root.querySelectorAll<HTMLButtonElement>('.pricing-toggle-btn');
-    const amounts = root.querySelectorAll<HTMLElement>('.pricing-amount');
-    const periodLabels = root.querySelectorAll<HTMLElement>('[data-frequency-label]');
-
-    function setFrequency(freq: 'monthly' | 'yearly') {
-      toggleBtns.forEach((b) => {
-        const active = b.dataset.frequency === freq;
-        b.classList.toggle('is-active', active);
-        b.setAttribute('aria-selected', active ? 'true' : 'false');
-      });
-      amounts.forEach((el) => {
-        const value = freq === 'monthly' ? el.dataset.monthly : el.dataset.yearlyEffective;
-        el.textContent = value ?? '';
-      });
-      periodLabels.forEach((el) => {
-        el.hidden = el.dataset.frequencyLabel !== freq;
-      });
-    }
-
-    toggleBtns.forEach((b) => {
-      b.addEventListener('click', () => setFrequency(b.dataset.frequency as 'monthly' | 'yearly'));
-    });
-  }
-</script>
