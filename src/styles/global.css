@@ -1097,7 +1097,7 @@ main { display: contents; }
   padding-left: 0;
   padding-right: 0;
 }
-.cases-row-wrap--compact .cases-row-card {
+.cases-row-wrap--compact .cases-row-item {
   flex: 0 0 clamp(280px, 32%, 380px);
 }
 .cases-row {
@@ -1110,9 +1110,17 @@ main { display: contents; }
   scrollbar-width: none;
 }
 .cases-row::-webkit-scrollbar { display: none; }
-.cases-row-card {
+/* Listitem-wrapper draagt de flex/scroll-snap-layout zodat de inner <a>
+   (cases-row-card) z'n natuurlijke role=link kan behouden. Voorheen zat
+   role=listitem op de <a> zelf, wat 'ARIA role not appropriate' triggert
+   bij accessibility-checks en agentic-browsing audits. */
+.cases-row-item {
   flex: 0 0 clamp(320px, 36vw, 520px);
   scroll-snap-align: start;
+  display: flex;
+}
+.cases-row-card {
+  flex: 1;
   background: var(--surface-card);
   border: var(--border);
   border-radius: var(--radius-lg);
@@ -1243,9 +1251,9 @@ main { display: contents; }
     gap: 20px;
     padding: 0 var(--gutter-mobile) 8px;
   }
-  .cases-row-card { flex: 1 1 auto; }
-  .cases-row-card.is-desktop-only { display: none; }
-  .cases-row-card.is-clone { display: none; }
+  .cases-row-item { flex: 1 1 auto; }
+  .cases-row-item.is-desktop-only { display: none; }
+  .cases-row-item.is-clone { display: none; }
   .cases-row-name { font-size: 22px; }
   .cases-row-nav-wrap { display: none; }
 }
