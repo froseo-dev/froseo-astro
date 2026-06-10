@@ -1,0 +1,78 @@
+---
+// Zwevende demo-switch tussen de Ruth Lasters homepage-opties.
+// Net als bij de Peter-demo: klant kan live tussen de richtingen wisselen.
+interface Props {
+  active?: "optie1" | "optie2" | "optie3" | "optie4";
+}
+const { active } = Astro.props;
+const opties = [
+  { id: "optie1", href: "/ruth-lasters/", label: "01", naam: "Optie 1" },
+  { id: "optie2", href: "/ruth-lasters/optie-2/", label: "02", naam: "Optie 2" },
+  { id: "optie3", href: "/ruth-lasters/optie-3/", label: "03", naam: "Optie 3" },
+  { id: "optie4", href: "/ruth-lasters/optie-4/", label: "04", naam: "Optie 4" },
+];
+---
+
+<nav class="ruth-switcher" aria-label="Kies ontwerp-variant">
+  <span class="ruth-switcher__lead">Demo</span>
+  <div class="ruth-switcher__opts">
+    {opties.map((o) => (
+      <a href={o.href} class={o.id === active ? "is-active" : ""}>
+        <span class="ruth-switcher__naam">{o.naam}</span>
+      </a>
+    ))}
+  </div>
+</nav>
+
+<style>
+  .ruth-switcher {
+    position: fixed;
+    bottom: 1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.55rem 0.5rem 1rem;
+    background: rgba(20, 17, 15, 0.82);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 100px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    font-family: "Inter", system-ui, sans-serif;
+  }
+  .ruth-switcher__lead {
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .ruth-switcher__opts {
+    display: flex;
+    gap: 0.3rem;
+  }
+  .ruth-switcher a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.95rem;
+    border-radius: 100px;
+    color: rgba(255, 255, 255, 0.72);
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .ruth-switcher a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .ruth-switcher a.is-active {
+    background: #c79a4e;
+    color: #161310;
+  }
+  .ruth-switcher__naam {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+</style>

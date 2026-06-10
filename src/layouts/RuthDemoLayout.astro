@@ -1,0 +1,81 @@
+---
+/* Standalone demo-layout voor de Ruth Lasters homepage-revamp.
+   Volledig geïsoleerd: eigen fonts, eigen reset, GEEN Froseo global.css of
+   tokens (dit is een andere klant met een eigen huisstijl). noindex zodat de
+   demo niet in de organische index belandt. */
+interface Props {
+  title?: string;
+  description?: string;
+  /* Body-basiskleur per optie: donker (optie 1) of licht (optie 2). Voorkomt
+     dat de verkeerde kleur doorschemert bij overscroll. */
+  bg?: string;
+  ink?: string;
+}
+const {
+  title = "Ruth Lasters — dichter, auteur, leerkracht",
+  description = "De website van Ruth Lasters: poëzie, proza en de ongemakkelijke stem over onderwijs.",
+  bg = "#100d0b",
+  ink = "#f3ece0",
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body style={`background:${bg};color:${ink};`}>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  img,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+  ul {
+    list-style: none;
+  }
+  button,
+  input {
+    font: inherit;
+    color: inherit;
+  }
+  ::selection {
+    background: #c79a4e;
+    color: #100d0b;
+  }
+</style>

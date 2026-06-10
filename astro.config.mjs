@@ -15,7 +15,8 @@ export default defineConfig({
          houden: die staan op noindex en horen niet in de organische index. */
       filter: (page) =>
         !page.includes('/wordpress-onderhoud/') &&
-        !page.includes('/peter-zijlstra'),
+        !page.includes('/peter-zijlstra') &&
+        !page.includes('/ruth-lasters'),
     }),
   ],
   image: {

@@ -1,0 +1,1186 @@
+---
+import RuthDemoLayout from "../../../layouts/RuthDemoLayout.astro";
+import RuthSwitcher from "../../../components/RuthSwitcher.astro";
+
+/* ──────────────────────────────────────────────────────────────────────────
+   OPTIE 2 — "Editorial licht"
+   Zelfde verfijnde, literaire art-direction als optie 1, maar lichter: warm
+   papier i.p.v. bijna-zwart, fotografie in kleur, en een hero-video die in
+   kleur speelt met een zachte scrim zodat de tekst leesbaar blijft. Twee
+   donkere "ankers" (onderwijs + gedicht) houden het editoriale ritme.
+   Beelden zijn placeholders; teksten in de ik-vorm (haar eigen site).
+   ────────────────────────────────────────────────────────────────────────── */
+
+// Kleur-placeholders (geen grayscale): lichter en warmer dan optie 1.
+const img = (seed: string, w = 1400, h = 1000) =>
+  `https://picsum.photos/seed/${seed}/${w}/${h}`;
+
+const oeuvre = [
+  { title: "Tijgerbrood", year: "2023", genre: "Poëzie", seed: "rl-tijgerbrood" },
+  { title: "VIN", year: "2019", genre: "Proza", seed: "rl-vin" },
+  { title: "Lichtmeters", year: "2015", genre: "Poëzie", seed: "rl-lichtmeters" },
+  { title: "Vlaggenbrief", year: "2014", genre: "Proza", seed: "rl-vlaggenbrief" },
+  { title: "Vouwplannen", year: "2007", genre: "Poëzie", seed: "rl-vouwplannen" },
+  { title: "Poolijs", year: "2006", genre: "Roman", seed: "rl-poolijs" },
+];
+
+const prijzen = [
+  { jaar: "2023", naam: "Arkprijs van het Vrije Woord" },
+  { jaar: "2022", naam: "Melopee Poëzieprijs" },
+  { jaar: "2022", naam: "Poëziewedstrijd der Lage Landen — eerste prijs" },
+  { jaar: "2015", naam: "Herman de Coninckprijs" },
+  { jaar: "2009", naam: "Debuutprijs Het Liegend Konijn" },
+  { jaar: "2007", naam: "Vlaamse Debuutprijs" },
+];
+
+const agenda = [
+  { datum: "24 okt", plaats: "Poetry International, Rotterdam", soort: "Voordracht" },
+  { datum: "08 nov", plaats: "Passa Porta, Brussel", soort: "Gesprek" },
+  { datum: "21 nov", plaats: "Boekenbeurs, Antwerpen", soort: "Signeersessie" },
+  { datum: "maart ’26", plaats: "Éditions Corlevour, Parijs", soort: "Boekpresentatie" },
+];
+---
+
+<RuthDemoLayout title="Ruth Lasters — optie 2 (Editorial licht)" bg="#f3ede1" ink="#211c16">
+  <!-- ══════════════════════ NAV ══════════════════════ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#top" class="nav__brand">
+        Ruth&nbsp;Lasters
+        <span class="nav__brand-sub">dichter · auteur · leerkracht</span>
+      </a>
+      <nav class="nav__links" aria-label="Hoofdmenu">
+        <a href="#werk">Werk</a>
+        <a href="#oeuvre">Boeken</a>
+        <a href="#onderwijs">Onderwijs</a>
+        <a href="#over">Over</a>
+        <a href="#agenda">Agenda</a>
+      </nav>
+      <a href="#contact" class="nav__cta">Contact</a>
+    </div>
+  </header>
+
+  <!-- ══════════════════════ HERO (kleuren-video) ══════════════════════ -->
+  <section class="hero" id="top">
+    <video class="hero__video" autoplay muted loop playsinline preload="auto">
+      <source src="/ruth-demo/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero__veil"></div>
+
+    <div class="hero__content reveal">
+      <span class="eyebrow eyebrow--light">Antwerpen, 1979</span>
+      <h1 class="hero__title">Ruth&nbsp;Lasters</h1>
+      <p class="hero__lede">
+        Dichter en leerkracht uit Antwerpen. Ik schrijf het liefst over wat
+        schuurt, en ik zwijg niet graag over wat er in mijn klas gebeurt.
+      </p>
+      <div class="hero__actions">
+        <a href="#oeuvre" class="btn btn--solid">Lees mijn werk</a>
+        <a href="#onderwijs" class="btn btn--glass">Mevrouw, u staat voor het bord</a>
+      </div>
+    </div>
+
+    <a href="#manifest" class="hero__scroll" aria-label="Scroll naar beneden"><span></span></a>
+  </section>
+
+  <!-- ══════════════════════ MANIFEST ══════════════════════ -->
+  <section class="manifest" id="manifest">
+    <div class="manifest__inner reveal">
+      <span class="manifest__mark">¶</span>
+      <p class="manifest__text">
+        Ik schrijf alsof taal nog iets te verliezen heeft. Sinds mijn debuut
+        <em>Poolijs</em> laat ik poëzie, roman en pamflet door elkaar lopen. Het
+        leverde me een paar prijzen op, en ooit een breuk met de stad Antwerpen,
+        toen die mijn gedicht over onderwijs-elitisme niet wilde publiceren.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ FEATURE — Désirs à l'essai ══════════════════════ -->
+  <section class="feature" id="werk">
+    <div class="feature__media">
+      <img src={img("rl-french-collection", 1300, 1600)} alt="Sfeerbeeld nieuwe bundel" loading="lazy" />
+      <span class="feature__badge">Nieuw · maart 2026</span>
+    </div>
+    <div class="feature__body reveal">
+      <span class="eyebrow">Voor het eerst in het Frans</span>
+      <h2 class="feature__title">Désirs<br /><em>à l’essai</em></h2>
+      <p>
+        Een ruime keuze uit mijn drie Nederlandstalige bundels, vertaald door
+        Daniel Cunin en uitgegeven door Éditions Corlevour. Mijn werk verscheen
+        al in het Duits en het Spaans; in 2026 komt daar het Frans bij.
+      </p>
+      <p class="feature__meta">
+        Vertaling · Daniel&nbsp;Cunin &nbsp;—&nbsp; Uitgever · Éditions&nbsp;Corlevour
+      </p>
+      <a href="#agenda" class="link-arrow">Naar de presentatie <span>→</span></a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ OEUVRE GRID ══════════════════════ -->
+  <section class="oeuvre" id="oeuvre">
+    <div class="section-head reveal">
+      <span class="eyebrow">Mijn boeken</span>
+      <h2 class="section-head__title">Wat ik tot nu toe schreef.</h2>
+    </div>
+    <div class="oeuvre__grid">
+      {oeuvre.map((b) => (
+        <article class="book reveal">
+          <a href="#" class="book__cover">
+            <img src={img(b.seed, 700, 950)} alt={`Cover ${b.title}`} loading="lazy" />
+            <span class="book__genre">{b.genre}</span>
+          </a>
+          <div class="book__foot">
+            <h3 class="book__title">{b.title}</h3>
+            <span class="book__year">{b.year}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ══════════════════════ ONDERWIJS — donker anker ══════════════════════ -->
+  <section class="bord" id="onderwijs">
+    <div class="bord__bg">
+      <img src={img("rl-classroom", 2000, 1300)} alt="Lege klas" loading="lazy" />
+    </div>
+    <div class="bord__inner reveal">
+      <span class="eyebrow eyebrow--light">Het project</span>
+      <h2 class="bord__title">Mevrouw, u staat<br />voor het bord!</h2>
+      <p class="bord__lede">
+        Ik geef les én ik schrijf over de burn-outgolf die het onderwijs
+        teistert. Toen Antwerpen mijn gedicht over kansenongelijkheid weigerde,
+        legde ik het stadsdichterschap neer. De pen bleek scherper dan het ambt.
+      </p>
+      <blockquote class="bord__quote">
+        „Een school die haar zwakste leerling laat vallen, valt zelf.”
+      </blockquote>
+      <a href="#" class="btn btn--solid">Lees mijn blog</a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ GEDICHT-INTERLUDE — donker anker ══════════════════════ -->
+  <section class="poem">
+    <div class="poem__bg">
+      <img src={img("rl-ink-paper", 2000, 1200)} alt="" loading="lazy" />
+    </div>
+    <p class="poem__lines reveal">
+      Geef mij een woord<br />
+      dat niet meteen gehoorzaamt,<br />
+      en ik leer het<br />
+      <em>opnieuw te ademen.</em>
+    </p>
+    <span class="poem__src reveal">— uit <em>Lichtmeters</em></span>
+  </section>
+
+  <!-- ══════════════════════ OVER MIJ ══════════════════════ -->
+  <section class="about" id="over">
+    <div class="about__portrait">
+      <img src={img("rl-portrait", 1100, 1400)} alt="Portret Ruth Lasters" loading="lazy" />
+    </div>
+    <div class="about__text reveal">
+      <span class="eyebrow">Over mij</span>
+      <h2 class="about__title">Antwerpen, 1979. En nog altijd voor de klas.</h2>
+      <p>
+        Ik debuteerde in 2006 met de roman <em>Poolijs</em>, een jaar later
+        volgde mijn poëziedebuut <em>Vouwplannen</em>. Sindsdien wissel ik romans
+        en dichtbundels af. Het persoonlijke en het maatschappelijke houd ik
+        daarin niet gescheiden.
+      </p>
+      <p>
+        Naast het schrijven sta ik voor de klas. Die twee dingen kleuren elkaar:
+        van mijn bundels tot de opiniestukken die ik schrijf over het onderwijs.
+      </p>
+
+      <div class="awards">
+        <span class="awards__label">Een paar prijzen onderweg</span>
+        <ul class="awards__list">
+          {prijzen.map((p) => (
+            <li>
+              <span class="awards__year">{p.jaar}</span>
+              <span class="awards__name">{p.naam}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ AGENDA ══════════════════════ -->
+  <section class="agenda" id="agenda">
+    <div class="section-head section-head--row reveal">
+      <span class="eyebrow">Agenda</span>
+      <h2 class="section-head__title">Waar ik binnenkort sta.</h2>
+    </div>
+    <ul class="agenda__list">
+      {agenda.map((a) => (
+        <li class="agenda__item reveal">
+          <span class="agenda__date">{a.datum}</span>
+          <span class="agenda__place">{a.plaats}</span>
+          <span class="agenda__kind">{a.soort}</span>
+          <span class="agenda__arrow">→</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ══════════════════════ CONTACT / NEWSLETTER ══════════════════════ -->
+  <section class="contact" id="contact">
+    <div class="contact__inner reveal">
+      <span class="eyebrow eyebrow--light">Blijf in de buurt</span>
+      <h2 class="contact__title">Nieuwe bundels, voordrachten<br />en het scherpe randje.</h2>
+      <form class="contact__form" onsubmit="return false">
+        <input type="email" placeholder="jouw e-mailadres" aria-label="E-mailadres" required />
+        <button type="submit" class="btn btn--solid">Schrijf me in</button>
+      </form>
+      <p class="contact__fine">
+        Voor optredens, lezingen en pers: <a href="mailto:info@ruthlasters.com">info@ruthlasters.com</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ FOOTER ══════════════════════ -->
+  <footer class="foot">
+    <div class="foot__top">
+      <span class="foot__brand">Ruth&nbsp;Lasters</span>
+      <nav class="foot__nav" aria-label="Footer">
+        <a href="#oeuvre">Boeken</a>
+        <a href="#onderwijs">Onderwijs</a>
+        <a href="#over">Over</a>
+        <a href="#agenda">Agenda</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="foot__social">
+        <a href="#" aria-label="Instagram">IG</a>
+        <a href="#" aria-label="Facebook">FB</a>
+        <a href="#" aria-label="LinkedIn">IN</a>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>© {new Date().getFullYear()} Ruth Lasters</span>
+      <span class="foot__credit">Demo-ontwerp — Froseo</span>
+    </div>
+  </footer>
+
+  <RuthSwitcher active="optie2" />
+
+  <script is:inline>
+    const nav = document.getElementById("nav");
+    const onScroll = () => nav.classList.toggle("nav--scrolled", window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.16 }
+    );
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  </script>
+</RuthDemoLayout>
+
+<style>
+  /* ════════════ TOKENS (licht) ════════════ */
+  :root {
+    --paper: #f3ede1;
+    --paper-2: #ece3d3;
+    --ink: #211c16;
+    --ink-2: #15110d; /* donkere ankers */
+    --cream: #f3ece0;
+    --muted: #8c8273;
+    --muted-light: #b6ab98;
+    --gold: #a9772a; /* leesbaar op licht */
+    --gold-bright: #cd9f57; /* op donker */
+    --line: rgba(33, 28, 22, 0.14);
+    --line-light: rgba(243, 236, 224, 0.16);
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", system-ui, sans-serif;
+    --maxw: 1280px;
+    --pad: clamp(1.25rem, 5vw, 5rem);
+  }
+
+  /* ════════════ PRIMITIVES ════════════ */
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.4rem;
+  }
+  .eyebrow--light {
+    color: var(--gold-bright);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 0.95rem 1.7rem;
+    border-radius: 2px;
+    transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  }
+  .btn--solid {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn--solid:hover {
+    background: var(--gold);
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
+  .btn--glass {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(6px);
+  }
+  .btn--glass:hover {
+    background: #fff;
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
+
+  .link-arrow {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .link-arrow span {
+    transition: transform 0.25s ease;
+  }
+  .link-arrow:hover span {
+    transform: translateX(5px);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  .section-head {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+  }
+  .section-head__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(1.9rem, 4.2vw, 3.4rem);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    max-width: 16ch;
+  }
+  .section-head--row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .section-head--row .section-head__title {
+    max-width: none;
+  }
+
+  /* ════════════ NAV ════════════ */
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease,
+      border-color 0.4s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .nav--scrolled {
+    background: rgba(243, 237, 225, 0.85);
+    backdrop-filter: blur(14px);
+    border-bottom-color: var(--line);
+  }
+  /* Bovenaan ligt de nav op de donkere video → lichte tekst; na scroll op
+     papier → donkere tekst. */
+  .nav__inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 1.1rem var(--pad);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .nav__brand {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: #fff;
+    transition: color 0.4s ease;
+  }
+  .nav--scrolled .nav__brand {
+    color: var(--ink);
+  }
+  .nav__brand-sub {
+    font-family: var(--sans);
+    font-size: 0.58rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.65);
+    transition: color 0.4s ease;
+  }
+  .nav--scrolled .nav__brand-sub {
+    color: var(--muted);
+  }
+  .nav__links {
+    display: flex;
+    gap: 2rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+  }
+  .nav__links a {
+    color: #fff;
+    opacity: 0.85;
+    transition: opacity 0.2s ease, color 0.2s ease;
+  }
+  .nav--scrolled .nav__links a {
+    color: var(--ink);
+    opacity: 0.78;
+  }
+  .nav__links a:hover {
+    opacity: 1;
+    color: var(--gold-bright);
+  }
+  .nav--scrolled .nav__links a:hover {
+    color: var(--gold);
+  }
+  .nav__cta {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    padding: 0.6rem 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+    color: #fff;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+  .nav--scrolled .nav__cta {
+    border-color: var(--line);
+    color: var(--ink);
+  }
+  .nav__cta:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  @media (max-width: 880px) {
+    .nav__links {
+      display: none;
+    }
+  }
+
+  /* ════════════ HERO ════════════ */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: var(--ink-2);
+  }
+  .hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* in KLEUR, alleen iets ingetogen zodat de tekst leest */
+    filter: saturate(1.02) contrast(1.02) brightness(0.92);
+  }
+  .hero__veil {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(18, 14, 10, 0.34) 0%,
+        rgba(18, 14, 10, 0.05) 28%,
+        rgba(18, 14, 10, 0.45) 64%,
+        rgba(18, 14, 10, 0.88) 100%
+      ),
+      radial-gradient(120% 80% at 12% 92%, rgba(18, 14, 10, 0.6), transparent 60%);
+  }
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: var(--maxw);
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--pad) clamp(3.5rem, 9vh, 7rem);
+    color: #fff;
+  }
+  .hero__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(3.6rem, 13vw, 11rem);
+    line-height: 0.9;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.6rem;
+    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.35);
+  }
+  .hero__lede {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: clamp(1.02rem, 1.7vw, 1.4rem);
+    line-height: 1.55;
+    max-width: 46ch;
+    color: rgba(255, 255, 255, 0.94);
+    margin-bottom: 2.4rem;
+    text-shadow: 0 1px 18px rgba(0, 0, 0, 0.45);
+  }
+  .hero__actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .hero__scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 26px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 14px;
+    display: grid;
+    place-items: start center;
+    padding-top: 7px;
+  }
+  .hero__scroll span {
+    width: 3px;
+    height: 8px;
+    background: var(--gold-bright);
+    border-radius: 2px;
+    animation: scroll-dot 1.8s ease-in-out infinite;
+  }
+  @keyframes scroll-dot {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(10px);
+      opacity: 0.3;
+    }
+  }
+
+  /* ════════════ MANIFEST ════════════ */
+  .manifest {
+    background: var(--paper);
+    color: var(--ink);
+    padding: clamp(5rem, 12vh, 9rem) var(--pad);
+  }
+  .manifest__inner {
+    max-width: 60rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .manifest__mark {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+  .manifest__text {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(1.4rem, 3vw, 2.25rem);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+  }
+  .manifest__text em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  /* ════════════ FEATURE ════════════ */
+  .feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    background: var(--paper-2);
+    color: var(--ink);
+  }
+  .feature__media {
+    position: relative;
+    min-height: 60vh;
+  }
+  .feature__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .feature__badge {
+    position: absolute;
+    top: 1.6rem;
+    left: 1.6rem;
+    background: var(--gold);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.9rem;
+    border-radius: 2px;
+  }
+  .feature__body {
+    padding: clamp(3rem, 7vw, 6rem) clamp(1.5rem, 5vw, 5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 38rem;
+  }
+  .feature__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.8rem;
+  }
+  .feature__title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .feature__body p {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: rgba(33, 28, 22, 0.82);
+    margin-bottom: 1.4rem;
+  }
+  .feature__meta {
+    font-size: 0.82rem !important;
+    letter-spacing: 0.04em;
+    color: var(--muted) !important;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 1rem 0 !important;
+    margin-bottom: 2rem !important;
+  }
+  @media (max-width: 880px) {
+    .feature {
+      grid-template-columns: 1fr;
+    }
+    .feature__media {
+      min-height: 52vh;
+    }
+  }
+
+  /* ════════════ OEUVRE ════════════ */
+  .oeuvre {
+    padding: clamp(5rem, 12vh, 9rem) 0;
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .oeuvre .section-head {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .oeuvre__grid {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.4rem, 3vw, 2.6rem);
+  }
+  .book__cover {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 2px;
+    aspect-ratio: 3 / 4;
+    box-shadow: 0 12px 30px rgba(33, 28, 22, 0.12);
+  }
+  .book__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .book:hover .book__cover img {
+    transform: scale(1.05);
+  }
+  .book__genre {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    font-family: var(--sans);
+    font-size: 0.64rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(20, 16, 12, 0.55);
+    backdrop-filter: blur(4px);
+    padding: 0.35rem 0.65rem;
+    border-radius: 2px;
+  }
+  .book__foot {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-top: 1.1rem;
+    border-top: 1px solid var(--line);
+    padding-top: 0.9rem;
+  }
+  .book__title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
+  }
+  .book__year {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  @media (max-width: 880px) {
+    .oeuvre__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 520px) {
+    .oeuvre__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.1rem;
+    }
+    .book__title {
+      font-size: 1.1rem;
+    }
+  }
+
+  /* ════════════ BORD (donker anker) ════════════ */
+  .bord {
+    position: relative;
+    padding: clamp(6rem, 16vh, 11rem) var(--pad);
+    overflow: hidden;
+    color: #fff;
+  }
+  .bord__bg {
+    position: absolute;
+    inset: 0;
+  }
+  .bord__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.4) brightness(0.4) contrast(1.05);
+  }
+  .bord::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      100deg,
+      rgba(15, 12, 9, 0.92) 0%,
+      rgba(15, 12, 9, 0.6) 55%,
+      rgba(15, 12, 9, 0.35) 100%
+    );
+  }
+  .bord__inner {
+    position: relative;
+    z-index: 2;
+    max-width: var(--maxw);
+    margin: 0 auto;
+  }
+  .bord__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2.4rem, 6.5vw, 5.4rem);
+    line-height: 0.96;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.8rem;
+  }
+  .bord__lede {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    line-height: 1.6;
+    max-width: 52ch;
+    color: rgba(255, 255, 255, 0.88);
+    margin-bottom: 2.4rem;
+  }
+  .bord__quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    line-height: 1.3;
+    color: var(--gold-bright);
+    border-left: 2px solid var(--gold-bright);
+    padding-left: 1.6rem;
+    max-width: 30ch;
+    margin-bottom: 2.6rem;
+  }
+
+  /* ════════════ POEM (donker anker) ════════════ */
+  .poem {
+    position: relative;
+    padding: clamp(6rem, 18vh, 12rem) var(--pad);
+    text-align: center;
+    overflow: hidden;
+    color: #fff;
+  }
+  .poem__bg {
+    position: absolute;
+    inset: 0;
+  }
+  .poem__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.85) brightness(0.32);
+  }
+  .poem::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(80% 80% at 50% 50%, transparent, rgba(15, 12, 9, 0.7));
+  }
+  .poem__lines {
+    position: relative;
+    z-index: 2;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(1.7rem, 4.5vw, 3.2rem);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+  }
+  .poem__lines em {
+    font-style: italic;
+    color: var(--gold-bright);
+  }
+  .poem__src {
+    position: relative;
+    z-index: 2;
+    display: block;
+    margin-top: 2rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    color: var(--muted-light);
+  }
+  .poem__src em {
+    font-style: italic;
+  }
+
+  /* ════════════ ABOUT ════════════ */
+  .about {
+    display: grid;
+    grid-template-columns: 0.85fr 1fr;
+    background: var(--paper-2);
+    color: var(--ink);
+  }
+  .about__portrait {
+    position: relative;
+    min-height: 70vh;
+  }
+  .about__portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .about__text {
+    padding: clamp(3.5rem, 7vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+    max-width: 44rem;
+  }
+  .about__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(1.9rem, 3.6vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.8rem;
+    max-width: 18ch;
+  }
+  .about__text p {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 1.04rem;
+    line-height: 1.7;
+    color: rgba(33, 28, 22, 0.78);
+    margin-bottom: 1.3rem;
+  }
+  .about__text em {
+    font-style: italic;
+    color: var(--ink);
+  }
+  .awards {
+    margin-top: 2.6rem;
+    border-top: 1px solid var(--line);
+    padding-top: 1.8rem;
+  }
+  .awards__label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(33, 28, 22, 0.5);
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+  .awards__list {
+    display: grid;
+    gap: 0.2rem;
+  }
+  .awards__list li {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .awards__year {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--gold);
+  }
+  .awards__name {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  @media (max-width: 880px) {
+    .about {
+      grid-template-columns: 1fr;
+    }
+    .about__portrait {
+      min-height: 60vh;
+    }
+  }
+
+  /* ════════════ AGENDA ════════════ */
+  .agenda {
+    padding: clamp(5rem, 12vh, 9rem) 0;
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .agenda .section-head {
+    margin-bottom: 2.6rem;
+  }
+  .agenda__list {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+  }
+  .agenda__item {
+    display: grid;
+    grid-template-columns: 7rem 1fr auto 2rem;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--line);
+    transition: padding-left 0.3s ease;
+  }
+  .agenda__item:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .agenda__item:hover {
+    padding-left: 0.8rem;
+  }
+  .agenda__date {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--gold);
+  }
+  .agenda__place {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  }
+  .agenda__kind {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .agenda__arrow {
+    color: var(--gold);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .agenda__item:hover .agenda__arrow {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+  @media (max-width: 720px) {
+    .agenda__item {
+      grid-template-columns: 5rem 1fr;
+      gap: 0.4rem 1rem;
+    }
+    .agenda__kind {
+      grid-column: 2;
+    }
+    .agenda__arrow {
+      display: none;
+    }
+  }
+
+  /* ════════════ CONTACT (donker anker) ════════════ */
+  .contact {
+    background: var(--ink-2);
+    color: #fff;
+    padding: clamp(5rem, 14vh, 10rem) var(--pad);
+    text-align: center;
+  }
+  .contact__inner {
+    max-width: 46rem;
+    margin: 0 auto;
+  }
+  .contact__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin-bottom: 2.6rem;
+  }
+  .contact__form {
+    display: flex;
+    gap: 0.6rem;
+    max-width: 32rem;
+    margin: 0 auto 1.6rem;
+  }
+  .contact__form input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 2px;
+    padding: 0.95rem 1.1rem;
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: #fff;
+  }
+  .contact__form input::placeholder {
+    color: var(--muted-light);
+  }
+  .contact__form input:focus {
+    outline: none;
+    border-color: var(--gold-bright);
+  }
+  .contact__fine {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    color: var(--muted-light);
+  }
+  .contact__fine a {
+    color: var(--gold-bright);
+    border-bottom: 1px solid transparent;
+  }
+  .contact__fine a:hover {
+    border-bottom-color: var(--gold-bright);
+  }
+  @media (max-width: 520px) {
+    .contact__form {
+      flex-direction: column;
+    }
+  }
+
+  /* ════════════ FOOTER ════════════ */
+  .foot {
+    background: var(--ink-2);
+    color: #fff;
+    padding: clamp(3rem, 6vw, 4.5rem) var(--pad) 2rem;
+    border-top: 1px solid var(--line-light);
+  }
+  .foot__top {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--line-light);
+  }
+  .foot__brand {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  .foot__nav {
+    display: flex;
+    gap: 1.8rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+  }
+  .foot__nav a {
+    color: #fff;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, color 0.2s ease;
+  }
+  .foot__nav a:hover {
+    opacity: 1;
+    color: var(--gold-bright);
+  }
+  .foot__social {
+    display: flex;
+    gap: 1rem;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+  }
+  .foot__social a {
+    color: var(--muted-light);
+    transition: color 0.2s ease;
+  }
+  .foot__social a:hover {
+    color: var(--gold-bright);
+  }
+  .foot__bottom {
+    max-width: var(--maxw);
+    margin: 1.6rem auto 0;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--muted-light);
+  }
+</style>

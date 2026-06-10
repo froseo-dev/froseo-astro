@@ -1,0 +1,1124 @@
+---
+import RuthDemoLayout from "../../../layouts/RuthDemoLayout.astro";
+import RuthSwitcher from "../../../components/RuthSwitcher.astro";
+
+/* ──────────────────────────────────────────────────────────────────────────
+   OPTIE 2 — "Atelier"
+   Helder, strak-grafisch, vriendelijk. Geënt op de sfeer van Ruth's eigen
+   homepagefilmpje: felblauwe lucht, knalrode boeken, warm goudzand, papieren
+   bootjes — een handgemaakte, optimistische diorama-wereld.
+   Kleur als bouwsteen (rood = hoofdaccent), Bricolage Grotesque voor karakter,
+   afgeronde kleurpanelen, lichte papier-achtergrond.
+   ────────────────────────────────────────────────────────────────────────── */
+
+// Placeholder-beelden: hier juist in KLEUR (matcht het kleurrijke filmpje).
+// Bij de echte bouw vervangen door Ruth's eigen fotografie.
+const img = (seed: string, w = 1400, h = 1000) =>
+  `https://picsum.photos/seed/${seed}/${w}/${h}`;
+
+const oeuvre = [
+  { title: "Tijgerbrood", year: "2023", genre: "Poëzie", tint: "rood", seed: "rl2-tijgerbrood" },
+  { title: "VIN", year: "2019", genre: "Proza", tint: "lucht", seed: "rl2-vin" },
+  { title: "Lichtmeters", year: "2015", genre: "Poëzie", tint: "zand", seed: "rl2-lichtmeters" },
+  { title: "Vlaggenbrief", year: "2014", genre: "Proza", tint: "lucht", seed: "rl2-vlaggenbrief" },
+  { title: "Vouwplannen", year: "2007", genre: "Poëzie", tint: "zand", seed: "rl2-vouwplannen" },
+  { title: "Poolijs", year: "2006", genre: "Roman", tint: "rood", seed: "rl2-poolijs" },
+];
+
+const prijzen = [
+  { jaar: "2023", naam: "Arkprijs van het Vrije Woord" },
+  { jaar: "2022", naam: "Melopee Poëzieprijs" },
+  { jaar: "2022", naam: "Poëziewedstrijd der Lage Landen" },
+  { jaar: "2015", naam: "Herman de Coninckprijs" },
+  { jaar: "2009", naam: "Debuutprijs Het Liegend Konijn" },
+  { jaar: "2007", naam: "Vlaamse Debuutprijs" },
+];
+
+const agenda = [
+  { datum: "24 okt", plaats: "Poetry International, Rotterdam", soort: "Voordracht" },
+  { datum: "08 nov", plaats: "Passa Porta, Brussel", soort: "Gesprek" },
+  { datum: "21 nov", plaats: "Boekenbeurs, Antwerpen", soort: "Signeersessie" },
+  { datum: "mrt ’26", plaats: "Éditions Corlevour, Parijs", soort: "Boekpresentatie" },
+];
+---
+
+<RuthDemoLayout
+  title="Ruth Lasters — optie 3 (Atelier)"
+  bg="#f7f2e8"
+  ink="#211d18"
+>
+  <!-- ══════════════════════ NAV ══════════════════════ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#top" class="nav__brand">Ruth Lasters</a>
+      <nav class="nav__links" aria-label="Hoofdmenu">
+        <a href="#werk">Werk</a>
+        <a href="#oeuvre">Boeken</a>
+        <a href="#onderwijs">Onderwijs</a>
+        <a href="#over">Over</a>
+        <a href="#agenda">Agenda</a>
+      </nav>
+      <a href="#contact" class="nav__cta">Contact</a>
+    </div>
+  </header>
+
+  <!-- ══════════════════════ HERO (groot afgerond video-vlak) ══════════════════════ -->
+  <section class="hero" id="top">
+    <div class="hero__stage reveal">
+      <video class="hero__video" autoplay muted loop playsinline preload="auto">
+        <source src="/ruth-demo/hero.mp4" type="video/mp4" />
+      </video>
+      <span class="hero__scrim" aria-hidden="true"></span>
+
+      <span class="hero__sticker">The<br />Inconvenient<br />Ruth</span>
+
+      <div class="hero__overlay">
+        <span class="eyebrow eyebrow--onvid">Dichter · auteur · leerkracht</span>
+        <h1 class="hero__title">Ruth <span class="ink-red">Lasters</span></h1>
+        <p class="hero__lede">
+          Ik kom uit Antwerpen en ik schrijf poëzie, proza en af en toe een
+          pamflet. Speels waar het kan, scherp waar het moet.
+        </p>
+        <div class="hero__actions">
+          <a href="#oeuvre" class="btn btn--red">Lees het werk</a>
+          <a href="#onderwijs" class="btn btn--glass">Het onderwijsverhaal</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ MANIFEST ══════════════════════ -->
+  <section class="manifest reveal">
+    <p>
+      Sinds mijn debuut <em>Poolijs</em> schrijf ik het liefst dingen die
+      <span class="hl hl--red">schuren</span>,
+      <span class="hl hl--sky">verwonderen</span> en
+      <span class="hl hl--sand">niet sussen</span>. Mijn werk verscheen in vijf
+      talen. En ja, ik nam ooit afscheid van de stad Antwerpen toen die mijn
+      gedicht over kansenongelijkheid niet wilde publiceren.
+    </p>
+  </section>
+
+  <!-- ══════════════════════ FEATURE — Désirs à l'essai (rood blok) ══════════════════════ -->
+  <section class="feature" id="werk">
+    <div class="feature__panel">
+      <div class="feature__body reveal">
+        <span class="badge badge--cream">Nieuw · maart 2026</span>
+        <h2 class="feature__title">Désirs à l’essai</h2>
+        <p>
+          Voor het eerst in het Frans. Een ruime keuze uit mijn drie
+          Nederlandstalige bundels, vertaald door Daniel Cunin voor Éditions
+          Corlevour.
+        </p>
+        <p class="feature__meta">Vertaling · Daniel Cunin — Parijs · 2026</p>
+        <a href="#agenda" class="btn btn--cream">Naar de presentatie</a>
+      </div>
+      <div class="feature__media reveal">
+        <img src={img("rl2-french", 1100, 1300)} alt="Sfeerbeeld nieuwe bundel" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ OEUVRE ══════════════════════ -->
+  <section class="oeuvre" id="oeuvre">
+    <div class="section-head reveal">
+      <span class="eyebrow">Mijn boeken</span>
+      <h2 class="section-head__title">Wat ik tot nu toe schreef.</h2>
+    </div>
+    <div class="oeuvre__grid">
+      {oeuvre.map((b) => (
+        <article class="book reveal">
+          <a href="#" class="book__cover">
+            <img src={img(b.seed, 700, 900)} alt={`Cover ${b.title}`} loading="lazy" />
+            <span class={`tag tag--${b.tint}`}>{b.genre}</span>
+          </a>
+          <div class="book__foot">
+            <h3 class="book__title">{b.title}</h3>
+            <span class="book__year">{b.year}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ══════════════════════ ONDERWIJS — lucht-blauw blok ══════════════════════ -->
+  <section class="bord" id="onderwijs">
+    <div class="bord__inner">
+      <div class="bord__body reveal">
+        <span class="badge badge--red">Het project</span>
+        <h2 class="bord__title">Mevrouw, u staat voor het bord!</h2>
+        <p>
+          Ik geef les én ik schrijf over de burn-outgolf in het onderwijs. Toen
+          Antwerpen mijn gedicht over kansenongelijkheid weigerde, legde ik het
+          stadsdichterschap neer. De pen bleek scherper dan het ambt.
+        </p>
+        <blockquote>„Een school die haar zwakste leerling laat vallen, valt zelf.”</blockquote>
+        <a href="#" class="btn btn--red">Lees de blog</a>
+      </div>
+      <div class="bord__media reveal">
+        <img src={img("rl2-classroom", 1000, 1200)} alt="Klaslokaal" loading="lazy" />
+        <span class="bord__note">Onderwijs &amp; opinie</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ OVER RUTH ══════════════════════ -->
+  <section class="about" id="over">
+    <div class="about__portrait reveal">
+      <img src={img("rl2-portrait", 1000, 1250)} alt="Portret Ruth Lasters" loading="lazy" />
+    </div>
+    <div class="about__text reveal">
+      <span class="eyebrow">Over mij</span>
+      <h2 class="about__title">Antwerpen, 1979. En nog altijd voor de klas.</h2>
+      <p>
+        Ik debuteerde in 2006 met de roman <em>Poolijs</em>, mijn poëziedebuut
+        <em>Vouwplannen</em> volgde een jaar later. Sindsdien wissel ik romans en
+        dichtbundels af, en bleef ik lesgeven.
+      </p>
+      <p>
+        Die twee dingen, schrijven en voor de klas staan, houd ik niet uit
+        elkaar. Het persoonlijke en het maatschappelijke lopen bij mij gewoon
+        door elkaar.
+      </p>
+      <div class="awards">
+        <span class="awards__label">Een paar prijzen onderweg</span>
+        <div class="awards__chips">
+          {prijzen.map((p) => (
+            <span class="award-chip">
+              <b>{p.jaar}</b> {p.naam}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ AGENDA ══════════════════════ -->
+  <section class="agenda" id="agenda">
+    <div class="section-head section-head--row reveal">
+      <span class="eyebrow">Agenda</span>
+      <h2 class="section-head__title">Waar ik binnenkort sta.</h2>
+    </div>
+    <ul class="agenda__list">
+      {agenda.map((a) => (
+        <li class="agenda__item reveal">
+          <span class="agenda__date">{a.datum}</span>
+          <span class="agenda__place">{a.plaats}</span>
+          <span class="agenda__kind">{a.soort}</span>
+          <span class="agenda__arrow" aria-hidden="true">→</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ══════════════════════ CONTACT (rood blok) ══════════════════════ -->
+  <section class="contact" id="contact">
+    <div class="contact__inner reveal">
+      <span class="badge badge--cream">Blijf in de buurt</span>
+      <h2 class="contact__title">Nieuwe bundels, voordrachten en het scherpe randje.</h2>
+      <form class="contact__form" onsubmit="return false">
+        <input type="email" placeholder="jouw e-mailadres" aria-label="E-mailadres" required />
+        <button type="submit" class="btn btn--cream">Schrijf me in</button>
+      </form>
+      <p class="contact__fine">
+        Voor optredens en pers: <a href="mailto:info@ruthlasters.com">info@ruthlasters.com</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ FOOTER ══════════════════════ -->
+  <footer class="foot">
+    <div class="foot__top">
+      <span class="foot__brand">Ruth Lasters</span>
+      <nav class="foot__nav" aria-label="Footer">
+        <a href="#oeuvre">Boeken</a>
+        <a href="#onderwijs">Onderwijs</a>
+        <a href="#over">Over</a>
+        <a href="#agenda">Agenda</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="foot__social">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>© {new Date().getFullYear()} Ruth Lasters</span>
+      <span>Demo-ontwerp — Froseo</span>
+    </div>
+  </footer>
+
+  <RuthSwitcher active="optie2" />
+
+  <script is:inline>
+    const nav = document.getElementById("nav");
+    const onScroll = () => nav.classList.toggle("nav--scrolled", window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  </script>
+</RuthDemoLayout>
+
+<style>
+  /* ════════════ TOKENS ════════════ */
+  :root {
+    --paper: #f7f2e8;
+    --paper-2: #fbf8f1;
+    --ink: #211d18;
+    --ink-soft: #6a6055;
+    --red: #df3b2b;
+    --red-dark: #c5301f;
+    --sky: #bcdcea;
+    --sky-deep: #6ba8c6;
+    --sand: #e9c270;
+    --line: rgba(33, 29, 24, 0.12);
+    --display: "Bricolage Grotesque", system-ui, sans-serif;
+    --sans: "Inter", system-ui, sans-serif;
+    --maxw: 1280px;
+    --pad: clamp(1.25rem, 5vw, 4.5rem);
+    --r: 22px;
+  }
+
+  /* ════════════ PRIMITIVES ════════════ */
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1.2rem;
+  }
+  .ink-red {
+    color: var(--red);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 0.95rem 1.7rem;
+    border-radius: 100px;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn--red {
+    background: var(--red);
+    color: #fff;
+    box-shadow: 0 8px 22px rgba(223, 59, 43, 0.28);
+  }
+  .btn--red:hover {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+  }
+  .btn--outline {
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+  }
+  .btn--outline:hover {
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateY(-2px);
+  }
+  .btn--cream {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .btn--cream:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+  }
+  .btn--glass {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(6px);
+  }
+  .btn--glass:hover {
+    background: #fff;
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.42rem 0.85rem;
+    border-radius: 100px;
+    margin-bottom: 1.4rem;
+  }
+  .badge--cream {
+    background: rgba(247, 242, 232, 0.92);
+    color: var(--red);
+  }
+  .badge--red {
+    background: var(--red);
+    color: #fff;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  .section-head {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+  }
+  .section-head__title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.9rem, 4vw, 3.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+  }
+  .section-head--row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .section-head--row .section-head__title {
+    max-width: none;
+  }
+
+  /* ════════════ NAV ════════════ */
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    transition: background 0.35s ease, box-shadow 0.35s ease;
+  }
+  .nav--scrolled {
+    background: rgba(247, 242, 232, 0.85);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .nav__inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 1rem var(--pad);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .nav__brand {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .nav__links {
+    display: flex;
+    gap: 2rem;
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+  .nav__links a {
+    color: var(--ink);
+    opacity: 0.8;
+    transition: opacity 0.2s ease, color 0.2s ease;
+  }
+  .nav__links a:hover {
+    opacity: 1;
+    color: var(--red);
+  }
+  .nav__cta {
+    font-family: var(--sans);
+    font-size: 0.86rem;
+    font-weight: 600;
+    padding: 0.6rem 1.3rem;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 100px;
+    transition: background 0.2s ease;
+  }
+  .nav__cta:hover {
+    background: var(--red);
+  }
+  @media (max-width: 900px) {
+    .nav__links {
+      display: none;
+    }
+  }
+
+  /* ════════════ HERO (groot afgerond video-vlak) ════════════ */
+  .hero {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: clamp(5.5rem, 11vh, 7.5rem) var(--pad) clamp(1rem, 3vw, 2rem);
+  }
+  .hero__stage {
+    position: relative;
+    border-radius: clamp(20px, 2.4vw, 34px);
+    overflow: hidden;
+    min-height: min(86svh, 780px);
+    display: flex;
+    align-items: flex-end;
+    box-shadow: 0 32px 70px rgba(33, 29, 24, 0.28);
+  }
+  .hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        180deg,
+        rgba(20, 16, 12, 0.18) 0%,
+        rgba(20, 16, 12, 0) 30%,
+        rgba(20, 16, 12, 0.18) 55%,
+        rgba(20, 16, 12, 0.78) 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(20, 16, 12, 0.55) 0%,
+        rgba(20, 16, 12, 0.12) 42%,
+        rgba(20, 16, 12, 0) 70%
+      );
+  }
+  .hero__overlay {
+    position: relative;
+    z-index: 2;
+    padding: clamp(2rem, 5vw, 4.5rem);
+    max-width: 50rem;
+    color: #fff;
+  }
+  .eyebrow--onvid {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.42rem 0.95rem;
+    border-radius: 100px;
+  }
+  .hero__title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(3.4rem, 10vw, 8.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+    margin-bottom: 1.3rem;
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.3);
+  }
+  .hero__title .ink-red {
+    color: #ff6552;
+  }
+  .hero__lede {
+    font-family: var(--sans);
+    font-size: clamp(1.05rem, 1.5vw, 1.32rem);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.92);
+    max-width: 44ch;
+    margin-bottom: 2rem;
+    text-shadow: 0 1px 16px rgba(0, 0, 0, 0.4);
+  }
+  .hero__actions {
+    display: flex;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+  .hero__sticker {
+    position: absolute;
+    z-index: 3;
+    top: clamp(1.5rem, 3vw, 2.5rem);
+    right: clamp(1.5rem, 3vw, 2.5rem);
+    background: var(--red);
+    color: #fff;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    padding: 0.75rem 1rem;
+    border-radius: 14px;
+    transform: rotate(6deg);
+    box-shadow: 0 12px 28px rgba(223, 59, 43, 0.4);
+  }
+  @media (max-width: 700px) {
+    .hero__stage {
+      min-height: min(82svh, 620px);
+    }
+    .hero__sticker {
+      font-size: 0.78rem;
+    }
+  }
+
+  /* ════════════ MANIFEST ════════════ */
+  .manifest {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: clamp(3rem, 9vh, 7rem) var(--pad);
+    text-align: center;
+  }
+  .manifest p {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 3.4vw, 2.6rem);
+    line-height: 1.32;
+    letter-spacing: -0.015em;
+  }
+  .hl {
+    position: relative;
+    white-space: nowrap;
+    padding: 0 0.15em;
+    border-radius: 6px;
+  }
+  .hl--red {
+    background: rgba(223, 59, 43, 0.16);
+    color: var(--red);
+  }
+  .hl--sky {
+    background: rgba(107, 168, 198, 0.22);
+    color: var(--sky-deep);
+  }
+  .hl--sand {
+    background: rgba(233, 194, 112, 0.32);
+    color: #a9772a;
+  }
+
+  /* ════════════ FEATURE ════════════ */
+  .feature {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: clamp(1rem, 3vw, 2rem) var(--pad);
+  }
+  .feature__panel {
+    background: var(--red);
+    color: #fff;
+    border-radius: var(--r);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+    align-items: stretch;
+  }
+  .feature__body {
+    padding: clamp(2.5rem, 5vw, 4.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .feature__title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.3rem;
+  }
+  .feature__body p {
+    font-family: var(--sans);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.92);
+    max-width: 36ch;
+    margin-bottom: 1.1rem;
+  }
+  .feature__meta {
+    font-size: 0.85rem !important;
+    color: rgba(255, 255, 255, 0.72) !important;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    margin-bottom: 1.8rem !important;
+  }
+  .feature__media {
+    position: relative;
+    min-height: 24rem;
+  }
+  .feature__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @media (max-width: 820px) {
+    .feature__panel {
+      grid-template-columns: 1fr;
+    }
+    .feature__media {
+      min-height: 16rem;
+      order: -1;
+    }
+  }
+
+  /* ════════════ OEUVRE ════════════ */
+  .oeuvre {
+    padding: clamp(4rem, 10vh, 7rem) 0;
+  }
+  .oeuvre .section-head {
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+  .oeuvre__grid {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.2rem, 2.6vw, 2.2rem);
+  }
+  .book__cover {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 16px;
+    aspect-ratio: 3 / 4;
+    background: var(--paper-2);
+    box-shadow: 0 10px 28px rgba(33, 29, 24, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .book:hover .book__cover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(33, 29, 24, 0.18);
+  }
+  .book__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .tag {
+    position: absolute;
+    top: 0.9rem;
+    left: 0.9rem;
+    font-family: var(--sans);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.7rem;
+    border-radius: 100px;
+    color: #fff;
+  }
+  .tag--rood {
+    background: var(--red);
+  }
+  .tag--lucht {
+    background: var(--sky-deep);
+  }
+  .tag--zand {
+    background: #b9863a;
+  }
+  .book__foot {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-top: 0.9rem;
+    padding: 0 0.2rem;
+  }
+  .book__title {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+  }
+  .book__year {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 820px) {
+    .oeuvre__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* ════════════ ONDERWIJS (lucht-blok) ════════════ */
+  .bord {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: clamp(1rem, 3vw, 2rem) var(--pad);
+  }
+  .bord__inner {
+    background: var(--sky);
+    border-radius: var(--r);
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    overflow: hidden;
+  }
+  .bord__body {
+    padding: clamp(2.5rem, 5vw, 4.5rem);
+    align-self: center;
+  }
+  .bord__title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2rem, 4.6vw, 3.6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.4rem;
+    max-width: 14ch;
+  }
+  .bord__body p {
+    font-family: var(--sans);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #2c4250;
+    max-width: 44ch;
+    margin-bottom: 1.6rem;
+  }
+  .bord__body blockquote {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+    line-height: 1.25;
+    color: var(--ink);
+    border-left: 3px solid var(--red);
+    padding-left: 1.2rem;
+    max-width: 26ch;
+    margin-bottom: 2rem;
+  }
+  .bord__media {
+    position: relative;
+    min-height: 22rem;
+  }
+  .bord__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .bord__note {
+    position: absolute;
+    left: 1.2rem;
+    bottom: 1.2rem;
+    background: rgba(247, 242, 232, 0.92);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.8rem;
+    border-radius: 100px;
+  }
+  @media (max-width: 820px) {
+    .bord__inner {
+      grid-template-columns: 1fr;
+    }
+    .bord__media {
+      min-height: 15rem;
+      order: -1;
+    }
+  }
+
+  /* ════════════ ABOUT ════════════ */
+  .about {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: clamp(4rem, 10vh, 7rem) var(--pad);
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .about__portrait {
+    border-radius: var(--r);
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    box-shadow: 0 18px 44px rgba(33, 29, 24, 0.16);
+  }
+  .about__portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .about__title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    max-width: 18ch;
+  }
+  .about__text p {
+    font-family: var(--sans);
+    font-size: 1.04rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 1.1rem;
+  }
+  .about__text em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .awards {
+    margin-top: 2rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--line);
+  }
+  .awards__label {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .awards__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .award-chip {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--ink);
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    padding: 0.5rem 0.9rem;
+    border-radius: 100px;
+  }
+  .award-chip b {
+    color: var(--red);
+    font-weight: 700;
+  }
+  @media (max-width: 820px) {
+    .about {
+      grid-template-columns: 1fr;
+    }
+    .about__portrait {
+      max-width: 24rem;
+    }
+  }
+
+  /* ════════════ AGENDA ════════════ */
+  .agenda {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: clamp(2rem, 5vh, 4rem) var(--pad) clamp(4rem, 9vh, 6rem);
+  }
+  .agenda .section-head {
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+  .agenda__item {
+    display: grid;
+    grid-template-columns: 6rem 1fr auto 1.5rem;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.4rem 0;
+    border-top: 1px solid var(--line);
+    transition: padding-left 0.25s ease;
+  }
+  .agenda__item:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .agenda__item:hover {
+    padding-left: 0.7rem;
+  }
+  .agenda__date {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--red);
+  }
+  .agenda__place {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    letter-spacing: -0.01em;
+  }
+  .agenda__kind {
+    font-family: var(--sans);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .agenda__arrow {
+    color: var(--red);
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .agenda__item:hover .agenda__arrow {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+  @media (max-width: 680px) {
+    .agenda__item {
+      grid-template-columns: 4.5rem 1fr;
+      gap: 0.3rem 1rem;
+    }
+    .agenda__kind {
+      grid-column: 2;
+    }
+    .agenda__arrow {
+      display: none;
+    }
+  }
+
+  /* ════════════ CONTACT (rood blok) ════════════ */
+  .contact {
+    padding: 0 var(--pad) clamp(4rem, 9vh, 6rem);
+  }
+  .contact__inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    background: var(--red);
+    color: #fff;
+    border-radius: var(--r);
+    padding: clamp(3rem, 7vw, 5.5rem) clamp(1.5rem, 5vw, 4rem);
+    text-align: center;
+  }
+  .contact__title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 20ch;
+    margin: 0 auto 2.4rem;
+  }
+  .contact__form {
+    display: flex;
+    gap: 0.6rem;
+    max-width: 30rem;
+    margin: 0 auto 1.4rem;
+  }
+  .contact__form input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 100px;
+    padding: 0.95rem 1.3rem;
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: #fff;
+  }
+  .contact__form input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .contact__form input:focus {
+    outline: none;
+    border-color: #fff;
+  }
+  .contact__fine {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .contact__fine a {
+    color: #fff;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  }
+  @media (max-width: 520px) {
+    .contact__form {
+      flex-direction: column;
+    }
+  }
+
+  /* ════════════ FOOTER ════════════ */
+  .foot {
+    background: var(--ink);
+    color: var(--paper);
+    padding: clamp(3rem, 6vw, 4rem) var(--pad) 2rem;
+  }
+  .foot__top {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(247, 242, 232, 0.16);
+  }
+  .foot__brand {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+  .foot__nav {
+    display: flex;
+    gap: 1.6rem;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+  }
+  .foot__nav a {
+    opacity: 0.75;
+    transition: opacity 0.2s ease, color 0.2s ease;
+  }
+  .foot__nav a:hover {
+    opacity: 1;
+    color: var(--sand);
+  }
+  .foot__social {
+    display: flex;
+    gap: 1.2rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+  }
+  .foot__social a {
+    opacity: 0.75;
+    transition: opacity 0.2s ease, color 0.2s ease;
+  }
+  .foot__social a:hover {
+    opacity: 1;
+    color: var(--red);
+  }
+  .foot__bottom {
+    max-width: var(--maxw);
+    margin: 1.5rem auto 0;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    opacity: 0.6;
+  }
+</style>
