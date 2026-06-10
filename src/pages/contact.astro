@@ -72,7 +72,15 @@ const onderwerpLabel = onderwerpLabels[onderwerpKey];
                 </div>
               )}
             </div>
-            <form class="contact-form" method="POST" action="/api/contact" data-contact-form novalidate>
+            <form
+              class="contact-form"
+              method="POST"
+              action="/api/contact"
+              data-contact-form
+              data-mcp-form="send_contact_message"
+              data-mcp-description="Contactformulier voor offerte-aanvragen, vragen en kennismakingen."
+              novalidate
+            >
               <input type="hidden" name="form_source" value="contact" />
               {/* Onderwerp-context altijd doorsturen (raw key als er geen
                   vriendelijk label is) zodat de server Service interest kan afleiden. */}
@@ -82,26 +90,26 @@ const onderwerpLabel = onderwerpLabels[onderwerpKey];
               <div class="form-row">
                 <label class="form-field">
                   <span class="form-label">Naam <em>*</em></span>
-                  <input type="text" name="name" required autocomplete="name" />
+                  <input type="text" name="name" required autocomplete="name" data-mcp-label="Volledige naam" />
                 </label>
                 <label class="form-field">
                   <span class="form-label">E-mail <em>*</em></span>
-                  <input type="email" name="email" required autocomplete="email" />
+                  <input type="email" name="email" required autocomplete="email" data-mcp-label="E-mailadres" />
                 </label>
               </div>
               <div class="form-row">
                 <label class="form-field">
                   <span class="form-label">Telefoon</span>
-                  <input type="tel" name="phone" autocomplete="tel" />
+                  <input type="tel" name="phone" autocomplete="tel" data-mcp-label="Telefoonnummer" />
                 </label>
                 <label class="form-field">
                   <span class="form-label">Huidige website</span>
-                  <input type="url" name="current_website" placeholder="https://" />
+                  <input type="url" name="current_website" placeholder="https://" data-mcp-label="Huidige website-URL" />
                 </label>
               </div>
               <label class="form-field">
                 <span class="form-label">Bericht <em>*</em></span>
-                <textarea name="message" rows="6" required minlength="10" placeholder="Vertel kort wat je zoekt of wat er beter kan."></textarea>
+                <textarea name="message" rows="6" required minlength="10" placeholder="Vertel kort wat je zoekt of wat er beter kan." data-mcp-label="Inhoud van het bericht"></textarea>
               </label>
 
               <!-- Honeypot — verborgen voor mensen, bots vullen 't vaak in -->

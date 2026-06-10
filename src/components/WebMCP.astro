@@ -1,0 +1,158 @@
+---
+/**
+ * WebMCP-registratie voor AI-agents. Brand-new W3C-ish-spec, momenteel
+ * alleen ondersteund in Chrome Canary (juni 2026). Component declareert:
+ *
+ *   1. Een statische tools-manifest via <script type="application/mcp+json">
+ *      met JSON-schema's per tool. Lighthouse Agentic Browsing leest deze.
+ *
+ *   2. Een runtime-registratie via window.mcp?.registerTool(...) waar de
+ *      handlers de bestaande on-page-acties uitvoeren (contact-form
+ *      versturen, scan-popup openen, navigatie).
+ *
+ * Feature-detection: als window.mcp niet bestaat doet de inline-script
+ * niets. Geen impact op browsers zonder WebMCP-support.
+ *
+ * Bedoeld om sitewide in BaseLayout te mounten.
+ */
+
+import { contact } from '@data/site-config';
+
+/* Tools-manifest als JSON-schema. Eén tool per primaire on-page-actie.
+   Beschrijvingen in Nederlands omdat het primaire publiek NL is, agents
+   begrijpen multi-language schemas. */
+const tools = {
+  schemaVersion: '0.1',
+  tools: [
+    {
+      name: 'send_contact_message',
+      description:
+        'Verstuurt een bericht naar Froseo via het contactformulier. Voor offerte-aanvragen, vragen of kennismakingen.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          name: { type: 'string', description: 'Volledige naam van de afzender.' },
+          email: { type: 'string', format: 'email', description: 'E-mailadres voor antwoord.' },
+          phone: { type: 'string', description: 'Optioneel telefoonnummer.' },
+          current_website: { type: 'string', format: 'uri', description: 'Optionele huidige website-URL van de afzender.' },
+          message: { type: 'string', minLength: 10, description: 'Inhoud van het bericht. Wat zoek je, waar loop je tegenaan, of wat wil je bespreken.' },
+          onderwerp: { type: 'string', description: 'Optioneel onderwerp (bijv. webdesign, seo, website-abonnement).' },
+        },
+        required: ['name', 'email', 'message'],
+      },
+    },
+    {
+      name: 'request_free_website_scan',
+      description:
+        'Opent de gratis website-analyse popup, waarmee een bezoeker een snelheid-, SEO- of lokale-scan voor zijn site kan aanvragen.',
+      inputSchema: {
+        type: 'object',
+        properties: {},
+      },
+    },
+    {
+      name: 'list_froseo_services',
+      description:
+        'Retourneert de lijst van diensten die Froseo aanbiedt, met titel, korte beschrijving en URL.',
+      inputSchema: {
+        type: 'object',
+        properties: {},
+      },
+    },
+  ],
+} as const;
+
+/* Diensten-lijst voor list_froseo_services. Gelijk getrokken met de
+   hasOfferCatalog in BaseLayout en de Nav-megadropdown zodat agents en
+   schema.org-consumers hetzelfde zien. */
+const services = [
+  { name: 'Maatwerk webdesign', url: 'https://froseo.nl/webdesign/', summary: 'Snelle WordPress- en Astro-websites op maat.' },
+  { name: 'Website abonnement', url: 'https://froseo.nl/website-abonnement/', summary: 'Vaste maandprijs vanaf €69. Hosting, beheer en SEO-basis inbegrepen.' },
+  { name: 'Website opfrissen', url: 'https://froseo.nl/website-opfrissen/', summary: 'Modulaire opknappakketten voor bestaande websites.' },
+  { name: 'Website onderhoud', url: 'https://froseo.nl/website-onderhoud/', summary: 'WordPress-onderhoud, updates en beveiliging per maand.' },
+  { name: 'Website optimalisatie', url: 'https://froseo.nl/website-optimalisatie/', summary: 'Doorlopend snelheid, conversie en vindbaarheid verbeteren.' },
+  { name: 'WordPress onderhoud', url: 'https://froseo.nl/wordpress-website-onderhoud/', summary: 'Drie pakketten voor WordPress-sites.' },
+  { name: 'SEO en GEO', url: 'https://froseo.nl/seo/', summary: 'Zichtbaar in Google en AI-zoekmachines.' },
+  { name: 'Lokale SEO', url: 'https://froseo.nl/lokale-seo/', summary: 'Ranken in je eigen regio en in het Google map-pack.' },
+  { name: 'Content abonnement', url: 'https://froseo.nl/content-abonnement/', summary: 'Maandelijks SEO-content en landingspagina\'s die ranken.' },
+  { name: 'Paid media', url: 'https://froseo.nl/paid-media/', summary: 'Google Ads en Meta Ads, gestuurd op aanvragen en omzet.' },
+  { name: 'OpenAI Ads', url: 'https://froseo.nl/openai-ads/', summary: 'Adverteren binnen ChatGPT en andere AI-platforms.' },
+];
+---
+
+{/* Declaratieve manifest — Lighthouse Agentic Browsing leest dit. */}
+<script type="application/mcp+json" set:html={JSON.stringify(tools)} />
+
+{/* Runtime-registratie — feature-detectie op window.mcp. Doet niets in
+    browsers zonder WebMCP. */}
+<script is:inline define:vars={{ services, contactEmail: contact.email }}>
+  (function () {
+    if (typeof window === 'undefined') return;
+    const mcp = window.mcp;
+    if (!mcp || typeof mcp.registerTool !== 'function') return;
+
+    /* Verstuurt het contactformulier via de bestaande /api/contact-endpoint. */
+    mcp.registerTool({
+      name: 'send_contact_message',
+      description: 'Verstuurt een bericht naar Froseo via het contactformulier.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+          email: { type: 'string', format: 'email' },
+          phone: { type: 'string' },
+          current_website: { type: 'string', format: 'uri' },
+          message: { type: 'string', minLength: 10 },
+          onderwerp: { type: 'string' },
+        },
+        required: ['name', 'email', 'message'],
+      },
+      handler: async (input) => {
+        const body = new URLSearchParams();
+        body.set('name', input.name);
+        body.set('email', input.email);
+        if (input.phone) body.set('phone', input.phone);
+        if (input.current_website) body.set('current_website', input.current_website);
+        body.set('message', input.message);
+        body.set('form_source', 'webmcp');
+        if (input.onderwerp) body.set('onderwerp', input.onderwerp);
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body.toString(),
+        });
+        if (!res.ok) {
+          throw new Error('Contact-API gaf status ' + res.status);
+        }
+        return {
+          success: true,
+          message: 'Bericht ontvangen. Calvin reageert meestal binnen één werkdag.',
+          contactEmail: contactEmail,
+        };
+      },
+    });
+
+    /* Opent de bestaande scan-popup. window.openScanPopup wordt door
+       src/components/ScanPopup.astro op de window exposed. */
+    mcp.registerTool({
+      name: 'request_free_website_scan',
+      description: 'Opent de gratis website-analyse popup.',
+      inputSchema: { type: 'object', properties: {} },
+      handler: async () => {
+        if (typeof window.openScanPopup === 'function') {
+          window.openScanPopup();
+          return { success: true, message: 'Scan-popup is geopend.' };
+        }
+        return { success: false, message: 'Scan-popup niet beschikbaar op deze pagina.' };
+      },
+    });
+
+    /* Retourneert de diensten-lijst zodat agents weten waar ze heen kunnen. */
+    mcp.registerTool({
+      name: 'list_froseo_services',
+      description: 'Retourneert de lijst van diensten die Froseo aanbiedt.',
+      inputSchema: { type: 'object', properties: {} },
+      handler: async () => ({ services }),
+    });
+  })();
+</script>

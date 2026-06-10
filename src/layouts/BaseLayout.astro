@@ -16,6 +16,7 @@ import '@styles/global.css';
 import PaletteSwitcher from '../components/dev/PaletteSwitcher.astro';
 import MobileCTA from '../components/layout/MobileCTA.astro';
 import ScanPopup from '../components/ScanPopup.astro';
+import WebMCP from '../components/WebMCP.astro';
 import { social, review as reviewData } from '@data/site-config';
 import { getAlternates, type Lang } from '@data/i18n';
 
@@ -195,6 +196,11 @@ const businessSchema = {
         zodat we 'm hier zonder conditionals universeel kunnen mounten. De
         test-pagina /test-scan-popup/ rendert deze met forceOpen=true. */}
     <ScanPopup />
+
+    {/* WebMCP tools-registratie. Lighthouse Agentic Browsing leest het
+        declaratieve <script type="application/mcp+json"> blok; Chrome
+        Canary registreert daarnaast runtime handlers via window.mcp. */}
+    <WebMCP />
 
     {/* Attributie-capture voor CRM-leads: legt UTM-params, gclid, referrer en
         landingspagina vast en injecteert ze als verborgen velden in de
