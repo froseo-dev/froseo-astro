@@ -1,18 +1,17 @@
 ---
 import RuthDemoLayout from "../../layouts/RuthDemoLayout.astro";
-import RuthSwitcher from "../../components/RuthSwitcher.astro";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   DEMO-CONTENT — Ruth Lasters homepage-revamp
-   Editorial / literaire art-direction (Moooi-achtige sfeer): warm bijna-zwart,
-   één gouden accent, grote Fraunces-serif, monochrome sfeerbeelden zodat het
-   goud de enige kleur is. Beelden zijn placeholders (picsum-seeds + duotone).
+   RUTH LASTERS — homepage
+   Verfijnde, lichte literaire art-direction: warm papier, fotografie in kleur,
+   en een hero-video die in kleur speelt met een zachte scrim zodat de tekst
+   leesbaar blijft. Twee donkere "ankers" (onderwijs + gedicht) houden het
+   editoriale ritme. Beelden zijn placeholders; teksten in de ik-vorm.
    ────────────────────────────────────────────────────────────────────────── */
 
-// Placeholder-helper: vaste seed → consistent beeld, grijs voor de monochrome
-// editorial-look. Bij de echte bouw vervangen door Ruth's eigen fotografie.
+// Kleur-placeholders (geen grayscale): warm en licht.
 const img = (seed: string, w = 1400, h = 1000) =>
-  `https://picsum.photos/seed/${seed}/${w}/${h}?grayscale`;
+  `https://picsum.photos/seed/${seed}/${w}/${h}`;
 
 const oeuvre = [
   { title: "Tijgerbrood", year: "2023", genre: "Poëzie", seed: "rl-tijgerbrood" },
@@ -40,7 +39,7 @@ const agenda = [
 ];
 ---
 
-<RuthDemoLayout>
+<RuthDemoLayout title="Ruth Lasters — dichter, auteur, leerkracht" bg="#f3ede1" ink="#211c16">
   <!-- ══════════════════════ NAV ══════════════════════ -->
   <header class="nav" id="nav">
     <div class="nav__inner">
@@ -59,17 +58,9 @@ const agenda = [
     </div>
   </header>
 
-  <!-- ══════════════════════ HERO (video-banner) ══════════════════════ -->
+  <!-- ══════════════════════ HERO (kleuren-video) ══════════════════════ -->
   <section class="hero" id="top">
-    <video
-      class="hero__video"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="auto"
-      poster=""
-    >
+    <video class="hero__video" autoplay muted loop playsinline preload="auto">
       <source src="/ruth-demo/hero.mp4" type="video/mp4" />
     </video>
     <div class="hero__veil"></div>
@@ -82,14 +73,12 @@ const agenda = [
         schuurt, en ik zwijg niet graag over wat er in mijn klas gebeurt.
       </p>
       <div class="hero__actions">
-        <a href="#oeuvre" class="btn btn--solid">Lees het werk</a>
-        <a href="#onderwijs" class="btn btn--ghost">Mevrouw, u staat voor het bord</a>
+        <a href="#oeuvre" class="btn btn--solid">Lees mijn werk</a>
+        <a href="#onderwijs" class="btn btn--glass">Mevrouw, u staat voor het bord</a>
       </div>
     </div>
 
-    <a href="#manifest" class="hero__scroll" aria-label="Scroll naar beneden">
-      <span></span>
-    </a>
+    <a href="#manifest" class="hero__scroll" aria-label="Scroll naar beneden"><span></span></a>
   </section>
 
   <!-- ══════════════════════ MANIFEST ══════════════════════ -->
@@ -105,7 +94,7 @@ const agenda = [
     </div>
   </section>
 
-  <!-- ══════════════════════ FEATURED — Désirs à l'essai ══════════════════════ -->
+  <!-- ══════════════════════ FEATURE — Désirs à l'essai ══════════════════════ -->
   <section class="feature" id="werk">
     <div class="feature__media">
       <img src={img("rl-french-collection", 1300, 1600)} alt="Sfeerbeeld nieuwe bundel" loading="lazy" />
@@ -148,7 +137,7 @@ const agenda = [
     </div>
   </section>
 
-  <!-- ══════════════════════ ONDERWIJS — full-bleed dark ══════════════════════ -->
+  <!-- ══════════════════════ ONDERWIJS — donker anker ══════════════════════ -->
   <section class="bord" id="onderwijs">
     <div class="bord__bg">
       <img src={img("rl-classroom", 2000, 1300)} alt="Lege klas" loading="lazy" />
@@ -164,11 +153,11 @@ const agenda = [
       <blockquote class="bord__quote">
         „Een school die haar zwakste leerling laat vallen, valt zelf.”
       </blockquote>
-      <a href="#" class="btn btn--solid">Lees de blog</a>
+      <a href="#" class="btn btn--solid">Lees mijn blog</a>
     </div>
   </section>
 
-  <!-- ══════════════════════ GEDICHT-INTERLUDE ══════════════════════ -->
+  <!-- ══════════════════════ GEDICHT-INTERLUDE — donker anker ══════════════════════ -->
   <section class="poem">
     <div class="poem__bg">
       <img src={img("rl-ink-paper", 2000, 1200)} alt="" loading="lazy" />
@@ -182,7 +171,7 @@ const agenda = [
     <span class="poem__src reveal">— uit <em>Lichtmeters</em></span>
   </section>
 
-  <!-- ══════════════════════ OVER RUTH ══════════════════════ -->
+  <!-- ══════════════════════ OVER MIJ ══════════════════════ -->
   <section class="about" id="over">
     <div class="about__portrait">
       <img src={img("rl-portrait", 1100, 1400)} alt="Portret Ruth Lasters" loading="lazy" />
@@ -191,10 +180,10 @@ const agenda = [
       <span class="eyebrow">Over mij</span>
       <h2 class="about__title">Antwerpen, 1979. En nog altijd voor de klas.</h2>
       <p>
-        Ik debuteerde in 2006 met de roman <em>Poolijs</em>, een jaar later volgde
-        mijn poëziedebuut <em>Vouwplannen</em>. Sindsdien wissel ik romans en
-        dichtbundels af. Het persoonlijke en het maatschappelijke houd ik daarin
-        niet gescheiden.
+        Ik debuteerde in 2006 met de roman <em>Poolijs</em>, een jaar later
+        volgde mijn poëziedebuut <em>Vouwplannen</em>. Sindsdien wissel ik romans
+        en dichtbundels af. Het persoonlijke en het maatschappelijke houd ik
+        daarin niet gescheiden.
       </p>
       <p>
         Naast het schrijven sta ik voor de klas. Die twee dingen kleuren elkaar:
@@ -271,16 +260,11 @@ const agenda = [
     </div>
   </footer>
 
-  <RuthSwitcher active="optie1" />
-
   <script is:inline>
-    // Sticky nav-state
     const nav = document.getElementById("nav");
     const onScroll = () => nav.classList.toggle("nav--scrolled", window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-
-    // Scroll-reveal
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -297,18 +281,19 @@ const agenda = [
 </RuthDemoLayout>
 
 <style>
-  /* ════════════ TOKENS (scoped) ════════════ */
+  /* ════════════ TOKENS (licht) ════════════ */
   :root {
-    --ink: #100d0b;
-    --ink-soft: #181311;
-    --paper: #f4efe4;
-    --paper-2: #ece4d4;
+    --paper: #f3ede1;
+    --paper-2: #ece3d3;
+    --ink: #211c16;
+    --ink-2: #15110d; /* donkere ankers */
     --cream: #f3ece0;
-    --muted: #a99e8c;
-    --gold: #c79a4e;
-    --gold-soft: #d8b574;
-    --line: rgba(243, 236, 224, 0.14);
-    --line-dark: rgba(16, 13, 11, 0.12);
+    --muted: #8c8273;
+    --muted-light: #b6ab98;
+    --gold: #a9772a; /* leesbaar op licht */
+    --gold-bright: #cd9f57; /* op donker */
+    --line: rgba(33, 28, 22, 0.14);
+    --line-light: rgba(243, 236, 224, 0.16);
     --serif: "Fraunces", Georgia, serif;
     --sans: "Inter", system-ui, sans-serif;
     --maxw: 1280px;
@@ -320,14 +305,14 @@ const agenda = [
     display: inline-block;
     font-family: var(--sans);
     font-size: 0.72rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 1.4rem;
   }
   .eyebrow--light {
-    color: var(--gold-soft);
+    color: var(--gold-bright);
   }
 
   .btn {
@@ -343,20 +328,24 @@ const agenda = [
     transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
   }
   .btn--solid {
-    background: var(--gold);
-    color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
   }
   .btn--solid:hover {
-    background: var(--gold-soft);
+    background: var(--gold);
+    color: var(--ink);
     transform: translateY(-2px);
   }
-  .btn--ghost {
-    border: 1px solid var(--line);
-    color: var(--cream);
+  .btn--glass {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(6px);
   }
-  .btn--ghost:hover {
-    border-color: var(--gold);
-    color: var(--gold-soft);
+  .btn--glass:hover {
+    background: #fff;
+    color: var(--ink);
+    transform: translateY(-2px);
   }
 
   .link-arrow {
@@ -427,10 +416,12 @@ const agenda = [
     border-bottom: 1px solid transparent;
   }
   .nav--scrolled {
-    background: rgba(16, 13, 11, 0.82);
+    background: rgba(243, 237, 225, 0.85);
     backdrop-filter: blur(14px);
     border-bottom-color: var(--line);
   }
+  /* Bovenaan ligt de nav op de donkere video → lichte tekst; na scroll op
+     papier → donkere tekst. */
   .nav__inner {
     max-width: var(--maxw);
     margin: 0 auto;
@@ -444,17 +435,25 @@ const agenda = [
     font-family: var(--serif);
     font-size: 1.25rem;
     font-weight: 500;
-    letter-spacing: 0.01em;
     line-height: 1;
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    color: #fff;
+    transition: color 0.4s ease;
+  }
+  .nav--scrolled .nav__brand {
+    color: var(--ink);
   }
   .nav__brand-sub {
     font-family: var(--sans);
     font-size: 0.58rem;
     letter-spacing: 0.34em;
     text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.65);
+    transition: color 0.4s ease;
+  }
+  .nav--scrolled .nav__brand-sub {
     color: var(--muted);
   }
   .nav__links {
@@ -465,26 +464,38 @@ const agenda = [
     letter-spacing: 0.03em;
   }
   .nav__links a {
-    color: var(--cream);
-    opacity: 0.78;
+    color: #fff;
+    opacity: 0.85;
     transition: opacity 0.2s ease, color 0.2s ease;
+  }
+  .nav--scrolled .nav__links a {
+    color: var(--ink);
+    opacity: 0.78;
   }
   .nav__links a:hover {
     opacity: 1;
-    color: var(--gold-soft);
+    color: var(--gold-bright);
+  }
+  .nav--scrolled .nav__links a:hover {
+    color: var(--gold);
   }
   .nav__cta {
     font-family: var(--sans);
     font-size: 0.8rem;
     letter-spacing: 0.05em;
     padding: 0.6rem 1.25rem;
-    border: 1px solid var(--line);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 2px;
-    transition: border-color 0.2s ease, color 0.2s ease;
+    color: #fff;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+  .nav--scrolled .nav__cta {
+    border-color: var(--line);
+    color: var(--ink);
   }
   .nav__cta:hover {
     border-color: var(--gold);
-    color: var(--gold-soft);
+    color: var(--gold);
   }
   @media (max-width: 880px) {
     .nav__links {
@@ -499,6 +510,7 @@ const agenda = [
     display: flex;
     align-items: flex-end;
     overflow: hidden;
+    background: var(--ink-2);
   }
   .hero__video {
     position: absolute;
@@ -506,19 +518,20 @@ const agenda = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(0.55) contrast(1.05) brightness(0.78);
+    /* in KLEUR, alleen iets ingetogen zodat de tekst leest */
+    filter: saturate(1.02) contrast(1.02) brightness(0.92);
   }
   .hero__veil {
     position: absolute;
     inset: 0;
     background: linear-gradient(
         180deg,
-        rgba(16, 13, 11, 0.55) 0%,
-        rgba(16, 13, 11, 0.12) 32%,
-        rgba(16, 13, 11, 0.72) 78%,
-        rgba(16, 13, 11, 0.96) 100%
+        rgba(18, 14, 10, 0.34) 0%,
+        rgba(18, 14, 10, 0.05) 28%,
+        rgba(18, 14, 10, 0.45) 64%,
+        rgba(18, 14, 10, 0.88) 100%
       ),
-      radial-gradient(120% 80% at 15% 90%, rgba(16, 13, 11, 0.6), transparent 60%);
+      radial-gradient(120% 80% at 12% 92%, rgba(18, 14, 10, 0.6), transparent 60%);
   }
   .hero__content {
     position: relative;
@@ -527,6 +540,7 @@ const agenda = [
     width: 100%;
     margin: 0 auto;
     padding: 0 var(--pad) clamp(3.5rem, 9vh, 7rem);
+    color: #fff;
   }
   .hero__title {
     font-family: var(--serif);
@@ -535,6 +549,7 @@ const agenda = [
     line-height: 0.9;
     letter-spacing: -0.025em;
     margin-bottom: 1.6rem;
+    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.35);
   }
   .hero__lede {
     font-family: var(--sans);
@@ -542,8 +557,9 @@ const agenda = [
     font-size: clamp(1.02rem, 1.7vw, 1.4rem);
     line-height: 1.55;
     max-width: 46ch;
-    color: rgba(243, 236, 224, 0.9);
+    color: rgba(255, 255, 255, 0.94);
     margin-bottom: 2.4rem;
+    text-shadow: 0 1px 18px rgba(0, 0, 0, 0.45);
   }
   .hero__actions {
     display: flex;
@@ -558,7 +574,7 @@ const agenda = [
     z-index: 2;
     width: 26px;
     height: 42px;
-    border: 1px solid var(--line);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 14px;
     display: grid;
     place-items: start center;
@@ -567,7 +583,7 @@ const agenda = [
   .hero__scroll span {
     width: 3px;
     height: 8px;
-    background: var(--gold);
+    background: var(--gold-bright);
     border-radius: 2px;
     animation: scroll-dot 1.8s ease-in-out infinite;
   }
@@ -618,7 +634,8 @@ const agenda = [
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: stretch;
-    background: var(--ink);
+    background: var(--paper-2);
+    color: var(--ink);
   }
   .feature__media {
     position: relative;
@@ -628,14 +645,13 @@ const agenda = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(0.4) contrast(1.05) brightness(0.9);
   }
   .feature__badge {
     position: absolute;
     top: 1.6rem;
     left: 1.6rem;
     background: var(--gold);
-    color: var(--ink);
+    color: #fff;
     font-family: var(--sans);
     font-size: 0.7rem;
     font-weight: 600;
@@ -668,7 +684,7 @@ const agenda = [
     font-weight: 300;
     font-size: 1.05rem;
     line-height: 1.65;
-    color: rgba(243, 236, 224, 0.82);
+    color: rgba(33, 28, 22, 0.82);
     margin-bottom: 1.4rem;
   }
   .feature__meta {
@@ -692,7 +708,8 @@ const agenda = [
   /* ════════════ OEUVRE ════════════ */
   .oeuvre {
     padding: clamp(5rem, 12vh, 9rem) 0;
-    background: var(--ink);
+    background: var(--paper);
+    color: var(--ink);
   }
   .oeuvre .section-head {
     margin-bottom: clamp(2.5rem, 5vw, 4rem);
@@ -711,18 +728,16 @@ const agenda = [
     overflow: hidden;
     border-radius: 2px;
     aspect-ratio: 3 / 4;
+    box-shadow: 0 12px 30px rgba(33, 28, 22, 0.12);
   }
   .book__cover img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(0.5) brightness(0.92);
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-      filter 0.5s ease;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .book:hover .book__cover img {
     transform: scale(1.05);
-    filter: grayscale(0) brightness(1);
   }
   .book__genre {
     position: absolute;
@@ -732,8 +747,8 @@ const agenda = [
     font-size: 0.64rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--cream);
-    background: rgba(16, 13, 11, 0.55);
+    color: #fff;
+    background: rgba(20, 16, 12, 0.55);
     backdrop-filter: blur(4px);
     padding: 0.35rem 0.65rem;
     border-radius: 2px;
@@ -772,11 +787,12 @@ const agenda = [
     }
   }
 
-  /* ════════════ BORD (onderwijs) ════════════ */
+  /* ════════════ BORD (donker anker) ════════════ */
   .bord {
     position: relative;
     padding: clamp(6rem, 16vh, 11rem) var(--pad);
     overflow: hidden;
+    color: #fff;
   }
   .bord__bg {
     position: absolute;
@@ -786,7 +802,7 @@ const agenda = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(0.85) brightness(0.32) contrast(1.1);
+    filter: grayscale(0.4) brightness(0.4) contrast(1.05);
   }
   .bord::after {
     content: "";
@@ -794,9 +810,9 @@ const agenda = [
     inset: 0;
     background: linear-gradient(
       100deg,
-      rgba(16, 13, 11, 0.92) 0%,
-      rgba(16, 13, 11, 0.6) 55%,
-      rgba(16, 13, 11, 0.35) 100%
+      rgba(15, 12, 9, 0.92) 0%,
+      rgba(15, 12, 9, 0.6) 55%,
+      rgba(15, 12, 9, 0.35) 100%
     );
   }
   .bord__inner {
@@ -819,7 +835,7 @@ const agenda = [
     font-size: clamp(1rem, 1.8vw, 1.25rem);
     line-height: 1.6;
     max-width: 52ch;
-    color: rgba(243, 236, 224, 0.85);
+    color: rgba(255, 255, 255, 0.88);
     margin-bottom: 2.4rem;
   }
   .bord__quote {
@@ -828,19 +844,20 @@ const agenda = [
     font-weight: 300;
     font-size: clamp(1.5rem, 3.5vw, 2.4rem);
     line-height: 1.3;
-    color: var(--gold-soft);
-    border-left: 2px solid var(--gold);
+    color: var(--gold-bright);
+    border-left: 2px solid var(--gold-bright);
     padding-left: 1.6rem;
     max-width: 30ch;
     margin-bottom: 2.6rem;
   }
 
-  /* ════════════ POEM ════════════ */
+  /* ════════════ POEM (donker anker) ════════════ */
   .poem {
     position: relative;
     padding: clamp(6rem, 18vh, 12rem) var(--pad);
     text-align: center;
     overflow: hidden;
+    color: #fff;
   }
   .poem__bg {
     position: absolute;
@@ -850,17 +867,13 @@ const agenda = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(1) brightness(0.28);
+    filter: grayscale(0.85) brightness(0.32);
   }
   .poem::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-      80% 80% at 50% 50%,
-      transparent,
-      rgba(16, 13, 11, 0.7)
-    );
+    background: radial-gradient(80% 80% at 50% 50%, transparent, rgba(15, 12, 9, 0.7));
   }
   .poem__lines {
     position: relative;
@@ -873,7 +886,7 @@ const agenda = [
   }
   .poem__lines em {
     font-style: italic;
-    color: var(--gold-soft);
+    color: var(--gold-bright);
   }
   .poem__src {
     position: relative;
@@ -883,7 +896,7 @@ const agenda = [
     font-family: var(--sans);
     font-size: 0.85rem;
     letter-spacing: 0.1em;
-    color: var(--muted);
+    color: var(--muted-light);
   }
   .poem__src em {
     font-style: italic;
@@ -893,7 +906,7 @@ const agenda = [
   .about {
     display: grid;
     grid-template-columns: 0.85fr 1fr;
-    background: var(--paper);
+    background: var(--paper-2);
     color: var(--ink);
   }
   .about__portrait {
@@ -904,7 +917,6 @@ const agenda = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(0.35) contrast(1.04);
   }
   .about__text {
     padding: clamp(3.5rem, 7vw, 7rem) clamp(1.5rem, 5vw, 5rem);
@@ -924,7 +936,7 @@ const agenda = [
     font-weight: 300;
     font-size: 1.04rem;
     line-height: 1.7;
-    color: rgba(16, 13, 11, 0.78);
+    color: rgba(33, 28, 22, 0.78);
     margin-bottom: 1.3rem;
   }
   .about__text em {
@@ -933,7 +945,7 @@ const agenda = [
   }
   .awards {
     margin-top: 2.6rem;
-    border-top: 1px solid var(--line-dark);
+    border-top: 1px solid var(--line);
     padding-top: 1.8rem;
   }
   .awards__label {
@@ -941,7 +953,7 @@ const agenda = [
     font-size: 0.7rem;
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: rgba(16, 13, 11, 0.5);
+    color: rgba(33, 28, 22, 0.5);
     display: block;
     margin-bottom: 1.2rem;
   }
@@ -955,7 +967,7 @@ const agenda = [
     gap: 1rem;
     align-items: baseline;
     padding: 0.7rem 0;
-    border-bottom: 1px solid var(--line-dark);
+    border-bottom: 1px solid var(--line);
   }
   .awards__year {
     font-family: var(--serif);
@@ -979,7 +991,8 @@ const agenda = [
   /* ════════════ AGENDA ════════════ */
   .agenda {
     padding: clamp(5rem, 12vh, 9rem) 0;
-    background: var(--ink);
+    background: var(--paper);
+    color: var(--ink);
   }
   .agenda .section-head {
     margin-bottom: 2.6rem;
@@ -1043,12 +1056,12 @@ const agenda = [
     }
   }
 
-  /* ════════════ CONTACT ════════════ */
+  /* ════════════ CONTACT (donker anker) ════════════ */
   .contact {
-    background: var(--ink-soft);
+    background: var(--ink-2);
+    color: #fff;
     padding: clamp(5rem, 14vh, 10rem) var(--pad);
     text-align: center;
-    border-top: 1px solid var(--line);
   }
   .contact__inner {
     max-width: 46rem;
@@ -1070,32 +1083,32 @@ const agenda = [
   }
   .contact__form input {
     flex: 1;
-    background: transparent;
-    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 2px;
     padding: 0.95rem 1.1rem;
     font-family: var(--sans);
     font-size: 0.95rem;
-    color: var(--cream);
+    color: #fff;
   }
   .contact__form input::placeholder {
-    color: var(--muted);
+    color: var(--muted-light);
   }
   .contact__form input:focus {
     outline: none;
-    border-color: var(--gold);
+    border-color: var(--gold-bright);
   }
   .contact__fine {
     font-family: var(--sans);
     font-size: 0.9rem;
-    color: var(--muted);
+    color: var(--muted-light);
   }
   .contact__fine a {
-    color: var(--gold-soft);
+    color: var(--gold-bright);
     border-bottom: 1px solid transparent;
   }
   .contact__fine a:hover {
-    border-bottom-color: var(--gold-soft);
+    border-bottom-color: var(--gold-bright);
   }
   @media (max-width: 520px) {
     .contact__form {
@@ -1105,9 +1118,10 @@ const agenda = [
 
   /* ════════════ FOOTER ════════════ */
   .foot {
-    background: var(--ink);
+    background: var(--ink-2);
+    color: #fff;
     padding: clamp(3rem, 6vw, 4.5rem) var(--pad) 2rem;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--line-light);
   }
   .foot__top {
     max-width: var(--maxw);
@@ -1118,7 +1132,7 @@ const agenda = [
     flex-wrap: wrap;
     gap: 1.5rem;
     padding-bottom: 2.5rem;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--line-light);
   }
   .foot__brand {
     font-family: var(--serif);
@@ -1132,13 +1146,13 @@ const agenda = [
     font-size: 0.85rem;
   }
   .foot__nav a {
-    color: var(--cream);
+    color: #fff;
     opacity: 0.7;
     transition: opacity 0.2s ease, color 0.2s ease;
   }
   .foot__nav a:hover {
     opacity: 1;
-    color: var(--gold-soft);
+    color: var(--gold-bright);
   }
   .foot__social {
     display: flex;
@@ -1148,11 +1162,11 @@ const agenda = [
     letter-spacing: 0.1em;
   }
   .foot__social a {
-    color: var(--muted);
+    color: var(--muted-light);
     transition: color 0.2s ease;
   }
   .foot__social a:hover {
-    color: var(--gold);
+    color: var(--gold-bright);
   }
   .foot__bottom {
     max-width: var(--maxw);
@@ -1163,6 +1177,6 @@ const agenda = [
     gap: 0.5rem;
     font-family: var(--sans);
     font-size: 0.78rem;
-    color: var(--muted);
+    color: var(--muted-light);
   }
 </style>
