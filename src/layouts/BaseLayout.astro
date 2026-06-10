@@ -121,6 +121,13 @@ const businessSchema = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+
+    {/* Preconnect naar derde-partij origins zodat de TCP+TLS-handshake
+        al begint terwijl de HTML nog parset. Bespaart ~100-200ms op de
+        eerste request naar GTM en Clarity. Max 4 preconnects per Google's
+        eigen advies; we houden 't bij de 2 echt-zware. */}
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://scripts.clarity.ms" crossorigin />
     {/* Google Search Console verification — sitewide zodat een refresh van
         welke pagina dan ook GSC's check kan beantwoorden. */}
     <meta name="google-site-verification" content="gJdefKHd5pQ7vnvoFgiIMjoE5WFN4BYQTHUAP_uPEFw" />
@@ -167,6 +174,10 @@ const businessSchema = {
         }
       })();
     </script>
+
+    {/* Per-pagina head-injecties (bv. hero-image preload op de homepage).
+        Vorm: <Fragment slot="head"><link rel="preload" .../></Fragment>. */}
+    <slot name="head" />
   </head>
   <body>
     {/* GTM noscript-fallback direct na <body> openen — voor bezoekers

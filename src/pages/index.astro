@@ -1,8 +1,30 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import HomepageV2 from '../components/composition/HomepageV2.astro';
+import { getImage } from 'astro:assets';
+import froseoMockup from '@assets/hero/froseo-mockup.webp';
+
+/* Hero-image preload: het LCP-element op de homepage. Hashed URL +
+   srcset komen uit dezelfde getImage-call die ook Hero.astro intern
+   doet, zodat de browser de fetch start zodra de HTML binnenkomt
+   i.p.v. te wachten op CSS-parse + image-discovery. */
+const heroImg = await getImage({
+  src: froseoMockup,
+  widths: [640, 960, 1280, 1600, 1800],
+  formats: ['webp'],
+});
 ---
 
 <BaseLayout theme="calvin-2">
+  <Fragment slot="head">
+    <link
+      rel="preload"
+      as="image"
+      href={heroImg.src}
+      imagesrcset={heroImg.srcSet?.attribute}
+      imagesizes="(max-width: 1024px) 100vw, 640px"
+      fetchpriority="high"
+    />
+  </Fragment>
   <HomepageV2 />
 </BaseLayout>
