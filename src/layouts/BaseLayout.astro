@@ -108,15 +108,47 @@ const businessSchema = {
 <!doctype html>
 <html lang={lang} data-theme={theme}>
   <head>
-    {/* Google Tag Manager — zo hoog mogelijk in <head> volgens Google's
-        installatie-instructies. Container-ID GTM-TLW4G9R beheert alle
-        analytics + advertising tags via de Tag Manager UI. */}
+    {/* Google Tag Manager — LAZY-loaded op eerste user-interactie OF na
+        5s idle, wat eerder komt. Bewuste trade-off: bouncers < 5s zonder
+        interactie missen we, maar page-view + alle echte conversies
+        blijven gedekt. Wint ~270ms main-thread (GTM 106ms + Clarity 133ms
+        scripting + parse-tijd) en stabiliseert LCP/TBT op mobile.
+
+        dataLayer wordt meteen geïnitialiseerd zodat code die elders op de
+        pagina `dataLayer.push(...)` doet (zie click-leads-listener
+        onderaan body) niet kapotgaat als events vóór GTM-load gepusht
+        worden. GTM verwerkt de queue zodra hij geladen is.
+
+        Container: GTM-TLW4G9R. Clarity wordt via GTM geladen en rijdt
+        automatisch mee in de lazy-flow. */}
     <script is:inline>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-TLW4G9R');
+      (function (w, d) {
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+
+        var loaded = false;
+        var events = ['scroll', 'click', 'touchstart', 'keydown', 'mousemove'];
+
+        function loadGTM() {
+          if (loaded) return;
+          loaded = true;
+          events.forEach(function (e) { w.removeEventListener(e, loadGTM); });
+          clearTimeout(idleTimer);
+          var s = d.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-TLW4G9R';
+          var f = d.getElementsByTagName('script')[0];
+          f.parentNode.insertBefore(s, f);
+        }
+
+        events.forEach(function (e) {
+          w.addEventListener(e, loadGTM, { once: true, passive: true });
+        });
+
+        /* Fallback: laad GTM hoe dan ook na 5s zodat de page-view nog
+           binnenkomt voor sessies zonder vroege interactie. */
+        var idleTimer = setTimeout(loadGTM, 5000);
+      })(window, document);
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
