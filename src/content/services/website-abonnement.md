@@ -63,7 +63,7 @@ includedBlock:
       body: 'Updates, beveiliging en kleine aanpassingen lopen door. Een prijs bijwerken of een telefoonnummer wijzigen hoort er gewoon bij, zonder offerte vooraf.'
     - title: 'Technische SEO en rapportage'
       icon: 'chartUp'
-      body: 'De technische SEO-basis staat op orde en je posities komen maandelijks in je inbox. Zo zie je zwart-op-wit wat je site doet in Google.'
+      body: 'De sterke SEO-basis staat op orde en je posities komen maandelijks in je inbox. Zo zie je zwart-op-wit wat je site doet in Google.'
   note: 'Deze basis zit in beide pakketten; het verschil zit in het aantal pagina''s, de wijzigingstijd en de rapportage. Wil je daarnaast actief stijgen in Google met content en zoekwoorden? Dat doen we los via een <a href="/seo/">SEO-traject</a>.'
 
 audienceFit:
@@ -92,7 +92,7 @@ comparison:
     - without: 'Wijzigingen via een nieuwe opdracht of offerte'
       with: '30 minuten tot 2 uur wijzigingen per maand inbegrepen'
     - without: 'Snelheid en SEO blijven jouw verantwoordelijkheid'
-      with: 'Streven naar 90+ PageSpeed, technische SEO-basis blijft op orde'
+      with: 'Streven naar 90+ PageSpeed, sterke SEO-basis blijft op orde'
     - without: 'Geen vaste momenten voor designvernieuwing'
       with: 'Jaarlijks een refresh van het design op het Froseo-framework'
     - without: 'Contact afhankelijk van de planning van de bouwer'
@@ -127,7 +127,7 @@ calvinNote:
 
 faqs:
   - q: Wat kost een website abonnement?
-    a: 'Online Start kost {{abboFromInline}} ({{vatNote}}). Daarvoor krijg je een professionele website op het Froseo-framework, inclusief hosting, SSL, de technische SEO-basis, maandelijkse positierapportage en 30 minuten wijzigingen per maand. Heb je meer pagina''s en uitgebreidere rapportage nodig, dan is er Online Plus voor {{abboPlusInline}} ({{vatNote}}). Bij een jaarcontract betaal je geen setup fee; bij een maandcontract komt er een eenmalige setup fee van {{abboStartSetupFee}} bij. Maandcontracten zijn maandelijks opzegbaar.'
+    a: 'Online Start kost {{abboFromInline}} ({{vatNote}}). Daarvoor krijg je een professionele website op het Froseo-framework, inclusief hosting, SSL, de sterke SEO-basis, maandelijkse positierapportage en 30 minuten wijzigingen per maand. Heb je meer pagina''s en uitgebreidere rapportage nodig, dan is er Online Plus voor {{abboPlusInline}} ({{vatNote}}). Bij een jaarcontract betaal je geen setup fee; bij een maandcontract komt er een eenmalige setup fee van {{abboStartSetupFee}} bij. Maandcontracten zijn maandelijks opzegbaar.'
   - q: Waarom een abonnement in plaats van een eenmalige website?
     a: 'Bij een eenmalige website betaal je vooraf veel en moet je het onderhoud daarna zelf regelen. Met een abonnement spreid je de kosten, blijft de techniek up-to-date en is er elke maand iemand verantwoordelijk voor de site. Heb je geen grote maatwerkfunctionaliteit nodig, dan dekt een abonnement de lading: je spreidt de kosten en de techniek blijft bijgehouden.'
   - q: Wat zit er níet in het abonnement?
@@ -149,7 +149,7 @@ faqs:
   - q: Kan ik ook een website laten maken zonder opstartkosten?
     a: 'Ja. Bij een jaarcontract op het website abonnement betaal je geen setup fee. Je betaalt alleen het vaste maandbedrag voor de bouw, de hosting, het technisch beheer en de ondersteuning van je website. Kies je voor een maandcontract op Online Start, dan komt er een eenmalige setup fee van {{abboStartSetupFee}} bij.'
   - q: Zit SEO inbegrepen bij het website abonnement?
-    a: 'De technische SEO-basis zit inbegrepen: een snelle structuur, sitemap, metadata, schema en Search Console. Actieve SEO zoals zoekwoordonderzoek, nieuwe landingspagina''s, blogartikelen en linkbuilding valt buiten het abonnement en kun je los toevoegen via een SEO-traject.'
+    a: 'De sterke SEO-basis zit inbegrepen: een snelle structuur, sitemap, metadata, schema en Search Console. Actieve SEO zoals zoekwoordonderzoek, nieuwe landingspagina''s, blogartikelen en linkbuilding valt buiten het abonnement en kun je los toevoegen via een SEO-traject.'
   - q: Kan ik mijn bestaande website omzetten naar een website abonnement?
     a: 'Vaak wel. We kijken eerst naar je huidige website, content, techniek en doelen. Soms bouwen we de site opnieuw op ons framework, soms nemen we vooral de belangrijkste pagina''s en structuur mee.'
   - q: Wat is het verschil tussen een website huren en een website abonnement?

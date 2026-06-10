@@ -25,7 +25,7 @@ bullets:
   - All-inclusive abonnement vanaf {{abboFromShort}}
   - Maatwerk voor grotere trajecten
   - Mobile-first, snel en AVG-proof
-  - Technische SEO-basis ingebouwd
+  - Sterke SEO-basis ingebouwd
 
 showcaseEyebrow: 'Recent werk'
 showcaseTitle: 'Websites die we'
@@ -97,7 +97,7 @@ usps:
     body: 'Veel bureaus zijn óf WordPress-bouwers, óf custom developers. Wij doen beide. Welke route bij jou past hangt af van wat je wil beheren, hoe vaak je dingen zelf wil bijwerken en wat je toekomstplannen zijn. We geven daar eerlijk advies over.'
   - title: Geen template dat je overal ziet
     body: 'We werken niet met kant-en-klare blokken die je bij vijf andere bureaus ook tegenkomt. Elk ontwerp begint vanaf wat jouw bedrijf onderscheidt. Dat geldt voor maatwerk én voor de doordachte basis onder ons abonnement.'
-  - title: Technische SEO-basis zit erin
+  - title: Sterke SEO-basis zit erin
     body: 'Snelheid, structuur, metadata, interne links en een logische pagina-opbouw. Daarmee kan Google jouw site goed indexeren. Actieve SEO, content of conversie-optimalisatie kan als losse uitbreiding bovenop.'
   - title: Eén aanspreekpunt, geen schakels
     body: 'Je werkt direct met de mensen die ontwerpen en bouwen. Geen accountmanagers, geen tussenlagen, geen telefoon-tag. Korte lijnen en snelle reacties.'
@@ -108,7 +108,7 @@ faqs:
   - q: Hoe lang duurt het voordat mijn website live staat?
     a: 'Voor maatwerk streven we naar live binnen een maand, afhankelijk van de omvang en hoe snel content wordt aangeleverd. Het abonnement gaat sneller: vaak binnen twee weken, omdat we vertrekken vanaf een doordachte basis. Tijdens de kennismaking geven we een realistische inschatting voor jouw situatie.'
   - q: Wat zit er in het website-abonnement van {{abboFromInline}}?
-    a: 'Een professionele website op onze doordachte basis, hosting, technisch beheer en kleine wijzigingen. We streven naar 90+ op Google PageSpeed en zetten de technische SEO-basis standaard op orde. Actieve SEO, content-uitbreiding of conversie-optimalisatie kan als losse uitbreiding bovenop.'
+    a: 'Een professionele website op onze doordachte basis, hosting, technisch beheer en kleine wijzigingen. We streven naar 90+ op Google PageSpeed en zetten de sterke SEO-basis standaard op orde. Actieve SEO, content-uitbreiding of conversie-optimalisatie kan als losse uitbreiding bovenop.'
   - q: Hoe zit het met hosting, domein en beheer?
     a: 'Bij maatwerk spreken we vooraf af hoe hosting, domein en beheer worden ingericht. Vaak zet je dat op eigen naam, soms regelen we het via een partner. Bij het website-abonnement blijft hosting onderdeel van de service. We zorgen altijd voor duidelijke afspraken zodat je weet wie wat in beheer heeft.'
   - q: Werken jullie ook voor ZZP''ers en kleine bedrijven?
@@ -116,7 +116,7 @@ faqs:
   - q: Kan een bestaande website worden opgefrist in plaats van helemaal opnieuw?
     a: 'Soms wel. Als de basis technisch in orde is en alleen het ontwerp verouderd voelt, kunnen we een opfrisbeurt doen. Vaak is een nieuwe site echter slimmer, omdat oude techniek je beperkt in snelheid en SEO. Bij de kennismaking kijken we welke route logisch is voor jou.'
   - q: Doen jullie ook actieve SEO en content?
-    a: 'We zorgen dat de technische SEO-basis goed staat: snelheid, structuur, metadata, interne links en een logische pagina-opbouw. Wil je actief groeien in Google met inhoudelijke SEO, doorlopende content, lokale SEO of conversie-optimalisatie? Dat kan als losse uitbreiding, vraag ernaar bij de kennismaking.'
+    a: 'We zorgen dat de sterke SEO-basis goed staat: snelheid, structuur, metadata, interne links en een logische pagina-opbouw. Wil je actief groeien in Google met inhoudelijke SEO, doorlopende content, lokale SEO of conversie-optimalisatie? Dat kan als losse uitbreiding, vraag ernaar bij de kennismaking.'
 ---
 
 ## Onze propositie
@@ -135,4 +135,4 @@ In beide gevallen bouwen we vanaf de basis. Geen kant-en-klare templates die je 
 
 ## Wat het oplevert
 
-Een website die er niet alleen goed uitziet, maar ook beter werkt. Bezoekers die snappen wat je doet, sneller bij de juiste pagina komen en vaker contact opnemen. Google die je beter kan indexeren door de technische SEO-basis. En een platform waar je over vijf jaar nog op kan bouwen.
+Een website die er niet alleen goed uitziet, maar ook beter werkt. Bezoekers die snappen wat je doet, sneller bij de juiste pagina komen en vaker contact opnemen. Google die je beter kan indexeren door de sterke SEO-basis. En een platform waar je over vijf jaar nog op kan bouwen.
