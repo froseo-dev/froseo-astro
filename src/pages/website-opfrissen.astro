@@ -34,6 +34,7 @@ import ReviewAvatars from '@components/ui/ReviewAvatars.astro';
 import SectionIcon from '@components/ui/SectionIcon.astro';
 import LogosTicker from '@components/sections/LogosTicker.astro';
 import BeforeAfter from '@components/sections/BeforeAfter.astro';
+import HeroReason from '@components/sections/HeroReason.astro';
 import CalvinNote from '@components/sections/CalvinNote.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
 import FAQ from '@components/sections/FAQ.astro';
@@ -45,6 +46,7 @@ import heroMockup from '@assets/hero/website-opfrissen-hero.webp';
 import froseoLogoWit from '@assets/brand/froseo-logo-wit.webp';
 import studioContenidoBefore from '@assets/before-after/studio-contenido-before.webp';
 import studioContenidoAfter from '@assets/before-after/studio-contenido-after.webp';
+import ruthLastersScreenshot from '@assets/website-opfrissen/ruth-lasters.webp';
 
 /* Cases — een aantal projecten die laten zien wat we al hebben
    opgeleverd. Mix van opfris- en rebuild-projecten zodat het
@@ -64,82 +66,65 @@ const showcaseCases = showcaseSlugs
 
 const pageTitle = 'Website opfrissen: sneller, veiliger en weer fris | Froseo';
 const pageDesc =
-  'Niet meteen alles opnieuw bouwen, maar wel een veiligere, snellere en frissere website. Een opfris-traject vanaf €399, modulair op te bouwen.';
+  'Niet meteen alles opnieuw bouwen, maar wel een veiligere, snellere en frissere website. Een opfrisbeurt vanaf €399, modulair op te bouwen.';
 
 /* 4 USP-cards met SectionIcon-namen. Volgorde komt overeen met de
    modulaire route eronder ("Klein beginnen of alles aanpakken?"). */
-const usps = [
+/* Vier modules van de "Pak één ding aan, of alles in één keer"-sectie.
+   Combineert de oorspronkelijke USP-teksten met de modulaire framing,
+   in een iets rijkere paragraaf per module zodat het meer dieptewerk
+   ademt dan de oude card-tekst. */
+const modules = [
   {
-    icon: 'shieldCheck',
-    title: 'Veiligheid op orde',
-    body: 'We werken WordPress, je plug-ins en thema\'s bij naar de laatste versie. Login-bescherming gaat aan en bekende lekken zetten we dicht.',
+    icon: 'paletteSwatch',
+    title: 'Design opgefrist',
+    body: 'Geen volledige rebrand, wel een verfrissing waar het telt. Typografie, kleurgebruik, knoppen, witruimte en mobiele uitlijning. We pakken aan wat je site nu visueel dateert, zonder je merk overhoop te halen. Belangrijk: zeven van de tien bezoekers komen via een telefoon. We testen alles op desktop, tablet en mobiel zodat je site overal even strak staat.',
   },
   {
     icon: 'chartUp',
     title: 'Snelheid omhoog',
-    body: 'Caching scherp gezet, zware afbeeldingen gecomprimeerd, database opgeschoond. Je laadtijd én Core Web Vitals knappen daar zichtbaar van op.',
+    body: 'Caching scherp gezet, zware afbeeldingen omgezet naar WebP en je database opgeschoond. Plug-ins die meer remmen dan opleveren halen we eruit. Je laadtijd en Core Web Vitals knappen daar zichtbaar van op, wat je terugziet in zowel de gebruikservaring als in Google.',
   },
   {
-    icon: 'paletteSwatch',
-    title: 'Design opgefrist',
-    body: 'Typografie, kleurgebruik en mobiele uitlijning krijgen een opknapbeurt. Geen volledige rebrand, wel zodat je site er niet meer vijf jaar oud uitziet.',
+    icon: 'shieldCheck',
+    title: 'Veiligheid op orde',
+    body: 'Sommige WordPress-plug-ins krijgen meerdere updates per week. Loopt dat achter, dan ligt je site er voor een hacker als een open deur bij. We werken alles bij naar de laatste stabiele versie en ruimen op wat je niet meer gebruikt. Inlogbescherming gaat aan, file-permissies kloppen weer en bekende kwetsbaarheden zetten we dicht.',
   },
   {
     icon: 'searchGlass',
     title: 'Google Proof',
-    body: 'We werken je sterke SEO-basis bij: schema, sitemap, meta-data en interne links. Een site die goed onderhouden is, wordt ook beter gevonden.',
-  },
-];
-
-/* Vier modules van de "Klein beginnen of alles aanpakken?"-sectie.
-   Elk een kort stuk dat het modulaire karakter ondersteunt. */
-const modules = [
-  {
-    title: 'Supersnel maken',
-    body: 'Caching aanzetten of bijschaven, afbeeldingen comprimeren naar WebP en je database opruimen. Plug-ins die meer kosten dan ze opleveren slopen we eruit.',
-  },
-  {
-    title: 'Veiligheid op orde',
-    body: 'We werken WordPress, je plug-ins en thema\'s bij naar de laatste stabiele versie. Login-bescherming gaat aan, file-permissies kloppen weer en bekende kwetsbaarheden zetten we dicht.',
-  },
-  {
-    title: 'Design verbeteren',
-    body: 'Geen complete rebrand, maar wel een verfrissing waar het telt. Typografie, knoppen, mobiele uitlijning, witruimte: alles wat je site visueel nu dateert.',
-  },
-  {
-    title: 'Content optimaliseren',
-    body: 'Je teksten worden beter scanbaar, koppen scherper en CTA\'s staan op de plek waar ze werken. De SEO-basis (titels, meta-data, interne links) trekken we tegelijk recht.',
+    body: 'We trekken je sterke SEO-basis recht: schema, sitemap, metadata, koppenstructuur en interne links. Verouderde content scherpen we waar nodig aan, gebroken URLs vangen we netjes af. Een site die goed onderhouden is wordt ook beter gevonden.',
   },
 ];
 
 const faqs = [
   {
-    q: 'Wanneer is een opfris-ronde slimmer dan een nieuwe website?',
-    a: 'Als de basis van je site nog goed staat (techniek, structuur, merk) maar het op delen pijnlijk verouderd voelt. Te traag, niet meer mobielvriendelijk, slechte SEO-scores of een design dat duidelijk uit een ander tijdperk komt. Dan is opfrissen vaak een fractie van de kosten en de tijd van helemaal opnieuw beginnen. Twijfel je? Stuur ons je site, we kijken vrijblijvend mee en zeggen je of opfrissen genoeg is of dat alles opnieuw bouwen verstandiger is.',
+    q: 'Wanneer is een opfrisbeurt slimmer dan een nieuwe website?',
+    a: 'Als de basis van je site nog goed staat (techniek, structuur, merk) maar delen pijnlijk verouderd voelen. Te traag, niet meer mobielvriendelijk, slechte SEO-scores of een ontwerp dat duidelijk uit een ander tijdperk komt. Dan is opfrissen vaak een fractie van de kosten en de tijd van helemaal opnieuw beginnen. Twijfel je? Stuur ons je site, we kijken vrijblijvend mee en zeggen je of opfrissen genoeg is, of dat alles opnieuw bouwen verstandiger is.',
   },
   {
-    q: 'Wat kost een opfris-traject precies?',
-    a: 'Een basis-opfris start vanaf €399 voor een gerichte ronde op één onderdeel (bijvoorbeeld snelheid of veiligheid). Daarboven bouwen we modulair: jij beslist of we alleen het meest urgente aanpakken of alles in één keer. Tijdens een gratis adviesgesprek geven we een heldere offerte vooraf, op basis van wat we onder de motorkap aantreffen.',
+    q: 'Wat kost een opfrisbeurt precies?',
+    a: 'Een basis-opfris start vanaf €399 voor een gerichte ronde op één onderdeel, bijvoorbeeld snelheid of veiligheid. Daarboven bouwen we modulair. Jij beslist of we alleen het meest urgente aanpakken of alles in één keer. Tijdens een gratis adviesgesprek geven we een heldere offerte vooraf, op basis van wat we onder de motorkap aantreffen.',
   },
   {
     q: 'Werken jullie alleen met WordPress-sites?',
-    a: 'Voor opfris-trajecten ja, WordPress is ons specialisme en daar halen we de meeste winst. Andere platforms (Drupal, Webflow, Wix) doen we incidenteel op uurbasis voor losse opdrachten, maar de modulaire opfris-route is specifiek voor WordPress ingericht.',
+    a: 'Voor opfrisbeurten ja. WordPress is ons specialisme en daar halen we de meeste winst. Andere platforms (Drupal, Webflow, Wix) doen we incidenteel op uurbasis voor losse opdrachten, maar de modulaire opfrisbeurt is specifiek voor WordPress ingericht.',
   },
   {
-    q: 'Hoe lang duurt een gemiddelde opfris-ronde?',
-    a: 'Een gerichte module (snelheid, veiligheid, of design-refresh) is meestal binnen één of twee weken klaar. Een volledige ronde over alle vier de onderdelen is gemiddeld drie tot vier weken werk. We doen dit zonder dat je site langer dan strikt nodig uit de lucht hoeft.',
+    q: 'Hoe lang duurt een gemiddelde opfrisbeurt?',
+    a: 'Een gerichte module (snelheid, veiligheid of een design-refresh) is meestal binnen één of twee weken klaar. Een volledige ronde over alle vier de onderdelen is gemiddeld drie tot vier weken werk. We doen dit zonder dat je site langer dan strikt nodig uit de lucht hoeft.',
   },
   {
     q: 'Verlies ik mijn Google-rankings als jullie aan mijn site werken?',
-    a: 'Nee, dat is juist een van de redenen waarom we modulair werken: we vervangen je structuur niet, we verbeteren wat er staat. Bij wijzigingen die SEO raken (URL-structuur, content, redirects) stellen we vooraf een migratieplan op zodat rankings behouden blijven. Bij Renovatie Totaal en andere klanten hebben we hier ervaring mee.',
+    a: 'Nee. Dat is juist een van de redenen waarom we modulair werken: we vervangen je structuur niet, we verbeteren wat er staat. Bij wijzigingen die SEO raken (URL-structuur, content, redirects) stellen we vooraf een migratieplan op zodat rankings behouden blijven. Bij Renovatie Totaal en andere klanten hebben we hier ervaring mee.',
   },
   {
     q: 'Doen jullie ook onderhoud nadat de opfrisbeurt klaar is?',
-    a: 'Ja, en dat raden we vaak ook aan. Een opfris-ronde is eenmalig; doorlopend onderhoud houdt je site daarna up-to-date en veilig. Daar hebben we vaste maandelijkse pakketten voor (Basic Care, Standard Care, Pro Care) inclusief premium plug-in-licenties.',
+    a: 'Ja, en dat raden we vaak ook aan. Een opfrisbeurt is eenmalig. Doorlopend onderhoud houdt je site daarna up-to-date en veilig. Daar hebben we vaste maandelijkse pakketten voor (Basic Care, Standard Care, Pro Care) inclusief premium plug-in-licenties.',
   },
   {
     q: 'Kunnen jullie ook helpen als ik geen idee heb waar te beginnen?',
-    a: 'Ja. Stuur ons je site of geef toegang, dan duiken we erin en sturen we je een overzichtje. Waar zit de meeste winst, welke modules zijn urgent, welke kunnen wachten. Met of zonder vervolg-traject, je kan er zelf ook al wat mee.',
+    a: 'Ja. Stuur ons je site of geef toegang, dan duiken we erin en sturen we je een overzichtje. Waar zit de meeste winst, welke modules zijn urgent, welke kunnen wachten. Met of zonder vervolg-traject kun je er zelf al wat mee.',
   },
 ];
 ---
@@ -181,8 +166,8 @@ const faqs = [
           <div class="service-hero-media">
             <Image
               src={heroMockup}
-              alt="Website opfrissen door Froseo: Studio Contenido op desktop, Rex The Agency op mobiel"
-              title="Website opfrissen door Froseo: Studio Contenido op desktop, Rex The Agency op mobiel"
+              alt="Website laten opfrissen door Froseo: opgefriste sites van Studio Contenido en Rex The Agency"
+              title="Website laten opfrissen door Froseo: opgefriste sites van Studio Contenido en Rex The Agency"
               class="service-hero-img"
               widths={[640, 960, 1280, 1600]}
               sizes="(max-width: 1024px) 100vw, 640px"
@@ -196,9 +181,33 @@ const faqs = [
       <LogosTicker />
 
       <!-- ============================================================
-           Interactieve before/after — Studio Contenido. Hoog op de
-           pagina want het is direct het sterkste visuele bewijs van
-           wat een opfris-ronde oplevert.
+           Waarom je website laten opfrissen — direct onder de logo-
+           ticker. Donker-paars met ruitjes-pattern (zelfde tokens als
+           de ticker), screenshot van Ruth Lasters als achtergrond met
+           glassy tekst-card eroverheen. Concrete redenen, geen vage
+           AI-taal. Volgt de problem-first volgorde i.p.v. eerst een
+           visuele voor/na-hook.
+           ============================================================ -->
+      <HeroReason
+        variant="left"
+        eyebrow="Waarom opfrissen"
+        title="Waarom je website laten"
+        titleAccent="opfrissen?"
+        body={[
+          'Je site werkt nog, maar voelt traag. Plug-ins lopen achter. Het design oogt verouderd en je "voelt" hem niet meer. En je posities in Google zakken zonder dat je weet waarom.',
+          'Met een opfrisbeurt pak je gericht aan wat achterloopt: snelheid, beveiliging, een fris ontwerp en je SEO-basis. Je houdt wat goed staat. Vaak voor een fractie van een nieuwe site.',
+        ]}
+        image={ruthLastersScreenshot}
+        imageAlt="Opgefriste website voor Ruth Lasters door Froseo"
+        imageTag="ruthlasters.com"
+        ctaLabel="Plan een kennismaking ↗"
+        ctaHref="/contact/?onderwerp=website-opfrissen"
+      />
+
+      <!-- ============================================================
+           Interactieve before/after — Studio Contenido. Komt na het
+           waarom-blok zodat de bezoeker eerst de redenen heeft gezien
+           voordat de visuele proof volgt.
            ============================================================ -->
       <section class="opfris-ba">
         <div class="opfris-ba-inner">
@@ -210,15 +219,15 @@ const faqs = [
             <p class="opfris-ba-lead">
               Studio Contenido had een site die werkte, maar visueel en technisch
               achterliep op waar het merk inmiddels stond. Niet alles opnieuw, wel
-              een gerichte opfris-ronde op design, structuur en techniek. Sleep
+              een gerichte opfrisbeurt op design, structuur en techniek. Sleep
               de handle om het verschil te zien.
             </p>
           </div>
           <BeforeAfter
             before={studioContenidoBefore}
             after={studioContenidoAfter}
-            beforeAlt="Studio Contenido — website voor de opfrisbeurt"
-            afterAlt="Studio Contenido — website na de opfrisbeurt"
+            beforeAlt="Website van Studio Contenido voor de opfrisbeurt door Froseo"
+            afterAlt="Opgefriste website voor Studio Contenido door Froseo"
           />
           <div class="opfris-ba-cta">
             <a class="btn-ghost" href="/cases/">Bekijk meer cases ↗</a>
@@ -227,78 +236,13 @@ const faqs = [
       </section>
 
       <!-- ============================================================
-           Waarom-blok — body-tekst over veroudering, technische schuld
-           en bezoekersverwachtingen. Bewust hoog op de pagina (direct
-           na de BeforeAfter-hook) zodat het probleem-framing volgt op
-           de visuele teaser, vóór we de oplossing (USPs/modules) tonen.
-           ============================================================ -->
-      <section class="opfris-waarom">
-        <div class="opfris-waarom-inner">
-          <EyebrowPill variant="rare">Waarom überhaupt opfrissen?</EyebrowPill>
-          <h2 class="opfris-waarom-title">
-            Een verouderde site <em>kost je geld.</em>
-          </h2>
-          <p>
-            De meeste websites zijn ooit goed opgeleverd, maar verouderen sneller dan
-            je denkt. WordPress, plug-ins en design-trends bewegen door. Bezoekers
-            verwachten elk jaar iets meer snelheid, mobiel gemak en betrouwbare
-            uitstraling. Google straft trage, onveilige of slecht mobiel werkende
-            sites zichtbaar af. En een vergeten plug-in is in deze tijd genoeg om
-            ineens onderdeel te zijn van een hack-statistiek.
-          </p>
-          <p>
-            Een opfris-ronde brengt je site terug naar het niveau van vandaag, zonder
-            dat je alles overhoop hoeft te halen. Voor veel ondernemers is dat de
-            meest logische volgende stap: behouden wat goed staat, vervangen wat
-            achterloopt. Wij doen het modulair, transparant en in je eigen tempo.
-          </p>
-          <a class="btn-ghost opfris-waarom-cta" href="/contact/?onderwerp=website-opfrissen">
-            Plan een kennismaking ↗
-          </a>
-        </div>
-      </section>
-
-      <!-- ============================================================
-           4 USP-cards: Veiligheid / Snelheid / Design / Google Proof.
-           Met SVG-icons in teal (currentColor erft via .opfris-usp-icon).
-           ============================================================ -->
-      <section class="opfris-usps">
-        <div class="opfris-usps-inner">
-          <div class="opfris-usps-head">
-            <EyebrowPill>Wat krijg je er voor terug</EyebrowPill>
-            <h2 class="opfris-usps-title">
-              Dit verbeteren we aan jouw <em>website.</em>
-            </h2>
-          </div>
-          <div class="opfris-usps-grid">
-            {usps.map((u) => (
-              <article class="opfris-usp-card">
-                <SectionIcon name={u.icon} class="opfris-usp-icon" size={44} />
-                <h3 class="opfris-usp-title">{u.title}</h3>
-                <p class="opfris-usp-body">{u.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================================
-           Mid-page Calvin-balk met advies-CTA. Bewust hoger op de
-           pagina (direct na de 4 USP-cards) zodat de bezoeker na het
-           "wat" meteen een laagdrempelige actie kan ondernemen, in
-           plaats van pas onderaan naast de close-CTA.
-           ============================================================ -->
-      <CalvinNote
-        message="Twijfel je of een opfrisbeurt voor jouw site genoeg is, of dat een complete vernieuwing verstandiger is? Stuur ons toegang, dan kijken we onder de motorkap en sturen je een nuchtere take terug."
-        ctaLabel="Vraag advies aan ↗"
-        ctaHref="/contact/?onderwerp=website-opfrissen-advies"
-      />
-
-      <!-- ============================================================
-           "Klein beginnen of alles aanpakken?" — 4-modules section op
-           donkere achtergrond met de échte Froseo-image-logo als
-           sfeer-watermark (i.p.v. tekst). Geen LogoBreak-dividers
-           eromheen — de section-borders dragen de visuele scheiding.
+           Modulair-aanpak sectie op donker-paarse achtergrond met
+           Froseo-logo-watermark. Combineert wat eerder in twee aparte
+           blokken (USPs + modules) stond tot één rijkere sectie. Direct
+           daaronder, ZONDER section-break (zelfde paarse achtergrond):
+           een mid-page CalvinNote en een cross-sell-card naar onderhoud
+           zodat de hele "wat doen we voor je"-flow visueel als één
+           geheel leest.
            ============================================================ -->
       <section class="opfris-modules">
         <Image
@@ -317,91 +261,99 @@ const faqs = [
               Pak één ding aan, of <em>alles in één keer.</em>
             </h2>
             <p class="opfris-modules-lead">
-              Geen vast pakket dat we per se willen verkopen. Jij beslist welke
-              onderdelen we voor je oppakken: alles tegelijk, of stap voor stap in
-              je eigen tempo. We starten altijd met een nuchtere audit zodat je
-              vooraf weet waar de meeste winst zit.
+              We starten altijd met een vrijblijvende analyse van je site.
+              Geen onderbuik-advies, maar een lijstje onderbouwd met data
+              over waar bij jou de meeste winst zit. Daarna beslis jij welke
+              modules we oppakken: alles tegelijk, of stap voor stap in je
+              eigen tempo. Je betaalt alleen voor wat je daadwerkelijk laat
+              doen.
             </p>
           </div>
           <div class="opfris-modules-grid">
             {modules.map((m, i) => (
               <article class="opfris-module-card">
+                <SectionIcon name={m.icon} class="opfris-module-icon" size={36} />
                 <div class="opfris-module-num">{String(i + 1).padStart(2, '0')}</div>
                 <h3 class="opfris-module-title">{m.title}</h3>
                 <p class="opfris-module-body">{m.body}</p>
               </article>
             ))}
           </div>
-        </div>
-      </section>
 
-      <!-- ============================================================
-           Cross-sell naar onderhoudspakketten — vervangt het eerdere
-           "persoonlijke aanpak" blok dat te veel dubbel met de modules
-           erboven. Teal-bg met purple pill+knop, 2-koloms met sneak-
-           preview van de Basic Care card rechts. Brengt natuurlijke
-           internal link naar /website-onderhoud.
-           ============================================================ -->
-      <section class="opfris-cross">
-        <div class="opfris-cross-inner">
-          <div class="opfris-cross-text">
-            <EyebrowPill variant="primary">Na de opfris</EyebrowPill>
-            <h2 class="opfris-cross-title">
-              Wil je dat je site <em>netjes blijft staan?</em>
-            </h2>
-            <p class="opfris-cross-body">
-              Een opfris-ronde brengt je site terug in topvorm. Maar WordPress,
-              plug-ins en thema's blijven daarna ook bewegen.
-            </p>
-            <p class="opfris-cross-body">
-              Wil je je site doorlopend in goede handen houden? Zet 'm dan bij ons
-              in onderhoud voor een vast maandbedrag. Drie pakketten waar je uit
-              kiest, van basis-updates tot een pakket waar je verder nergens naar
-              omkijken hebt. Inclusief premium plug-in-licenties.
-            </p>
+          {/* Mid-page advies-CTA op dezelfde paarse achtergrond, zodat
+              het visueel onderdeel is van de modulaire-aanpak-flow. */}
+          <div class="opfris-modules-note">
+            <CalvinNote
+              message="Twijfel je of een opfrisbeurt voor jouw site genoeg is, of dat een complete vernieuwing verstandiger is? Stuur ons toegang, dan kijken we onder de motorkap en sturen je een eerlijk advies terug."
+              ctaLabel="Vraag advies aan ↗"
+              ctaHref="/contact/?onderwerp=website-opfrissen-advies"
+            />
           </div>
-          <div class="opfris-cross-right">
-            {/* Hergebruikt de pricing-card-stijl van /website-onderhoud
-                zodat dit blok visueel een herkenbare sneak-peek is van
-                de echte pakketten-cards. */}
-            <div class="pricing-card opfris-cross-card" aria-hidden="true">
-              <header class="pricing-card-head opfris-cross-card-head">
-                <h3 class="pricing-card-name">Care Packages</h3>
-                <p class="pricing-card-tagline">Doorlopend in goede handen.</p>
-                <div class="pricing-card-price opfris-cross-card-price">
-                  <span class="opfris-cross-vanaf">Vanaf</span>
-                  <span class="pricing-amount-prefix">€</span>
-                  <span class="pricing-amount">19</span>
-                  <span class="pricing-period">/ maand</span>
-                </div>
-                <p class="pricing-card-for">Drie pakketten</p>
-              </header>
-              <ul class="pricing-card-features">
-                <li>
-                  <span class="check-icon" aria-hidden="true">✓</span>
-                  <span>Handmatige updates met restore-point</span>
-                </li>
-                <li>
-                  <span class="check-icon" aria-hidden="true">✓</span>
-                  <span>Dagelijkse backups en beveiligings-scans</span>
-                </li>
-                <li>
-                  <span class="check-icon" aria-hidden="true">✓</span>
-                  <span>24/7 uptime-monitoring</span>
-                </li>
-                <li class="is-highlight">
-                  <span class="check-icon" aria-hidden="true">✓</span>
-                  <span>Premium plug-in-licenties t.w.v. €350+/jaar</span>
-                </li>
-                <li>
-                  <span class="check-icon" aria-hidden="true">✓</span>
-                  <span>€10/u korting op het Froseo-uurtarief</span>
-                </li>
-              </ul>
+
+          {/* Cross-sell naar onderhoud — natuurlijke vervolg-stap. Geen
+              aparte section: blijft binnen de paarse modules-section zodat
+              alles als één samenhangend "wat we doen + hoe verder" leest. */}
+          <div class="opfris-cross">
+            <div class="opfris-cross-text">
+              <EyebrowPill variant="primary" onDark>Na de opfrisbeurt</EyebrowPill>
+              <h3 class="opfris-cross-title">
+                Wil je dat je site <em>netjes blijft staan?</em>
+              </h3>
+              <p class="opfris-cross-body">
+                Een opfrisbeurt brengt je site terug in topvorm. Maar WordPress,
+                plug-ins en je thema blijven daarna ook bewegen.
+              </p>
+              <p class="opfris-cross-body">
+                Wil je je site doorlopend in goede handen houden? Zet 'm dan
+                bij ons in onderhoud voor een vast maandbedrag. Drie pakketten
+                waar je uit kiest, van basis-updates tot een pakket waar je
+                nergens meer naar omkijken hebt.
+              </p>
+              <a class="btn-primary opfris-cross-cta" href="/website-onderhoud/">
+                Bekijk onderhoudspakketten ↗
+              </a>
             </div>
-            <a class="btn-cross opfris-cross-cta" href="/website-onderhoud/">
-              Bekijk onderhoudspakketten ↗
-            </a>
+            <div class="opfris-cross-right">
+              {/* Sneak-peek van de Basic Care card. Bullets matchen 1-op-1
+                  met src/data/maintenance-packages.ts (Basic Care features).
+                  Geen verzonnen USPs zoals 'dagelijkse backups' (zit pas in
+                  Standard Care) of '€10/u korting' (bestaat niet meer). */}
+              <div class="pricing-card opfris-cross-card" aria-hidden="true">
+                <header class="pricing-card-head opfris-cross-card-head">
+                  <h3 class="pricing-card-name">Care Packages</h3>
+                  <p class="pricing-card-tagline">Doorlopend in goede handen.</p>
+                  <div class="pricing-card-price opfris-cross-card-price">
+                    <span class="opfris-cross-vanaf">Vanaf</span>
+                    <span class="pricing-amount-prefix">€</span>
+                    <span class="pricing-amount">19</span>
+                    <span class="pricing-period">/ maand</span>
+                  </div>
+                  <p class="pricing-card-for">Drie pakketten</p>
+                </header>
+                <ul class="pricing-card-features">
+                  <li>
+                    <span class="check-icon" aria-hidden="true">✓</span>
+                    <span>Maandelijkse updates met restore-point</span>
+                  </li>
+                  <li>
+                    <span class="check-icon" aria-hidden="true">✓</span>
+                    <span>Wekelijkse backups en beveiligingsscan</span>
+                  </li>
+                  <li>
+                    <span class="check-icon" aria-hidden="true">✓</span>
+                    <span>24/7 uptime-monitoring</span>
+                  </li>
+                  <li>
+                    <span class="check-icon" aria-hidden="true">✓</span>
+                    <span>Support via mail, telefoon en WhatsApp</span>
+                  </li>
+                  <li class="is-highlight">
+                    <span class="check-icon" aria-hidden="true">✓</span>
+                    <span>Standard en Pro met premium plug-inlicenties</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>

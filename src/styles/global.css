@@ -8909,6 +8909,18 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   flex-direction: column;
   gap: 10px;
 }
+/* Icon-cirkel binnen elke module-card. Geeft visueel gewicht aan de
+   USP-functie van de modules; nummers blijven als secundair
+   counter-systeem zichtbaar. */
+.opfris-module-icon {
+  width: 56px;
+  height: 56px;
+  padding: 14px;
+  border-radius: 50%;
+  background: rgba(245, 197, 24, 0.14);
+  color: var(--accent-highlight);
+  margin-bottom: 4px;
+}
 .opfris-module-num {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -8945,34 +8957,26 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   margin-top: 32px;
 }
 
-/* --- Cross-sell naar onderhoudspakketten — teal bg, 2-koloms met
-   sneak-pakketten-card rechts. Purple pill + button voor contrast,
-   sterk visueel ritme tegen de teal bg. --- */
-.opfris-cross {
-  position: relative;
-  padding: 96px var(--gutter);
-  /* Teal-bg + subtiele grid-pattern overlay (witte lijnen, radial-
-     fade naar het midden) zodat het blok geen platte vlakte is. */
-  background-color: var(--color-teal);
-  background-image:
-    radial-gradient(ellipse at center, transparent 22%, var(--color-teal) 78%),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 60px),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 60px);
-  background-size: cover, 60px 60px, 60px 60px;
-  background-repeat: no-repeat, repeat, repeat;
-  background-position: center, 0 0, 0 0;
-  color: var(--color-white);
-  border-top: var(--border);
-  border-bottom: var(--border);
-  overflow: hidden;
+/* CalvinNote-wrapper binnen de paarse modules-section. Extra ruimte
+   boven en onder zodat de note visueel adem heeft tussen de modules-
+   grid en het cross-sell-blok. */
+.opfris-modules-note {
+  margin-top: 56px;
 }
-.opfris-cross-inner {
-  max-width: var(--container-max);
-  margin: 0 auto;
+
+/* --- Cross-sell naar onderhoudspakketten — NESTED binnen .opfris-modules
+   (zelfde paarse bg). 2-koloms met text links, sneak-pakketten-card
+   rechts. Geen aparte section meer; visueel onderdeel van de modulair-
+   aanpak-flow. --- */
+.opfris-cross {
+  margin-top: 64px;
+  padding-top: 56px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: 56px;
   align-items: center;
+  color: var(--text-on-dark);
 }
 .opfris-cross-text {
   display: flex;
@@ -8980,42 +8984,37 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   align-items: flex-start;
   gap: 16px;
 }
-/* Rechter kolom: stacks card + button verticaal zodat de CTA direct
-   onder het preview-blokje zit (niet onder de body-tekst links). */
+/* Rechter kolom: card alleen, knop staat nu in de tekst-kolom links. */
 .opfris-cross-right {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 18px;
   justify-self: end;
   max-width: 360px;
   width: 100%;
 }
-.opfris-cross-right .btn-cross {
-  align-self: stretch;
-  justify-content: center;
-  margin-top: 0;
-}
 .opfris-cross-title {
   font-family: var(--font-display);
-  font-size: clamp(30px, 4vw, 52px);
+  font-size: clamp(26px, 3.4vw, 40px);
   font-weight: 900;
-  line-height: 1.05;
+  line-height: 1.1;
   letter-spacing: -0.02em;
-  color: var(--color-white);
+  color: var(--text-on-dark);
   margin: 4px 0 6px;
 }
 .opfris-cross-title em {
   font-style: normal;
-  /* Geel als contrast-accent op teal. Past in palet, hoog leesbaar. */
   color: var(--accent-highlight);
 }
 .opfris-cross-body {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.85);
   margin: 0;
-  max-width: 56ch;
+  max-width: 52ch;
+}
+.opfris-cross-cta {
+  margin-top: 8px;
 }
 /* Cross-sell CTA: purple bg + white text. Onafhankelijk van --action-bg
    omdat we hier bewust de zware tegen-kleur willen op teal. */
@@ -9046,14 +9045,13 @@ a.visit-address-value:hover { color: var(--accent-teal); }
    pricing-card uit /website-onderhoud. Decoratief (aria-hidden) maar
    geeft direct visueel houvast aan het cross-sell-aanbod. */
 /* Sneak-peek-card hergebruikt .pricing-card structuur volledig.
-   Overrides voor de teal-context:
-     - Tekstkleur expliciet naar text-primary (omhullende .opfris-cross
-       zet color:white voor white-on-teal body-tekst; in deze witte
-       card moet de tekst weer donker).
-     - Paarse drop-shadow i.p.v. line-color, past op de teal-bg. */
+   Overrides voor de paars-donkere context van de nested cross-sell:
+     - Tekstkleur expliciet naar text-primary (omhullende sectie heeft
+       white tekst; in deze witte card moet alles weer donker).
+     - Highlight-accent shadow voor pop op de paarse bg. */
 .opfris-cross-card.pricing-card {
   color: var(--text-primary);
-  box-shadow: 8px 8px 0 var(--color-purple-deep);
+  box-shadow: 8px 8px 0 var(--accent-highlight);
 }
 /* Header-content gecentreerd. De feature-list onder de divider blijft
    left-aligned (standaard .pricing-card-features styling). */
@@ -9081,13 +9079,13 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   margin-right: 2px;
 }
 @media (max-width: 900px) {
-  .opfris-cross-inner { grid-template-columns: 1fr; gap: 40px; }
-  /* Op mobile/tablet: stack + center. Card + knop visueel centraal
-     uitgelijnd in de viewport zodat ze niet links plakken. */
+  .opfris-cross { grid-template-columns: 1fr; gap: 40px; }
+  /* Op mobile/tablet: stack + center. Card visueel centraal
+     uitgelijnd in de viewport zodat 'ie niet rechts plakt. */
   .opfris-cross-right { justify-self: center; }
 }
 @media (max-width: 640px) {
-  .opfris-cross { padding: 64px var(--gutter-mobile); }
+  .opfris-cross { margin-top: 48px; padding-top: 40px; }
   .opfris-cross-card { padding: 24px 22px 26px; }
 }
 
@@ -11064,6 +11062,53 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   color: var(--text-primary);
 }
 .kb-prose blockquote p { margin: 0; }
+
+/* Tabel-styling voor kennisbank-artikelen. De markdown-author wikkelt
+   z'n tabel in een <div style="overflow-x:auto"> wrapper voor mobiel;
+   onderstaande regels stylen de tabel zelf in het Froseo-grid. */
+.kb-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface-card);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 15px;
+}
+.kb-prose thead {
+  background: var(--surface-dark);
+  color: var(--text-on-dark);
+}
+.kb-prose th {
+  padding: 14px 16px;
+  text-align: left;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+.kb-prose td {
+  padding: 14px 16px;
+  vertical-align: top;
+  line-height: 1.55;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  color: var(--text-primary);
+}
+.kb-prose tbody tr:last-child td { border-bottom: 0; }
+.kb-prose tbody tr:nth-child(odd) { background: rgba(0, 0, 0, 0.015); }
+.kb-prose tbody tr:hover { background: rgba(0, 128, 125, 0.05); }
+.kb-prose td:first-child {
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .kb-prose table { font-size: 14px; }
+  .kb-prose th,
+  .kb-prose td { padding: 10px 12px; }
+  .kb-prose td:first-child { white-space: normal; }
+}
 .kb-prose code {
   font-family: var(--font-mono);
   font-size: 0.92em;

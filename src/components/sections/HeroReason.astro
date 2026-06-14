@@ -1,0 +1,277 @@
+---
+/**
+ * HeroReason — full-bleed achtergrond-afbeelding met een glassy
+ * tekst-card in de hoek. Donker-paarse achtergrond met subtle grid-
+ * pattern (zelfde dark-tokens als de logo-ticker) zodat de overgang
+ * naadloos aansluit.
+ *
+ * Twee varianten via `variant`-prop:
+ *   - 'right' (default): afbeelding links, card rechtsonder, tag linksboven
+ *   - 'left':             afbeelding rechts, card linksonder, tag rechtsboven
+ *
+ * Tag (klantnaam of URL) staat altijd aan de tegenover­liggende kant van
+ * de tekst-card, zodat ze elkaar niet overlappen. Mobile: card stapelt
+ * onder de afbeelding, tag blijft op de afbeelding.
+ */
+
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import EyebrowPill from '../ui/EyebrowPill.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** Accent-segment binnen de titel, gerendered als <em> met highlight-kleur. */
+  titleAccent?: string;
+  body: string[];
+  image: ImageMetadata;
+  imageAlt: string;
+  /** Tag-label rechts/links-boven op de afbeelding (bv. URL of klantnaam). */
+  imageTag?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  /** 'right' = card rechts, image links. 'left' = card links, image rechts. */
+  variant?: 'right' | 'left';
+}
+
+const {
+  eyebrow,
+  title,
+  titleAccent,
+  body,
+  image,
+  imageAlt,
+  imageTag,
+  ctaLabel,
+  ctaHref,
+  variant = 'right',
+} = Astro.props;
+---
+
+<section class={`hero-reason hero-reason--${variant}`}>
+  <div class="hero-reason-inner">
+    <div class="hero-reason-media">
+      <Image
+        src={image}
+        alt={imageAlt}
+        title={imageAlt}
+        class="hero-reason-img"
+        widths={[640, 960, 1280, 1600]}
+        sizes="(max-width: 1024px) 100vw, 70vw"
+        loading="lazy"
+      />
+      {imageTag && (
+        <span class="hero-reason-tag">
+          <span class="hero-reason-tag-dot" aria-hidden="true"></span>
+          {imageTag}
+        </span>
+      )}
+    </div>
+
+    <div class="hero-reason-card">
+      {eyebrow && <EyebrowPill variant="rare" onDark>{eyebrow}</EyebrowPill>}
+      <h2 class="hero-reason-title">
+        {title} {titleAccent && <em>{titleAccent}</em>}
+      </h2>
+      {body.map((p) => (
+        <p class="hero-reason-body" set:html={p} />
+      ))}
+      {ctaLabel && ctaHref && (
+        <a class="btn-primary hero-reason-cta" href={ctaHref}>{ctaLabel}</a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-reason {
+    position: relative;
+    /* Zelfde dark-bg-tokens als de logo-ticker. Section sluit visueel
+       naadloos aan op de strip eronder. Subtiele grid-overlay erbovenop
+       voor de extra textuur die in het screenshot zit. Extra
+       padding-bottom geeft ruimte voor de card die met negatieve
+       bottom uit de image-hoek steekt; voorkomt overlap met de volgende
+       sectie bij lange card-tekst. */
+    background-color: var(--surface-dark);
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      var(--bg-decoration-dark);
+    background-size: 40px 40px, 40px 40px, var(--backdrop-size);
+    background-repeat: repeat, repeat, var(--backdrop-repeat);
+    color: var(--text-on-dark, #fff);
+    padding: clamp(3rem, 6vw, 5rem) var(--gutter, 1.5rem) clamp(5rem, 8vw, 7rem);
+    overflow: hidden;
+  }
+  .hero-reason-inner {
+    max-width: var(--container-max, 1200px);
+    margin: 0 auto;
+    position: relative;
+    /* Grid-truc: image links/rechts in kolom 1, card overlapt via
+       grid-area op kolom 2 met negatieve translate. Grid bepaalt nu de
+       hoogte van de container i.p.v. een vaste min-height. Card 'wint'
+       de hoogtemeting wanneer 'ie langer is dan de image, dus geen
+       overlap meer met de volgende sectie. */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    column-gap: 0;
+  }
+  /* Image neemt 1.4 kolombreedte voor de breakout-look; card-kolom
+     overlapt via negatieve margin. */
+  .hero-reason-media {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 28px 64px rgba(0, 0, 0, 0.45);
+    aspect-ratio: 16 / 9;
+    grid-row: 1;
+    z-index: 1;
+  }
+  .hero-reason--right .hero-reason-media {
+    grid-column: 2 / span 1;
+    margin-left: -28%;
+    width: calc(100% + 28%);
+  }
+  .hero-reason--left .hero-reason-media {
+    grid-column: 1 / span 1;
+    margin-right: -28%;
+    width: calc(100% + 28%);
+  }
+  .hero-reason-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* Tag altijd aan de tegenoverliggende kant van de card zodat ze
+     elkaar niet overlappen. Variant 'right' (card rechts) → tag links. */
+  .hero-reason-tag {
+    position: absolute;
+    top: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: rgba(15, 0, 35, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 999px;
+    font-family: var(--font-display, sans-serif);
+    font-weight: 600;
+    font-size: 13px;
+    color: #fff;
+    white-space: nowrap;
+  }
+  /* Tag aan de tegenoverliggende kant van de tekst-card.
+     'right' = card links/onder, tag rechtsboven op de image.
+     'left'  = card rechts/onder, tag linksboven op de image. */
+  .hero-reason--right .hero-reason-tag { right: 18px; }
+  .hero-reason--left  .hero-reason-tag { left: 18px; }
+  .hero-reason-tag-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent-highlight, #6EE3DE);
+    box-shadow: 0 0 0 2px rgba(110, 227, 222, 0.25);
+  }
+
+  /* Glassy tekst-card: ligt over de afbeelding heen via grid-overlap
+     en een verticale translate die 'm iets onder de image-bottom laat
+     uitsteken. GEEN position:absolute meer: de grid-cell bepaalt de
+     hoogte van de section, dus lange tekst duwt 'm gewoon mee omlaag
+     en de volgende sectie blijft schoon. */
+  .hero-reason-card {
+    grid-row: 1;
+    z-index: 2;
+    padding: clamp(1.5rem, 2.5vw, 2.25rem);
+    background: rgba(20, 6, 50, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 20px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    align-self: end;
+    /* Subtiel naar onder zodat de card uit de image-hoek 'springt'. */
+    transform: translateY(32px);
+  }
+  .hero-reason--right .hero-reason-card {
+    grid-column: 1 / span 1;
+    margin-right: -10%;
+  }
+  .hero-reason--left .hero-reason-card {
+    grid-column: 2 / span 1;
+    margin-left: -10%;
+  }
+  .hero-reason-title {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin: 1rem 0 1.25rem;
+  }
+  .hero-reason-title em {
+    color: var(--accent-rare, #b6007b);
+    font-style: normal;
+  }
+  .hero-reason-body {
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.88);
+    margin: 0 0 0.85rem;
+  }
+  .hero-reason-body :global(strong) { color: #fff; font-weight: 600; }
+  .hero-reason-cta {
+    margin-top: 1rem;
+    display: inline-flex;
+  }
+
+  /* Tablet + grote phone (≤960px): stack-layout zonder grid-overlap,
+     met een normale gap tussen foto en card. */
+  @media (max-width: 960px) {
+    .hero-reason-inner { display: flex; flex-direction: column; gap: 1.25rem; }
+    .hero-reason-media,
+    .hero-reason--right .hero-reason-media,
+    .hero-reason--left  .hero-reason-media {
+      width: 100%;
+      margin: 0;
+      aspect-ratio: 16 / 10;
+      grid-column: auto;
+    }
+    .hero-reason-card,
+    .hero-reason--right .hero-reason-card,
+    .hero-reason--left  .hero-reason-card {
+      transform: none;
+      width: 100%;
+      margin: 0;
+      padding: 1.5rem;
+      grid-column: auto;
+      align-self: auto;
+    }
+  }
+
+  /* Mobile (≤640px): designer-spec van Calvin's designer. Krappere
+     section-padding, foto licht buiten de container-padding (rand-
+     padding van -0.4rem), tekstvak smaller én via negatieve margin-top
+     overlappend op de foto. Geen losse gap meer — overlap doet 't werk. */
+  @media (max-width: 640px) {
+    .hero-reason {
+      padding: 2rem 1.25rem 2.5rem;
+    }
+    .hero-reason-inner { gap: 0; }
+    .hero-reason-media,
+    .hero-reason--right .hero-reason-media,
+    .hero-reason--left  .hero-reason-media {
+      width: auto;
+      margin: 0 -0.4rem;
+    }
+    .hero-reason-card,
+    .hero-reason--right .hero-reason-card,
+    .hero-reason--left  .hero-reason-card {
+      margin: -2.75rem 0.6rem 0;
+      padding: 1.45rem 1.3rem;
+    }
+  }
+</style>

@@ -132,6 +132,11 @@ const serviceSchema = {
               <a class="btn-primary" href={s.heroPrimaryCta?.href ?? '/contact/'}>
                 {s.heroPrimaryCta?.label ?? 'Plan een kennismaking ↗'}
               </a>
+              {s.heroSecondaryCta && (
+                <a class="btn-ghost" href={s.heroSecondaryCta.href}>
+                  {s.heroSecondaryCta.label}
+                </a>
+              )}
             </div>
             <div class="service-hero-reviews reviews-inline">
               <ReviewAvatars />

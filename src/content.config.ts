@@ -143,8 +143,9 @@ const services = defineCollection({
 
     /** Optionele override voor de hero-knop. Service-hero toont één CTA. */
     heroPrimaryCta: z.object({ label: z.string(), href: z.string() }).optional(),
-    /** @deprecated Service-hero toont nu één CTA. Veld blijft voor backwards-
-        compatibiliteit maar wordt niet meer gerenderd. */
+    /** Optionele tweede CTA in de service-hero. Wordt als btn-ghost
+        naast de primary getoond. Voor pagina's waar je twee paden wil
+        bieden (bv. directe check + advies aanvragen). */
     heroSecondaryCta: z.object({ label: z.string(), href: z.string() }).optional(),
 
     /** Stats-ribbon — 4 credibility-cijfers naast elkaar (60+ sites, 15+ jaar, etc). */
