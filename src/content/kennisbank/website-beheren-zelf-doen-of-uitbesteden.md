@@ -11,20 +11,24 @@ author: Calvin Telkamp
 excerpt: 'Zelf je website beheren is goedkoop tot het misgaat. Wanneer is zelf doen logisch, en wanneer levert uitbesteden meer op dan het kost?'
 faqs:
   - q: Wat is websitebeheer eigenlijk?
-    a: 'Websitebeheer is alles wat je site na livegang draaiend en bruikbaar houdt. Dat is breder dan alleen onderhoud. Techniek hoort erbij (updates, backups, beveiliging), maar ook content (nieuwe pagina''s, prijswijzigingen), formulier-controle en de SEO-basis (kapotte links, metadata, structured data).'
+    a: 'Websitebeheer is alles wat je site na livegang draaiend en bruikbaar houdt. Dat is breder dan alleen onderhoud. Techniek hoort erbij (updates, backups, beveiliging), maar ook content (nieuwe pagina''s, prijswijzigingen) en formulier-controle.'
   - q: Wanneer kan ik mijn website prima zelf beheren?
-    a: 'Drie situaties waarin zelf doen logisch is. Je werkt graag in WordPress en plug-in-meldingen zijn voor jou geen onbekende taal. Je site verandert nauwelijks, dus er is amper content-werk. Of je hebt simpelweg de tijd om er een uurtje per maand voor te reserveren. Sta je achter alle drie? Doe het lekker zelf.'
+    a: 'Als je in WordPress geen vreemde bent, plug-in-meldingen je niet afschrikken en je site nauwelijks verandert. Dan kun je je redden met een uurtje per maand: WordPress en plug-ins bijwerken, kijken of er geen rare meldingen verschijnen, en eens per kwartaal een backup naar je laptop downloaden.'
   - q: Wat zijn de grootste risico''s van zelf beheren?
-    a: 'Verouderde plug-ins zijn jaar in jaar uit de hoofdoorzaak van WordPress-hacks. Backups die nooit getest zijn blijken op het verkeerde moment niet terug te zetten. Een trage site verliest niet ineens posities, maar glijdt langzaam af. Stuk voor stuk geen drama, opgeteld serieuze schade.'
+    a: 'Verouderde plug-ins zijn een van de bekendste oorzaken van gehackte WordPress-sites. Backups die nooit getest zijn blijken op het verkeerde moment niet terug te zetten. En een trage site verliest niet ineens posities, maar glijdt langzaam af.'
   - q: Hoeveel tijd kost websitebeheer per maand?
     a: 'Eén tot vier uur als alles meezit, meer wanneer er iets stuk gaat. Reken daarbij niet alleen de directe tijd, maar ook het zoeken op fora bij problemen en de stress als je site eens platligt. Tegen jouw eigen uurtarief loopt dat snel op.'
   - q: Wat kost website beheer uitbesteden?
-    a: 'Dat hangt af van wat je laat doen. Alleen technisch onderhoud begint vanaf zo''n €21 per maand. Compleet beheer met content, kleine aanpassingen en SEO-hygiëne zit gemiddeld tussen €99 en €299 per maand. Beheer plus actieve groei (met SEO of content) ligt hoger. Een check vooraf is altijd vrijblijvend.'
+    a: 'Dat hangt af van wat je laat doen. Alleen technisch onderhoud begint vanaf €19 per maand. Beheer met daarbij content, kleine aanpassingen en doorlopende controle zit gemiddeld tussen €99 en €299 per maand. Een check vooraf is altijd vrijblijvend.'
 ---
 
 Je site staat live, krijgt af en toe aanvragen, en eens in de zoveel tijd verschijnt er een meldinkje in het WordPress-dashboard. Plug-ins die updates nodig hebben. Een nieuwe versie van het thema. Een melding over PHP. Negeer je het, of duik je erin? En als je erin duikt: doe je het zelf, of laat je het over aan iemand die er dagelijks mee bezig is?
 
-Voor sommige ondernemers is zelf doen prima. Voor anderen kost het meer dan het oplevert. Hieronder waar dat omslagpunt ligt.
+Hieronder waar dat omslagpunt ligt: wanneer zelf doen prima is, en wanneer uitbesteden meer oplevert dan het kost.
+
+## Kort antwoord
+
+Heb je een kleine site die weinig verandert en weet je hoe updates, backups en plug-ins werken? Dan kun je je beheer prima zelf doen. Wordt je site belangrijk voor aanvragen, SEO of omzet? Dan is uitbesteden meestal slimmer. Niet omdat je niets zelf kunt, maar omdat achterstallig beheer vaak pas opvalt wanneer er al iets misgaat.
 
 ## Wat verstaan we onder websitebeheer?
 
@@ -32,7 +36,7 @@ Websitebeheer is alles wat je site na livegang draaiend en bruikbaar houdt. Dat 
 
 > Website onderhoud houdt je site draaiend. Beheer kan dat doen, plus alles wat je site daarnaast actueel en bruikbaar houdt.
 
-De praktijk: voor sommige sites is beheer hetzelfde als puur technisch [website onderhoud](/website-onderhoud/). Voor andere sites komt er content, conversiecontrole en SEO-hygiëne bij. Dat hangt af van hoe levend je site is.
+Hoe levend je site is bepaalt wat je nodig hebt. Verandert er weinig? Dan is puur technisch [website onderhoud](/website-onderhoud/) genoeg. Komen er regelmatig nieuwe pagina's of aanpassingen bij? Dan wil je techniek, content en kleine verbeteringen liever onderbrengen bij één partij; bekijk dan hoe je je [website beheer kunt uitbesteden](/website-beheer-uitbesteden/).
 
 ## Wanneer kun je je site prima zelf beheren?
 
@@ -48,7 +52,7 @@ Een enkele update is het probleem niet. Het is alles wat je eromheen moet weten 
 
 Plug-in-updates die je uitstelt omdat je niet zeker weet of ze iets slopen. Een contactformulier waarvan je vermoedt dat er aanvragen verloren gaan, zonder dat je het kunt nakijken. Een design dat verouderd voelt, maar waarvan je niet weet of een [opfrisbeurt](/website-opfrissen/) of een nieuwe site logischer is. Een Google-positie die langzaam zakt zonder dat je weet waardoor.
 
-Stuk voor stuk geen drama. Bij elkaar opgeteld is het zo maanden achterstand voor je het doorhebt. En dan hebben we het nog niet over de minder zichtbare risico's. Verouderde plug-ins zijn jaar in jaar uit de hoofdoorzaak van WordPress-hacks. Een backup die je nooit hebt getest blijkt op het verkeerde moment niet terug te zetten. Een trage site verliest niet ineens posities maar glijdt af. Allemaal dingen die je merkt zodra je ze niet meer kunt herstellen.
+Voor je het doorhebt heb je maanden achterstand opgebouwd. En dan zitten de minder zichtbare risico's er nog overheen. Verouderde plug-ins zijn een van de bekendste oorzaken van gehackte WordPress-sites. Een backup die je nooit hebt getest blijkt op het verkeerde moment niet terug te zetten. Een trage site verliest niet ineens posities maar glijdt af.
 
 ## Zelf doen versus uitbesteden, naast elkaar
 
@@ -66,15 +70,13 @@ Stuk voor stuk geen drama. Bij elkaar opgeteld is het zo maanden achterstand voo
 
 </div>
 
-Het kantelpunt zit ergens tussen "kleine site die nauwelijks beweegt" en "site die je bedrijf draait". Zolang je in het eerste kamp zit, is zelf doen prima. Zit je in het tweede? Dan loopt de optelsom snel een andere kant op.
+Het kantelpunt zit ergens tussen een kleine site die nauwelijks beweegt en een site die je bedrijf draait. Zolang je in het eerste kamp zit kun je het zelf prima af. Zit je in het tweede, dan loopt de optelsom snel een andere kant op.
 
 ## Wat zelf doen je werkelijk kost
 
-Op papier kost het niets. Reken eens echt mee. Een paar uur per maand met je site bezig zijn is tegen jouw uurtarief al snel een paar honderd euro aan opportuniteitskosten. Plus de tijd die je kwijt bent met zoeken op fora wanneer iets stuk is, en de stress als je site eens onbedoeld platligt.
+Op papier kost het niets, maar reken eens echt mee. Een paar uur per maand met je site bezig zijn is tegen jouw uurtarief al snel een paar honderd euro aan opportuniteitskosten. Daarbij komt de tijd die je kwijt bent met zoeken op fora wanneer iets stuk is, en de stress als je site eens platligt.
 
-Het risico kost ook geld. Een gehackte WordPress-site herstellen ligt tussen de paar honderd en duizend euro. Een week aan aanvragen die verloren gaan via een kapot formulier kan een veelvoud daarvan kosten. Drie maanden ongemerkt dalen in Google vraagt later weer een investering om terug te komen.
-
-Zelf doen wordt pas écht duur als je het wél doet maar net niet goed genoeg.
+Het risico kost ook geld. Een gehackte WordPress-site herstellen kost al snel honderden euro's. En dan heb je het nog niet over gemiste aanvragen, stress en de tijd die je kwijt bent om alles weer recht te trekken. Een week aan aanvragen die verloren gaan via een kapot formulier kan al een veelvoud van de herstelkosten zijn. Drie maanden ongemerkt dalen in Google vraagt later weer een investering om terug te komen.
 
 ## Een paar vragen die je keuze makkelijker maken
 
@@ -82,7 +84,7 @@ Verandert er weinig op je site in een gemiddelde maand? Dan red je je waarschijn
 
 Stel je site ligt een week plat. Is dat een paar telefoontjes minder, of mis je het verkeer dat normaal binnenkomt voor offertes en klanten? Dat tweede is meestal het echte argument om iemand erop te zetten.
 
-Daarnaast helpt het om te weten of je backup ook werkt als je hem nodig hebt. De meeste sites draaien een backup-plug-in, maar nauwelijks iemand heeft ooit gecontroleerd of die backup ook teruggezet kan worden. Pas bij een crash blijkt het.
+Daarnaast helpt het om te weten of je backup ook werkt als je hem nodig hebt. Je site draait waarschijnlijk een backup-plug-in, maar of die backup ook terug te zetten is heb je vermoedelijk nooit getest. Pas bij een crash blijkt het.
 
 En de plug-ins zelf. Weet je welke er op je site draaien en waarom ze er staan? Kun je ze opnoemen? Top, zelf doen kan. Lukt dat niet, dan zit er ergens technische schuld onder je site die op een dag boven komt.
 
@@ -94,7 +96,7 @@ Sommige patronen komen elke maand terug zodra een nieuwe klant ons inschakelt na
 
 De klassieker is automatische updates aanzetten en hopen dat het goed gaat. Werkt prima, tot een plug-in-update een functie sloopt. Je merkt het pas een week later omdat een klant belt dat het formulier geen reactie geeft.
 
-Daarna: te veel plug-ins. Elke plug-in is een afhankelijkheid, en elke afhankelijkheid is een potentieel beveiligings- of conflictrisico. Een gezonde WordPress-site draait op vijftien tot twintig plug-ins, niet op vijftig.
+Daarna: te veel plug-ins. Elke plug-in is een afhankelijkheid, en elke afhankelijkheid is een potentieel beveiligings- of conflictrisico. Niet elke site met veel plug-ins is direct slecht, maar vijftig plug-ins is meestal een teken dat er ooit te veel is bijgeplakt zonder iemand die het overzicht hield.
 
 Backups op dezelfde server als de site zelf zijn ook een blijver. Als de server platgaat, gaan ze samen. Backups horen off-site, op een aparte locatie waar je ze écht terug kunt halen.
 
