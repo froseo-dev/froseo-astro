@@ -14,6 +14,7 @@ import EyebrowPill from '@components/ui/EyebrowPill.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
 import ScanCTA from '@components/sections/ScanCTA.astro';
+import ServicesGrid from '@components/sections/ServicesGrid.astro';
 import CounterTool from '@components/tools/CounterTool.astro';
 import { getOtherTools } from '@data/tools';
 import screenshot from '@assets/tools/woorden-tellen.jpg';
@@ -48,6 +49,10 @@ const faqItems = [
   {
     q: 'Werkt het op mobiel?',
     a: 'Ja, helemaal responsive. Het tekstvlak schaalt comfortabel op smartphone-formaat en de teller blijft in beeld terwijl je typt.',
+  },
+  {
+    q: 'Waarom maken jullie deze tool gratis?',
+    a: 'De woordenteller gebruiken we zelf voor klantcopy, SEO-pagina\'s en advertentieteksten. Iets wat we toch al voor eigen werk hadden gebouwd, konden we net zo goed met andere ondernemers en schrijvers delen.',
   },
 ];
 ---
@@ -199,6 +204,14 @@ const faqItems = [
       titleLine1="Vragen over"
       titleAccent="de woordenteller?"
       items={faqItems}
+    />
+
+    <ServicesGrid
+      eyebrow="Diensten van Froseo"
+      titleLine1="Naast deze tool"
+      titleLine2="doen we"
+      accent="veel meer."
+      intro="Tools zijn een leuk nevenproject. Bij Froseo bouwen, optimaliseren en beheren we vooral websites die aanvragen en klanten opleveren."
     />
 
     <BetterCallCalvin />

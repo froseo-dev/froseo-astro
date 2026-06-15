@@ -15,6 +15,7 @@ import EyebrowPill from '@components/ui/EyebrowPill.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
 import ScanCTA from '@components/sections/ScanCTA.astro';
+import ServicesGrid from '@components/sections/ServicesGrid.astro';
 import KeywordDensityTool from '@components/tools/KeywordDensityTool.astro';
 import { getOtherTools } from '@data/tools';
 import screenshot from '@assets/tools/keyword-density-checker.jpg';
@@ -53,6 +54,10 @@ const faqItems = [
   {
     q: 'Werkt het op mobiel?',
     a: 'Ja. De tabs voor 1, 2, 3 en 4 woorden wrappen netjes en het keyword-veld past zich aan smartphone-breedtes aan.',
+  },
+  {
+    q: 'Waarom maken jullie deze tool gratis?',
+    a: 'We bouwden deze checker voor onze eigen SEO-projecten en gebruiken hem nog altijd bij klantteksten. Een tool die wij wekelijks gebruiken delen we liever dan dat hij alleen intern blijft.',
   },
 ];
 ---
@@ -229,6 +234,14 @@ const faqItems = [
       titleLine1="Vragen over"
       titleAccent="de density checker?"
       items={faqItems}
+    />
+
+    <ServicesGrid
+      eyebrow="Diensten van Froseo"
+      titleLine1="Naast deze tool"
+      titleLine2="doen we"
+      accent="veel meer."
+      intro="Tools zijn een leuk nevenproject. Bij Froseo bouwen, optimaliseren en beheren we vooral websites die aanvragen en klanten opleveren."
     />
 
     <BetterCallCalvin />

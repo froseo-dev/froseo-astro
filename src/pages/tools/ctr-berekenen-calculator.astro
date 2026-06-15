@@ -13,6 +13,7 @@ import EyebrowPill from '@components/ui/EyebrowPill.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import BetterCallCalvin from '@components/sections/BetterCallCalvin.astro';
 import ScanCTA from '@components/sections/ScanCTA.astro';
+import ServicesGrid from '@components/sections/ServicesGrid.astro';
 import CtrCalculatorTool from '@components/tools/CtrCalculatorTool.astro';
 import { getOtherTools } from '@data/tools';
 
@@ -50,6 +51,10 @@ const faqItems = [
   {
     q: 'Worden mijn cijfers opgeslagen?',
     a: 'Nee. Alle berekeningen gebeuren in je browser. Cijfers gaan nergens heen, ook niet naar ons. Je kunt veilig met klantdata werken.',
+  },
+  {
+    q: 'Waarom maken jullie deze tool gratis?',
+    a: 'We rekenen CTR\'s regelmatig uit bij SEO- en Ads-projecten van klanten. Een snelle calculator scheelt Excel openen of de formule opzoeken. Aangezien hij er toch was, kon hij net zo goed publiek staan.',
   },
 ];
 ---
@@ -222,6 +227,14 @@ const faqItems = [
       titleLine1="Vragen over"
       titleAccent="de CTR-calculator?"
       items={faqItems}
+    />
+
+    <ServicesGrid
+      eyebrow="Diensten van Froseo"
+      titleLine1="Naast deze tool"
+      titleLine2="doen we"
+      accent="veel meer."
+      intro="Tools zijn een leuk nevenproject. Bij Froseo bouwen, optimaliseren en beheren we vooral websites die aanvragen en klanten opleveren."
     />
 
     <BetterCallCalvin />
