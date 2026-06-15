@@ -104,6 +104,19 @@ export const review = {
 } as const;
 
 /**
+ * Oprichter-info voor Person JSON-LD. Wordt sitewide in BaseLayout @graph
+ * geëmit en als `author` gebruikt op kennisbank-artikelen, zodat Google
+ * E-E-A-T-signalen aan één entity koppelt (knowledge-graph + author-card).
+ */
+export const founder = {
+  name: 'Calvin Telkamp',
+  jobTitle: 'Oprichter Froseo',
+  /** Persoonlijke LinkedIn — koppelt de Person-entity aan een verifieerbaar
+      profiel buiten froseo.nl. */
+  linkedin: 'https://nl.linkedin.com/in/calvin-telkamp-6a06b917',
+} as const;
+
+/**
  * Site-brede credibility-cijfers. Worden gebruikt in homepage Stats én op
  * andere pagina's (projecten-overview, service-pagina's). Pas hier aan
  * en alle plekken volgen mee.

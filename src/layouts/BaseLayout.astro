@@ -17,7 +17,7 @@ import PaletteSwitcher from '../components/dev/PaletteSwitcher.astro';
 import MobileCTA from '../components/layout/MobileCTA.astro';
 import ScanPopup from '../components/ScanPopup.astro';
 import WebMCP from '../components/WebMCP.astro';
-import { social } from '@data/site-config';
+import { social, founder } from '@data/site-config';
 import { getAlternates, type Lang } from '@data/i18n';
 
 interface Props {
@@ -71,6 +71,15 @@ const siteSchema = {
       publisher: { '@id': 'https://froseo.nl/#agency' },
     },
     {
+      '@type': 'Person',
+      '@id': 'https://froseo.nl/#calvin',
+      name: founder.name,
+      jobTitle: founder.jobTitle,
+      url: 'https://froseo.nl/',
+      worksFor: { '@id': 'https://froseo.nl/#agency' },
+      sameAs: [founder.linkedin],
+    },
+    {
       '@type': 'LocalBusiness',
       '@id': 'https://froseo.nl/#agency',
       name: 'Froseo',
@@ -80,6 +89,7 @@ const siteSchema = {
       email: 'info@froseo.nl',
       image: 'https://froseo.nl/froseo-logo.webp',
       logo: 'https://froseo.nl/froseo-logo.webp',
+      founder: { '@id': 'https://froseo.nl/#calvin' },
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Leidseveer 10',

@@ -74,7 +74,10 @@ const authorInitials = data.author
   .join('')
   .toUpperCase();
 
-/* JSON-LD BlogPosting voor Google. */
+/* JSON-LD BlogPosting voor Google. Als de auteur Calvin Telkamp is,
+   verwijzen we naar de sitewide Person-entity uit BaseLayout @graph zodat
+   Google E-E-A-T-signalen (LinkedIn, jobTitle, worksFor Froseo) aan deze
+   author koppelt. Andere auteursnamen krijgen een inline Person. */
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -82,11 +85,9 @@ const articleSchema = {
   description: data.description,
   datePublished: data.publishedDate.toISOString(),
   dateModified: (data.updatedDate ?? data.publishedDate).toISOString(),
-  author: {
-    '@type': 'Person',
-    name: data.author,
-    url: 'https://froseo.nl/over-ons',
-  },
+  author: data.author === 'Calvin Telkamp'
+    ? { '@id': 'https://froseo.nl/#calvin' }
+    : { '@type': 'Person', name: data.author, url: 'https://froseo.nl/over-ons' },
   publisher: {
     '@type': 'Organization',
     name: 'Froseo',
