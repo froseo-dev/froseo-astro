@@ -11,12 +11,14 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     sitemap({
-      /* Ads-landingspagina's en de Peter Zijlstra-demo uit de sitemap
-         houden: die staan op noindex en horen niet in de organische index. */
+      /* Ads-landingspagina's, design-demo's en testpagina's uit de sitemap
+         houden: die staan op noindex en horen niet in de organische index.
+         Wanneer je een nieuwe noindex-pagina toevoegt, zet 'm hier ook. */
       filter: (page) =>
         !page.includes('/wordpress-onderhoud/') &&
         !page.includes('/peter-zijlstra') &&
-        !page.includes('/ruth-lasters'),
+        !page.includes('/ruth-lasters') &&
+        !page.includes('/test-scan-popup'),
     }),
   ],
   image: {
