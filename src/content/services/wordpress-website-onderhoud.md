@@ -154,3 +154,7 @@ faqs:
   - q: Hoe snel reageren jullie als er iets stuk gaat?
     a: 'Meldingen pakken we meestal binnen één werkdag op, vaak sneller. Onze uptime-monitor seint ons direct in als je site plat gaat, dus grote problemen zien we vaak al voordat jij ze merkt. Bij Pro Care heb je voorrang.'
 ---
+
+## Heb je nog geen WordPress-site?
+
+Dit pakket is voor sites die al gebouwd zijn. Wil je zowel een [WordPress website laten bouwen](/webdesign/) als doorlopend onderhoud onder één dak, dan combineren we dat in één traject: wij maken de site en houden hem daarna voor je bij, zodat techniek, plug-ins en beveiliging vanaf dag één bij dezelfde mensen zitten.

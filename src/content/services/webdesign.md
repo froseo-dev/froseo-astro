@@ -17,7 +17,7 @@ heroChecks:
 heroPrimaryCta:
   label: 'Plan een kennismaking ↗'
   href: '/contact/?onderwerp=webdesign'
-description: 'Snelle, professionele websites voor lokale ondernemers. Voor velen is het website-abonnement vanaf {{abboFromInline}} de slimste route. Maatwerk blijft mogelijk voor grotere trajecten.'
+description: 'Snelle, professionele websites voor lokale ondernemers. Voor velen is het website abonnement vanaf {{abboFromInline}} de slimste route. Maatwerk blijft mogelijk voor grotere trajecten.'
 icon: '◆'
 shadow: dark
 order: 1
@@ -33,11 +33,11 @@ showcaseTitleAccent: 'lanceerden.'
 
 proposalsEyebrow: 'Drie opties'
 proposalsTitle: 'Drie routes voor jouw <em>nieuwe website.</em>'
-proposalsLead: 'Voor de meeste ondernemers is het website-abonnement de slimste route: snel professioneel online, vaste maandprijs en zonder gedoe. Een one-pager of een maatwerk-traject kan ook, als dat beter past bij waar je nu staat.'
+proposalsLead: 'Voor de meeste ondernemers is het website abonnement de slimste route: snel professioneel online, vaste maandprijs en zonder gedoe. Een one-pager of een maatwerktraject kan ook, als dat beter past bij waar je nu staat.'
 proposalsLayout: 'package'
 
 propositionPaths:
-  - title: Website-abonnement
+  - title: Website abonnement
     tagline: 'Compleet, vaste maandprijs.'
     priceFrom: true
     priceAmount: 69
@@ -107,10 +107,10 @@ faqs:
     a: 'Dat hangt af van wat je wil. WordPress past goed als je een uitgebreid CMS wil waarin je zelf veel kunt aanpassen, blogs schrijft of veel verschillende paginatypes nodig hebt. Astro is logisch als je hard wil scoren op snelheid en techniek, en je minder zelf hoeft bij te werken. Beide platforms scoren goed in Google. We bespreken het bij de kennismaking en kiezen samen.'
   - q: Hoe lang duurt het voordat mijn website live staat?
     a: 'Voor maatwerk streven we naar live binnen een maand, afhankelijk van de omvang en hoe snel content wordt aangeleverd. Het abonnement gaat sneller: vaak binnen twee weken, omdat we vertrekken vanaf een doordachte basis. Tijdens de kennismaking geven we een realistische inschatting voor jouw situatie.'
-  - q: Wat zit er in het website-abonnement van {{abboFromInline}}?
-    a: 'Een professionele website op onze doordachte basis, hosting, technisch beheer en kleine wijzigingen. We streven naar 90+ op Google PageSpeed en zetten de sterke SEO-basis standaard op orde. Actieve SEO, content-uitbreiding of conversie-optimalisatie kan als losse uitbreiding bovenop.'
+  - q: Wat zit er in het website abonnement van {{abboFromInline}}?
+    a: 'Een professionele website op onze doordachte basis, hosting, technisch beheer en kleine wijzigingen. We streven naar 90+ op Google PageSpeed en zetten de sterke SEO-basis standaard op orde. Actieve SEO, content-uitbreiding of conversieoptimalisatie kan als losse uitbreiding bovenop.'
   - q: Hoe zit het met hosting, domein en beheer?
-    a: 'Bij maatwerk spreken we vooraf af hoe hosting, domein en beheer worden ingericht. Vaak zet je dat op eigen naam, soms regelen we het via een partner. Bij het website-abonnement blijft hosting onderdeel van de service. We zorgen altijd voor duidelijke afspraken zodat je weet wie wat in beheer heeft.'
+    a: 'Bij maatwerk spreken we vooraf af hoe hosting, domein en beheer worden ingericht. Vaak zet je dat op eigen naam, soms regelen we het via een partner. Bij het website abonnement blijft hosting onderdeel van de service. We zorgen altijd voor duidelijke afspraken zodat je weet wie wat in beheer heeft.'
   - q: Werken jullie ook voor ZZP''ers en kleine bedrijven?
     a: 'Ja. Onze gemiddelde klant is MKB met 2 tot 25 medewerkers, en daarnaast werken we graag voor ZZP''ers met serieuze plannen. Voor die groep is het abonnement vaak de logische start. Voor grotere organisaties of specifieke trajecten kiezen we maatwerk.'
   - q: Kan een bestaande website worden opgefrist in plaats van helemaal opnieuw?
@@ -123,7 +123,7 @@ faqs:
 
 Snelle, professionele websites voor lokale ondernemers. Geen zware WordPress-installatie of onnodige technische rommel, maar een site die goed laadt, vertrouwen wekt en aanvragen oplevert.
 
-Voor veel bedrijven is het website-abonnement de slimste route: snel professioneel online, een vaste maandprijs en zonder gedoe over hosting en updates. Maatwerk blijft mogelijk voor grotere trajecten of specifieke functionaliteit.
+Voor veel bedrijven is het [website abonnement](/website-abonnement/) de slimste route: snel professioneel online, een vaste maandprijs en zonder gedoe over hosting en updates. Maatwerk blijft mogelijk voor grotere trajecten of specifieke functionaliteit.
 
 ## Waar we goed in zijn
 
@@ -132,6 +132,8 @@ Een website maken is niet hetzelfde als een ontwerp tekenen. Het gaat om hoe je 
 We bouwen al meer dan 15 jaar websites. Eerst alleen in WordPress, sinds een paar jaar ook in Astro. Beide platforms hebben hun plek. WordPress als je een uitgebreid CMS wil waarin je zelf veel wil bijhouden of regelmatig blogs publiceert. Astro als snelheid en techniek de hoofdrol moeten spelen.
 
 In beide gevallen bouwen we vanaf de basis. Geen kant-en-klare templates die je elders ook tegenkomt, maar een ontwerp dat past bij wat jouw bedrijf onderscheidt. Met de techniek die past bij je doelen.
+
+Onze opdrachtgevers lopen uiteen van zelfstandigen tot MKB met 25 medewerkers. Bij [websites voor zzp'ers](/website-laten-maken-zzp/) houden we het compact: snel professioneel online en betaalbaar in onderhoud. Voor grotere organisaties kiezen we sneller voor maatwerk, omdat daar meer functionaliteit en eigen processen om de hoek komen kijken.
 
 ## Wat het oplevert
 

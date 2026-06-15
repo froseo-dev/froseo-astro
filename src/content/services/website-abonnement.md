@@ -73,6 +73,7 @@ audienceFit:
   lead:
     - 'Een abonnement werkt het best als je vooral professioneel online wilt staan zonder zelf met techniek, hosting en updates bezig te zijn. Je krijgt een verzorgde site die meegroeit, voor een vast bedrag per maand vanaf {{abboFromInline}} ({{vatNote}}).'
     - 'Start je als zelfstandige? Bekijk dan ook hoe we een <a href="/website-laten-maken-zzp/">website laten maken voor zzp''ers</a> aanpakken.'
+    - 'Heb je je site al staan en wil je alleen technisch beheer, dan past los <a href="/website-onderhoud/">website onderhoud</a> beter. Het abonnement is voor wie bouw én beheer in één wil.'
   items:
     - 'Zzp''ers en starters die professioneel online willen zonder investering vooraf'
     - 'Lokale ondernemers en dienstverleners die in hun regio gevonden willen worden'

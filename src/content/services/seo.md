@@ -135,3 +135,5 @@ Geen quick wins die je over zes maanden weer inhalen, wel een strategie die meeg
 SEO bij Froseo past het beste bij ondernemers die online serieus willen groeien en bereid zijn om verder te kijken dan volgende maand. Niet "ik wil morgen op #1", wel "ik wil over een jaar significant meer kwalitatief verkeer en aanvragen".
 
 We werken voor uiteenlopende branches en bedrijfsgroottes. De aanpak past zich aan op jouw situatie, de pijlers blijven hetzelfde.
+
+Combineer je SEO met consistent publiceren, dan loopt dat via ons [content abonnement](/content-abonnement/): maandelijkse SEO-pagina's en blogs vanuit één plan, zodat content en zoekwoordenstrategie op elkaar blijven aansluiten.

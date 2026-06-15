@@ -17,7 +17,7 @@ import PaletteSwitcher from '../components/dev/PaletteSwitcher.astro';
 import MobileCTA from '../components/layout/MobileCTA.astro';
 import ScanPopup from '../components/ScanPopup.astro';
 import WebMCP from '../components/WebMCP.astro';
-import { social, review as reviewData } from '@data/site-config';
+import { social } from '@data/site-config';
 import { getAlternates, type Lang } from '@data/i18n';
 
 interface Props {
@@ -50,59 +50,68 @@ const canonical = new URL(pathname, site).toString();
 const alt = getAlternates(pathname);
 const absolutize = (path: string) => new URL(path, site).toString();
 
-/* JSON-LD: LocalBusiness + Organization on every page. Search engines use
-   this for rich snippets, the local pack and brand-knowledge graph.
-   Naam: officieel "Froseo" (geen "Digital Agency"-suffix, want zo heten
-   we niet in Google Business Profile, op de gevel of in correspondentie).
-   Image: publiek-bereikbare logo-asset in /public/, geen Astro-gehashte
-   src/assets URL want JSON-LD parseert geen build-time imports. */
-const businessSchema = {
+/* JSON-LD: gebundeld via @graph zodat WebSite + LocalBusiness aan elkaar
+   gekoppeld zijn voor de knowledge-graph. Per-pagina schema's (Service,
+   FAQPage, BlogPosting, BreadcrumbList) komen er los bij in de templates.
+
+   Géén aggregateRating op LocalBusiness/Organization: Google negeert dat
+   sinds september 2019 als "self-serving" en het risk = manual action voor
+   "misleading structured data". Sterren in SERP komen automatisch uit het
+   Google Business Profile. */
+const siteSchema = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  '@id': 'https://froseo.nl/#agency',
-  name: 'Froseo',
-  description: 'Webdesign, SEO en online marketing voor ambitieuze ondernemers in Utrecht en omgeving.',
-  url: 'https://froseo.nl/',
-  telephone: '+31302378053',
-  email: 'info@froseo.nl',
-  image: 'https://froseo.nl/froseo-logo.webp',
-  logo: 'https://froseo.nl/froseo-logo.webp',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Leidseveer 10',
-    postalCode: '3511 SB',
-    addressLocality: 'Utrecht',
-    addressCountry: 'NL',
-  },
-  areaServed: { '@type': 'Country', name: 'Nederland' },
-  priceRange: '€€',
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: reviewData.rating,
-    reviewCount: reviewData.count,
-    bestRating: '5',
-  },
-  /* Diensten-catalogus zodat Google snapt waarop we actief zijn en kandidaat
-     wordt voor service-rich-results en de knowledge-graph "services" sectie. */
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Diensten Froseo',
-    itemListElement: [
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Webdesign', url: 'https://froseo.nl/webdesign/' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website abonnement', url: 'https://froseo.nl/website-abonnement/' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website onderhoud', url: 'https://froseo.nl/website-onderhoud/' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website beheer uitbesteden', url: 'https://froseo.nl/website-beheer-uitbesteden/' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website opfrissen', url: 'https://froseo.nl/website-opfrissen/' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website optimalisatie', url: 'https://froseo.nl/website-optimalisatie/' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'WordPress onderhoud', url: 'https://froseo.nl/wordpress-website-onderhoud/' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SEO en GEO', url: 'https://froseo.nl/seo/' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Lokale SEO', url: 'https://froseo.nl/lokale-seo/' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Content abonnement', url: 'https://froseo.nl/content-abonnement/' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Paid media', url: 'https://froseo.nl/paid-media/' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'OpenAI Ads', url: 'https://froseo.nl/openai-ads/' } },
-    ],
-  },
-  sameAs: [...social.sameAs, 'https://nl.trustpilot.com/review/froseo.nl'],
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': 'https://froseo.nl/#website',
+      url: 'https://froseo.nl/',
+      name: 'Froseo',
+      description: 'Webdesign, SEO en online marketing voor ambitieuze ondernemers in Utrecht en omgeving.',
+      inLanguage: 'nl-NL',
+      publisher: { '@id': 'https://froseo.nl/#agency' },
+    },
+    {
+      '@type': 'LocalBusiness',
+      '@id': 'https://froseo.nl/#agency',
+      name: 'Froseo',
+      description: 'Webdesign, SEO en online marketing voor ambitieuze ondernemers in Utrecht en omgeving.',
+      url: 'https://froseo.nl/',
+      telephone: '+31302378053',
+      email: 'info@froseo.nl',
+      image: 'https://froseo.nl/froseo-logo.webp',
+      logo: 'https://froseo.nl/froseo-logo.webp',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Leidseveer 10',
+        postalCode: '3511 SB',
+        addressLocality: 'Utrecht',
+        addressCountry: 'NL',
+      },
+      areaServed: { '@type': 'Country', name: 'Nederland' },
+      priceRange: '€€',
+      /* Diensten-catalogus zodat Google snapt waarop we actief zijn en
+         kandidaat wordt voor service-rich-results. */
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Diensten Froseo',
+        itemListElement: [
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Webdesign', url: 'https://froseo.nl/webdesign/' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website abonnement', url: 'https://froseo.nl/website-abonnement/' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website onderhoud', url: 'https://froseo.nl/website-onderhoud/' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website beheer uitbesteden', url: 'https://froseo.nl/website-beheer-uitbesteden/' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website opfrissen', url: 'https://froseo.nl/website-opfrissen/' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Website optimalisatie', url: 'https://froseo.nl/website-optimalisatie/' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'WordPress onderhoud', url: 'https://froseo.nl/wordpress-website-onderhoud/' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SEO en GEO', url: 'https://froseo.nl/seo/' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Lokale SEO', url: 'https://froseo.nl/lokale-seo/' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Content abonnement', url: 'https://froseo.nl/content-abonnement/' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Paid media', url: 'https://froseo.nl/paid-media/' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'OpenAI Ads', url: 'https://froseo.nl/openai-ads/' } },
+        ],
+      },
+      sameAs: [...social.sameAs, 'https://nl.trustpilot.com/review/froseo.nl'],
+    },
+  ],
 };
 ---
 
@@ -193,7 +202,7 @@ const businessSchema = {
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(siteSchema)} />
 
     {/* Apply persisted theme BEFORE body renders to avoid a flash.
          Falls back to "calvin" so a fresh visitor sees Calvin's working palette. */}

@@ -24,6 +24,7 @@ import OnboardingTimeline from '@components/sections/OnboardingTimeline.astro';
 import Testimonial from '@components/sections/Testimonial.astro';
 import MaintenanceCheck from '@components/sections/MaintenanceCheck.astro';
 import MaintenanceCheckCta from '@components/sections/MaintenanceCheckCta.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
 import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import { interpolate, review } from '@data/site-config';
@@ -109,6 +110,10 @@ const serviceSchema = {
   <Nav />
   <main>
     <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+    <Breadcrumbs crumbs={[
+      { name: 'Home', href: '/' },
+      { name: s.shortTitle ?? s.title, href: `/${s.slug}/` },
+    ]} />
     <article class={`service-page ${s.pageClass ?? ''}`}>
       <!-- ============================================================
            Hero

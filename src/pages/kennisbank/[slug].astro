@@ -19,6 +19,7 @@ import FAQ from '@components/sections/FAQ.astro';
 import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import calvinPhoto from '@assets/team/calvin.webp';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
 
 export async function getStaticPaths() {
   const all = await getCollection('kennisbank', ({ data }) => data.draft !== true);
@@ -107,6 +108,11 @@ const articleSchema = {
   <Nav />
 
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <Breadcrumbs crumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Kennisbank', href: '/kennisbank/' },
+    { name: data.title, href: `/kennisbank/${data.slug}/` },
+  ]} />
 
   <main>
     <article class="kb-article">

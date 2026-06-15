@@ -146,3 +146,5 @@ En het is nooit klaar. Concurrenten worden actiever, Google sleutelt aan z'n alg
 Voor elk bedrijf dat klanten in een vaste regio bedient. Of dat nou één stad is of een hele provincie, en of je nou een fysieke zaak hebt of bij klanten over de vloer komt.
 
 We hebben veel ervaring met lokale SEO voor branches als bouw en renovatie, dakdekkers, tandartsen, personal trainers, makelaars, kappers, advocaten en hoveniers. De pijlers werken voor elke branche met lokale klanten, wat je sector ook is. Zoeken jouw klanten op "[dienst] [plaatsnaam]" of "[dienst] in de buurt"? Dan valt er met local SEO winst te halen.
+
+Zit je in of rond Utrecht, dan kennen we de markt extra goed: ons kantoor staat in het centrum en als [SEO bureau in Utrecht](/seo-bureau-utrecht/) werken we voor veel ondernemers in de stad en omliggende gemeenten.

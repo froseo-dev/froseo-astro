@@ -147,12 +147,10 @@ const faqs = [
       { '@type': 'City', name: 'Loenen' },
     ],
     priceRange: '€€',
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '5',
-      reviewCount: '13',
-      bestRating: '5',
-    },
+    /* Geen aggregateRating: Google negeert self-serving ratings op
+       LocalBusiness/Organization (policy sinds sept 2019) en pakt het risico
+       op een manual action voor "misleading structured data" niet waard.
+       Sterren in SERP komen via het Google Business Profile. */
     sameAs: [
       'https://www.instagram.com/froseo',
       'https://www.linkedin.com/company/froseo',

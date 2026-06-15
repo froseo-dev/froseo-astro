@@ -1,0 +1,45 @@
+---
+/**
+ * Breadcrumbs — JSON-LD BreadcrumbList voor de huidige pagina.
+ *
+ * Render-only schema (geen visible UI). De hiërarchie matcht de URL-structuur
+ * + de Nav-navigatie, dus consistent met wat een crawler op de pagina ziet.
+ * Visible breadcrumbs kunnen we later los toevoegen als design-keuze.
+ *
+ * Gebruik in een template:
+ *   <Breadcrumbs crumbs={[
+ *     { name: 'Home', href: '/' },
+ *     { name: 'Webdesign', href: '/webdesign/' },
+ *   ]} />
+ *
+ * Pas geen "name: Home" trail toe op de homepage zelf — daar is breadcrumbs
+ * niet zinvol en Google verwerpt single-item lijsten.
+ */
+
+interface Crumb {
+  name: string;
+  href: string;
+}
+
+interface Props {
+  crumbs: Crumb[];
+}
+
+const { crumbs } = Astro.props;
+const site = Astro.site ?? new URL('https://froseo.nl');
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((crumb, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: crumb.name,
+    item: new URL(crumb.href, site).toString(),
+  })),
+};
+---
+
+{crumbs.length >= 2 && (
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+)}
