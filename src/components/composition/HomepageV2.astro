@@ -17,10 +17,12 @@ import FAQ from '../sections/FAQ.astro';
 import BetterCallCalvin from '../sections/BetterCallCalvin.astro';
 import CalvinNote from '../sections/CalvinNote.astro';
 import TeamNote from '../sections/TeamNote.astro';
+import HeroReason from '../sections/HeroReason.astro';
 import Footer from '../layout/Footer.astro';
 
 import testiBg from '@assets/testimonials/renovatie-totaal-bg.webp';
 import basAvatar from '@assets/testimonials/bas-bertrams.webp';
+import ruthLastersScreenshot from '@assets/website-opfrissen/ruth-lasters.webp';
 
 /* CRO ordering rationale (Calvin's Optie A):
    - FAQ moves to the very bottom (objection handling, low intent, SEO body)
@@ -63,6 +65,20 @@ import basAvatar from '@assets/testimonials/bas-bertrams.webp';
   <Testimonial bgImage={testiBg} bgAlt="Renovatie Totaal aan het werk" avatar={basAvatar} />
   <Stats />
   <OverFroseo />
+  <HeroReason
+    variant="left"
+    eyebrow="Digitaal partner"
+    title="Websites en marketing voor"
+    titleAccent="zzp & mkb."
+    body={[
+      "We hebben ons in de loop der jaren steeds meer gericht op mkb en zzp. Goede marketing en een professionele website moeten ook voor 'kleinere' ondernemers realistisch zijn, niet alleen voor de grote partijen.",
+      "We doen ons best om voor ieder bedrijf en ieder budget een passende oplossing te vinden. Soms is dat een one-pager, soms een website abonnement, soms maatwerk webdesign of doorlopende SEO. Samen behalen wij jouw doelen.",
+    ]}
+    image={ruthLastersScreenshot}
+    imageAlt="webdesigners voor mkb en zzp"
+    ctaLabel="Bekijk zzp websites ↗"
+    ctaHref="/website-laten-maken-zzp/"
+  />
   <CTA
     variant="form"
     sectionId="analyse"
