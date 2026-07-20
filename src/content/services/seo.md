@@ -14,6 +14,7 @@ heroChecks:
   - Vindbaar in Google, Maps en AI-zoekmachines
   - Maandelijks bijsturen op rankings, verkeer en aanvragen
 description: 'Techniek, content en autoriteit, in die volgorde. We bouwen SEO-strategieën waar Google én de nieuwe AI-zoekmachines niet omheen kunnen.'
+gridDescription: 'Beter vindbaar in Google en AI-zoekmachines op de woorden waar jouw klanten op zoeken. Meer bezoekers die al iets willen kopen.'
 icon: '⌕'
 shadow: rare
 order: 3

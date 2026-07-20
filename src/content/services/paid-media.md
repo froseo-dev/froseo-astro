@@ -23,10 +23,11 @@ calvinNote:
 
 eyebrow: 'Paid Advertising'
 description: 'Google Ads, Meta Ads en LinkedIn Ads die rendement uit je budget halen. Wij sturen niet op kliks maar op echte conversies en winst, met heldere maandrapportage en een vaste maandfee.'
+gridDescription: 'Advertenties in Google, Maps en op social die klanten opleveren. We sturen op aanvragen en omzet, niet op kliks die niets doen.'
 icon: '↗'
 shadow: primary
-order: 4
-featured: false
+order: 5
+featured: true
 bullets:
   - 'Google Ads (Search, Shopping, Performance Max)'
   - Meta en LinkedIn Ads

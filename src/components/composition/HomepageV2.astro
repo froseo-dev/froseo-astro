@@ -33,14 +33,24 @@ import ruthLastersScreenshot from '@assets/website-opfrissen/ruth-lasters.webp';
 <Topbar />
 <Nav />
 <main>
-  {/* H1-truc: hero-title is 'p' i.p.v. h1, en de eyebrow-pill boven de
-      cases krijgt h1-tag met keyword-rich tekst "Webdesign, SEO &
-      marketing Utrecht". Zelfde visuele layout, andere semantiek. */}
-  <Hero titleAs="p" />
+  <Hero
+    titleAs="h1"
+    eyebrow="Van onzichtbaar naar onmisbaar"
+    titleLine1="Webdesign, marketing & SEO"
+    titleLine2="vanuit"
+    accent="Utrecht."
+    bullets={[
+      '15+ jaar ervaring.',
+      'Razendsnelle websites, gebouwd voor conversie.',
+      'Beter vindbaar in Google, Maps en AI.',
+      'Marketing die bezoekers omzet in klanten.',
+    ]}
+  />
   <LogosTicker />
   <CasesStrip
-    eyebrow="Webdesign, SEO & marketing Utrecht"
-    eyebrowAs="h1"
+    eyebrow="Cases"
+    titleLead="van"
+    lead="Benieuwd naar ons werk? Bekijk hier enkele van onze succesverhalen. Resultaat behalen we samen!"
     pickSlugs={[
       'club12',
       'renovatie-totaal',
@@ -52,10 +62,18 @@ import ruthLastersScreenshot from '@assets/website-opfrissen/ruth-lasters.webp';
       'dakdekkersbedrijf-dkh-ede',
     ]}
   />
-  <PricingTeaser />
+  <PricingTeaser
+    title="Een professionele all-inclusive website vanaf €69 per maand."
+    body="Razendsnel, professioneel ontworpen en geoptimaliseerd voor het binnenhalen van klanten. Inclusief hosting, onderhoud en beheer!"
+  />
   <ServicesTicker />
   <TeamNote />
-  <ServicesGrid />
+  <ServicesGrid
+    titleLine1="Full-service"
+    titleLine2="digitaal"
+    accent="bureau."
+    intro="Website, vindbaarheid en advertenties bij één partij. Wij bouwen je site, zorgen dat klanten je vinden in Google en Maps, en zetten advertenties in waar ze geld opleveren."
+  />
   <InlineCTA
     primaryLabel="Plan een vrijblijvend gesprek ↗"
     primaryHref="/contact/"
@@ -80,13 +98,12 @@ import ruthLastersScreenshot from '@assets/website-opfrissen/ruth-lasters.webp';
     ctaHref="/website-laten-maken-zzp/"
   />
   <CTA
-    variant="form"
-    sectionId="analyse"
+    variant="scanform"
+    sectionId="cta"
     eyebrow="Gratis website-analyse"
     titleLine1="Eerst weten waar je staat?"
     titleAccent="Vraag een gratis analyse."
-    text="Ontvang een gratis analyse met concrete verbeterpunten. Zonder verplichtingen."
-    features={[]}
+    text="Kies wat we mogen checken: snelheid, SEO of je lokale vindbaarheid. Je krijgt binnen 1 werkdag een persoonlijk rapport met concrete verbeterpunten."
   />
   <Approach watermark={true} />
   <BetterCallCalvin />

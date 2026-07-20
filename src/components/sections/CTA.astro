@@ -1,5 +1,6 @@
 ---
 import EyebrowPill from '../ui/EyebrowPill.astro';
+import ScanForm from './ScanForm.astro';
 
 interface Props {
   eyebrow?: string;
@@ -10,9 +11,11 @@ interface Props {
   formTitle?: string;
   submitLabel?: string;
   formAction?: string;
-  /** `form` (default) renders the analyse-aanvraag form on the right.
-   *  `link`  renders a single CTA button (used for the secondary "plan een gesprek"). */
-  variant?: 'form' | 'link';
+  /** `form`     renders het simpele 2-veld analyse-formulier op rechts.
+   *  `scanform` rendert het uitgebreide multistep scan-formulier (ScanForm)
+   *             op rechts — meer vragen + scan-types aanvinken.
+   *  `link`     rendert een enkele CTA-knop (secundaire "plan een gesprek"). */
+  variant?: 'form' | 'scanform' | 'link';
   linkLabel?: string;
   linkHref?: string;
   linkMeta?: string;
@@ -52,7 +55,11 @@ const {
       )}
     </div>
 
-    {variant === 'form' ? (
+    {variant === 'scanform' ? (
+      <div class="cta-form cta-scanform">
+        <ScanForm hideStep1Intro />
+      </div>
+    ) : variant === 'form' ? (
       <form
         class="cta-form"
         action="/api/contact"

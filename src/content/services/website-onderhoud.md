@@ -37,6 +37,7 @@ description: 'WordPress onderhoud met vaste maandprijs. Updates, backups, beveil
 icon: '⚙'
 shadow: rare
 order: 5
+featured: false
 bullets:
   - Handmatige updates met restore-point
   - Dagelijkse backups en beveiligingsscans

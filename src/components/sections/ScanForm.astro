@@ -1,0 +1,421 @@
+---
+/**
+ * Multistep scan-aanvraag formulier (gedeeld).
+ *
+ * Wordt op twee plekken gebruikt:
+ *  - inline in een sectie (bv. de homepage-CTA, variant "scanform")
+ *  - binnen de modal ScanPopup
+ *
+ * Meerdere instances op één pagina zijn toegestaan (de homepage heeft de
+ * inline-variant én de site-brede ScanPopup): de JS bindt per
+ * [data-scan-form]-root en er worden bewust GEEN id's gebruikt — labels
+ * wrappen hun eigen input — zodat er geen dubbele id's op de pagina staan.
+ *
+ * Stappen (max 5 — stap 3 wordt overgeslagen bij alleen snelheid):
+ *  1. URL  2. Scan-type(s)  3. Conditionele details  4. E-mail  5. Bedankt
+ * Submit POST → /api/scan-request → Brevo "Froseo Leads" lijst.
+ *
+ * Reset: dispatch een `scanform:reset` CustomEvent op de root om terug naar
+ * stap 1 te gaan en de velden te legen (ScanPopup doet dit in test-mode bij
+ * sluiten).
+ *
+ * `hideStep1Intro`: verbergt de eyebrow/titel/lead van stap 1. Voor de inline
+ * variant in een sectie die zelf al een kop + uitleg heeft (bv. de homepage-
+ * CTA-band), zodat de tekst niet dubbelop is. De popup laat 'm op default
+ * (false) staan en houdt dus zijn eigen intro — het zijn twee losse dingen.
+ */
+interface Props {
+  hideStep1Intro?: boolean;
+}
+const { hideStep1Intro = false } = Astro.props;
+---
+
+<div class="scan-form" data-scan-form>
+  {/* ────── STAP 1 — URL ────── */}
+  <div class="scan-step" data-step="1">
+    {!hideStep1Intro && <span class="scan-eyebrow">Gratis &amp; vrijblijvend</span>}
+    {!hideStep1Intro && <h2 class="scan-title">Gratis website analyse</h2>}
+    {!hideStep1Intro && <p class="scan-lead">Wij checken jouw website gratis op snelheid, techniek en vindbaarheid. Begin met je URL.</p>}
+
+    <label class="scan-field">
+      <span class="scan-field-label">Website</span>
+      <input type="url" name="website" placeholder="https://jouwsite.nl" required />
+    </label>
+
+    <div class="scan-actions">
+      <button type="button" class="scan-btn scan-btn-primary" data-step-next>Volgende →</button>
+    </div>
+  </div>
+
+  {/* ────── STAP 2 — Scan-type(s) ────── */}
+  <div class="scan-step" data-step="2" hidden>
+    <span class="scan-eyebrow">Wat checken we</span>
+    <h2 class="scan-title">Kies wat we mogen analyseren.</h2>
+    <p class="scan-lead">Combineren mag. Hoe meer je aanvinkt, hoe completer het rapport.</p>
+
+    <div class="scan-types" role="group" aria-label="Welke scans">
+      <label class="scan-type-card">
+        <input type="checkbox" name="scanType" value="snelheid" />
+        <div class="scan-type-body">
+          <strong>Snelheid &amp; techniek</strong>
+          <span>PageSpeed, Core Web Vitals en techniek-check op je homepage.</span>
+        </div>
+      </label>
+      <label class="scan-type-card">
+        <input type="checkbox" name="scanType" value="seo" />
+        <div class="scan-type-body">
+          <strong>SEO</strong>
+          <span>Posities in Google, zoekvolumes en organisch verkeer op je belangrijkste zoekwoorden.</span>
+        </div>
+      </label>
+      <label class="scan-type-card">
+        <input type="checkbox" name="scanType" value="lokaal" />
+        <div class="scan-type-body">
+          <strong>Lokale zichtbaarheid <span class="scan-type-meta">voor lokale ondernemers</span></strong>
+          <span>Google Maps, local pack en je Google Business Profile in jouw verzorgingsgebied.</span>
+        </div>
+      </label>
+    </div>
+
+    <div class="scan-actions">
+      <button type="button" class="scan-btn scan-btn-secondary" data-step-prev>← Vorige</button>
+      <button type="button" class="scan-btn scan-btn-primary" data-step-next>Volgende →</button>
+    </div>
+  </div>
+
+  {/* ────── STAP 3 — Conditionele details (skipped als alleen snelheid) ────── */}
+  <div class="scan-step" data-step="3" hidden>
+    <span class="scan-eyebrow">Even iets specifieks</span>
+    <h2 class="scan-title">Een paar details.</h2>
+
+    {/* Lokaal-specifieke velden — alleen bedrijfsnaam, adres halen we zelf op via GBP */}
+    <div class="scan-lokaal-fields" hidden>
+      <label class="scan-field">
+        <span class="scan-field-label">Bedrijfsnaam</span>
+        <input type="text" name="bedrijfsnaam" placeholder="Bijv. Bakkerij Jansen Utrecht" />
+      </label>
+    </div>
+
+    {/* Zoekwoord-velden bij SEO + Lokaal */}
+    <div class="scan-keyword-fields" hidden>
+      <label class="scan-field">
+        <span class="scan-field-label">Zoekwoorden <span class="scan-optional">(optioneel, anders kiezen wij relevante voor je)</span></span>
+        <input type="text" name="kw1" placeholder="Bijv. webdesign utrecht" />
+        <input type="text" name="kw2" placeholder="Bijv. dakdekker zeist" style="margin-top:6px" />
+        <input type="text" name="kw3" placeholder="Bijv. personal training amsterdam" style="margin-top:6px" />
+      </label>
+    </div>
+
+    <div class="scan-actions">
+      <button type="button" class="scan-btn scan-btn-secondary" data-step-prev>← Vorige</button>
+      <button type="button" class="scan-btn scan-btn-primary" data-step-next>Volgende →</button>
+    </div>
+  </div>
+
+  {/* ────── STAP 4 — E-mail ────── */}
+  <div class="scan-step" data-step="4" hidden>
+    <span class="scan-eyebrow">Bijna klaar</span>
+    <h2 class="scan-title">Waar mogen we het rapport sturen?</h2>
+    <p class="scan-lead">Binnen 1 werkdag ligt je persoonlijke rapport in je inbox.</p>
+
+    <label class="scan-field">
+      <span class="scan-field-label">E-mail</span>
+      <input type="email" name="email" placeholder="jij@bedrijf.nl" required />
+    </label>
+
+    {/* Honeypot — verborgen voor mensen, bots vullen 't vaak in */}
+    <div aria-hidden="true" style="position:absolute;left:-9999px;">
+      <label>Website-URL: <input type="text" name="website_url_check" tabindex="-1" autocomplete="off" /></label>
+    </div>
+
+    <p class="scan-privacy">
+      Door verzenden ontvang je de scan en af en toe een follow-up. Zie ons <a href="/privacybeleid/" target="_blank" rel="noopener">privacybeleid</a>.
+    </p>
+
+    <div class="scan-error" data-scan-error hidden></div>
+
+    <div class="scan-actions">
+      <button type="button" class="scan-btn scan-btn-secondary" data-step-prev>← Vorige</button>
+      <button type="button" class="scan-btn scan-btn-primary" data-scan-submit>Verstuur aanvraag</button>
+    </div>
+  </div>
+
+  {/* ────── STAP 5 — Bedankt ────── */}
+  <div class="scan-step" data-step="5" hidden>
+    <div class="scan-success">✓</div>
+    <h2 class="scan-title">Top, we gaan er voor je induiken.</h2>
+    <p class="scan-lead">Binnen 1 werkdag krijg je een persoonlijk rapport in je inbox met concrete inzichten over je website.</p>
+  </div>
+
+  {/* Progress dots — 4 voortgangs-stappen (laatste is bedankt-scherm). */}
+  <div class="scan-progress" data-scan-progress>
+    <span class="dot active" data-progress="1"></span>
+    <span class="dot" data-progress="2"></span>
+    <span class="dot" data-progress="3"></span>
+    <span class="dot" data-progress="4"></span>
+  </div>
+</div>
+
+<style>
+  .scan-form { font-family: 'Inter Tight', system-ui, sans-serif; color: #0A0A14; }
+
+  .scan-eyebrow {
+    display: inline-block;
+    background: #150030; color: #fff;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;
+  }
+  .scan-title {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-weight: 800; font-size: 22px; line-height: 1.2;
+    margin: 0 0 8px; color: #0A0A14;
+  }
+  .scan-lead { font-size: 13.5px; color: #54506A; margin: 0 0 18px; line-height: 1.5; }
+
+  .scan-types { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+  .scan-type-card {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 14px;
+    background: #fff;
+    border: 2px solid #EAE3D2; border-radius: 12px;
+    cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .scan-type-card:hover { border-color: #B6007B; }
+  .scan-type-card input[type="checkbox"],
+  .scan-type-card input[type="radio"] {
+    margin-top: 3px; cursor: pointer;
+    accent-color: #B6007B;
+    width: 16px; height: 16px; flex-shrink: 0;
+  }
+  .scan-type-card:has(input:checked) {
+    border-color: #B6007B;
+    box-shadow: 3px 3px 0 #B6007B;
+  }
+  .scan-type-body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .scan-type-body strong { font-size: 14px; font-weight: 700; color: #0A0A14; }
+  .scan-type-body span { font-size: 12.5px; color: #54506A; line-height: 1.4; }
+  .scan-type-meta { font-weight: 400; font-size: 11.5px; color: #9CA3AF; font-style: italic; }
+
+  .scan-field { display: flex; flex-direction: column; margin-bottom: 14px; }
+  .scan-field-label { font-size: 12px; font-weight: 600; color: #0A0A14; margin-bottom: 6px; }
+  .scan-field input {
+    padding: 10px 12px; font-size: 14px; font-family: inherit;
+    background: #fff; border: 2px solid #EAE3D2; border-radius: 8px;
+    color: #0A0A14; transition: border-color 0.15s;
+  }
+  .scan-field input:focus { outline: none; border-color: #B6007B; }
+  .scan-optional { font-weight: 400; color: #9CA3AF; font-size: 11.5px; }
+
+  .scan-privacy { font-size: 11px; color: #9CA3AF; line-height: 1.4; margin: 8px 0 12px; }
+  .scan-privacy a { color: #6901AA; text-decoration: underline; }
+
+  .scan-error {
+    background: #FEE2E2; color: #991B1B;
+    border: 1.5px solid #FCA5A5; border-radius: 8px;
+    padding: 10px 12px; font-size: 12.5px; margin-bottom: 12px;
+  }
+
+  .scan-success {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: #16A34A; color: #fff;
+    font-size: 32px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px; box-shadow: 3px 3px 0 #0A0A14;
+  }
+  .scan-step[data-step="5"] { text-align: center; }
+
+  .scan-actions { display: flex; gap: 8px; margin-top: 4px; }
+  .scan-btn {
+    flex: 1;
+    padding: 12px 18px;
+    font-family: inherit; font-size: 14px; font-weight: 700;
+    border: 2px solid #0A0A14; border-radius: 10px;
+    cursor: pointer; transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .scan-btn-primary {
+    background: #00807d; color: #fff;
+    box-shadow: 3px 3px 0 #0A0A14;
+  }
+  .scan-btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #0A0A14; }
+  .scan-btn-primary:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 #0A0A14; }
+  .scan-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .scan-btn-secondary {
+    background: transparent; color: #0A0A14;
+    flex: 0 0 auto; padding: 12px 16px;
+  }
+  .scan-btn-secondary:hover { background: rgba(0,0,0,0.05); }
+
+  .scan-progress {
+    display: flex; justify-content: center; gap: 6px;
+    margin-top: 18px; padding-top: 14px;
+    border-top: 1px solid #EAE3D2;
+  }
+  .scan-progress .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #EAE3D2; transition: background 0.2s, width 0.2s;
+  }
+  .scan-progress .dot.active { background: #B6007B; width: 20px; border-radius: 4px; }
+</style>
+
+<script>
+  /* eslint-disable */
+  (() => {
+    const forms = document.querySelectorAll<HTMLDivElement>('[data-scan-form]');
+    if (!forms.length) return;
+
+    /* Min-time-op-formulier anti-spam: bots klikken in milliseconden door
+       alle stappen, mensen niet. 5s tussen render en submit filtert bots
+       zonder echte gebruikers te storen. */
+    const MIN_OPEN_MS = 5000;
+
+    forms.forEach((root) => {
+      let currentStep = 1;
+      let scanTypes: string[] = [];
+      let startedAt = Date.now();
+
+      const q = <T extends HTMLElement = HTMLElement>(sel: string) => root.querySelector<T>(sel);
+      const qa = <T extends HTMLElement = HTMLElement>(sel: string) => root.querySelectorAll<T>(sel);
+
+      /* ───── Stappen-navigatie ───── */
+      const showStep = (n: number) => {
+        currentStep = n;
+        qa<HTMLDivElement>('[data-step]').forEach((el) => {
+          el.hidden = parseInt(el.dataset.step!) !== n;
+        });
+        qa<HTMLSpanElement>('[data-progress]').forEach((el) => {
+          el.classList.toggle('active', parseInt(el.dataset.progress!) <= Math.min(n, 4));
+        });
+        /* Progress wegstoppen op bedankt-scherm (stap 5). */
+        const progress = q<HTMLDivElement>('[data-scan-progress]');
+        if (progress) progress.style.display = n === 5 ? 'none' : '';
+      };
+
+      /* Stap 3 (extra details) is alleen relevant bij SEO of lokale scan;
+         bij alleen snelheid slaan we 'm over. */
+      const stepNeedsDetails = () =>
+        scanTypes.includes('seo') || scanTypes.includes('lokaal');
+
+      const updateConditionalFields = () => {
+        const lokaalFields = q<HTMLDivElement>('.scan-lokaal-fields');
+        const kwFields = q<HTMLDivElement>('.scan-keyword-fields');
+        const bedrijfInput = q<HTMLInputElement>('input[name="bedrijfsnaam"]');
+
+        const hasLokaal = scanTypes.includes('lokaal');
+        const hasSeo = scanTypes.includes('seo');
+
+        if (lokaalFields) lokaalFields.hidden = !hasLokaal;
+        if (kwFields) kwFields.hidden = !(hasSeo || hasLokaal);
+        if (bedrijfInput) bedrijfInput.required = hasLokaal;
+      };
+
+      qa<HTMLInputElement>('input[name="scanType"]').forEach((el) => {
+        el.addEventListener('change', () => {
+          scanTypes = Array.from(qa<HTMLInputElement>('input[name="scanType"]:checked'))
+            .map((i) => i.value);
+          updateConditionalFields();
+        });
+      });
+
+      qa<HTMLButtonElement>('[data-step-next]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (currentStep === 1) {
+            const website = q<HTMLInputElement>('input[name="website"]');
+            if (!website?.value) { alert('Vul je website in.'); website?.focus(); return; }
+            showStep(2);
+            return;
+          }
+          if (currentStep === 2) {
+            if (scanTypes.length === 0) { alert('Kies minimaal één scan (combineren mag).'); return; }
+            showStep(stepNeedsDetails() ? 3 : 4);
+            return;
+          }
+          if (currentStep === 3) {
+            if (scanTypes.includes('lokaal')) {
+              const bedrijf = q<HTMLInputElement>('input[name="bedrijfsnaam"]');
+              if (!bedrijf?.value) { alert('Voor de lokale scan hebben we je bedrijfsnaam nodig.'); bedrijf?.focus(); return; }
+            }
+            showStep(4);
+            return;
+          }
+          showStep(currentStep + 1);
+        });
+      });
+      qa<HTMLButtonElement>('[data-step-prev]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (currentStep === 4 && !stepNeedsDetails()) { showStep(2); return; }
+          showStep(currentStep - 1);
+        });
+      });
+
+      /* ───── Reset (bv. door ScanPopup bij test-mode sluiten) ───── */
+      root.addEventListener('scanform:reset', () => {
+        currentStep = 1;
+        scanTypes = [];
+        showStep(1);
+        qa<HTMLInputElement>('input').forEach((el) => {
+          if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+          else el.value = '';
+        });
+        updateConditionalFields();
+        startedAt = Date.now();
+      });
+
+      /* ───── Submit ───── */
+      const submitBtn = q<HTMLButtonElement>('[data-scan-submit]');
+      const errorBox = q<HTMLDivElement>('[data-scan-error]');
+      submitBtn?.addEventListener('click', async () => {
+        const email = q<HTMLInputElement>('input[name="email"]');
+        if (!email?.value || !/.+@.+\..+/.test(email.value)) {
+          alert('Vul een geldig e-mailadres in.');
+          email?.focus();
+          return;
+        }
+
+        if (Date.now() - startedAt < MIN_OPEN_MS) {
+          if (errorBox) {
+            errorBox.textContent = 'Wacht even, je was wel erg snel. Probeer het zo opnieuw.';
+            errorBox.hidden = false;
+          }
+          return;
+        }
+
+        const honeypot = q<HTMLInputElement>('input[name="website_url_check"]');
+        const get = (n: string) => q<HTMLInputElement>(`input[name="${n}"]`)?.value?.trim() || '';
+        const payload = {
+          scanTypes,
+          website: get('website'),
+          bedrijfsnaam: get('bedrijfsnaam'),
+          keywords: [get('kw1'), get('kw2'), get('kw3')].filter(Boolean),
+          email: email.value.trim(),
+          leadBron: location.pathname,
+          honeypot: honeypot?.value || '',
+        };
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Versturen...';
+        if (errorBox) errorBox.hidden = true;
+
+        try {
+          const res = await fetch('/api/scan-request', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (!res.ok) throw new Error((await res.json()).error || 'Er ging iets mis');
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          (window as any).dataLayer.push({ event: 'scan_request', scan_types: scanTypes.join(',') });
+          showStep(5);
+        } catch (err: any) {
+          if (errorBox) {
+            errorBox.textContent = err.message || 'Er ging iets mis. Probeer het opnieuw of mail ons direct op info@froseo.nl.';
+            errorBox.hidden = false;
+          }
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Verstuur aanvraag';
+        }
+      });
+    });
+  })();
+</script>

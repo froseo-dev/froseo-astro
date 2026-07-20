@@ -21,11 +21,12 @@ heroPrimaryCta:
 
 eyebrow: 'Website abonnement'
 description: 'Een professionele website met vaste maandprijs. Twee pakketten vanaf {{abboFromInline}}: Online Start voor MKB en ZZP, Online Plus voor groeiende bedrijven. Bij een jaarcontract betaal je geen setup fee. Inclusief hosting, technisch beheer en kleine wijzigingen.'
+gridDescription: 'Een professionele website voor een vast bedrag per maand, inclusief hosting, onderhoud en kleine wijzigingen. Klaar om klanten binnen te halen, zonder dat je er zelf naar omkijkt.'
 icon: '◆'
 shadow: dark
-order: 2
+order: 0
 bullets:
-  - Vaste maandprijs, geen setup fee bij jaarcontract
+  - All-inclusive abonnement vanaf {{abboFromShort}}
   - Inclusief hosting, e-mail en beheer
   - Snelheid, technische SEO en aanvragen
   - Maandelijks opzegbaar bij maandcontract

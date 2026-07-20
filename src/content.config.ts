@@ -105,6 +105,10 @@ const services = defineCollection({
     metaDescription: z.string().optional(),
     eyebrow: z.string(),
     description: z.string(),
+    /** Korte, concrete kaarttekst voor de homepage ServicesGrid. Fallback
+        naar `description`. Bestaat apart zodat de homepage-kaart punchy kan
+        zijn zonder de service-page hero-lead / meta-description te raken. */
+    gridDescription: z.string().optional(),
     icon: z.string(),
     bullets: z.array(z.string()),
     /** Semantic shadow role — maps to .service-card.shadow-{role} in global.css */

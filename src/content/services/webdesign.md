@@ -18,11 +18,12 @@ heroPrimaryCta:
   label: 'Plan een kennismaking ↗'
   href: '/contact/?onderwerp=webdesign'
 description: 'Snelle, professionele websites voor lokale ondernemers. Voor velen is het website abonnement vanaf {{abboFromInline}} de slimste route. Maatwerk blijft mogelijk voor grotere trajecten.'
+gridDescription: 'Een website op maat met een eigen gezicht, snel en gebouwd om te scoren in Google. Bezoekers zien meteen waarom ze bij jou moeten zijn.'
 icon: '◆'
 shadow: dark
 order: 1
 bullets:
-  - All-inclusive abonnement vanaf {{abboFromShort}}
+  - WordPress of custom CMS
   - Maatwerk voor grotere trajecten
   - Mobile-first, snel en AVG-proof
   - Sterke SEO-basis ingebouwd

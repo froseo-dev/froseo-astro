@@ -14,6 +14,7 @@ heroChecks:
   - Google Business Profile compleet uitgewerkt
   - Maandelijks bijsturen op rankings en reviews
 description: 'Lokale SEO en Google Maps optimalisatie voor MKB en ZZP. Beter scoren in Google Maps, lokale zoekresultaten en het local pack van jouw regio.'
+gridDescription: 'Bovenaan komen in Google Maps en het local pack van jouw regio. Zo vinden klanten uit de buurt jou eerder dan de concurrent.'
 icon: '◎'
 shadow: rare
 order: 2
