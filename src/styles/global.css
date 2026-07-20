@@ -255,6 +255,13 @@ main { display: contents; }
    ========================================================================== */
 
 .topbar {
+  /* Sticky bovenaan, mét de nav die er direct onder pint (nav.top =
+     --topbar-h). z-index boven de nav zodat de promo altijd zichtbaar
+     blijft tijdens scrollen — desktop én mobiel. */
+  position: sticky;
+  top: 0;
+  z-index: 51;
+  display: block;
   padding: 10px var(--gutter);
   background: var(--topbar-bg);
   color: var(--topbar-text);
@@ -263,13 +270,16 @@ main { display: contents; }
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-align: center;
+  text-decoration: none;
   border-bottom: var(--border);
 }
+.topbar:hover { color: var(--topbar-text); text-decoration: underline; text-underline-offset: 2px; }
 .topbar .star { color: var(--accent-highlight); }
 
 .nav {
   position: sticky;
-  top: 0;
+  /* Pint direct onder de sticky topbar (hoogte via --topbar-h). */
+  top: var(--topbar-h);
   z-index: 50;
   display: flex;
   justify-content: space-between;
@@ -3663,11 +3673,11 @@ main { display: contents; }
 }
 
 @media (max-width: 640px) {
-  /* Mobiele menu-balk slanker — Topbar + Nav samen waren te dik. */
+  /* Mobiele menu-balk slanker — Topbar + Nav samen waren te dik. De
+     slankere topbar is ~30px; --topbar-h override zorgt dat de nav én de
+     secundaire sticky-bars (filter, TOC) daar goed onder blijven pinnen. */
+  :root { --topbar-h: 30px; }
   .topbar { padding: 7px var(--gutter-mobile); font-size: 10px; letter-spacing: 0.08em; }
-  /* Op mobile alleen de korte hoofdtekst tonen, zodat het strookje op
-     één regel past. */
-  .topbar-extra { display: none; }
   .nav { padding: 10px var(--gutter-mobile); }
   .nav-cta { padding: 8px 14px; font-size: 12px; box-shadow: 2px 2px 0 var(--line-color); }
   .menu-toggle { width: 42px; height: 42px; border-radius: 10px; box-shadow: 2px 2px 0 var(--line-color); }
@@ -5860,9 +5870,10 @@ main { display: contents; }
 .projects-filter {
   padding: 24px var(--gutter);
   position: sticky;
-  /* Plak onder de sticky nav (~72px desktop). Z-index lager dan nav (50)
-     zodat de filter NETJES onder het nav-blok schuift, niet erachter. */
-  top: 72px;
+  /* Plak onder de sticky nav (~72px desktop) + de sticky topbar erboven.
+     Z-index lager dan nav (50) zodat de filter NETJES onder het nav-blok
+     schuift, niet erachter. */
+  top: calc(72px + var(--topbar-h));
   z-index: 10;
   background: var(--surface-page);
   border-top: 1px dashed var(--line-color);
@@ -10775,13 +10786,13 @@ a.visit-address-value:hover { color: var(--accent-teal); }
 }
 
 /* --- Sticky TOC linker kolom ---
-   top-offset houdt rekening met de gefixeerde nav (~84px hoog
-   inclusief topbar) plus wat ademruimte. */
+   top-offset houdt rekening met de sticky nav plus de sticky topbar
+   (--topbar-h) erboven, plus wat ademruimte. */
 .kb-toc {
   position: sticky;
-  top: 104px;
+  top: calc(104px + var(--topbar-h));
   align-self: start;
-  max-height: calc(100vh - 124px);
+  max-height: calc(100vh - 124px - var(--topbar-h));
   overflow-y: auto;
 }
 .kb-toc-title {
@@ -11012,7 +11023,7 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   letter-spacing: -0.02em;
   margin-top: 48px;
   color: var(--text-primary);
-  scroll-margin-top: 104px; /* houdt rekening met fixed nav bij anchor-jumps */
+  scroll-margin-top: calc(104px + var(--topbar-h)); /* fixed nav + sticky topbar bij anchor-jumps */
 }
 .kb-prose h2:first-child { margin-top: 0; }
 .kb-prose h3 {
@@ -11023,7 +11034,7 @@ a.visit-address-value:hover { color: var(--accent-teal); }
   letter-spacing: -0.01em;
   margin-top: 32px;
   color: var(--text-primary);
-  scroll-margin-top: 104px;
+  scroll-margin-top: calc(104px + var(--topbar-h));
 }
 .kb-prose a {
   color: var(--accent-rare);

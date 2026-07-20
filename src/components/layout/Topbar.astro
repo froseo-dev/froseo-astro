@@ -1,21 +1,21 @@
 ---
 /**
- * Topbar boven het menu — promo-strookje. Splitsing in twee delen
- * zodat het tweede deel op mobiel verbergt en het bericht op één regel
- * past.
+ * Topbar boven het menu — promo-strookje, sticky bovenaan (samen met de
+ * nav die eronder pint). Hele balk is een link naar het website abonnement,
+ * want daar gaat de promo over. Zelfde tekst op desktop én mobiel.
  */
 import { pricing } from '@data/site-config';
 
 interface Props {
-  /** Korte hoofdtekst, altijd zichtbaar. */
+  /** Promo-tekst. */
   text?: string;
-  /** Aanvulling, alleen zichtbaar op tablet/desktop. */
-  extra?: string;
+  /** Doel van de klik. Default = website abonnement pagina. */
+  href?: string;
 }
 const {
-  text = `Populair: Een website vanaf ${pricing.abboFromShort}`,
-  extra = ', inclusief hosting en onderhoud',
+  text = `Populair: een all-inclusive website vanaf ${pricing.abboFromShort}`,
+  href = '/website-abonnement/',
 } = Astro.props;
 ---
 
-<div class="topbar"><span class="star">★</span> {text}<span class="topbar-extra">{extra}</span></div>
+<a class="topbar" href={href}><span class="star">★</span> {text}</a>

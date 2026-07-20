@@ -149,6 +149,10 @@
   --container-text:   960px;
   --gutter:           40px;
   --gutter-mobile:    20px;
+  /* Hoogte van de sticky promo-topbar. De nav pint hier direct onder
+     (.nav top = --topbar-h) en secundaire sticky-bars (filter, TOC) tellen
+     'm op bij hun offset. Mobiel-override staat in global.css. */
+  --topbar-h:         38px;
 
   /* Radius */
   --radius-sm:   10px;
