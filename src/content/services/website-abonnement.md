@@ -47,7 +47,7 @@ introBlock:
   title: 'Wat houdt een website abonnement'
   titleAccent: 'bij Froseo in?'
   body:
-    - 'Vanaf {{abboFromInline}} ({{vatNote}}) staat je site live op het Froseo-framework, draait hij snel en blijft hij up-to-date. Hosting, SSL, technisch beheer, kleine wijzigingen en maandelijkse positierapportage zitten erbij. Eén factuur, één aanspreekpunt, één voorspelbaar maandbedrag.'
+    - 'Vanaf {{abboFromInline}} ({{vatNote}}) staat je site live op het Froseo-framework, draait hij snel (PageSpeed 90+) en blijft hij up-to-date. Hosting, SSL, technisch beheer, kleine wijzigingen en maandelijkse positierapportage zitten erbij. Eén factuur, één aanspreekpunt, één voorspelbaar maandbedrag.'
     - 'Wij bouwen je site, optimaliseren de techniek en houden hem scherp. Jij hoeft niet meer met hosting, plug-in-updates of SSL te schuiven. Maandelijks opzegbaar bij een maandcontract; bij een jaarcontract betaal je geen setup fee.'
 
 includedBlock:
@@ -114,7 +114,7 @@ approachSteps:
 
 usps:
   - title: 15 jaar WordPress-ervaring, toegepast op moderne techniek
-    body: 'We bouwden eerst alleen in WordPress. Sinds een paar jaar ook in Astro, omdat dat sneller is en beter aansluit op de techniek van vandaag. Het abonnement draait op Astro, met alle WordPress-lessen van 60+ sites in het ontwerp verwerkt.'
+    body: 'We begonnen zo''n 15 jaar geleden met <a href="/">webdesign in Utrecht</a>. Toen nog primair met WordPress. Inmiddels werken we ook veel met Astro, omdat dat sneller is en beter aansluit op de techniek van vandaag. Het abonnement draait op Astro, met alle WordPress-lessen van 60+ sites in het ontwerp verwerkt.'
   - title: Snelheid die we waarmaken
     body: 'We streven naar 90+ op Google PageSpeed, op mobiel én desktop. We claimen geen 100/100, want dat hangt te veel af van externe scripts (Analytics, pixels, embeds, video). 90+ over de hele site is wel realistisch én meetbaar. Daar werken we naartoe en daar houden we het.'
   - title: We denken mee, ook na livegang

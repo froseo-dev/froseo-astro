@@ -196,7 +196,7 @@ Het scheelt je dat je niet hoeft uit te vogelen of een beveiligingsupdate veilig
 
 Wil je alleen de techniek? Of ook je content en kleine verbeteringen? Wil je daarbovenop actief groeien in Google? Elke keuze heeft een ander prijspunt.
 
-Stuur je URL via de check. Wij kijken wat je site nu nodig heeft en sturen een prijs die past bij de scope. Niets meer en niets minder.
+Stuur je URL via de check. Dan kijken we bij [Froseo](/) wat je site nu nodig heeft en sturen we een prijs die past bij de scope. Niets meer en niets minder.
 
 <div class="md-cta">
   <a class="btn-primary" href="/contact/?onderwerp=website-beheer-check">Laat je website vrijblijvend checken ↗</a>

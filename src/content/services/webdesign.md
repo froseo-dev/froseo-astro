@@ -130,7 +130,7 @@ Voor veel bedrijven is het [website abonnement](/website-abonnement/) de slimste
 
 Een website maken is niet hetzelfde als een ontwerp tekenen. Het gaat om hoe je content is opgebouwd, hoe snel je pagina's laden, hoe Google ze kan begrijpen en hoe een bezoeker zonder nadenken bij de juiste knop terechtkomt. Daar denken we vanaf het eerste gesprek over na.
 
-We bouwen al meer dan 15 jaar websites. Eerst alleen in WordPress, sinds een paar jaar ook in Astro. Beide platforms hebben hun plek. WordPress als je een uitgebreid CMS wil waarin je zelf veel wil bijhouden of regelmatig blogs publiceert. Astro als snelheid en techniek de hoofdrol moeten spelen.
+We bouwen als [webdesigners in Utrecht](/) al meer dan 15 jaar websites. Eerst alleen in WordPress, sinds een paar jaar ook in Astro. Beide platforms hebben hun plek. WordPress als je een uitgebreid CMS wil waarin je zelf veel wil bijhouden of regelmatig blogs publiceert. Astro als snelheid en techniek de hoofdrol moeten spelen.
 
 In beide gevallen bouwen we vanaf de basis. Geen kant-en-klare templates die je elders ook tegenkomt, maar een ontwerp dat past bij wat jouw bedrijf onderscheidt. Met de techniek die past bij je doelen.
 

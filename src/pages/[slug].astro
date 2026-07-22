@@ -607,7 +607,7 @@ const serviceSchema = {
             {s.usps.map((u, i) => (
               <article class={`service-usp-card usp-${i % 4}`}>
                 <h3 class="usp-title">{u.title}</h3>
-                <p class="usp-body">{interpolate(u.body)}</p>
+                <p class="usp-body" set:html={interpolate(u.body)} />
               </article>
             ))}
           </div>

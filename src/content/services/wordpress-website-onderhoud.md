@@ -157,4 +157,4 @@ faqs:
 
 ## Heb je nog geen WordPress-site?
 
-Dit pakket is voor sites die al gebouwd zijn. Wil je zowel een [WordPress website laten bouwen](/webdesign/) als doorlopend onderhoud onder één dak, dan combineren we dat in één traject: wij maken de site en houden hem daarna voor je bij, zodat techniek, plug-ins en beveiliging vanaf dag één bij dezelfde mensen zitten.
+Dit pakket is voor sites die al gebouwd zijn. Wil je zowel een [WordPress website laten bouwen](/webdesign/) als doorlopend onderhoud onder één dak, dan combineren we dat in één traject: wij maken de site en houden hem daarna voor je bij, zodat techniek, plug-ins en beveiliging vanaf dag één bij dezelfde mensen zitten. Van de eerste build tot doorlopend onderhoud houd je zo alles bij [Froseo](/).

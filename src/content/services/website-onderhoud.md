@@ -154,6 +154,6 @@ faqs:
 
 ## Onderhoud, beheer en opfrissen: wat past bij jou?
 
-Website onderhoud houdt techniek draaiend: updates, backups, beveiliging en monitoring. Wil je daarnaast ook content, kleine verbeteringen en doorlopende controle via één partij, dan past [website beheer uitbesteden](/website-beheer-uitbesteden/) beter: onderhoud plus actief meedenken over wat je site nodig heeft.
+Website onderhoud bij [Froseo](/) houdt techniek draaiend: updates, backups, beveiliging en monitoring. Wil je daarnaast ook content, kleine verbeteringen en doorlopende controle via één partij, dan past [website beheer uitbesteden](/website-beheer-uitbesteden/) beter: onderhoud plus actief meedenken over wat je site nodig heeft.
 
 Is de techniek op orde maar voelt het ontwerp verouderd, kijk dan eerst naar [website opfrissen](/website-opfrissen/) voordat je een complete nieuwbouw overweegt. Vaak zit de winst in een visuele update op de bestaande basis, niet in opnieuw beginnen.

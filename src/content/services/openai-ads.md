@@ -176,4 +176,4 @@ Adverteren in ChatGPT draait sinds begin 2026 in de Verenigde Staten en in een k
 
 Een harde datum is er niet, en daar doen we ook geen loze voorspelling over. Wat we wel doen, is de uitrol scherp volgen. Zodra adverteren in ChatGPT in Nederland mogelijk is, hoor je het van ons en kunnen we direct aan de slag in de OpenAI Ads Manager.
 
-Tot die tijd zit je niet stil. Ruim je content op, zorg dat de modellen je oppikken en maak je landingspagina's klaar voor wie straks vanuit ChatGPT binnenstapt. Dat werk verdwijnt niet in een la tot de lancering. Het tikt nu al door in je vindbaarheid in Google. En zodra adverteren in ChatGPT opengaat, sta je vooraan in plaats van dat je nog moet beginnen.
+Tot die tijd zit je niet stil. Ruim je content op, zorg dat de modellen je oppikken en maak je landingspagina's klaar voor wie straks vanuit ChatGPT binnenstapt. Dat werk verdwijnt niet in een la tot de lancering. Het tikt nu al door in je vindbaarheid in Google. En zodra adverteren in ChatGPT opengaat, sta je vooraan in plaats van dat je nog moet beginnen. Bij [Froseo](/) helpen we je die voorbereiding nu al op orde te krijgen.

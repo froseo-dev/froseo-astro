@@ -100,7 +100,7 @@ approachSteps:
 
 usps:
   - title: SEO én webdesign onder één dak
-    body: 'Veel contentbureaus schrijven, maar weten niet hoe je technische SEO inricht of welke interne links écht effect hebben. Wij doen al meer dan 15 jaar zowel webdesign als SEO. Je content staat niet los, maar sluit naadloos aan op je bestaande sitestructuur.'
+    body: 'Veel contentbureaus schrijven, maar weten niet hoe je technische SEO inricht of welke interne links écht effect hebben. Wij doen bij <a href="/">Froseo</a> al meer dan 15 jaar zowel webdesign als SEO. Je content staat niet los, maar sluit naadloos aan op je bestaande sitestructuur.'
   - title: Geen AI-spam, wel AI als sparringpartner
     body: 'AI-tools gebruiken we voor onderzoek en review, niet om hele artikelen te genereren. Google straft thin content steeds harder af. Je krijgt artikelen die voelen alsof iemand met kennis van zaken ze heeft geschreven, omdat dat ook zo is.'
   - title: Elke maand zichtbare actie

@@ -78,6 +78,7 @@ comparison:
       with: 'Google, Meta en LinkedIn als één geheel, ingezet waar je doelgroep zit'
     - without: 'Een accountmanager tussen jou en het werk'
       with: 'Direct contact met de specialist die in je account zit'
+  footnote: 'Advertenties werken het best bovenop een site die converteert. Bij <a href="/">Froseo</a> pakken we campagnes, techniek en landingspagina''s als één geheel aan.'
 
 approachStyle: timeline
 approachSteps:
